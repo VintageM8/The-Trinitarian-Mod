@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Trinitarian.NPCs.Ocean
 {
 
-	public class OceanMimic : ModNPC
-	{
-		public override void SetStaticDefaults()
+    public class OceanMimic : ModNPC
+    {
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ocean Mimic");
             Main.npcFrameCount[npc.type] = 14;
@@ -57,11 +57,11 @@ namespace Trinitarian.NPCs.Ocean
         }
 
         public override void NPCLoot()
-		{
-			if (Main.rand.NextBool(50))
-			{
-				Item.NewItem(npc.getRect(), ItemID.SandBlock);//add stuff vintage. Later hibub.
-			}
-		}
-	}
+        {
+            if (Main.rand.NextBool(50))
+            {
+                Item.NewItem(npc.getRect(), ItemID.SandBlock);//add stuff vintage. Later hibub.
+            }
+        }
+    }
 }

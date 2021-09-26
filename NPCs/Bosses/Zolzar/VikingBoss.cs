@@ -1,17 +1,10 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Trinitarian.Projectiles.Melee;
-using Trinitarian.Projectiles;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
-using Trinitarian.Items.Bags.Boss;
-using System.IO;
 using Terraria.Localization;
-using Terraria.Graphics.Shaders;
-using Terraria.DataStructures;
+using Terraria.ModLoader;
+using Trinitarian.Projectiles;
 
 namespace Trinitarian.NPCs.Bosses.Zolzar
 {

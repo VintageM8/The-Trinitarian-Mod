@@ -1,16 +1,14 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 using Trinitarian.Items.Bags.Boss;
 using Trinitarian.Items.Weapons.Mage;
 using Trinitarian.Items.Weapons.Melee;
 using Trinitarian.Items.Weapons.Ranged;
 using Trinitarian.Items.Weapons.Summoner;
-using Terraria;
-using Terraria.GameContent.Events;
-using Terraria.ID;
-using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 
 namespace Trinitarian.NPCs.Bosses
 {
@@ -199,7 +197,7 @@ namespace Trinitarian.NPCs.Bosses
                                     for (int i = 0; i < Main.rand.Next(3, 6); i++)
                                     {
                                         npc.netUpdate = true;
-                                        Projectile.NewProjectile(new Vector2(player.Center.X - Main.rand.Next(1200, 1500), npc.Center.Y + Main.rand.Next(-360, 360)), new Vector2(Main.rand.Next(6, 11), 0), ProjectileID.SnowBallHostile , npc.damage / (Main.expertMode ? 4 : 2), 0f, Main.myPlayer);
+                                        Projectile.NewProjectile(new Vector2(player.Center.X - Main.rand.Next(1200, 1500), npc.Center.Y + Main.rand.Next(-360, 360)), new Vector2(Main.rand.Next(6, 11), 0), ProjectileID.SnowBallHostile, npc.damage / (Main.expertMode ? 4 : 2), 0f, Main.myPlayer);
                                     }
                                 }
                             }

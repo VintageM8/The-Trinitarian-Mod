@@ -1,9 +1,9 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Trinitarian.Items.Materials.Parts;
 using Trinitarian.Items.Materials.RadiatedSubclass;
 using Trinitarian.Projectiles.Magus;
-using Trinitarian.Items.Materials.Parts;
 
 namespace Trinitarian.Items.Weapons.Magus
 {

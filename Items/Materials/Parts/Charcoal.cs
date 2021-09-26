@@ -23,7 +23,7 @@ namespace Trinitarian.Items.Materials.Parts
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Wood, 1); 
+            recipe.AddIngredient(ItemID.Wood, 1);
             recipe.AddTile(TileID.Furnaces);
             recipe.SetResult(this);
             recipe.AddRecipe();

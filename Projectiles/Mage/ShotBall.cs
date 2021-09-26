@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Trinitarian.Projectiles.Mage
@@ -31,7 +29,7 @@ namespace Trinitarian.Projectiles.Mage
         {
             projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
             timer++;
-            if(timer > 20)
+            if (timer > 20)
             {
                 projectile.tileCollide = true;
             }

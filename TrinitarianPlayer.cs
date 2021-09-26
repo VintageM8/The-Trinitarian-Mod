@@ -1,19 +1,17 @@
-using Microsoft.Xna.Framework;
-using Terraria;
 using Terraria.ModLoader;
 
 namespace Trinitarian
 {
-	public class TrinitarianPlayer : ModPlayer
-	{
-		public int TitleID;
-		public bool FocusBoss;
-	    public bool ShowText;
+    public class TrinitarianPlayer : ModPlayer
+    {
+        public int TitleID;
+        public bool FocusBoss;
+        public bool ShowText;
 
         // TODO: This does nothing
         public bool drowning;
 
-		public int ScreenShake;
+        public int ScreenShake;
         public bool canFocus = true;
         // Unused
         // private float amount = 0;
@@ -28,7 +26,7 @@ namespace Trinitarian
         private int holdCameraLength;
         private float returnLength; */
 
-		public override void ModifyScreenPosition()
+        public override void ModifyScreenPosition()
         {
             // There is 0% chance this works, and a 100% chance it will throw some crazy errors.
             /* if (FocusBoss)
@@ -92,5 +90,5 @@ namespace Trinitarian
                 }
             } */
         }
-	}
+    }
 }

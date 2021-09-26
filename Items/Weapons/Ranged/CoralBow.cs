@@ -1,10 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
-using Microsoft.Xna.Framework;
-using static Terraria.ModLoader.ModContent;
-using Trinitarian.Projectiles.Ranged;
 
 namespace Trinitarian.Items.Weapons.Ranged
 {

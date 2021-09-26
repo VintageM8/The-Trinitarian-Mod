@@ -1,9 +1,9 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Dusts;
 using static Terraria.ModLoader.ModContent;
-using Microsoft.Xna.Framework;
 
 namespace Trinitarian.Projectiles.Melee
 {

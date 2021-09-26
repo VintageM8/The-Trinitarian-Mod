@@ -1,18 +1,17 @@
-using Terraria;
 using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 
 namespace Trinitarian.Projectiles.Ammo
 {
-	public class ThePurge : ModProjectile
-	{
+    public class ThePurge : ModProjectile
+    {
         private bool canAccelerate = false;
         private Vector2 storeVelocity;
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("The Purge");
+        {
+            DisplayName.SetDefault("The Purge");
         }
 
         public override void SetDefaults()

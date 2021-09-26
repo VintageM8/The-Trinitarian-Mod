@@ -1,10 +1,5 @@
-using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
-using System;
-using Microsoft.Xna.Framework;
-using Trinitarian.Items.Materials.Bars;
 
 namespace Trinitarian.Items.Materials.Bars
 {
@@ -22,7 +17,7 @@ namespace Trinitarian.Items.Materials.Bars
             item.maxStack = 999;
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.autoReuse = true;
-            item.value =  25000; // 100 = silver, 10000 = gold
+            item.value = 25000; // 100 = silver, 10000 = gold
             item.useAnimation = 20;
             item.useTime = 20;
         }

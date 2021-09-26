@@ -5,8 +5,8 @@ using Trinitarian.Items.Materials.Parts;
 
 namespace Trinitarian.NPCs.Ocean
 {
-	public class Chinook : ModNPC
-	{
+    public class Chinook : ModNPC
+    {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Chinook");

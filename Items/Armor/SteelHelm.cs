@@ -1,9 +1,8 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Trinitarian.Items.Armor;
-using static Terraria.ModLoader.ModContent;
 using Trinitarian.Items.Materials.Bars;
+using static Terraria.ModLoader.ModContent;
 
 namespace Trinitarian.Items.Armor
 {

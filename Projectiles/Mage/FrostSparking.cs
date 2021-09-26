@@ -4,12 +4,12 @@ using Terraria.ModLoader;
 
 namespace Trinitarian.Projectiles.Mage
 {
-	public class FrostSparking : ModProjectile
-	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Frost Sparking");
-		}
+    public class FrostSparking : ModProjectile
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Frost Sparking");
+        }
 
         public override void SetDefaults()
         {
@@ -39,8 +39,8 @@ namespace Trinitarian.Projectiles.Mage
 
 
         public override void Kill(int timeLeft)
-		{
-			Main.PlaySound(SoundID.Dig, projectile.position);
-		}
-	}
+        {
+            Main.PlaySound(SoundID.Dig, projectile.position);
+        }
+    }
 }

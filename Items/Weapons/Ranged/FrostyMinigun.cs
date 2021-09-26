@@ -1,8 +1,5 @@
-using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Trinitarian.Items.Materials.Parts;
-using Microsoft.Xna.Framework;
 
 namespace Trinitarian.Items.Weapons.Ranged
 {

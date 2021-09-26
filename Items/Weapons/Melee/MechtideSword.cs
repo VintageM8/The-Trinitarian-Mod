@@ -2,17 +2,16 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Items.Materials.Bars;
-using static Terraria.ModLoader.ModContent;
 
 namespace Trinitarian.Items.Weapons.Melee
 {
-	public class MechtideSword : ModItem
-	{
+    public class MechtideSword : ModItem
+    {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mechtide Sword"); 
+            DisplayName.SetDefault("Mechtide Sword");
             Tooltip.SetDefault("From the heart of death");
-		}
+        }
 
         public override void SetDefaults()
         {
@@ -36,7 +35,7 @@ namespace Trinitarian.Items.Weapons.Melee
             target.AddBuff(BuffID.Poisoned, 180);
             target.AddBuff(BuffID.Burning, 180);
         }
-       
+
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);

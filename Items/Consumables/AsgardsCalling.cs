@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Trinitarian.NPCs.Bosses.Zolzar;
-using Trinitarian.Items.Materials.Parts;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Trinitarian.Items.Materials.Parts;
+using Trinitarian.NPCs.Bosses.Zolzar;
 
 namespace Trinitarian.Items.Consumables
 {

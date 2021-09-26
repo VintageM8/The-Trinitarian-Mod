@@ -4,11 +4,11 @@ using Terraria.ModLoader;
 
 namespace Trinitarian.Projectiles.Mage
 {
-	public class NjorsStaffproj : ModProjectile
-	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Njors Staff");
+    public class NjorsStaffproj : ModProjectile
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Njors Staff");
         }
 
         public override void SetDefaults()
@@ -30,11 +30,11 @@ namespace Trinitarian.Projectiles.Mage
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-		{
-			if (Main.rand.Next(6) == 0)
-			{
-				target.AddBuff(BuffID.Poisoned, 180);
-			}
-		}
-	}
+        {
+            if (Main.rand.Next(6) == 0)
+            {
+                target.AddBuff(BuffID.Poisoned, 180);
+            }
+        }
+    }
 }

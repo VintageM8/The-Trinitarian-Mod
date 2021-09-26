@@ -1,10 +1,9 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
-using Trinitarian.Projectiles.Melee;
-using Trinitarian.Items.Weapons.Melee;
 using Trinitarian.Items.Materials.Parts;
+using Trinitarian.Projectiles.Melee;
+using static Terraria.ModLoader.ModContent;
 
 namespace Trinitarian.Items.Weapons.Melee
 {
