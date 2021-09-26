@@ -2,7 +2,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Items.Materials.Parts;
-using Trinitarian.Items.Materials.Bars;
 
 namespace Trinitarian.Items.Accessories
 {

@@ -5,18 +5,18 @@ using Trinitarian.Items.Materials.Bars;
 
 namespace Trinitarian.Items.Weapons.Ranged
 {
-	public class RustedBow : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Rusted Bow");
-		}
+    public class RustedBow : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Rusted Bow");
+        }
 
-		public override void SetDefaults()
-		{
-			item.damage = 6;
-			item.noMelee = true;
-			item.ranged = true;
+        public override void SetDefaults()
+        {
+            item.damage = 6;
+            item.noMelee = true;
+            item.ranged = true;
             item.width = 16;
             item.height = 36;
             item.useTime = 26;

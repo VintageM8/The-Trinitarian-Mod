@@ -1,15 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
-using Trinitarian.Items.Accessories;
-using System;
-using System.IO;
-using Microsoft.Xna.Framework;
-using Terraria.GameInput;
 using Terraria.DataStructures;
-using Terraria.Graphics.Shaders;
 
 namespace Trinitarian
 {
@@ -21,16 +13,17 @@ namespace Trinitarian
 
 		public int ScreenShake;
         public bool canFocus = true;
-        private float amount = 0;
+        // private float amount = 0;
 
         //fuck me
-        Vector2 screenPositionStore;
+        /* Related to non-functional boss code below
+         * Vector2 screenPositionStore;
         private Vector2 focusTo;
         private float towardsLength;
         private bool holdPosition;
         private int holdCounter = 0;
         private int holdCameraLength;
-        private float returnLength;
+        private float returnLength; */
 
          public bool drowning = false;
         public override void ResetEffects()
@@ -81,7 +74,7 @@ namespace Trinitarian
 
 		public override void ModifyScreenPosition()
         {
-            if (FocusBoss)
+            /* if (FocusBoss)
             {
                 if (canFocus)
                 {
@@ -131,7 +124,7 @@ namespace Trinitarian
                         }
                     }
                 }
-            }
+            } */
 
             if (!Main.gamePaused)
             {

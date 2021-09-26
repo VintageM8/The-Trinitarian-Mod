@@ -1,24 +1,18 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.World.Generation;
-using Microsoft.Xna.Framework;
-using Terraria.GameContent.Generation;
-using Trinitarian.Items.Materials.RadiatedSubclass;
-using Trinitarian.Items.Weapons.Ranged;
 using Trinitarian.Items.Weapons.Melee;
-using Trinitarian.Items.QuestItems.Wizard;
+using Trinitarian.Items.Weapons.Ranged;
 
 namespace Trinitarian
 {
     public class TrinitarianWorld : ModWorld
     {
         //bosses
-         public static bool downedViking;
+        public static bool downedViking;
 
         public override void PostWorldGen()
         {
-           
             int[] itemsToPlaceInIceChests = { ModContent.ItemType<FrostyMinigun>(), ModContent.ItemType<IceSpear>() };
 			int itemsToPlaceInIceChestsChoice = 0;
 			for (int chestIndex = 0; chestIndex < 1000; chestIndex++) 
@@ -27,7 +21,8 @@ namespace Trinitarian
 				if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 11 * 36) 
 				{	for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++) 
 					{	if (chest.item[inventoryIndex].type == ItemID.None) 
-						{	chest.item[inventoryIndex].SetDefaults(itemsToPlaceInIceChests[itemsToPlaceInIceChestsChoice]);
+						{	
+                            chest.item[inventoryIndex].SetDefaults(itemsToPlaceInIceChests[itemsToPlaceInIceChestsChoice]);
 							itemsToPlaceInIceChestsChoice = (itemsToPlaceInIceChestsChoice + 1) % itemsToPlaceInIceChests.Length;
 							// Alternate approach: Random instead of cyclical: chest.item[inventoryIndex].SetDefaults(Main.rand.Next(itemsToPlaceInIceChests));
 							break;
@@ -37,4 +32,4 @@ namespace Trinitarian
             }
         }
     }
-}                        
+}

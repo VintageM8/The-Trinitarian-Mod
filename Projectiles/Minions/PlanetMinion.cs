@@ -1,10 +1,8 @@
-using System;
-using Trinitarian.Buffs;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 
 namespace Trinitarian.Projectiles.Minions
 {

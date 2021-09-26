@@ -1,10 +1,9 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
-using Trinitarian.Projectiles.Melee;
-using Trinitarian.Items.Weapons.Melee;
 using Trinitarian.Items.Materials.Parts;
+using Trinitarian.Projectiles.Melee;
+using static Terraria.ModLoader.ModContent;
 
 namespace Trinitarian.Items.Weapons.Melee
 {
@@ -24,7 +23,7 @@ namespace Trinitarian.Items.Weapons.Melee
             item.height = 64;
             item.useTime = 21;
             item.useAnimation = 21;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 5;
             item.value = Item.sellPrice(0, 10, 50, 0);
             item.rare = ItemRarityID.Pink;

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Trinitarian.Projectiles.Ranged
@@ -29,7 +30,7 @@ namespace Trinitarian.Projectiles.Ranged
             if (projectile.ai[1] == 0f)
             {
                 projectile.ai[1] = 1f;
-                Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 20);
+                Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 20);
             }
             if (projectile.alpha > 0)
             {
@@ -42,7 +43,7 @@ namespace Trinitarian.Projectiles.Ranged
             Lighting.AddLight(projectile.Center, 0.7f, 0f, 0f);
             for (int i = 0; i < 5; i++)
             {
-                Dust obj = Main.dust[Dust.NewDust(projectile.position, projectile.width, projectile.height, 143, projectile.velocity.X, projectile.velocity.Y, 100)];
+                Dust obj = Main.dust[Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Paint, projectile.velocity.X, projectile.velocity.Y, 100)];
                 obj.velocity = Vector2.Zero;
                 obj.position -= projectile.velocity / 5f * i;
                 obj.noGravity = true;

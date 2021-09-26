@@ -1,46 +1,21 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Trinitarian.Projectiles.Melee;
-using Trinitarian.Projectiles;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
-using Trinitarian.Items.Bags.Boss;
-using System.IO;
 using Terraria.Localization;
-using Terraria.Graphics.Shaders;
-using Terraria.DataStructures;
+using Terraria.ModLoader;
+using Trinitarian.Projectiles;
 
 namespace Trinitarian.NPCs.Bosses.Zolzar
 {
     [AutoloadBossHead]
     public class VikingBoss : ModNPC
     {
-        int spritetimer = 0;
-        int frame = 1;
-        int attackCounter = 0;
-        Vector2 teleportPosition = Vector2.Zero;
         bool changedPhase2 = false;
-        bool changedPhase2Indicator = false;
         private int bufferCount = 0;
-
-        int Direction = -1;
-        bool direction = true;
-
-        int RandomCase = 0;
-        int LastCase = 4;
-        int RandomCeiling;
-        bool movement = true;
 
         bool npcDashing = false;
         int spriteDirectionStore = 0;
-        private bool Dashing = false;
-        private int myProjectileStore;
-        private int myProjectileStore2;
-
-        bool dead = false;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Zolzar, Berserker Viking");

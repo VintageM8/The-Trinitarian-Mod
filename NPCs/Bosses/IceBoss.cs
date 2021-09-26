@@ -1,16 +1,14 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 using Trinitarian.Items.Bags.Boss;
 using Trinitarian.Items.Weapons.Mage;
 using Trinitarian.Items.Weapons.Melee;
 using Trinitarian.Items.Weapons.Ranged;
 using Trinitarian.Items.Weapons.Summoner;
-using Terraria;
-using Terraria.GameContent.Events;
-using Terraria.ID;
-using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 
 namespace Trinitarian.NPCs.Bosses
 {
@@ -26,7 +24,6 @@ namespace Trinitarian.NPCs.Bosses
         bool halflife = false;
         bool fourthlife = false;
         bool circleactive = false;
-        Vector2 playercentersnapshot;
 
         public override void SetStaticDefaults()
         {
@@ -200,7 +197,7 @@ namespace Trinitarian.NPCs.Bosses
                                     for (int i = 0; i < Main.rand.Next(3, 6); i++)
                                     {
                                         npc.netUpdate = true;
-                                        Projectile.NewProjectile(new Vector2(player.Center.X - Main.rand.Next(1200, 1500), npc.Center.Y + Main.rand.Next(-360, 360)), new Vector2(Main.rand.Next(6, 11), 0), ProjectileID.SnowBallHostile , npc.damage / (Main.expertMode ? 4 : 2), 0f, Main.myPlayer);
+                                        Projectile.NewProjectile(new Vector2(player.Center.X - Main.rand.Next(1200, 1500), npc.Center.Y + Main.rand.Next(-360, 360)), new Vector2(Main.rand.Next(6, 11), 0), ProjectileID.SnowBallHostile, npc.damage / (Main.expertMode ? 4 : 2), 0f, Main.myPlayer);
                                     }
                                 }
                             }
@@ -250,7 +247,7 @@ namespace Trinitarian.NPCs.Bosses
                     for (int i = 0; i < 18; i++)
                     {
                         Vector2 dustPos = npc.Center + new Vector2(npc.ai[2], 0).RotatedBy(MathHelper.ToRadians(i * 20 + npc.ai[1]));
-                        Dust dust = Main.dust[Dust.NewDust(dustPos, 15, 15, 76, 0f, 0f, 0, default, 2.04f)];
+                        Dust dust = Main.dust[Dust.NewDust(dustPos, 15, 15, DustID.Snow, 0f, 0f, 0, default, 2.04f)];
                         dust.noGravity = true;
                     }
 
@@ -487,7 +484,7 @@ namespace Trinitarian.NPCs.Bosses
 
                     for (int num1202 = 0; num1202 < 4; num1202++)
                     {
-                        Dust.NewDust(npc.Center - new Vector2(npc.width / 4, -35), npc.width / 3, npc.height, 76, 0, 2.63f, default, default, 1.45f);
+                        Dust.NewDust(npc.Center - new Vector2(npc.width / 4, -35), npc.width / 3, npc.height, DustID.Snow, 0, 2.63f, default, default, 1.45f);
                     }
                 }
             }
@@ -495,7 +492,7 @@ namespace Trinitarian.NPCs.Bosses
             {
                 for (int num1101 = 0; num1101 < 6; num1101++)
                 {
-                    int num1110 = Dust.NewDust(new Vector2(npc.Center.X, npc.Center.Y), npc.width, npc.height, 76, npc.velocity.X, npc.velocity.Y, 50, default(Color), 3f);
+                    int num1110 = Dust.NewDust(new Vector2(npc.Center.X, npc.Center.Y), npc.width, npc.height, DustID.Snow, npc.velocity.X, npc.velocity.Y, 50, default(Color), 3f);
                     Main.dust[num1110].position = (Main.dust[num1110].position + npc.Center) / 2f;
                     Main.dust[num1110].noGravity = true;
                     Dust dust81 = Main.dust[num1110];

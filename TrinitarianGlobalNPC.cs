@@ -1,17 +1,13 @@
 using Terraria;
-using System;
-using System.Collections.Generic;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Trinitarian.Items.Materials.Parts;
 using Trinitarian.Items.Accessories;
-using Microsoft.Xna.Framework;
+using Trinitarian.Items.Materials.Parts;
 
 namespace Trinitarian
 {
     public class TrinitarianGlobalNPC : GlobalNPC
     {
-
         public override bool InstancePerEntity
         {
             get
