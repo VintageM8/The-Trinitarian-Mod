@@ -1,14 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
-using System;
-using System.IO;
-using Microsoft.Xna.Framework;
-using Terraria.GameInput;
-using Terraria.DataStructures;
-using Terraria.Graphics.Shaders;
 
 namespace Trinitarian
 {
@@ -18,22 +10,28 @@ namespace Trinitarian
 		public bool FocusBoss;
 	    public bool ShowText;
 
+        // TODO: This does nothing
+        public bool drowning;
+
 		public int ScreenShake;
         public bool canFocus = true;
-        private float amount = 0;
+        // Unused
+        // private float amount = 0;
 
         //fuck me
-        Vector2 screenPositionStore;
+        // I assume this goes with the block below. Will not work.
+        /* Vector2 screenPositionStore;
         private Vector2 focusTo;
         private float towardsLength;
         private bool holdPosition;
         private int holdCounter = 0;
         private int holdCameraLength;
-        private float returnLength;
+        private float returnLength; */
 
 		public override void ModifyScreenPosition()
         {
-            if (FocusBoss)
+            // There is 0% chance this works, and a 100% chance it will throw some crazy errors.
+            /* if (FocusBoss)
             {
                 if (canFocus)
                 {
@@ -92,7 +90,7 @@ namespace Trinitarian
                     Main.screenPosition += new Vector2(Main.rand.Next(-10, 10), Main.rand.Next(-10, 10));
                     ScreenShake--;
                 }
-            }
+            } */
         }
 	}
 }

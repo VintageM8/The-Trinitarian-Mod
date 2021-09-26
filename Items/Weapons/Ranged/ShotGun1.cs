@@ -28,7 +28,7 @@ namespace Trinitarian.Items.Weapons.Ranged
 			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item36;
 			item.autoReuse = false;
-			item.shoot = 10;
+			item.shoot = ProjectileID.PurificationPowder;
 			item.shootSpeed = 9f;
 			item.useAmmo = AmmoID.Bullet;
 		}

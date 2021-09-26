@@ -12,7 +12,7 @@ namespace Trinitarian.Items.Weapons.Melee
 		public override void SetDefaults()
 		{
 			item.damage = 23;
-			item.useStyle = 5;
+			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.useAnimation = 28;
 			item.useTime = 32;
 			item.shootSpeed = 5f;

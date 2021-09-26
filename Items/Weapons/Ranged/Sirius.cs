@@ -41,13 +41,12 @@ namespace Trinitarian.Items.Weapons.Ranged
                 type = ProjectileID.ChlorophyteBullet;
             }
             return true;
-
-			Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 25f;
+			/* Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 25f;
 			if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
 			{
 				position += muzzleOffset;
 			}
-			return true;
+			return true; */
 		}
 
 		public override void AddRecipes()

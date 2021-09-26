@@ -23,7 +23,7 @@ namespace Trinitarian.Projectiles.Melee
         {
             if (Main.rand.NextBool(6))
             {
-                Dust.NewDust(projectile.Center, projectile.width, projectile.height, 37);
+                Dust.NewDust(projectile.Center, projectile.width, projectile.height, DustID.Obsidian);
             }
         }
 

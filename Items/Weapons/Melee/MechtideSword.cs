@@ -22,10 +22,10 @@ namespace Trinitarian.Items.Weapons.Melee
             item.height = 47;
             item.useTime = 20;
             item.useAnimation = 20;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 8;
             item.value = Item.buyPrice(gold: 1);
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
         }

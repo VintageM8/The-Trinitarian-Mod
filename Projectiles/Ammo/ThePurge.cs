@@ -74,7 +74,7 @@ namespace Trinitarian.Projectiles.Ammo
                             Vector2 vector304 = projectile.position;
                             vector304 -= projectile.velocity * ((float)num1202 * 0.25f);
                             projectile.alpha = 255;
-                            int num1200 = Dust.NewDust(vector304, 1, 1, 206);
+                            int num1200 = Dust.NewDust(vector304, 1, 1, DustID.UnusedWhiteBluePurple);
                             Main.dust[num1200].position = vector304;
                             Dust expr_140F1_cp_0 = Main.dust[num1200];
                             expr_140F1_cp_0.position.X = expr_140F1_cp_0.position.X + (float)(projectile.width / 2);
@@ -95,7 +95,7 @@ namespace Trinitarian.Projectiles.Ammo
 
             for (int i = 0; i < 3; i++)
             {
-                Dust.NewDust(projectile.position, 1, 1, 206);
+                Dust.NewDust(projectile.position, 1, 1, DustID.UnusedWhiteBluePurple);
             }
             projectile.ai[0]++;
         }

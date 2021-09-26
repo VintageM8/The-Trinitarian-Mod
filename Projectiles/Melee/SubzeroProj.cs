@@ -59,7 +59,7 @@ namespace Trinitarian.Projectiles.Melee
                 float x = (float)(Math.Cos(ang) * 15) + projectile.Center.X;
                 float y = (float)(Math.Sin(ang) * 15) + projectile.Center.Y;
                 Vector2 vel = Vector2.Normalize(new Vector2(x - projectile.Center.X, y - projectile.Center.Y)) * 7;
-                int dustIndex = Dust.NewDust(new Vector2(x - 3, y - 3), 6, 6, 160, vel.X, vel.Y);
+                int dustIndex = Dust.NewDust(new Vector2(x - 3, y - 3), 6, 6, DustID.MagnetSphere, vel.X, vel.Y);
                 Main.dust[dustIndex].noGravity = true;
             }
             return true;
@@ -76,7 +76,7 @@ namespace Trinitarian.Projectiles.Melee
 
                 Vector2 vel = Vector2.Normalize(new Vector2(x - projectile.Center.X, y - projectile.Center.Y)) * 7;
 
-                int dustIndex = Dust.NewDust(new Vector2(x - 3, y - 3), 6, 6, 160, vel.X, vel.Y);
+                int dustIndex = Dust.NewDust(new Vector2(x - 3, y - 3), 6, 6, DustID.MagnetSphere, vel.X, vel.Y);
                 Main.dust[dustIndex].noGravity = true;
             }
         }

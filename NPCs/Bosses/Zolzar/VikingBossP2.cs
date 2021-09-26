@@ -17,11 +17,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
         private int StopHeal = 0;
         bool npcDashing = false;
         int spriteDirectionStore = 0;
-        private bool Dashing = false;
 
-        bool leafatt = false;
-
-        bool dead = false;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Zolzar, God of Demise");
@@ -423,7 +419,6 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
             if (npc.ai[3] == 0f)
             {
                 npc.ai[2] = 0;
-                dead = true;
                 npc.ai[3] = 1f;
                 npc.damage = 0;
                 npc.life = npc.lifeMax;

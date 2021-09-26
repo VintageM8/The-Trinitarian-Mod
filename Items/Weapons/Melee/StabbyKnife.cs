@@ -19,7 +19,7 @@ namespace Trinitarian.Items.Weapons.Melee
 			item.height = 40;
 			item.useTime = 10;
 			item.useAnimation = 20;
-			item.useStyle = 3;
+			item.useStyle = ItemUseStyleID.Stabbing;
 			item.knockBack = 6;
 			item.value = Item.sellPrice(0, 15, 0, 0);
 			item.rare = ItemRarityID.LightRed;

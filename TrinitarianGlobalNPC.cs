@@ -7,10 +7,12 @@ using Trinitarian.Items.Materials.Parts;
 using Trinitarian.Items.Accessories;
 using Microsoft.Xna.Framework;
 
-namespace TerrariaDemised
+namespace Trinitarian
 {
-    public class TerrariaDemisedNPC : GlobalNPC
+    public class TrinitarianGlobalNPC : GlobalNPC
     {
+        // TODO: Does nothing, also doesn't work unless you set "InstancePerEntity".
+        // public bool drowning;
         public override void SetupShop(int type, Chest shop, ref int nextSlot)
         {
             if (type == NPCID.ArmsDealer)

@@ -26,7 +26,7 @@ namespace Trinitarian.Projectiles
         }
         public override void AI()
         {
-            Dust.NewDust(projectile.Center, 1, 1, 102, 0, 0, 0, Colors.RarityRed);
+            Dust.NewDust(projectile.Center, 1, 1, DustID.Water_Desert, 0, 0, 0, Colors.RarityRed);
         }
 
     }

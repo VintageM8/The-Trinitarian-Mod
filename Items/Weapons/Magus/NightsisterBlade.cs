@@ -21,7 +21,7 @@ namespace Trinitarian.Items.Weapons.Magus
 			item.height = 66;
 			item.useTime = 10;
 			item.useAnimation = 20;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.knockBack = 6;
 			item.value = Item.sellPrice(0, 12, 0, 0);
 			item.rare = ItemRarityID.Pink;

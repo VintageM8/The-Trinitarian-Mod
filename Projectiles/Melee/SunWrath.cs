@@ -35,7 +35,7 @@ namespace Trinitarian.Projectiles.Melee
             i++;
             if (i % 1 == 0)
             {
-                int dust = Dust.NewDust(projectile.position, projectile.width / 2, projectile.height / 2, 164);
+                int dust = Dust.NewDust(projectile.position, projectile.width / 2, projectile.height / 2, DustID.TeleportationPotion);
             }
         }
     }

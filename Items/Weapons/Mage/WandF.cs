@@ -24,7 +24,7 @@ namespace Trinitarian.Items.Weapons.Mage
                 item.height = 28;
                 item.useTime = 27;
                 item.useAnimation = 27;
-                item.useStyle = 1;
+                item.useStyle = ItemUseStyleID.SwingThrow;
                 item.noMelee = true;
                 item.knockBack = 0;
                 item.value = Item.sellPrice(0, 0, 16, 0);

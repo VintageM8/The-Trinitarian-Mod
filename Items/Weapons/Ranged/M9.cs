@@ -24,10 +24,10 @@ namespace Trinitarian.Items.Weapons.Ranged
 			item.noMelee = true;
 			item.knockBack = 4;
 			item.value = 35;
-			item.rare = 0;
+			item.rare = ItemRarityID.White;
 			item.UseSound = SoundID.Item11;
 			item.autoReuse = false;
-			item.shoot = 10;
+			item.shoot = ProjectileID.PurificationPowder;
 			item.shootSpeed = 17f;
 			item.useAmmo = AmmoID.Bullet;
 		}

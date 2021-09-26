@@ -260,10 +260,7 @@ namespace Trinitarian.NPCs.Ocean
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			{
-				return SpawnCondition.Ocean.Chance * 0.50f;
-			}
-			return 0;
+			return SpawnCondition.Ocean.Chance * 0.50f;
 		}
 	}
 }
