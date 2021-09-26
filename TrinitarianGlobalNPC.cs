@@ -8,8 +8,31 @@ namespace Trinitarian
 {
     public class TrinitarianGlobalNPC : GlobalNPC
     {
-        // TODO: Does nothing, also doesn't work unless you set "InstancePerEntity".
-        // public bool drowning;
+        public override bool InstancePerEntity
+        {
+            get
+            {
+                return true;
+            }
+        }
+        public bool drowning = false;
+
+        public override void ResetEffects(NPC npc)
+        {
+            drowning = false;
+        }
+        public override void UpdateLifeRegen(NPC npc, ref int damage)
+        {
+            if (drowning)
+            {
+                if (npc.lifeRegen > 0)
+                {
+                    npc.lifeRegen = 0;
+                }
+                npc.lifeRegen -= 8; //change this number to how fast you want the debuff to damage the players. Every 2 is 1 hp lost per second
+            }
+        }
+
         public override void SetupShop(int type, Chest shop, ref int nextSlot)
         {
             if (type == NPCID.ArmsDealer)
