@@ -46,7 +46,7 @@ namespace Trinitarian.Projectiles.Mage
 			//TODO maybe enable suck for bosses
 			for (int i = 0; i < Main.npc.Length; i++)
 			{
-				if (Main.npc[i].active && projectile.DistanceSQ(Main.npc[i].Center) < SuckDist && !Main.npc[i].boss && !Main.npc[i].friendly)
+				if (Main.npc[i].active && projectile.DistanceSQ(Main.npc[i].Center) < SuckDist && !Main.npc[i].boss && !Main.npc[i].friendly && Main.npc[i].type != NPCID.TargetDummy)
 				{
 					Vector2 SuckAcc = projectile.Center - Main.npc[i].Center;
 					float npcSpeed = Main.npc[i].velocity.Length();
