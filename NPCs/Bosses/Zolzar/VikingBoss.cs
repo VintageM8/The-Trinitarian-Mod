@@ -23,12 +23,20 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
         private const int State_Spawning = 0;
         private const int State_Moving = 1;
         private const int State_Attacking = 2;
-        private const int State_Circling = 3;
+        private const int State_Circling = 3; //This is used for the Adds the boss never enters this state.
 
         private const float AttackTargetingDistanceSQ = 1000 * 1000;
         private const int MovementTime = 300;
         private const int MaxDashes = 2;
         private const float Max_Speed = 6;
+        private const int DashStartTime = 200;
+        private const int DashDelay = 20;
+
+        private const float SoftMovementDistanceSQ = 700 * 700;
+
+        private const float DashSpeed = 18;
+
+        private const int SpawnDelay = 60;
 
         private float DashTime;
         private int TimesDashed;
@@ -100,14 +108,21 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 
         public override void AI()
         {
+            //TODO better targeting selection
             npc.TargetClosest(true);
             Player player = Main.player[npc.target];
+
+            //This handles the timing for calculating the spinning adds. The period for 1 rotation is exactly 300 ticks. Changing this makes the circle spinn slower/faster but changing it is not recommended.
+            //There are a a coupple things that rely on the rotation speed that would have to be changed which involves some math. So unless you know what you are doing don't touch this number.
+            //Things that would require recalculation: Add movementspeed, Add locking distance, GenerateAddPositions.
             if (RotationTimer == 300)
             {
                 RotationTimer = 0;
             }
             GenerateAddPositions();
             RotationTimer++;
+
+            //Initial spawning. Boss starts with 5 Adds
             if (!TrinitarianWorld.downedViking && AI_State == State_Spawning)
             {
                 npc.dontTakeDamage = true;
@@ -124,7 +139,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 {
                     npc.dontTakeDamage = false;
                     AI_State = State_Moving;
-                    AI_Timer = 0;
+                    AI_Timer = -1;
                     npc.netUpdate = true;
                 }
                 AI_Timer++;
@@ -149,11 +164,6 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 npc.TargetClosest(false);
                 npc.velocity.Y = 2000;
             }
-            //TODO phase change
-            //if (npc.life <= npc.lifeMax * 0.5f)
-            //{
-            //    changedPhase2 = true;
-            //}
 
             //TODO not sure what this is but it wont ever get called
             //if (npc.ai[3] == 90)
@@ -168,11 +178,13 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
             //        }
             //    }
             //}
-
+            
+            //Basic non attacking cooldown phase.
             if (AI_State == State_Moving)
             {
                 Moving();
                 float distPlayerSQ = (npc.Center - player.Center).LengthSquared();
+                //Condition for when the boss can attack.
                 if (AI_Timer >= MovementTime && npc.HasValidTarget && distPlayerSQ < AttackTargetingDistanceSQ)
                 {
                     AI_State = State_Attacking;
@@ -180,11 +192,16 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 }
             }
 
+            //Attack logic.
             if (AI_State == State_Attacking)
             {
+                //Initialization for the Attacks.
                 if (AI_Timer == 0)
                 {
-                    Attack_State = Main.rand.Next(0, 7);
+                    //prevents repeat BigDAshAttack
+                    if (Attack_State != 0) Attack_State = Main.rand.Next(0, 7);
+                    else Attack_State = Main.rand.Next(1, 7);
+
                     if (AddNumber == 0) Attack_State = 0;
                     npc.netUpdate = true;
                 }
@@ -203,17 +220,26 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                     case 3:
                         if (AI_Timer == 0) SpawnAdd(npc.Center);
                         SendAdd((int)AddNumber);
+                        if (AI_Timer >= 120)
+                        {
+                            AI_State = State_Moving;
+                            AI_Timer = -1;
+                        }
                         break;
                     case 4:
                     case 5:
                     case 6:
                         if (AI_Timer == 0) SpawnAdd(npc.Center);
                         LightningStrike((int)AddNumber);
+                        if (AI_Timer >= (AddNumber - 1) * SpawnDelay)
+                        {
+                            AI_State = State_Moving;
+                            AI_Timer = -1;
+                        }
                         break;               
                 }
             }
             AI_Timer++;
-            Main.NewText(AddNumber);
         }
         private void Moving()
         {
@@ -221,19 +247,24 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
             float distPlayerSQ = (npc.Center - player.Center).LengthSquared();
             Vector2 npcAcc = player.Center - npc.Center;
             float maxspeed = Max_Speed;
+            //Assign weight of the NPC
             if (npcAcc != Vector2.Zero)
             {
                 npcAcc.Normalize();
                 npcAcc *= 1 / 5f;
             }
-            if (distPlayerSQ < 700 * 700)
+            //scale speed with distance. Closer = Slower.
+            if (distPlayerSQ < SoftMovementDistanceSQ)
             {
-                maxspeed *= distPlayerSQ / (700 * 700);
+                //Simple scaling function !!NOT linear since the quantitys are squared!!.
+                maxspeed *= distPlayerSQ / SoftMovementDistanceSQ;
             }
+            //apply acceleration
             if ((npc.velocity + npcAcc).LengthSquared() <= maxspeed * maxspeed)
             {
                 npc.velocity += npcAcc;
             }
+            //Enforce the maxspeed by setting the magnitude of the vector.
             else
             {
                 npc.velocity += npcAcc;
@@ -244,22 +275,22 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 npc.velocity *= maxspeed;
             }
         }
-
+        //This spawns the Adds.
         private void SpawnAdd(Vector2 pos, int count = 1)
         {
+            TrinitarianGlobalNPC globalnpc = npc.GetGlobalNPC<TrinitarianGlobalNPC>();
             for (int i = 0; i < count; i++)
-            {
-                TrinitarianGlobalNPC globalnpc = npc.GetGlobalNPC<TrinitarianGlobalNPC>();
-                globalnpc.Add[(int)AddNumber] = NPC.NewNPC((int)pos.X, (int)pos.Y, ModContent.NPCType<VikingBossAdd>(), 0, 1, npc.whoAmI, 0, AddNumber, Main.myPlayer);
+            {   
+                globalnpc.Add[(int)AddNumber] = NPC.NewNPC((int)pos.X, (int)pos.Y, ModContent.NPCType<VikingBossAdd>(), 0, 1, npc.whoAmI, 0, AddNumber, npc.target);
                 AddNumber++;
             }           
             GenerateAddPositions();
         }
-        private void Dash(int delay)
+        //This is here to use in the BigDash.
+        private void Dash(int delay = 0)
         {
-            Player target = Main.player[npc.target];
-            float DashSpeed = 18;
-             if (AI_Timer == 0 + delay)
+             Player target = Main.player[npc.target];
+             if (AI_Timer == delay)
              {
                 Vector2 npcVel = target.Center - npc.Center;
                 DashTime = 1.5f * npcVel.Length() / DashSpeed;
@@ -272,51 +303,45 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
              }
 
         }
-        private void SendAdd(int SendCount)
+        private void SendAdd(int SendCount, int delay = 0)
         {
             TrinitarianGlobalNPC globalnpc = npc.GetGlobalNPC<TrinitarianGlobalNPC>();
-            if (AI_Timer == 0)
+            Moving();
+            if (AI_Timer == delay)
             {
-                npc.velocity = Vector2.Zero;
                 int j = 0;
+                //this selects the adds that are currently available.
                 for (int i = 0; i < SendCount; i++)
+                {                  
+                    while (Main.npc[globalnpc.Add[j]].ai[0] != State_Circling && j < 40)
+                    {
+                        j++;
+                    }
+                    Main.npc[globalnpc.Add[j]].ai[0] = State_Attacking;   //Setting the State of the Add
+                    Main.npc[globalnpc.Add[j]].ai[2] = 0;   //carefull here we need to reset to 0 and not -1 !!
+                    Main.npc[globalnpc.Add[j]].localAI[0] = 1;  //Assigning the Attack state of the Add
+                    j++;
+                }
+            }
+        }
+        private void LightningStrike(int StrikeCount, int delay = 0)
+        {
+            TrinitarianGlobalNPC globalnpc = npc.GetGlobalNPC<TrinitarianGlobalNPC>();
+            Moving();
+            //this selects the adds that are currently available.
+            if (AI_Timer >= delay)
+            {
+                int j = 0;
+                if ((AI_Timer - delay) % SpawnDelay == 0)
                 {
                     while (Main.npc[globalnpc.Add[j]].ai[0] != State_Circling && j < 40)
                     {
                         j++;
                     }
                     Main.npc[globalnpc.Add[j]].ai[0] = State_Attacking;   //Setting the State of the Add
-                    Main.npc[globalnpc.Add[j]].ai[2] = 0;   //carefull -1 or 0!!!!!!!. Resetting timer of the Add
-                    Main.npc[globalnpc.Add[j]].localAI[0] = 1;  //Assigning the Attack state of the Add
-                    j++;
+                    Main.npc[globalnpc.Add[j]].ai[2] = 0;   //carefull here we need to reset to 0 and not -1 !!
+                    Main.npc[globalnpc.Add[j]].localAI[0] = 0;  //Assigning the Attack state of the Add
                 }
-            }
-            if (AI_Timer >= 240)
-            {
-                AI_State = State_Moving;
-                AI_Timer = -1;
-            }
-        }
-        private void LightningStrike(int StrikeCount)
-        {
-            const int SpawnDelay = 60;
-            TrinitarianGlobalNPC globalnpc = npc.GetGlobalNPC<TrinitarianGlobalNPC>();
-            Moving();
-            int j = 0;
-            if (AI_Timer % SpawnDelay == 0)
-            {
-                while (Main.npc[globalnpc.Add[j]].ai[0] != State_Circling && j < 40)
-                {
-                    j++;
-                }
-                Main.npc[globalnpc.Add[j]].ai[0] = State_Attacking;   //Setting the State of the Add
-                Main.npc[globalnpc.Add[j]].ai[2] = 0;   //carefull -1 or 0!!!!!!!. Resetting timer of the Add
-                Main.npc[globalnpc.Add[j]].localAI[0] = 0;  //Assigning the Attack state of the Add
-            }
-            if (AI_Timer >= SpawnDelay * (StrikeCount - 1))
-            {
-                AI_State = State_Moving;
-                AI_Timer = -1;
             }
         }
         private void BigDashAttack()
@@ -327,17 +352,16 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 for (int i = 0; i < AddNumber; i++)
                 {
                     Main.npc[globalnpc.Add[i]].ai[0] = State_Attacking;   //Setting the State of the Add
-                    Main.npc[globalnpc.Add[i]].ai[2] = 0;   //carefull -1 or 0!!!!!!!. Resetting timer of the Add
+                    Main.npc[globalnpc.Add[i]].ai[2] = 0;   //carefull here we need to reset to 0 and not -1 !!
                     Main.npc[globalnpc.Add[i]].localAI[0] = 2;  //Assigning the Attack state of the Add
                 }
             }
-            if (AI_Timer >= 180)
+                     
+            Dash(DashStartTime);
+            
+            if (AI_Timer >= DashTime + DashStartTime && TimesDashed < MaxDashes)
             {
-                Dash(200);
-            }
-            if (AI_Timer >= DashTime + 200 && TimesDashed < MaxDashes)
-            {
-                AI_Timer = 180;
+                AI_Timer = DashStartTime - DashDelay;
                 TimesDashed++;
             }
             if (TimesDashed == MaxDashes)
@@ -356,7 +380,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 globalnpc.AddPositions[i] = npc.Center + new Vector2(300 * (float)Math.Cos(period * (RotationTimer + (300 / AddNumber * i))), 300 * (float)Math.Sin(period * (RotationTimer + (300 / AddNumber * i))));
             }
         }
-        //Don't like this attack :(
+
         private void SpawnThorns()
         {
             Player player = Main.player[npc.target];

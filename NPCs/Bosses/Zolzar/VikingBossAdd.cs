@@ -45,6 +45,16 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 		private float DashTime;
 		private Vector2 tempPos;
 
+		private const int npcVelocity = 8;
+		private const int DashSpeed = 18;
+		private const int LightningStrikeSpeed = 18;
+		private const int FollowTime = 180;
+		private const int ShootingDelay = 5;
+		private const int ExplosionTime = 360;
+		private const int LightningDMG = 1;
+		private const float LightningKB = 1;
+		private const float ExplosionDelay = 30;
+
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("VikingAss");
@@ -126,14 +136,13 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 				{
 					npcVel.Normalize();
 				}
-				npcVel *= 8;
+				npcVel *= npcVelocity;
 				npc.velocity = npcVel;
 			}
 		}
 		private void Dash()
         {
 			Player target = Main.player[npc.target];
-			float DashSpeed = 18;
 			if (AI_Timer == 0) {
 				Vector2 npcVel = target.Center - npc.Center;
 				DashTime = 1.7f* npcVel.Length() / DashSpeed;
@@ -154,8 +163,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 		private void LightningStrike()
 		{
 			Player target = Main.player[npc.target];
-			float TravelSpeed = 14;
-			if (MoveTo(target.Center + new Vector2(0, -300), TravelSpeed, false))
+			if (MoveTo(target.Center + new Vector2(0, -300), LightningStrikeSpeed, false))
 			{
 				if (AI_Timer % 20 == 0)
 				{
@@ -185,12 +193,12 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 			TrinitarianGlobalNPC globalOwner = Owner.GetGlobalNPC<TrinitarianGlobalNPC>();
 			int AddNumber = (int)Owner.ai[3]; //this is the number of Adds currently
 											  			
-			if (AI_Timer < 180)
+			if (AI_Timer < FollowTime)
             {
 				Vector2 WantedPosition = target.Center + new Vector2(300 * (float)Math.Cos(Math.PI * 2 * AddID / AddNumber), 300 * (float)Math.Sin(Math.PI * 2 * AddID / AddNumber));
 				MoveTo(WantedPosition, 14, true);
 			}
-			if (AI_Timer == 180)
+			if (AI_Timer == FollowTime + ShootingDelay)
 			{
 				Vector2 projVel = target.Center - npc.Center;
 				if (projVel != Vector2.Zero)
@@ -198,16 +206,16 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 					projVel.Normalize();
 				}
 				projVel *= 7;
-				Projectile.NewProjectile(npc.Center, projVel, ProjectileID.CultistBossLightningOrbArc, 1, 1, Main.myPlayer, projVel.ToRotation(), AI_Timer); //TODO randomise the lightning seed
+				Projectile.NewProjectile(npc.Center, projVel, ProjectileID.CultistBossLightningOrbArc, LightningDMG, LightningKB, Main.myPlayer, projVel.ToRotation(), AI_Timer); //TODO randomise the lightning seed
 			}
-			if (AI_Timer == 360)
+			if (AI_Timer == ExplosionTime)
 			{
 				for (int i = 0; i < 2; i++)
 				{
 					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 8 * (float)Math.Cos(2 * Math.PI * i / 2), 8 * (float)Math.Sin(2 * Math.PI * i / 2), ProjectileID.CultistBossIceMist, 1, 1, target.whoAmI);
 				}
 			}
-			if (AI_Timer >= 390)
+			if (AI_Timer >= ExplosionTime + ExplosionDelay)
 			{
 				AI_State = State_Moving;
 				AI_Timer = -1;
