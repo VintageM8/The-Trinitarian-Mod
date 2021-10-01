@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -8,15 +9,12 @@ namespace Trinitarian
 {
     public class TrinitarianGlobalNPC : GlobalNPC
     {
-        public override bool InstancePerEntity
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public override bool InstancePerEntity => true;
+ 
         public bool drowning = false;
 
+        public Vector2[] AddPositions = new Vector2[50];
+        public int[] Add = new int[50];
         public override void ResetEffects(NPC npc)
         {
             drowning = false;

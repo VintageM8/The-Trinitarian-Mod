@@ -38,8 +38,14 @@ namespace Trinitarian.Projectiles.Mage
             {
                 Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
                 Main.PlaySound(SoundID.Item8, projectile.position);
-                projectile.velocity.X = -projectile.velocity.X;
-                projectile.velocity.Y = -projectile.velocity.Y;
+                if (projectile.velocity.X != oldVelocity.X)
+                {
+                    projectile.velocity.X = -oldVelocity.X;
+                }
+                if (projectile.velocity.Y != oldVelocity.Y)
+                {
+                    projectile.velocity.Y = -oldVelocity.Y;
+                }
             }
             return false;
         }
