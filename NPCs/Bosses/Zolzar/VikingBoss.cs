@@ -14,7 +14,6 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
     [AutoloadBossHead]
     public class VikingBoss : ModNPC
     {
-        bool changedPhase2 = false;
         private int bufferCount = 0;
 
         bool npcDashing = false;
@@ -40,6 +39,8 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 
         private float DashTime;
         private int TimesDashed;
+        private Vector2 tempPos;
+        private Vector2 IntSpeed;
 
         public float AI_State
         {
@@ -105,7 +106,23 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(text), Color.Green);
             }
         }
+        public override bool PreAI()
+        {
+            Player target = Main.player[npc.target];
+            TrinitarianPlayer globaltarget = target.GetModPlayer<TrinitarianPlayer>();
+            int Frames = 20;
+            for (int i = 1; i < Frames; i++)
+            {
+                globaltarget.PreviousVelocity[i] = globaltarget.PreviousVelocity[i - 1];
+            }
+            globaltarget.PreviousVelocity[0] = target.velocity;
+            for (int i = 0; i < Frames; i++)
+            {
+                IntSpeed = Vector2.Lerp(IntSpeed, globaltarget.PreviousVelocity[Frames - 1 - i], 0.14f);
+            }
 
+            return true;
+        }
         public override void AI()
         {
             //TODO better targeting selection
@@ -150,7 +167,6 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
             if (npc.target < 0 || npc.target == 255 || player.dead || !player.active)
             {
                 npc.TargetClosest(false);
-                npc.direction = 1;
                 npc.velocity.Y = npc.velocity.Y - 0.1f;
                 if (npc.timeLeft > 20)
                 {
@@ -199,10 +215,11 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 if (AI_Timer == 0)
                 {
                     //prevents repeat BigDAshAttack
-                    if (Attack_State != 0) Attack_State = Main.rand.Next(0, 7);
-                    else Attack_State = Main.rand.Next(1, 7);
+                    if (Attack_State != 0) Attack_State = Main.rand.Next(0, 9);
+                    else Attack_State = Main.rand.Next(1, 9);
 
                     if (AddNumber == 0) Attack_State = 0;
+                    Attack_State = 0;
                     npc.netUpdate = true;
                 }
                 switch (Attack_State)
@@ -219,8 +236,11 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                     case 2:
                     case 3:
                         if (AI_Timer == 0) SpawnAdd(npc.Center);
-                        SendAdd((int)AddNumber);
-                        if (AI_Timer >= 120)
+                        for(int i = 0; i < (int)AddNumber; i++)
+                        {
+                            SendAdd(2, 60*i);
+                        }
+                        if (AI_Timer >= 60 * AddNumber)
                         {
                             AI_State = State_Moving;
                             AI_Timer = -1;
@@ -230,13 +250,25 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                     case 5:
                     case 6:
                         if (AI_Timer == 0) SpawnAdd(npc.Center);
-                        LightningStrike((int)AddNumber);
-                        if (AI_Timer >= (AddNumber - 1) * SpawnDelay)
+                        LightningStrike();
+                        if (AI_Timer >= ((int)(AddNumber/2f) - 1) * SpawnDelay)
                         {
                             AI_State = State_Moving;
                             AI_Timer = -1;
                         }
-                        break;               
+                        break;
+                    case 7:
+                    case 8:
+                        if (AI_Timer == 0) SpawnAdd(npc.Center);
+                        LightningStrike((int)(AddNumber / 4f));
+                        SendAdd(2, 20);
+                        SendAdd(2, 80);
+                        if (AI_Timer >= 180)
+                        {
+                            AI_State = State_Moving;
+                            AI_Timer = -1;
+                        }
+                        break;
                 }
             }
             AI_Timer++;
@@ -292,13 +324,15 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
              Player target = Main.player[npc.target];
              if (AI_Timer == delay)
              {
-                Vector2 npcVel = target.Center - npc.Center;
-                DashTime = 1.5f * npcVel.Length() / DashSpeed;
-                if (npcVel != Vector2.Zero)
-                {
-                    npcVel.Normalize();
-                }
-                npcVel *= DashSpeed;
+                float time = 0;
+                Vector2 npcVel = ModTargeting.LinearAdvancedTargeting(npc.Center, target.Center, IntSpeed, DashSpeed, ref time);
+                ModTargeting.FallingTargeting(npc, target, new Vector2(0, -28), (int)DashSpeed, ref time, ref npcVel);
+                DashTime = time * 1.2f;
+                //if (npcVel != Vector2.Zero)
+                //{
+                //    npcVel.Normalize();
+                //}
+                //npcVel *= DashSpeed;
                 npc.velocity = npcVel;
              }
 
@@ -324,7 +358,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 }
             }
         }
-        private void LightningStrike(int StrikeCount, int delay = 0)
+        private void LightningStrike(int delay = 0)
         {
             TrinitarianGlobalNPC globalnpc = npc.GetGlobalNPC<TrinitarianGlobalNPC>();
             Moving();
@@ -346,6 +380,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
         }
         private void BigDashAttack()
         {
+            Player target = Main.player[npc.target];
             TrinitarianGlobalNPC globalnpc = npc.GetGlobalNPC<TrinitarianGlobalNPC>();
             if (AI_Timer == 0)
             {
@@ -356,7 +391,12 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                     Main.npc[globalnpc.Add[i]].localAI[0] = 2;  //Assigning the Attack state of the Add
                 }
             }
-                     
+            if (AI_Timer < DashStartTime && TimesDashed == 0)
+            {
+                float factor = target.Center.X - npc.Center.X;
+                factor /= Math.Abs(factor); 
+                MoveTo(target.Center - new Vector2 (factor * Main.screenWidth/3f, Main.screenHeight / 3f), 12, true);
+            }         
             Dash(DashStartTime);
             
             if (AI_Timer >= DashTime + DashStartTime && TimesDashed < MaxDashes)
@@ -380,7 +420,27 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 globalnpc.AddPositions[i] = npc.Center + new Vector2(300 * (float)Math.Cos(period * (RotationTimer + (300 / AddNumber * i))), 300 * (float)Math.Sin(period * (RotationTimer + (300 / AddNumber * i))));
             }
         }
-
+        private bool MoveTo(Vector2 WantedPosition, float TravelSpeed, bool follow)
+        {
+            if (AI_Timer == 0 || follow)
+            {
+                tempPos = WantedPosition;
+                Vector2 npcVel = tempPos - npc.Center;
+                if (npcVel != Vector2.Zero)
+                {
+                    npcVel.Normalize();
+                }
+                npcVel *= TravelSpeed;
+                npc.velocity = npcVel;
+            }
+            if (npc.DistanceSQ(tempPos) <= 14 * 14)
+            {
+                npc.Center = tempPos;
+                npc.velocity = Vector2.Zero;
+                return true;
+            }
+            return false;
+        }
         private void SpawnThorns()
         {
             Player player = Main.player[npc.target];
@@ -462,19 +522,19 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 }
             }
 
-            if (AI_Timer == 300)
-            {
-                if (changedPhase2)
-                {
-                    AI_State = State_Moving;
-                    AI_Timer = -1;
-                }
-                else
-                {
-                    AI_State = State_Moving;
-                    AI_Timer = -1;
-                }
-            }
+            //if (AI_Timer == 300)
+            //{
+            //    if (changedPhase2)
+            //    {
+            //        AI_State = State_Moving;
+            //        AI_Timer = -1;
+            //    }
+            //    else
+            //    {
+            //        AI_State = State_Moving;
+            //        AI_Timer = -1;
+            //    }
+            //}
         }
         private void MultipleThorns()
         {
@@ -635,6 +695,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
         public override bool CheckDead()
         {
             npc.boss = false;
+            //TODO despawn adds
             return base.CheckDead();
         }
 

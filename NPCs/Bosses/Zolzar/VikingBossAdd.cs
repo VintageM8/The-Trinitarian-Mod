@@ -67,7 +67,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 			npc.height = 100;
 			npc.damage = 0;
 			npc.defense = 8;
-			npc.lifeMax = 10000;
+			npc.lifeMax = 24000;
 			npc.value = 60f;
 			npc.knockBackResist = 0;
 			npc.scale = 1f;
@@ -145,7 +145,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 			Player target = Main.player[npc.target];
 			if (AI_Timer == 0) {
 				Vector2 npcVel = target.Center - npc.Center;
-				DashTime = 1.7f* npcVel.Length() / DashSpeed;
+				DashTime = 1.5f* npcVel.Length() / DashSpeed;
 				if (npcVel != Vector2.Zero)
                 {
 					npcVel.Normalize();
