@@ -221,7 +221,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                     else Attack_State = Main.rand.Next(1, 9);
 
                     if (AddNumber == 0) Attack_State = 0;
-                    Attack_State = 0;
+                    //Attack_State = 0;
                     npc.netUpdate = true;
                 }
                 switch (Attack_State)
@@ -371,7 +371,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 float time = 0;
                 Vector2 npcVel = ModTargeting.LinearAdvancedTargeting(npc.Center, target.Center, IntSpeed, DashSpeed, ref time);
                 ModTargeting.FallingTargeting(npc, target, new Vector2(0, -28), (int)DashSpeed, ref time, ref npcVel);
-                if (time > 20) DashTime = time * 1.4f;
+                if (time > 20) DashTime = time * (1.4f + 0.3f*TimesDashed);
                 else DashTime = 26;
                 //if (npcVel != Vector2.Zero)
                 //{
