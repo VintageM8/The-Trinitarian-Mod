@@ -44,16 +44,18 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 
 		private float DashTime;
 		private Vector2 tempPos;
+		private Vector2 IntSpeed;
 
 		private const int npcVelocity = 8;
 		private const int DashSpeed = 18;
 		private const int LightningStrikeSpeed = 18;
 		private const int FollowTime = 180;
-		private const int ShootingDelay = 5;
+		private const int ShootingDelay = 10;
 		private const int ExplosionTime = 360;
 		private const int LightningDMG = 1;
 		private const float LightningKB = 1;
 		private const float ExplosionDelay = 30;
+		private const float OverDashFactor = 1.7f;
 
 		public override void SetStaticDefaults()
 		{
@@ -76,7 +78,19 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 			npc.boss = false;
 			npc.noTileCollide = true;
 		}
+		public override bool PreAI()
+		{
+			Player target = Main.player[npc.target];
+			TrinitarianPlayer globaltarget = target.GetModPlayer<TrinitarianPlayer>();
+			int Frames = 20;
+			globaltarget.PreviousVelocity[0] = target.velocity;
+			for (int i = 0; i < Frames; i++)
+			{
+				IntSpeed = Vector2.Lerp(IntSpeed, globaltarget.PreviousVelocity[Frames - 1 - i], 0.14f);
+			}
 
+			return true;
+		}
 		public override void AI()
 		{
 			npc.TargetClosest(true);
@@ -104,7 +118,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 						break;
 				}
 			}
-			AI_Timer++;
+			AI_Timer++;	
 		}
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
         {
@@ -144,13 +158,16 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
         {
 			Player target = Main.player[npc.target];
 			if (AI_Timer == 0) {
-				Vector2 npcVel = target.Center - npc.Center;
-				DashTime = 1.5f* npcVel.Length() / DashSpeed;
-				if (npcVel != Vector2.Zero)
-                {
-					npcVel.Normalize();
-                }
-				npcVel *= DashSpeed;
+				float time = 0;
+				Vector2 npcVel = ModTargeting.LinearAdvancedTargeting(npc.Center, target.Center, IntSpeed, DashSpeed, ref time);
+				ModTargeting.FallingTargeting(npc, target, new Vector2(0, -28), (int)DashSpeed, ref time, ref npcVel);
+				if (time > 40) DashTime = time * OverDashFactor;
+				else DashTime = 40;
+				//if (npcVel != Vector2.Zero)
+				//{
+				//    npcVel.Normalize();
+				//}
+				//npcVel *= DashSpeed;
 				npc.velocity = npcVel;
 			}
 

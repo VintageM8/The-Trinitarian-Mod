@@ -156,7 +156,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 {
                     npc.dontTakeDamage = false;
                     AI_State = State_Moving;
-                    AI_Timer = -1;
+                    AI_Timer = 0;
                     npc.netUpdate = true;
                 }
                 AI_Timer++;
@@ -168,6 +168,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
             {
                 npc.TargetClosest(false);
                 npc.velocity.Y = npc.velocity.Y - 0.1f;
+                Main.NewText("Bye");
                 if (npc.timeLeft > 20)
                 {
                     npc.timeLeft = 20;
@@ -179,6 +180,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
             {
                 npc.TargetClosest(false);
                 npc.velocity.Y = 2000;
+                Main.NewText("bye");
             }
 
             //TODO not sure what this is but it wont ever get called
@@ -204,7 +206,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 if (AI_Timer >= MovementTime && npc.HasValidTarget && distPlayerSQ < AttackTargetingDistanceSQ)
                 {
                     AI_State = State_Attacking;
-                    AI_Timer = -1;
+                    AI_Timer = 0;
                 }
             }
 
@@ -228,15 +230,15 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                         if (AI_Timer == 0)
                         {
                             if (AddNumber == 0) SpawnAdd(npc.Center, 5);
-                            else SpawnAdd(npc.Center, 2);
+                            //else SpawnAdd(npc.Center, 2);
                         }
                         BigDashAttack();
                         break;
                     case 1:
                     case 2:
                     case 3:
-                        if (AI_Timer == 0) SpawnAdd(npc.Center);
-                        for(int i = 0; i < (int)AddNumber; i++)
+                        //if (AI_Timer == 0) SpawnAdd(npc.Center);
+                        for (int i = 0; i < (int)AddNumber/2f; i++)
                         {
                             SendAdd(2, 60*i);
                         }
@@ -319,24 +321,6 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
             GenerateAddPositions();
         }
         //This is here to use in the BigDash.
-        private void Dash(int delay = 0)
-        {
-             Player target = Main.player[npc.target];
-             if (AI_Timer == delay)
-             {
-                float time = 0;
-                Vector2 npcVel = ModTargeting.LinearAdvancedTargeting(npc.Center, target.Center, IntSpeed, DashSpeed, ref time);
-                ModTargeting.FallingTargeting(npc, target, new Vector2(0, -28), (int)DashSpeed, ref time, ref npcVel);
-                DashTime = time * 1.2f;
-                //if (npcVel != Vector2.Zero)
-                //{
-                //    npcVel.Normalize();
-                //}
-                //npcVel *= DashSpeed;
-                npc.velocity = npcVel;
-             }
-
-        }
         private void SendAdd(int SendCount, int delay = 0)
         {
             TrinitarianGlobalNPC globalnpc = npc.GetGlobalNPC<TrinitarianGlobalNPC>();
@@ -358,6 +342,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 }
             }
         }
+
         private void LightningStrike(int delay = 0)
         {
             TrinitarianGlobalNPC globalnpc = npc.GetGlobalNPC<TrinitarianGlobalNPC>();
@@ -378,6 +363,24 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 }
             }
         }
+        private void Dash(int delay = 0)
+        {
+            Player target = Main.player[npc.target];
+            if (AI_Timer == delay)
+            {
+                float time = 0;
+                Vector2 npcVel = ModTargeting.LinearAdvancedTargeting(npc.Center, target.Center, IntSpeed, DashSpeed, ref time);
+                ModTargeting.FallingTargeting(npc, target, new Vector2(0, -28), (int)DashSpeed, ref time, ref npcVel);
+                if (time > 20) DashTime = time * 1.4f;
+                else DashTime = 26;
+                //if (npcVel != Vector2.Zero)
+                //{
+                //    npcVel.Normalize();
+                //}
+                //npcVel *= DashSpeed;
+                npc.velocity = npcVel;
+            }
+        }
         private void BigDashAttack()
         {
             Player target = Main.player[npc.target];
@@ -396,12 +399,14 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 float factor = target.Center.X - npc.Center.X;
                 factor /= Math.Abs(factor); 
                 MoveTo(target.Center - new Vector2 (factor * Main.screenWidth/3f, Main.screenHeight / 3f), 12, true);
-            }         
+            }  
+            
             Dash(DashStartTime);
             
             if (AI_Timer >= DashTime + DashStartTime && TimesDashed < MaxDashes)
             {
                 AI_Timer = DashStartTime - DashDelay;
+                npc.velocity *= 0.04f;
                 TimesDashed++;
             }
             if (TimesDashed == MaxDashes)
@@ -654,7 +659,6 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
             {
                 AI_State = State_Moving;
                 AI_Timer = -1;
-
                 bufferCount = 0;
             }
         }
