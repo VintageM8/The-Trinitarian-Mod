@@ -5,11 +5,11 @@ using Terraria;
 
 namespace Trinitarian.Items.Materials.Parts
 {
-	public class AlgeaItem : ModItem
+	public class AlgaeItem : ModItem
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Algea");
+            DisplayName.SetDefault("Algae");
         }
 
         public override void SetDefaults()
