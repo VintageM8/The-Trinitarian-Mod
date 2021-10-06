@@ -7,7 +7,7 @@ using Terraria.ObjectData;
 
 namespace Trinitarian.Tiles
 {
-	public class Algea : ModTile
+	public class Algae : ModTile
 	{
 		public override void SetDefaults()
 		{
