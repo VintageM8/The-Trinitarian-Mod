@@ -111,7 +111,7 @@ namespace Trinitarian
                 tileL = Main.tile[x - 1, y];
                 tileR = Main.tile[x - 1, y];
                 tileBelow = Main.tile[x, y + 1];
-                if ((tileBelow.type == TileID.Sand || tileBelow.type == ModContent.TileType<Tiles.Algea>() || tileR.type == ModContent.TileType<Tiles.Algea>() ||tileL.type == ModContent.TileType<Tiles.Algea>()) && tile.liquid > 0)
+                if ((tileBelow.type == TileID.Sand || tileBelow.type == ModContent.TileType<Tiles.Algea>() || tileR.type == ModContent.TileType<Tiles.Algea>() ||tileL.type == ModContent.TileType<Tiles.Algea>()) && tile.liquid > 0  && !tile.active())
                 {
                     WorldGen.PlaceTile(x, y, Placer, true);
                     //Player nlayer = Main.player[Main.myPlayer];
@@ -135,7 +135,7 @@ namespace Trinitarian
                 tileL = Main.tile[x - 1, y];
                 tileR = Main.tile[x - 1, y];
                 tileBelow = Main.tile[x, y + 1];
-                if ((tileBelow.type == TileID.Sand || tileBelow.type == ModContent.TileType<Tiles.Algea>() || tileR.type == ModContent.TileType<Tiles.Algea>() || tileL.type == ModContent.TileType<Tiles.Algea>()) && tile.liquid > 0)
+                if ((tileBelow.type == TileID.Sand || tileBelow.type == ModContent.TileType<Tiles.Algea>() || tileR.type == ModContent.TileType<Tiles.Algea>() || tileL.type == ModContent.TileType<Tiles.Algea>()) && tile.liquid > 0  && !tile.active())
                 {
                     WorldGen.PlaceTile(x, y, Placer, true);
                     //Player nlayer = Main.player[Main.myPlayer];Testing
