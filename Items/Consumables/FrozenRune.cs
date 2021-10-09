@@ -1,9 +1,9 @@
 using Microsoft.Xna.Framework;
-using Trinitarian.NPCs.Bosses;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Trinitarian.NPCs.Bosses;
 
 namespace Trinitarian.Items.Consumables
 {

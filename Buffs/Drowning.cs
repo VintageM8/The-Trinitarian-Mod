@@ -1,5 +1,4 @@
-﻿using Terraria.ID;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
 
 namespace Trinitarian.Buffs
@@ -22,7 +21,8 @@ namespace Trinitarian.Buffs
         }
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<TrinitarianGlobalNPC>().drowning = true;
+            // TODO: Not Implemented
+            // npc.GetGlobalNPC<TrinitarianGlobalNPC>().drowning = true;
         }
     }
 }

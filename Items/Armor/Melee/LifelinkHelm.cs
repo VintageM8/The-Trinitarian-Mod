@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Trinitarian.Items.Armor.Melee;
 using static Terraria.ModLoader.ModContent;
 
 namespace Trinitarian.Items.Armor.Melee

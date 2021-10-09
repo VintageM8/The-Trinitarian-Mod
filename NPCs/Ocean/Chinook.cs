@@ -5,8 +5,8 @@ using Trinitarian.Items.Materials.Parts;
 
 namespace Trinitarian.NPCs.Ocean
 {
-	public class Chinook : ModNPC
-	{
+    public class Chinook : ModNPC
+    {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Chinook");
@@ -28,10 +28,7 @@ namespace Trinitarian.NPCs.Ocean
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            {
-                return SpawnCondition.Ocean.Chance * 0.50f;
-            }
-            return 0;
+            return SpawnCondition.Ocean.Chance * 0.50f;
         }
 
         public override void NPCLoot()

@@ -1,7 +1,6 @@
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
-using static Terraria.ModLoader.ModContent;
 
 namespace Trinitarian.Items.Weapons.Ranged
 {

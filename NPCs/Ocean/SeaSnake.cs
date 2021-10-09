@@ -1,6 +1,4 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -329,7 +327,7 @@ namespace Trinitarian.NPCs.Ocean
 
         public override void OnHitPlayer(Player player, int damage, bool crit)
         {
-           player.AddBuff(BuffID.Venom, 120);
+            player.AddBuff(BuffID.Venom, 120);
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

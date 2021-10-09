@@ -1,12 +1,10 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Buffs;
 using Trinitarian.Projectiles.Minions;
-using Trinitarian.Items.Materials.Bars;
-using Trinitarian.Items.Materials.Parts;
-using Microsoft.Xna.Framework;
-using static Terraria.ModLoader.ModContent; 
+using static Terraria.ModLoader.ModContent;
 
 namespace Trinitarian.Items.Weapons.Summoner
 {

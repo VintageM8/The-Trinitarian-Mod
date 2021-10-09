@@ -2,7 +2,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Projectiles.Mage;
-using static Terraria.ModLoader.ModContent;
 
 namespace Trinitarian.Items.Weapons.Mage
 {

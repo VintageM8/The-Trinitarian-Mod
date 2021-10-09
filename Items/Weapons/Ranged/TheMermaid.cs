@@ -1,7 +1,7 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
 
 namespace Trinitarian.Items.Weapons.Ranged
 {
@@ -39,7 +39,7 @@ namespace Trinitarian.Items.Weapons.Ranged
             int numberProjectiles = 4 + Main.rand.Next(2); // 4 or 5 shots
             for (int i = 0; i < numberProjectiles; i++)
             {
-                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(30)); 
+                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(30));
                 Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
             }
             return false; // return false because we don't want tmodloader to shoot projectile

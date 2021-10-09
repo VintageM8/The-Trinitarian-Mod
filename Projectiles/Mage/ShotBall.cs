@@ -1,14 +1,11 @@
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Trinitarian.Projectiles.Mage
 {
     public class ShotBall : ModProjectile
     {
-        private int length = 1;
         private int timer = 0;
 
         public override void SetStaticDefaults()
@@ -32,7 +29,7 @@ namespace Trinitarian.Projectiles.Mage
         {
             projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
             timer++;
-            if(timer > 20)
+            if (timer > 20)
             {
                 projectile.tileCollide = true;
             }

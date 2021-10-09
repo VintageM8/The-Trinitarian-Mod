@@ -1,8 +1,8 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 using Trinitarian.Items.Materials.RadiatedSubclass;
+using static Terraria.ModLoader.ModContent;
 
 namespace Trinitarian.Items.Armor.RadiatedSubclass
 {

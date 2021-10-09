@@ -5,12 +5,12 @@ using Trinitarian.Items.Materials.Bars;
 
 namespace Trinitarian.Items.Weapons.Melee
 {
-	public class RustedSword : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
+    public class RustedSword : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
             DisplayName.SetDefault("Rusted Sword");
-		}
+        }
 
         public override void SetDefaults()
         {

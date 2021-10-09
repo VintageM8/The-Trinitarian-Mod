@@ -1,9 +1,9 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Trinitarian.Items.Materials.RadiatedSubclass;
 using Trinitarian.Items.Materials.Bars;
+using Trinitarian.Items.Materials.RadiatedSubclass;
 
 namespace Trinitarian.Items.Weapons.Magus
 {

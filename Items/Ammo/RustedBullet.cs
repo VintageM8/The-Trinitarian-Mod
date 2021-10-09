@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Trinitarian;
 using Trinitarian.Items.Materials.Bars;
 using Trinitarian.Projectiles.Ammo;
 

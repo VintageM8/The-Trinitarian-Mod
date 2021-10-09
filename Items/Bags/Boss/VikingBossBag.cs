@@ -1,9 +1,9 @@
-﻿using Trinitarian.Items.Materials.Parts;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Trinitarian.NPCs.Bosses.Zolzar;
 using Trinitarian.Items.Accessories;
+using Trinitarian.Items.Materials.Parts;
+using Trinitarian.NPCs.Bosses.Zolzar;
 
 namespace Trinitarian.Items.Bags.Boss
 {

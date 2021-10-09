@@ -1,10 +1,6 @@
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Trinitarian.Items.Materials.Parts;
-using Trinitarian.Items.Materials.Bars;
-using static Terraria.ModLoader.ModContent;
 
 namespace Trinitarian.Items.Weapons.Melee
 {
@@ -19,8 +15,8 @@ namespace Trinitarian.Items.Weapons.Melee
         {
             item.damage = 28;
             item.melee = true;
-            item.width = 40; 
-            item.height = 40; 
+            item.width = 40;
+            item.height = 40;
             item.useTime = 23;
             item.useAnimation = 23;
             item.knockBack = 3f;

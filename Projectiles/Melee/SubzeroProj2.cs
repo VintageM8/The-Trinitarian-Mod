@@ -1,6 +1,5 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +29,7 @@ namespace Trinitarian.Projectiles.Melee
                 circular.X *= 0.7f;
                 circular = circular.RotatedBy(Math.Atan2(projectile.velocity.Y, projectile.velocity.X));
                 Vector2 dustVelo = new Vector2(0, 0).RotatedBy(Math.Atan2(projectile.velocity.Y, projectile.velocity.X));
-                Dust dust = Dust.NewDustDirect(from - new Vector2(5) + circular, 0, 0, 67, 0, 0, projectile.alpha);
+                Dust dust = Dust.NewDustDirect(from - new Vector2(5) + circular, 0, 0, DustID.IceRod, 0, 0, projectile.alpha);
                 dust.velocity *= 0.15f;
                 dust.velocity += dustVelo;
                 dust.noGravity = true;

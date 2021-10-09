@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -49,16 +48,9 @@ namespace Trinitarian.Projectiles.Melee
         }
         public override void AI()
         {
-            float num = (float)Math.PI / 2f;
-
             Player player = Main.player[projectile.owner];
 
             Vector2 vector = player.RotatedRelativePoint(player.MountedCenter);
-            num = 0f;
-            if (projectile.spriteDirection == -1)
-            {
-                num = (int)(float)Math.PI;
-            }
             if (++projectile.frame >= Main.projFrames[projectile.type])
             {
                 projectile.frame = 0;
@@ -100,7 +92,7 @@ namespace Trinitarian.Projectiles.Melee
             Lighting.AddLight(vector9, 0.8f, 0.8f, 0.8f);
             if (Main.rand.Next(3) == 0)
             {
-                int num34 = Dust.NewDust(vector9 - projectile.Size / 2f, projectile.width, projectile.height, 63, projectile.velocity.X, projectile.velocity.Y, 100, default(Color), 2f);
+                int num34 = Dust.NewDust(vector9 - projectile.Size / 2f, projectile.width, projectile.height, DustID.WhiteTorch, projectile.velocity.X, projectile.velocity.Y, 100, default(Color), 2f);
                 Main.dust[num34].noGravity = true;
                 Main.dust[num34].position -= projectile.velocity;
             }

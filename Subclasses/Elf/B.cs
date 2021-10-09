@@ -1,10 +1,9 @@
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 using Trinitarian.Projectiles;
-using static Terraria.ModLoader.ModContent;
 
 namespace Trinitarian.Subclasses.Elf
 {
@@ -38,19 +37,19 @@ namespace Trinitarian.Subclasses.Elf
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             // Power-attacking if player right-clicked
-            if (powerAttack) 
-            { 
+            if (powerAttack)
+            {
                 type = ModContent.ProjectileType<ElfPower>();
 
                 Vector2 direction;
 
                 // creating first arrow
                 direction = Rotate(new Vector2(speedX, speedY), 30);
-                Projectile.NewProjectile(player.Center.X,player.Center.Y, direction.X,direction.Y,type,damage,knockBack,player.whoAmI);
+                Projectile.NewProjectile(player.Center.X, player.Center.Y, direction.X, direction.Y, type, damage, knockBack, player.whoAmI);
 
                 // creating second arrow
                 direction = Rotate(new Vector2(speedX, speedY), -30);
-                Projectile.NewProjectile(player.Center.X,player.Center.Y,direction.X,direction.Y,type,damage,knockBack,player.whoAmI);
+                Projectile.NewProjectile(player.Center.X, player.Center.Y, direction.X, direction.Y, type, damage, knockBack, player.whoAmI);
             }
             return true;
         }
@@ -95,10 +94,11 @@ namespace Trinitarian.Subclasses.Elf
             return base.CanUseItem(player);
         }
         private bool powerAttack = false;
-        private Vector2 Rotate(Vector2 vector, float degrees) {
+        private Vector2 Rotate(Vector2 vector, float degrees)
+        {
             float sin = (float)Math.Sin(degrees * (Math.PI / 180));
             float cos = (float)Math.Cos(degrees * (Math.PI / 180));
-            
+
             float tx = vector.X;
             float ty = vector.Y;
             vector.X = (cos * tx) - (sin * ty);

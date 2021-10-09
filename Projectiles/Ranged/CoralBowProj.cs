@@ -1,10 +1,8 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using System;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
-using Microsoft.Xna.Framework;
-using static Terraria.ModLoader.ModContent;
-using Trinitarian.Projectiles.Ranged;
 
 namespace Trinitarian.Projectiles.Ranged
 {
@@ -44,14 +42,14 @@ namespace Trinitarian.Projectiles.Ranged
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             projectile.scale *= 0.90f;
-            Dust.NewDustDirect(projectile.position + projectile.velocity, projectile.width, projectile.height, 240, projectile.oldVelocity.X * 0.5f, projectile.oldVelocity.Y * 0.5f);
+            Dust.NewDustDirect(projectile.position + projectile.velocity, projectile.width, projectile.height, DustID.Granite, projectile.oldVelocity.X * 0.5f, projectile.oldVelocity.Y * 0.5f);
             int type = mod.ProjectileType("CrystalCannonShard");
             Vector2 velocity = new Vector2(projectile.velocity.X * -0.6f, projectile.velocity.Y * -0.6f).RotatedByRandom(MathHelper.ToRadians(40));
             Projectile.NewProjectile(projectile.Center, velocity, type, projectile.damage, 5f, projectile.owner);
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Dust.NewDustDirect(projectile.position + projectile.velocity, projectile.width, projectile.height, 240, projectile.oldVelocity.X * 0.5f, projectile.oldVelocity.Y * 0.5f);
+            Dust.NewDustDirect(projectile.position + projectile.velocity, projectile.width, projectile.height, DustID.Granite, projectile.oldVelocity.X * 0.5f, projectile.oldVelocity.Y * 0.5f);
             int type = mod.ProjectileType("CrystalCannonShard");
             Vector2 velocity = new Vector2(projectile.velocity.X * -0.6f, projectile.velocity.Y * -0.6f).RotatedByRandom(MathHelper.ToRadians(40));
             Projectile.NewProjectile(projectile.Center, velocity, type, projectile.damage, 5f, projectile.owner);

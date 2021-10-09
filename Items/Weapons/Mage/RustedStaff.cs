@@ -5,13 +5,13 @@ using Trinitarian.Items.Materials.Bars;
 
 namespace Trinitarian.Items.Weapons.Mage
 {
-	public class RustedStaff : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Rusted Staff");
-			Item.staff[item.type] = true;
-		}
+    public class RustedStaff : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Rusted Staff");
+            Item.staff[item.type] = true;
+        }
 
         public override void SetDefaults()
         {

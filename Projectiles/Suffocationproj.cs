@@ -1,13 +1,13 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
 
 namespace Trinitarian.Projectiles
 {
     public class Suffocationproj : ModProjectile
     {
-          public override void SetDefaults()
+        public override void SetDefaults()
         {
             projectile.ignoreWater = false;
             projectile.width = 24;
@@ -28,7 +28,7 @@ namespace Trinitarian.Projectiles
 
                 if (Suffocationtime == 5)
                 {
-                    Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 0, -3,ProjectileID.CursedFlameFriendly, 45, projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 0, -3, ProjectileID.CursedFlameFriendly, 45, projectile.knockBack, Main.myPlayer);
                     Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 0, 3, ProjectileID.CursedFlameFriendly, 45, projectile.knockBack, Main.myPlayer);
                     Suffocationtime = 0;
                 }

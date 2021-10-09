@@ -1,10 +1,10 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Items.Materials.Bars;
 using Trinitarian.Items.Materials.Parts;
 using static Terraria.ModLoader.ModContent;
-using Microsoft.Xna.Framework;
 
 namespace Trinitarian.Items.Weapons.Mage
 {
@@ -17,7 +17,7 @@ namespace Trinitarian.Items.Weapons.Mage
             Item.staff[item.type] = true;
         }
 
-         public override void SetDefaults()
+        public override void SetDefaults()
         {
             item.damage = 17;
             item.magic = true;
