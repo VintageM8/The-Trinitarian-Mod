@@ -13,6 +13,8 @@ namespace Trinitarian
 
 		public int ScreenShake;
         public bool canFocus = true;
+
+        public Vector2[] PreviousVelocity = new Vector2[30];
         // private float amount = 0;
 
         //fuck me
