@@ -14,11 +14,13 @@ namespace Trinitarian.Projectiles.Mage
 
         public override void SetDefaults()
         {
-            projectile.width = 10;
-            projectile.height = 10;
+            projectile.width = 15;
+            projectile.height = 20;
             projectile.aiStyle = 105;
+            projectile.timeLeft = 180;
             projectile.friendly = true;
             projectile.ranged = true;
+            aiType = ProjectileID.SporeTrap2;
         }
 
         public override void AI()
@@ -27,12 +29,13 @@ namespace Trinitarian.Projectiles.Mage
             {
                 Dust.NewDust(projectile.Center, projectile.width, projectile.height, DustID.Blood);
             }
-        }
-
-        public override bool OnTileCollide(Vector2 oldVelocity)
-        {
-            Main.PlaySound(SoundID.Dig, projectile.position);
-            return false;
+            if (projectile.velocity != Vector2.Zero && projectile.velocity.LengthSquared() < 2)
+            {
+                projectile.velocity.Normalize();
+                projectile.velocity *= 2;
+            }
+            //this is needed to make sure the projectile doesn't despawn when you don't have the spore sac
+            projectile.ai[0] = 100;
         }
     }
 }

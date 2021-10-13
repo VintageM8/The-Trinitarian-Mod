@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +32,11 @@ namespace Trinitarian.Items.Weapons.Mage
             item.UseSound = SoundID.Item43;
             item.autoReuse = true;
             item.shoot = ModContent.ProjectileType<Mushrooms>();
-            item.shootSpeed = 18f;
+            item.shootSpeed = 10f;
+        }
+        public override Vector2? HoldoutOrigin()
+        {
+            return new Vector2(4, 0);
         }
     }
 }
