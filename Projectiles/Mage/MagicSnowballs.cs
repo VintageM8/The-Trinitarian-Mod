@@ -24,8 +24,8 @@ namespace Trinitarian.Projectiles.Mage
 
         public override void SetDefaults()
         {
-            projectile.width = 24;
-            projectile.height = 18;
+            projectile.width = 14;
+            projectile.height = 14;
             projectile.friendly = true;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;

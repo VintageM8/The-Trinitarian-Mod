@@ -31,7 +31,7 @@ namespace Trinitarian.Projectiles
         {
             double temp = Math.Atan2(target.Center.Y - projectile.Center.Y, target.Center.X - projectile.Center.X);
             double TurningAngle;
-            float ProjSpeed = projectile.velocity.Length();
+            //float ProjSpeed = projectile.velocity.Length();
 
 
             if (projectile.velocity != Vector2.Zero && Orient == true)

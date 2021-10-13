@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,9 +32,12 @@ namespace Trinitarian.Items.Weapons.Mage
             item.UseSound = SoundID.Item43;
             item.autoReuse = true;
             item.shoot = ModContent.ProjectileType<Boulder>();
-            item.shootSpeed = 15f;
+            item.shootSpeed = 12f;
         }
-
+        public override Vector2? HoldoutOrigin()
+        {
+            return new Vector2(15, 0);
+        }
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);

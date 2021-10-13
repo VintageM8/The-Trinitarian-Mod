@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,8 +15,8 @@ namespace Trinitarian.Projectiles.Mage
 
         public override void SetDefaults()
         {
-            projectile.width = 22;
-            projectile.height = 22;
+            projectile.width = 35;
+            projectile.height = 35;
             projectile.penetrate = 2;
             projectile.friendly = true;
             projectile.hostile = false;
@@ -23,8 +24,8 @@ namespace Trinitarian.Projectiles.Mage
             projectile.timeLeft = 60;
             projectile.melee = true;
 
-            drawOriginOffsetX = -5;
-            drawOriginOffsetY = -20;
+            //drawOriginOffsetX = -5;
+            //drawOriginOffsetY = -20;
         }
 
         public override void AI()
@@ -32,7 +33,7 @@ namespace Trinitarian.Projectiles.Mage
             projectile.rotation = projectile.velocity.ToRotation();
 
             // Make projectiles gradually disappear
-            if (projectile.timeLeft <= 20)
+            if (projectile.timeLeft <= 16)
             {
                 projectile.alpha += 10;
             }
@@ -63,6 +64,13 @@ namespace Trinitarian.Projectiles.Mage
                 int dust = Dust.NewDust(position, 2, 2, DustID.Water, dustvelocity.X, dustvelocity.Y, 0, default, 1);
                 Main.dust[dust].noGravity = false;
             }
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            Texture2D texture = ModContent.GetTexture(Texture);
+            Color drawColor = projectile.GetAlpha(lightColor);
+            spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, new Rectangle(0, 0, 44, 60), drawColor, projectile.rotation, new Vector2(44 * 0.5f, 60 * 0.5f), 1 + projectile.ai[1], SpriteEffects.None, 0);
+            return false;
         }
     }
 }

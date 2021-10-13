@@ -13,8 +13,8 @@ namespace Trinitarian.Projectiles.Mage
 
         public override void SetDefaults()
         {
-            projectile.width = 28;
-            projectile.height = 2;
+            projectile.width = 4;
+            projectile.height = 5;
             projectile.aiStyle = 1;
             projectile.friendly = true;
             projectile.magic = true;

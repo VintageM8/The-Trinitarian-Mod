@@ -11,9 +11,9 @@ namespace Trinitarian.Projectiles.Magus
             projectile.ignoreWater = true;
             projectile.aiStyle = 2;
             aiType = ProjectileID.Shuriken;
-            projectile.width = 40;
+            projectile.width = 50;
             projectile.penetrate = 3;
-            projectile.height = 36;
+            projectile.height = 50;
             projectile.friendly = true;
             projectile.light = 0.40f;
         }
