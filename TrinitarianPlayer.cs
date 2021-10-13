@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
+using Terraria.GameInput;
 
 namespace Trinitarian
 {
@@ -26,7 +27,47 @@ namespace Trinitarian
         private int holdCounter = 0;
         private int holdCameraLength;
         private float returnLength; */
-
+ public enum AbiltyID : int
+        {
+            None,//0
+            Paladin,//1
+            Elf,//2
+            Necromancer,//3
+            Wizard//4
+        }
+	  public override void ProcessTriggers(TriggersSet triggersSet)
+        {
+            Player p = Main.player[Main.myPlayer];
+            if (Trinitarian.UseAbilty.JustPressed && !p.HasBuff(ModContent.BuffType<Cooldown>()))
+            {
+              switch (CurrentA)
+                {//Add stuff for the abiltys here, if you want to make more, add more IDs
+                    case  AbiltyID.None:
+                        Main.NewText("No Abilty");
+                        p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
+                        break;
+                    case AbiltyID.Elf:
+                        Main.NewText("Elf");
+                        p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
+                        break;
+                    case AbiltyID.Paladin:
+                        Main.NewText("Paladin");
+                        p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
+                        break;
+                    case AbiltyID.Necromancer:
+                        Main.NewText("Necromancer");
+                        p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
+                        break;
+                    case AbiltyID.Wizard:
+                        Main.NewText("Wizard");
+                        p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
+                        break;
+                    default:
+                        Main.NewText("That wasnt supposed to happen \n Your abilty isnt set to anything, or no abilty!", new Color(255,0,0));
+                        break;
+                }
+            }
+        }
          public bool drowning = false;
         public override void ResetEffects()
         {
