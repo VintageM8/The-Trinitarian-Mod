@@ -15,8 +15,8 @@ namespace Trinitarian.Projectiles.Mage
 
         public override void SetDefaults()
         {
-            projectile.width = 24;
-            projectile.height = 18;
+            projectile.width = 14;
+            projectile.height = 14;
             projectile.timeLeft = 100;
             projectile.penetrate = -1;
             projectile.hostile = false;

@@ -16,8 +16,8 @@ namespace Trinitarian.Projectiles.Ammo
 
         public override void SetDefaults()
         {
-            projectile.width = 28;
-            projectile.height = 2;
+            projectile.width = 6;
+            projectile.height = 6;
             projectile.friendly = true;
             projectile.magic = true;
             projectile.penetrate = 3;

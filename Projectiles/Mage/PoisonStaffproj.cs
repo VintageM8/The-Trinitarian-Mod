@@ -14,8 +14,8 @@ namespace Trinitarian.Projectiles.Mage
         public override void SetDefaults()
         {
             projectile.arrow = true;
-            projectile.width = 10;
-            projectile.height = 10;
+            projectile.width = 16;
+            projectile.height = 16;
             projectile.aiStyle = 29;
             projectile.friendly = true;
             projectile.ranged = true;
