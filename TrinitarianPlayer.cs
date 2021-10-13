@@ -26,7 +26,41 @@ namespace Trinitarian
         private int holdCounter = 0;
         private int holdCameraLength;
         private float returnLength; */
-
+ public enum AbiltyID : int
+        {
+            None,//0
+            Paladin,//1
+            Elf,//2
+            Necromancer,//3
+            Wizard//4
+        }
+	public override void ProcessTriggers(TriggersSet triggersSet)
+        {
+            if (Trinitarian.UseAbilty.JustPressed)
+            {
+              switch (CurrentA)
+                {//Add stuff for the abiltys here, if you want to make more, add more IDs
+                    case  AbiltyID.None:
+                        Main.NewText("No Abilty");
+                        break;
+                    case AbiltyID.Elf:
+                        Main.NewText("Elf");
+                        break;
+                    case AbiltyID.Paladin:
+                        Main.NewText("Paladin");
+                        break;
+                    case AbiltyID.Necromancer:
+                        Main.NewText("Necromancer");
+                        break;
+                    case AbiltyID.Wizard:
+                        Main.NewText("Wizard");
+                        break;
+                    default:
+                        Main.NewText("That wasnt supposed to happen \n Your abilty isnt set to anything, or no abilty!", new Color(255,0,0));
+                        break;
+                }
+            }
+        }
          public bool drowning = false;
         public override void ResetEffects()
         {
