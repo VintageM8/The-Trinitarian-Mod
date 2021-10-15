@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework;
 using Trinitarian.Items.Materials.RadiatedSubclass;
 using System.Collections.Generic;
 using Trinitarian.Items.Weapons.Ranged;
+using Trinitarian.Tiles;
+using static Terraria.ModLoader.ModContent;
 
 
 namespace Trinitarian

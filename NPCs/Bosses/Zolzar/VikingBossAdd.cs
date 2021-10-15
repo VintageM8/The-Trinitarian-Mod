@@ -45,17 +45,19 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 		private float DashTime;
 		private Vector2 tempPos;
 		private Vector2 IntSpeed;
+		float TimerStart = 0;
+		double angle = 0;
 
-		private const int npcVelocity = 8;
-		private const int DashSpeed = 18;
-		private const int LightningStrikeSpeed = 18;
-		private const int FollowTime = 180;
-		private const int ShootingDelay = 10;
-		private const int ExplosionTime = 360;
-		private const int LightningDMG = 1;
+		private const int npcVelocity = 11;
+		private const int DashSpeed = 20;
+		private const int LightningStrikeSpeed = 16;
+		private const int FollowTime = 45;
+		private const int ShootingDelay = 45;
+		private const int ExplosionTime = 390;
+		private const int LightningDMG = 60;
 		private const float LightningKB = 1;
 		private const float ExplosionDelay = 30;
-		private const float OverDashFactor = 1.7f;
+		private const float OverDashFactor = 1.5f;
 
 		public override void SetStaticDefaults()
 		{
@@ -65,17 +67,17 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 		public override void SetDefaults()
 		{
 			npc.aiStyle = -1;
-			npc.width = 100;
-			npc.height = 100;
-			npc.damage = 0;
+			npc.width = 50;
+			npc.height = 50;
+			npc.damage = 90;
 			npc.defense = 8;
-			npc.lifeMax = 24000;
+			npc.lifeMax = 15000;
 			npc.value = 60f;
 			npc.knockBackResist = 0;
 			npc.scale = 1f;
 			npc.stepSpeed = 0f;
 			npc.noGravity = true;
-			npc.boss = false;
+			npc.boss = true;
 			npc.noTileCollide = true;
 		}
 		public override bool PreAI()
@@ -124,11 +126,19 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
         {
 			NPC Owner = Main.npc[(int)AI_Owner];
 			Owner.life -= (int)(damage * 0.3);
+			if (Owner.life <= 0)
+            {
+				Owner.checkDead();
+            }
 		}
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
         {
 			NPC Owner = Main.npc[(int)AI_Owner];
 			Owner.life -= (int)(damage * 0.5);
+			if (Owner.life <= 0)
+			{
+				Owner.checkDead();
+			}
 		}
 
         private void Moving()
@@ -137,13 +147,15 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 			TrinitarianGlobalNPC globalOwner = Owner.GetGlobalNPC<TrinitarianGlobalNPC>();
 			int AddNumber = (int)Owner.ai[3]; //this is the number of Adds currently
 			Vector2 WantedPosition = globalOwner.AddPositions[AddNumber - (int)AddID - 1];
+			npc.velocity = Owner.velocity;
 			if (npc.DistanceSQ(WantedPosition) < 13 * 13)
 			{
 				AI_State = State_Circling;
 				npc.Center = WantedPosition;
-				npc.velocity = Vector2.Zero;
+				TimerStart = 0;
+				//npc.velocity = Vector2.Zero;
 			}
-			else
+			else if (AI_State == State_Moving)
 			{
 				Vector2 npcVel = WantedPosition - npc.Center;
 				if (npcVel != Vector2.Zero)
@@ -151,7 +163,18 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 					npcVel.Normalize();
 				}
 				npcVel *= npcVelocity;
-				npc.velocity = npcVel;
+				npc.velocity += npcVel;
+			}
+			else
+            {
+				if (TimerStart == 0)
+				{
+					angle = Math.Atan2(npc.Center.Y - Owner.Center.Y, npc.Center.X - Owner.Center.X);
+					TimerStart = Owner.localAI[0];
+				}
+
+				double period = 2 * Math.PI / 150f;
+				npc.Center = Owner.Center + new Vector2(300 * (float)Math.Cos(period * (Owner.localAI[0] - TimerStart) + angle), 300 * (float)Math.Sin(period * (Owner.localAI[0] - TimerStart) + angle));
 			}
 		}
 		private void Dash()
@@ -161,8 +184,8 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 				float time = 0;
 				Vector2 npcVel = ModTargeting.LinearAdvancedTargeting(npc.Center, target.Center, IntSpeed, DashSpeed, ref time);
 				ModTargeting.FallingTargeting(npc, target, new Vector2(0, -28), (int)DashSpeed, ref time, ref npcVel);
-				if (time > 40) DashTime = time * OverDashFactor;
-				else DashTime = 40;
+				if (time > 15) DashTime = time * OverDashFactor;
+				else DashTime = 15 * OverDashFactor;
 				//if (npcVel != Vector2.Zero)
 				//{
 				//    npcVel.Normalize();
@@ -171,7 +194,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 				npc.velocity = npcVel;
 			}
 
-			if (AI_Timer >= DashTime && AI_Timer > 60)
+			if (AI_Timer >= DashTime || AI_Timer >= 120)
             {
 				AI_State = State_Moving;
 				AI_Timer = -1;
@@ -180,7 +203,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 		private void LightningStrike()
 		{
 			Player target = Main.player[npc.target];
-			if (MoveTo(target.Center + new Vector2(0, -300), LightningStrikeSpeed, false))
+			if (MoveTo(target.Center + new Vector2(0, -300), LightningStrikeSpeed, false, true))
 			{
 				if (AI_Timer % 20 == 0)
 				{
@@ -190,7 +213,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 						projVel.Normalize();
 					}
 					projVel *= 7;
-					Projectile.NewProjectile(npc.Center, projVel, ProjectileID.CultistBossLightningOrbArc, 1, 1, Main.myPlayer, projVel.ToRotation(), AI_Timer);
+					Projectile.NewProjectile(npc.Center, projVel, ProjectileID.CultistBossLightningOrbArc, LightningDMG, LightningKB, Main.myPlayer, projVel.ToRotation(), AI_Timer);
 				}
 			}
 			else
@@ -208,41 +231,57 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 			NPC Owner = Main.npc[(int)AI_Owner];
 			Player target = Main.player[npc.target];
 			TrinitarianGlobalNPC globalOwner = Owner.GetGlobalNPC<TrinitarianGlobalNPC>();
+			npc.damage = 0;
 			int AddNumber = (int)Owner.ai[3]; //this is the number of Adds currently
 											  			
-			if (AI_Timer < FollowTime)
+			if (AI_Timer <= AddNumber * FollowTime + 240)
             {
-				Vector2 WantedPosition = target.Center + new Vector2(300 * (float)Math.Cos(Math.PI * 2 * AddID / AddNumber), 300 * (float)Math.Sin(Math.PI * 2 * AddID / AddNumber));
-				MoveTo(WantedPosition, 14, true);
-			}
-			if (AI_Timer == FollowTime + ShootingDelay)
-			{
-				Vector2 projVel = target.Center - npc.Center;
-				if (projVel != Vector2.Zero)
+				Vector2 WantedPosition = target.Center + new Vector2(450 * (float)Math.Cos(Math.PI * 2 * AddID / AddNumber), 450 * (float)Math.Sin(Math.PI * 2 * AddID / AddNumber));
+				MoveTo(WantedPosition, 14, true, true);
+				if ((AI_Timer - 120) == AddID * FollowTime && (AI_Timer - 120) > 0)
 				{
-					projVel.Normalize();
+					float time = 0;
+					Vector2 projVel = ModTargeting.LinearAdvancedTargeting(npc.Center, target.Center, IntSpeed, 7 * 4, ref time);
+					ModTargeting.FallingTargeting(npc, target, new Vector2(0, -28), 7 * 4, ref time, ref projVel);
+					Projectile.NewProjectile(npc.Center, projVel / 4, ProjectileID.CultistBossLightningOrbArc, LightningDMG, LightningKB, Main.myPlayer, projVel.ToRotation(), AI_Timer);
 				}
-				projVel *= 7;
-				Projectile.NewProjectile(npc.Center, projVel, ProjectileID.CultistBossLightningOrbArc, LightningDMG, LightningKB, Main.myPlayer, projVel.ToRotation(), AI_Timer); //TODO randomise the lightning seed
+
 			}
-			if (AI_Timer == ExplosionTime)
+			if (AI_Timer == AddNumber * FollowTime + 240 + 1)
+            {
+				MoveTo(target.Center, 6, false, false, AddNumber * FollowTime + 240 + 1);
+            }
+				//if (AI_Timer == FollowTime + ShootingDelay)
+				//{
+				//	Vector2 projVel = target.Center - npc.Center;
+				//	if (projVel != Vector2.Zero)
+				//	{
+				//		projVel.Normalize();
+				//	}
+				//	projVel *= 7;
+				//	Projectile.NewProjectile(npc.Center, projVel, ProjectileID.CultistBossLightningOrbArc, LightningDMG, LightningKB, Main.myPlayer, projVel.ToRotation(), AI_Timer); //TODO randomise the lightning seed
+				//}
+			if (AI_Timer == AddNumber * FollowTime + 240 + 1 + 75 && AddID == 0)
 			{
-				for (int i = 0; i < 2; i++)
+				for (int i = 0; i < 4; i++)
 				{
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 8 * (float)Math.Cos(2 * Math.PI * i / 2), 8 * (float)Math.Sin(2 * Math.PI * i / 2), ProjectileID.CultistBossIceMist, 1, 1, target.whoAmI);
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 8 * (float)Math.Cos(2 * Math.PI * i / 4), 8 * (float)Math.Sin(2 * Math.PI * i / 4), ProjectileID.CultistBossIceMist, 40, 1, target.whoAmI);
 				}
 			}
-			if (AI_Timer >= ExplosionTime + ExplosionDelay)
+			if (AI_Timer >= AddNumber * FollowTime + 240 + 1 + 75 + ExplosionDelay)
 			{
+				npc.damage = 90;
 				AI_State = State_Moving;
 				AI_Timer = -1;
 			}
 
 		}
-		private bool MoveTo(Vector2 WantedPosition, float TravelSpeed, bool follow)
-		{ 
-			if (AI_Timer == 0 || follow)
+		private bool MoveTo(Vector2 WantedPosition, float TravelSpeed, bool follow, bool relative = false, int delay = 0)
+		{
+			Player player = Main.player[npc.target];
+			if (AI_Timer == delay || follow)
 			{
+				if (relative) npc.velocity = player.velocity;
 				tempPos = WantedPosition;
 				Vector2 npcVel = tempPos - npc.Center;
 				if (npcVel != Vector2.Zero)
@@ -250,7 +289,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 					npcVel.Normalize();
 				}
 				npcVel *= TravelSpeed;
-				npc.velocity = npcVel;
+				npc.velocity += npcVel;
 			}
 			if (npc.DistanceSQ(tempPos) <= 14 * 14)
 			{
@@ -259,6 +298,17 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 				return true;
 			}
 			return false;
+		}
+		private void GenerateAddPositions()
+		{
+			NPC Owner = Main.npc[(int)AI_Owner];			
+			TrinitarianGlobalNPC globalOwner = Owner.GetGlobalNPC<TrinitarianGlobalNPC>();
+			int AddNumber = (int)Owner.ai[3]; //this is the number of Adds currently
+			double period = 2f * Math.PI / 300f;
+			for (int i = 0; i < AddNumber; i++)
+			{
+				globalOwner.AddPositions[i] = npc.Center + new Vector2(300 * (float)Math.Cos(period * (Owner.localAI[0] + (300 / AddNumber * i))), 300 * (float)Math.Sin(period * (Owner.localAI[0] + (300 / AddNumber * i))));
+			}
 		}
 
 		//this is probably really scuffed. Id handles the the reordering of the adds once one of them dies. I wrote the algorythm for reordering them but forgot that the way the spots are assigned is such that AddID 0 goes to the last spot on the circle.
@@ -270,25 +320,29 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 			TrinitarianGlobalNPC globalOwner = Owner.GetGlobalNPC<TrinitarianGlobalNPC>();
 			Owner.ai[3]--; //reduce the Addnumber by 1
 			int AddNumber = (int)Owner.ai[3];
-            if (AddID != AddNumber && AddNumber > 0)
+			npc.boss = false;
+            if (AddNumber > 0 && AddID != 0)
             {
-                for (int i = (int)AddID; i > 0; i--)
+                for (int i = (int)AddID; i < AddNumber; i++)
                 {
-                    globalOwner.Add[i] = globalOwner.Add[i - 1];    														        			
-                }
-                globalOwner.Add[0] = globalOwner.Add[AddNumber];
-				globalOwner.Add[AddNumber] = 0;
+                    globalOwner.Add[i] = globalOwner.Add[i + 1];
+                }               
+				globalOwner.Add[AddNumber] = globalOwner.Add[0];
 			}
-			globalOwner.Add[AddNumber] = globalOwner.Add[0];
-			for (int j = 0; j < AddNumber; j++)
+			if (AddID == 0 || true)
 			{
-				globalOwner.Add[j] = globalOwner.Add[j + 1];    																		
+				for (int j = 0; j < AddNumber; j++)
+				{
+					globalOwner.Add[j] = globalOwner.Add[j + 1];
+				}
 			}
-
-			for (int k = 0; k < AddNumber; k++)
+            for (int k = 0; k < AddNumber; k++)
 			{
 				Main.npc[globalOwner.Add[k]].ai[3] = k;
 			}
+			globalOwner.Add[AddNumber] = 0;
+			globalOwner.Add[AddNumber] = 0;
+			GenerateAddPositions();
 			return true;
 		}
 	}
