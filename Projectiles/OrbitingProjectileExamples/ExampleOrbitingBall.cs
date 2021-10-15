@@ -28,7 +28,6 @@ namespace Trinitarian.Projectiles.OrbitingProjectileExamples
             OrbitingRadius = 300;
             CurrentOrbitingRadius = 300;
         }
-        public override string Texture => "Trinitarian/Projectiles/Mage/OrbitingBall";
         public override void AI()
         {
             player = Main.player[projectile.owner];
