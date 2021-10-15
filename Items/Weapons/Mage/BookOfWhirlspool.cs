@@ -11,7 +11,7 @@ using Trinitarian.Projectiles.Mage;
 
 namespace Trinitarian.Items.Weapons.Mage
 {
-	class BookOfWhirlspool : ModItem
+	public class BookOfWhirlspool : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
