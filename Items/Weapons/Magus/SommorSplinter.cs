@@ -26,7 +26,7 @@ namespace Trinitarian.Items.Weapons.Magus
             item.value = Item.sellPrice(0, 1, 0, 0);
             item.rare = ItemRarityID.White;
             item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
+            item.autoReuse = false;
             item.consumable = false;
             item.noUseGraphic = true;
             item.noMelee = true;

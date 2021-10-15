@@ -1,17 +1,17 @@
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Items.Materials.Bars;
 using static Terraria.ModLoader.ModContent;
 
-namespace Trinitarian.Items.Accessories
+namespace Trinitarian.Items.Accessories.Melee
 {
-    public class SteelChain : ModItem
+    public class WarriorOcean : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Steel Chain");
-            Tooltip.SetDefault("Increases range damage by 5%");
+            DisplayName.SetDefault("Warrior's Ocean");
+            Tooltip.SetDefault("Increases melee damage by 5% and provides water breathing");
         }
 
         public override void SetDefaults()
@@ -25,13 +25,14 @@ namespace Trinitarian.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.rangedDamage += 0.05f;
+            player.meleeDamage += 0.05f;
+            player.gills = true;
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<SteelBar>(), 3);
+            recipe.AddIngredient(ItemType<OceanBar>(), 4);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();

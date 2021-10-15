@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using Trinitarian.Items.Materials.Parts;
 using static Terraria.ModLoader.ModContent;
 
-namespace Trinitarian.Items.Accessories
+namespace Trinitarian.Items.Accessories.Magus
 {
     public class JungleRune : ModItem
     {

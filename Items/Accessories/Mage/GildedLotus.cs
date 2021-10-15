@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Trinitarian.Items.Accessories
+namespace Trinitarian.Items.Accessories.Mage
 {
     public class GildedLotus : ModItem
     {

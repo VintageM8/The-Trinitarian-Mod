@@ -93,15 +93,6 @@ namespace TerrariaDemised.Drops
             }
 
             //boss drops
-
-            if (npc.type == NPCID.WallofFlesh)
-            {
-                if (Main.rand.NextFloat() < .30f)
-                {
-                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<NinjaEmblem>(), 1);
-                }
-            }
-
             if (npc.type == NPCID.QueenBee)
             {
                 if (Main.rand.NextFloat() < .99f)

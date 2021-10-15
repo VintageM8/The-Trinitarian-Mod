@@ -2,7 +2,9 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
+using Terraria.GameInput;
 using System;
+
 
 namespace Trinitarian
 {
@@ -14,6 +16,7 @@ namespace Trinitarian
 
 		public int ScreenShake;
         public bool canFocus = true;
+        public bool drowning = false;
         //These are all important for the Orbiting staff. They could be used for other uses though. The orbiting staff uses at most the first 15 of the OrbitingProjectile array so the rest are free to use for other weapons.
         public int RotationTimer = 0;
         public int[] OrbitingProjectileCount = new int[5];                               //Current upadted count of how many projectiles are active.
@@ -34,7 +37,49 @@ namespace Trinitarian
         private int holdCameraLength;
         private float returnLength; */
 
-        public bool drowning = false;
+ public enum AbiltyID : int
+        {
+            None,//0
+            Paladin,//1
+            Elf,//2
+            Necromancer,//3
+            Wizard//4
+        }
+	  public override void ProcessTriggers(TriggersSet triggersSet)
+        {
+            Player p = Main.player[Main.myPlayer];
+            if (Trinitarian.UseAbilty.JustPressed && !p.HasBuff(ModContent.BuffType<Cooldown>()))
+            {
+              switch (CurrentA)
+                {//Add stuff for the abiltys here, if you want to make more, add more IDs
+                    case  AbiltyID.None:
+                        Main.NewText("No Abilty");
+                        p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
+                        break;
+                    case AbiltyID.Elf:
+                        Main.NewText("Elf");
+                        p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
+                        break;
+                    case AbiltyID.Paladin:
+                        Main.NewText("Paladin");
+                        p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
+                        break;
+                    case AbiltyID.Necromancer:
+                        Main.NewText("Necromancer");
+                        p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
+                        break;
+                    case AbiltyID.Wizard:
+                        Main.NewText("Wizard");
+                        p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
+                        break;
+                    default:
+                        Main.NewText("That wasnt supposed to happen \n Your abilty isnt set to anything, or no abilty!", new Color(255,0,0));
+                        break;
+                }
+            }
+        }
+
+
         public override void OnEnterWorld(Player player)
         {
             //Important for Orbiting projectiles.
@@ -43,6 +88,7 @@ namespace Trinitarian
                 OrbitingProjectileCount[i] = 0;
             }
         }
+
         public override void ResetEffects()
         {
             drowning = false;

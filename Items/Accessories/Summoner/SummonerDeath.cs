@@ -3,14 +3,14 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Items.Materials.Parts;
 
-namespace Trinitarian.Items.Accessories
+namespace Trinitarian.Items.Accessories.Summoner
 {
     public class SummonerDeath : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Summoner's Death");
-            Tooltip.SetDefault("Let your Summons bring pain to your foes\n Increases minions by 3, Increases max life by 25, and increases minion damage by 8%");
+            Tooltip.SetDefault("Let your Summons bring pain to your foes\n Increases minions by 2, Increases max life by , and increases minion damage by 8%");
         }
 
         public override void SetDefaults()
@@ -24,8 +24,8 @@ namespace Trinitarian.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.maxMinions += 3;
-            player.statLifeMax2 += 25;
+            player.maxMinions += 2;
+            player.statLifeMax2 += 10;
             player.minionDamage += 0.08f;
         }
 

@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Trinitarian.Items.Accessories
+namespace Trinitarian.Items.Accessories.Mage
 {
     public class StarryNightmare : ModItem
     {
@@ -31,9 +31,9 @@ namespace Trinitarian.Items.Accessories
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.FragmentNebula, 25);
-            recipe.AddIngredient(ItemID.LunarBar, 12);
-            recipe.AddIngredient(ItemID.FallenStar, 100);
+            recipe.AddIngredient(ItemID.FragmentNebula, 999999);
+            recipe.AddIngredient(ItemID.LunarBar, 999999);
+            recipe.AddIngredient(ItemID.FallenStar, 999999);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
