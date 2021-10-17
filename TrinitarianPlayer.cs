@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Terraria.GameInput;
+using Trinitarian.Buffs;
 
 namespace Trinitarian
 {
@@ -35,6 +36,7 @@ namespace Trinitarian
             Necromancer,//3
             Wizard//4
         }
+        public AbiltyID CurrentA;
 	  public override void ProcessTriggers(TriggersSet triggersSet)
         {
             Player p = Main.player[Main.myPlayer];
