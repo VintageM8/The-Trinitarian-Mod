@@ -4,7 +4,8 @@ using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Terraria.GameInput;
 using System;
-
+using Trinitarian.Buffs;
+using Terraria.ModLoader.IO;
 
 namespace Trinitarian
 {
@@ -15,6 +16,7 @@ namespace Trinitarian
 	    public bool ShowText;
 
 		public int ScreenShake;
+        public AbiltyID CurrentA;
         public bool canFocus = true;
         public bool drowning = false;
         //These are all important for the Orbiting staff. They could be used for other uses though. The orbiting staff uses at most the first 15 of the OrbitingProjectile array so the rest are free to use for other weapons.
@@ -37,28 +39,38 @@ namespace Trinitarian
         private int holdCameraLength;
         private float returnLength; */
 
- public enum AbiltyID : int
-        {
+        public enum AbiltyID : int         
+        {    
             None,//0
             Paladin,//1
             Elf,//2
             Necromancer,//3
             Wizard//4
         }
-	  public override void ProcessTriggers(TriggersSet triggersSet)
+        public override TagCompound Save()
+        {
+            return new TagCompound {
+				{"CurrentA", (int)CurrentA},
+            };
+        }
+        public override void Load(TagCompound tag)
+        {
+            CurrentA = (AbiltyID)tag.GetInt("CurrentA");        
+        }
+        public override void ProcessTriggers(TriggersSet triggersSet)
         {
             Player p = Main.player[Main.myPlayer];
             if (Trinitarian.UseAbilty.JustPressed && !p.HasBuff(ModContent.BuffType<Cooldown>()))
             {
-              switch (CurrentA)
+                switch (CurrentA)
                 {//Add stuff for the abiltys here, if you want to make more, add more IDs
-                    case  AbiltyID.None:
+                    case (int)AbiltyID.None:
                         Main.NewText("No Abilty");
-                        p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
+                        p.AddBuff(ModContent.BuffType<Cooldown>(), 120);
                         break;
                     case AbiltyID.Elf:
                         Main.NewText("Elf");
-                        p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
+                        p.AddBuff(ModContent.BuffType<Cooldown>(), 120);
                         break;
                     case AbiltyID.Paladin:
                         Main.NewText("Paladin");
@@ -70,10 +82,10 @@ namespace Trinitarian
                         break;
                     case AbiltyID.Wizard:
                         Main.NewText("Wizard");
-                        p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
+                        p.AddBuff(ModContent.BuffType<Cooldown>(), 120);
                         break;
                     default:
-                        Main.NewText("That wasnt supposed to happen \n Your abilty isnt set to anything, or no abilty!", new Color(255,0,0));
+                        Main.NewText("That wasnt supposed to happen \n Your abilty isnt set to anything, or no abilty!", new Color(255, 0, 0));
                         break;
                 }
             }
