@@ -13,7 +13,7 @@ namespace Trinitarian.Items.Weapons.Ranged
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 20; 
+			item.damage = 40; 
 			item.ranged = true;
 			item.width = 40;
 			item.height = 20; 
