@@ -7,7 +7,7 @@ using Trinitarian.Items.Materials.Parts;
 using Trinitarian.Items.Weapons.Melee;
 using Trinitarian.Items.Weapons.Ranged;
 
-namespace TerrariaDemised.Drops
+namespace Trinitarian.Drops
 {
     class Drops : GlobalNPC
     {
