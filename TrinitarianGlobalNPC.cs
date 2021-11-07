@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Items.Accessories;
+using Trinitarian.Items.Accessories.Ranged;
 using Trinitarian.Items.Materials.Parts;
 
 namespace Trinitarian

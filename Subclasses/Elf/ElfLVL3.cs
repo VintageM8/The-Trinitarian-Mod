@@ -21,10 +21,13 @@ namespace Trinitarian.Subclasses.Elf
             item.value = Item.sellPrice(0, 0, 0, 1);
         }
 
-        public override void UpdateAccessory(Player player, bool hideVisual)
-        {
-            player.rangedDamage += 0.8f;
-            player.moveSpeed -= 0.06f;
+        public override void UpdateInventory(Player player)
+		{
+			if (base.item.favorited)
+			{
+               player.rangedDamage += 0.8f;
+               player.moveSpeed += 0.06f;
+            }
         }
 
         public override void AddRecipes()
