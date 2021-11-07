@@ -167,56 +167,8 @@ namespace Trinitarian
             return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
          }
 
-		public override void ModifyScreenPosition()
+		    public override void ModifyScreenPosition()
         {
-            /* if (FocusBoss)
-            {
-                if (canFocus)
-                {
-                    if (!Main.gamePaused)
-                    {
-                        screenPositionStore = new Vector2(MathHelper.Lerp(player.Center.X - Main.screenWidth / 2, focusTo.X - Main.screenWidth / 2, amount), MathHelper.Lerp(player.Center.Y - Main.screenHeight / 2, focusTo.Y - Main.screenHeight / 2, amount));
-                    }
-                    Main.screenPosition = screenPositionStore;
-                    amount += 1 / towardsLength;
-                    if (amount >= 1f)
-                    {
-                        holdPosition = true;
-                        canFocus = false;
-                        amount = 0;
-                    }
-                }
-                else
-                {
-                    if (holdPosition)
-                    {
-                        Main.screenPosition = screenPositionStore;
-                        holdCounter++;
-                        if (holdCounter == holdCameraLength)
-                        {
-                            holdCounter = 0;
-                            holdPosition = false;
-                        }
-                    }
-                    else
-                    {
-                        if (!Main.gamePaused)
-                        {
-                            screenPositionStore = new Vector2(MathHelper.SmoothStep(focusTo.X - Main.screenWidth / 2, player.Center.X - Main.screenWidth / 2, amount), MathHelper.SmoothStep(focusTo.Y - Main.screenHeight / 2, player.Center.Y - Main.screenHeight / 2, amount));
-                        }
-                        Main.screenPosition = screenPositionStore;
-                        amount += 1 / returnLength;
-                        if (amount >= 1f)
-                        {
-                            amount = 0;
-                            FocusBoss = false;
-                            canFocus = true;
-                            ShowText = false;
-                        }
-                    }
-                }
-            } */
-
             if (!Main.gamePaused)
             {
                 if (ScreenShake > 0)
@@ -225,8 +177,6 @@ namespace Trinitarian
                     ScreenShake--;
                 }
             }
-
-
         }
         //oudated. Will delete soon.
         public void GenerateProjectilePositions()
