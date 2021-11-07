@@ -56,7 +56,7 @@ namespace Trinitarian.Items.Weapons.Magus
                     from += velo * 12;
                     Vector2 circularLocation = new Vector2(10, 0).RotatedBy(MathHelper.ToRadians(j * 12 + dynamicCounter));
 
-                    int dust = Dust.NewDust(from + new Vector2(-4, -4) + circularLocation, 0, 0, 164, 0, 0, 0, default, 1.25f);
+                    int dust = Dust.NewDust(from + new Vector2(-4, -4) + circularLocation, 0, 0, DustID.TeleportationPotion, 0, 0, 0, default, 1.25f);
                     Main.dust[dust].noGravity = true;
                     Main.dust[dust].velocity *= 0.1f;
                     Main.dust[dust].scale = 1.8f;

@@ -41,7 +41,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 			get => npc.localAI[0];
 			set => npc.localAI[0] = value;
 		}
-
+		private bool npcDashing = false;
 		private float DashTime;
 		private Vector2 tempPos;
 		private Vector2 IntSpeed;
@@ -62,6 +62,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("VikingAss");
+			Main.npcFrameCount[npc.type] = 4;
 		}
 
 		public override void SetDefaults()
@@ -192,13 +193,15 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 				//}
 				//npcVel *= DashSpeed;
 				npc.velocity = npcVel;
+				npcDashing = true;
 			}
 
 			if (AI_Timer >= DashTime || AI_Timer >= 120)
             {
 				AI_State = State_Moving;
 				AI_Timer = -1;
-            }
+				npcDashing = false;
+			}
         }
 		private void LightningStrike()
 		{
@@ -310,7 +313,22 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 				globalOwner.AddPositions[i] = npc.Center + new Vector2(300 * (float)Math.Cos(period * (Owner.localAI[0] + (300 / AddNumber * i))), 300 * (float)Math.Sin(period * (Owner.localAI[0] + (300 / AddNumber * i))));
 			}
 		}
+		public override void FindFrame(int frameHeight)
+		{
+			int factor = (int)((Main.player[npc.target].Center.X - npc.Center.X) / Math.Abs(Main.player[npc.target].Center.X - npc.Center.X));
+			npc.frameCounter++;
 
+			if (npc.frameCounter % 6f == 5f)
+			{
+				npc.frame.Y += frameHeight;
+			}
+			if (npc.frame.Y >= frameHeight * 4) // 10 is max # of frames
+			{
+				npc.frame.Y = 0; // Reset back to default
+			}
+
+			npc.spriteDirection = factor;
+		}
 		//this is probably really scuffed. Id handles the the reordering of the adds once one of them dies. I wrote the algorythm for reordering them but forgot that the way the spots are assigned is such that AddID 0 goes to the last spot on the circle.
 		//that lead to them rotating against the spinning direction which looked ugly. So i just fixed it by shifting the array to the left by one and then just overriding the AddIDs. The shifting makes it so the try to align with the previous point instead of the next one wich fixes it. 
 		//This logic can probably be reworked but it's important that the direction the adds move in after they get reassigned is in the direction of the spin. Because it looks really bad if thats not the case. So carefull !!!!

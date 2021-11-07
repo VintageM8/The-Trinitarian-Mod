@@ -206,14 +206,14 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 if (AI_Timer == 0)
                 {
                     //prevents repeat BigDAshAttack
-                    int nextAttackstate = 0;
+                    int nextAttackstate = Main.rand.Next(0, 9);
                     while (nextAttackstate == Attack_State)
                     {
                         nextAttackstate = Main.rand.Next(0, 9);
                     }
                     Attack_State = nextAttackstate;
                     if (AddNumber == 0) Attack_State = 0;
-                    //Attack_State = 0;
+                    Attack_State = 1;
                     npc.netUpdate = true;
                 }
                 switch (Attack_State)
@@ -280,6 +280,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                 }
             }
             AI_Timer++;
+            //npc.velocity = Vector2.Zero;
         }
         private void Moving()
         {
@@ -409,15 +410,20 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
             }  
             
             Dash(DashStartTime);
-            
+            if (AI_Timer == DashStartTime)
+            {
+                npcDashing = true;
+            }      
             if (AI_Timer >= DashTime + DashStartTime && TimesDashed < MaxDashes)
             {
                 AI_Timer = DashStartTime - DashDelay;
                 npc.velocity *= 0.04f;
+                npcDashing = false;
                 TimesDashed++;
             }
             if (TimesDashed == MaxDashes)
             {
+                npcDashing = false;
                 TimesDashed = 0;
                 AI_State = State_Moving;
                 AI_Timer = -1;
@@ -684,6 +690,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 
         public override void FindFrame(int frameHeight)
         {
+            int factor = (int)((Main.player[npc.target].Center.X - npc.Center.X)/ Math.Abs(Main.player[npc.target].Center.X - npc.Center.X));
             npc.frameCounter++;
 
             if (npc.frameCounter % 6f == 5f)
@@ -694,10 +701,9 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
             {
                 npc.frame.Y = 0; // Reset back to default
             }
-
-            if (Main.player[npc.target].Center.X < npc.Center.X && npcDashing == false)
+            if (!npcDashing)
             {
-                npc.spriteDirection = -1;
+                npc.spriteDirection = factor;
             }
             while (npcDashing == true && npc.spriteDirection != spriteDirectionStore)
             {

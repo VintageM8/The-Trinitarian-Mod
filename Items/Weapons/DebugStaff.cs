@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Projectiles.Mage;
-using Trinitarian.Projectiles.VikingBoss;
+
 
 namespace Trinitarian.Items.Weapons
 {
