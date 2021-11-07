@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Trinitarian.Items.Weapons.Magus.Hardmode;
 
 namespace Trinitarian.Projectiles.Magus
 {
@@ -41,7 +42,7 @@ namespace Trinitarian.Projectiles.Magus
 
             projectile.Center = Main.MouseWorld;
 
-            if (Main.player[projectile.owner].channel && Main.player[projectile.owner].HeldItem.type == ModContent.ItemType<FocusWep>())
+            if (Main.player[projectile.owner].channel && Main.player[projectile.owner].HeldItem.type == ModContent.ItemType<NightStaff>())
             {
                 if (projectile.ai[0] <= 850)
                 {
