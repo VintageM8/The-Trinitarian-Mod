@@ -26,14 +26,5 @@ namespace Trinitarian.Items.QuestItems.Paladins
         {
             player.meleeDamage += 0.4f;
         }
-
-        public override void AddRecipes()
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Wood, 3);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this, 1);
-            recipe.AddRecipe();
-        }
     }
 }

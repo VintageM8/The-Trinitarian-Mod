@@ -2,14 +2,14 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Trinitarian.Quests.Snow
+namespace Trinitarian.Quests.Ocean
 {
-    public class FrozenFire : ModItem
+    public class UndeadTerror : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Frozen Fire");
-            Tooltip.SetDefault("In the Great War of Cthulhu, there was a Frozen Dragon, Etoirir.\nThe Army of the Dryads and Paladins where able to defeat her,\nbut her frozen heart lives on and can bring great power to any magic user.");
+            DisplayName.SetDefault("Undead Terror");
+            Tooltip.SetDefault("In the depths of the ocean, many creatures harbor there\nOne such creature is the Sabertooth Fish.\nThey are rare but a select few have a very powerful item that can summon the dead of the sea.");
         }
 
         public override void SetDefaults()

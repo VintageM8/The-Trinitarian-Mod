@@ -2,14 +2,14 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Trinitarian.Quests.Snow
+namespace Trinitarian.Items.QuestItems.Wizard
 {
-    public class FrozenFire : ModItem
+    public class WizardToken : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Frozen Fire");
-            Tooltip.SetDefault("In the Great War of Cthulhu, there was a Frozen Dragon, Etoirir.\nThe Army of the Dryads and Paladins where able to defeat her,\nbut her frozen heart lives on and can bring great power to any magic user.");
+            DisplayName.SetDefault("Wizard Token");
+            Tooltip.SetDefault("Take this to the quest master.");
         }
 
         public override void SetDefaults()
