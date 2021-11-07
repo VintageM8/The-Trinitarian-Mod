@@ -3,7 +3,9 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Terraria.GameInput;
+using System;
 using Trinitarian.Buffs;
+using Terraria.ModLoader.IO;
 
 namespace Trinitarian
 {
@@ -14,7 +16,15 @@ namespace Trinitarian
 	    public bool ShowText;
 
 		public int ScreenShake;
+        public AbiltyID CurrentA;
         public bool canFocus = true;
+        public bool drowning = false;
+        //These are all important for the Orbiting staff. They could be used for other uses though. The orbiting staff uses at most the first 15 of the OrbitingProjectile array so the rest are free to use for other weapons.
+        public int RotationTimer = 0;
+        public int[] OrbitingProjectileCount = new int[5];                               //Current upadted count of how many projectiles are active.
+        public Vector2[,] OrbitingProjectilePositions = new Vector2[5, 50];             //Used to store the desired positions for the projectiles.
+        public Projectile[,] OrbitingProjectile = new Projectile[5, 50];                //This stores all the projectiles that are currently beeing used. A projectiles ID is equal to the index in this array.
+        //End of orbiting projectile stuff.
 
         public Vector2[] PreviousVelocity = new Vector2[30];
         // private float amount = 0;
@@ -28,29 +38,39 @@ namespace Trinitarian
         private int holdCounter = 0;
         private int holdCameraLength;
         private float returnLength; */
- public enum AbiltyID : int
-        {
+
+        public enum AbiltyID : int         
+        {    
             None,//0
             Paladin,//1
             Elf,//2
             Necromancer,//3
             Wizard//4
         }
-        public AbiltyID CurrentA;
-	  public override void ProcessTriggers(TriggersSet triggersSet)
+        public override TagCompound Save()
+        {
+            return new TagCompound {
+				{"CurrentA", (int)CurrentA},
+            };
+        }
+        public override void Load(TagCompound tag)
+        {
+            CurrentA = (AbiltyID)tag.GetInt("CurrentA");        
+        }
+        public override void ProcessTriggers(TriggersSet triggersSet)
         {
             Player p = Main.player[Main.myPlayer];
             if (Trinitarian.UseAbilty.JustPressed && !p.HasBuff(ModContent.BuffType<Cooldown>()))
             {
-              switch (CurrentA)
+                switch (CurrentA)
                 {//Add stuff for the abiltys here, if you want to make more, add more IDs
-                    case  AbiltyID.None:
+                    case (int)AbiltyID.None:
                         Main.NewText("No Abilty");
-                        p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
+                        p.AddBuff(ModContent.BuffType<Cooldown>(), 120);
                         break;
                     case AbiltyID.Elf:
                         Main.NewText("Elf");
-                        p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
+                        p.AddBuff(ModContent.BuffType<Cooldown>(), 120);
                         break;
                     case AbiltyID.Paladin:
                         Main.NewText("Paladin");
@@ -62,15 +82,25 @@ namespace Trinitarian
                         break;
                     case AbiltyID.Wizard:
                         Main.NewText("Wizard");
-                        p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
+                        p.AddBuff(ModContent.BuffType<Cooldown>(), 120);
                         break;
                     default:
-                        Main.NewText("That wasnt supposed to happen \n Your abilty isnt set to anything, or no abilty!", new Color(255,0,0));
+                        Main.NewText("That wasnt supposed to happen \n Your abilty isnt set to anything, or no abilty!", new Color(255, 0, 0));
                         break;
                 }
             }
         }
-         public bool drowning = false;
+
+
+        public override void OnEnterWorld(Player player)
+        {
+            //Important for Orbiting projectiles.
+            for (int i = 0; i < OrbitingProjectileCount.Length; i++)
+            {
+                OrbitingProjectileCount[i] = 0;
+            }
+        }
+
         public override void ResetEffects()
         {
             drowning = false;
@@ -78,6 +108,26 @@ namespace Trinitarian
         public override void UpdateDead()
         {
             drowning = false;
+            //Important for Orbiting projectiles.
+            for (int i = 0; i < OrbitingProjectileCount.Length; i++)
+            {
+                OrbitingProjectileCount[i] = 0;
+            }
+        }
+        //This is where we make our central timer that the orbiting projectile uses.
+        public override void PostUpdate()
+        {
+            bool temp = false;
+            for (int i = 0; i < 5; i++)
+            {
+                if (OrbitingProjectileCount[i] > 0) temp = true;
+            }
+            if (temp)
+            {
+                GenerateProjectilePositions();
+                RotationTimer++;
+            }
+            else RotationTimer = 0;
         }
         public override void UpdateLifeRegen()
         {
@@ -127,7 +177,6 @@ namespace Trinitarian
                     {
                         screenPositionStore = new Vector2(MathHelper.Lerp(player.Center.X - Main.screenWidth / 2, focusTo.X - Main.screenWidth / 2, amount), MathHelper.Lerp(player.Center.Y - Main.screenHeight / 2, focusTo.Y - Main.screenHeight / 2, amount));
                     }
-
                     Main.screenPosition = screenPositionStore;
                     amount += 1 / towardsLength;
                     if (amount >= 1f)
@@ -143,7 +192,6 @@ namespace Trinitarian
                     {
                         Main.screenPosition = screenPositionStore;
                         holdCounter++;
-
                         if (holdCounter == holdCameraLength)
                         {
                             holdCounter = 0;
@@ -157,9 +205,7 @@ namespace Trinitarian
                             screenPositionStore = new Vector2(MathHelper.SmoothStep(focusTo.X - Main.screenWidth / 2, player.Center.X - Main.screenWidth / 2, amount), MathHelper.SmoothStep(focusTo.Y - Main.screenHeight / 2, player.Center.Y - Main.screenHeight / 2, amount));
                         }
                         Main.screenPosition = screenPositionStore;
-
                         amount += 1 / returnLength;
-
                         if (amount >= 1f)
                         {
                             amount = 0;
@@ -181,6 +227,16 @@ namespace Trinitarian
             }
 
 
+        }
+        //oudated. Will delete soon.
+        public void GenerateProjectilePositions()
+        {           
+            double period = 2f * Math.PI / 300f;
+            for (int i = 0; i < OrbitingProjectileCount[0]; i++)
+            {
+                //Radius 200.
+                OrbitingProjectilePositions[0, i] = player.Center + new Vector2(200 * (float)Math.Cos(period * (RotationTimer + (300 / OrbitingProjectileCount[0] * i))), 200 * (float)Math.Sin(period * (RotationTimer + (300 / OrbitingProjectileCount[0] * i))));
+            }
         }
     }
 }
