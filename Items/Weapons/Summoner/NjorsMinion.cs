@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Trinitarian.Buffs;
+using Trinitarian.Buffs.Minion;
 using Trinitarian.Projectiles.Minions;
 using static Terraria.ModLoader.ModContent;
 
@@ -32,7 +32,7 @@ namespace Trinitarian.Items.Weapons.Summoner
             item.UseSound = SoundID.Item44;
             item.noMelee = true;
             item.summon = true;
-            item.buffType = BuffType<PlanetBuff>();
+            item.buffType = BuffType<NjorMinionBuff>();
             item.shoot = ProjectileType<NjorMinion>();
         }
 

@@ -21,17 +21,20 @@ namespace Trinitarian.Subclasses.Wizard
             item.value = Item.sellPrice(0, 0, 0, 1);
         }
 
-        public override void UpdateAccessory(Player player, bool hideVisual)
-        {
-            player.magicDamage += 0.8f;
-            player.manaCost -= 5;
-            player.magicCrit -= 8;
+        public override void UpdateInventory(Player player)
+	    {
+		   if (base.item.favorited)
+           {
+              player.magicDamage += 0.08f;
+              player.magicCrit -= 08;
+              player.manaCost -= 05;
+           }
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.HellstoneBar, 45);
+            recipe.AddIngredient(ItemID.HellstoneBar, 20);
             recipe.AddIngredient(ModContent.ItemType<WizardLVL2>(), 1);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this, 1);

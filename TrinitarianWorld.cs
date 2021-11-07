@@ -97,7 +97,7 @@ namespace Trinitarian
         private void Generate2Algea()
         {
             int attempts = 0;
-            int Placer = ModContent.TileType<Tiles.Algea>();
+            int Placer = ModContent.TileType<Tiles.Algae>();
             Tile tile;
             Tile tileL;
             Tile tileR;
@@ -109,11 +109,11 @@ namespace Trinitarian
                 // Pick a location.
                 int x = WorldGen.genRand.Next(20, Main.maxTilesX/10 - 1);
                 int y = WorldGen.genRand.Next(20, Main.maxTilesY);
-                tile = Main.tile[x, y];
-                tileL = Main.tile[x - 1, y];
-                tileR = Main.tile[x - 1, y];
-                tileBelow = Main.tile[x, y + 1];
-                if ((tileBelow.type == TileID.Sand || tileBelow.type == ModContent.TileType<Tiles.Algea>() || tileR.type == ModContent.TileType<Tiles.Algea>() ||tileL.type == ModContent.TileType<Tiles.Algea>()) && tile.liquid > 0  && !tile.active())
+                tile = Framing.GetTileSafely(x, y);
+                tileL = Framing.GetTileSafely(x - 1, y);
+                tileR = Framing.GetTileSafely(x +1, y);
+                tileBelow = Framing.GetTileSafely(x, y + 1);
+                if ((tileBelow.type == TileID.Sand || tileBelow.type == ModContent.TileType<Tiles.Algae>() || tileR.type == ModContent.TileType<Tiles.Algae>() ||tileL.type == ModContent.TileType<Tiles.Algae>()) && tile.liquid > 0  && !tile.active())
                 {
                     WorldGen.PlaceTile(x, y, Placer, true);
                     //Player nlayer = Main.player[Main.myPlayer];
@@ -133,11 +133,11 @@ namespace Trinitarian
                 // Pick a location.
                 int x = WorldGen.genRand.Next(Main.maxTilesX/10 * 9, Main.maxTilesX);
                 int y = WorldGen.genRand.Next(20, Main.maxTilesY);
-                tile = Main.tile[x, y];
-                tileL = Main.tile[x - 1, y];
-                tileR = Main.tile[x - 1, y];
-                tileBelow = Main.tile[x, y + 1];
-                if ((tileBelow.type == TileID.Sand || tileBelow.type == ModContent.TileType<Tiles.Algea>() || tileR.type == ModContent.TileType<Tiles.Algea>() || tileL.type == ModContent.TileType<Tiles.Algea>()) && tile.liquid > 0  && !tile.active())
+                tile = Framing.GetTileSafely(x, y);
+                tileL = Framing.GetTileSafely(x - 1, y);
+                tileR = Framing.GetTileSafely(x + 1, y);
+                tileBelow = Framing.GetTileSafely(x, y + 1);
+                if ((tileBelow.type == TileID.Sand || tileBelow.type == ModContent.TileType<Tiles.Algae>() || tileR.type == ModContent.TileType<Tiles.Algae>() || tileL.type == ModContent.TileType<Tiles.Algae>()) && tile.liquid > 0  && !tile.active())
                 {
                     WorldGen.PlaceTile(x, y, Placer, true);
                     //Player nlayer = Main.player[Main.myPlayer];Testing

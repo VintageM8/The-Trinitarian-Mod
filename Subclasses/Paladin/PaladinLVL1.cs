@@ -22,10 +22,13 @@ namespace Trinitarian.Subclasses.Paladin
             item.defense = 5;
         }
 
-        public override void UpdateAccessory(Player player, bool hideVisual)
-        {
-            player.meleeDamage += 0.3f;
-        }
+       public override void UpdateInventory(Player player)
+	   {
+		   if (base.item.favorited)
+           {  
+              player.meleeDamage += 0.3f;
+           }
+       } 
 
         public override void AddRecipes()
         {

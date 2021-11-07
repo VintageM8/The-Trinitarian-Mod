@@ -3,6 +3,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Trinitarian.Buffs.Minion;
 
 namespace Trinitarian.Projectiles.Minions
 {
@@ -43,6 +44,16 @@ namespace Trinitarian.Projectiles.Minions
         public override void AI()
         {
             Player player = Main.player[projectile.owner];
+            #region Active check
+            if (player.dead || !player.active)
+            {
+                player.ClearBuff(ModContent.BuffType<NjorMinionBuff>());
+            }
+            if (player.HasBuff(ModContent.BuffType<NjorMinionBuff>()))
+            {
+                projectile.timeLeft = 2;
+            }
+            #endregion
 
             Vector2 idlePosition = player.Center;
             idlePosition.Y -= 48f;

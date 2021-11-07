@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Trinitarian.Buffs;
+using Trinitarian.Buffs.Minion;
 using Trinitarian.Items.Materials.Bars;
 using Trinitarian.Items.Materials.Parts;
 using Trinitarian.Projectiles.Minions;

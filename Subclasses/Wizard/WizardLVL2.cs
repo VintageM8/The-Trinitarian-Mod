@@ -21,11 +21,14 @@ namespace Trinitarian.Subclasses.Wizard
             item.value = Item.sellPrice(0, 0, 0, 1);
         }
 
-        public override void UpdateAccessory(Player player, bool hideVisual)
-        {
-            player.magicDamage += 0.5f;
-            player.manaCost -= 3;
-            player.magicCrit -= 4;
+        public override void UpdateInventory(Player player)
+	    {
+		   if (base.item.favorited)
+           {
+              player.magicDamage += 0.5f;
+              player.magicCrit -= 04;
+              player.manaCost -= 03;
+           }
         }
 
         public override void AddRecipes()

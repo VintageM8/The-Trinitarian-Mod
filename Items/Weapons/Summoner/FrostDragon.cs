@@ -2,9 +2,11 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Trinitarian.Buffs;
+using Trinitarian.Buffs.Minion;
 using Trinitarian.Projectiles.Minions;
 using static Terraria.ModLoader.ModContent;
+using Trinitarian.Items.Materials.Bars;
+using Trinitarian.Items.Materials.Parts;
 
 namespace Trinitarian.Items.Weapons.Summoner
 {
@@ -33,7 +35,7 @@ namespace Trinitarian.Items.Weapons.Summoner
             item.UseSound = SoundID.Item44;
             item.noMelee = true;
             item.summon = true;
-            item.buffType = BuffType<PlanetBuff>();
+            item.buffType = BuffType<IceDragBuff>();
             item.shoot = ProjectileType<FrostDragonproj>();
         }
 
@@ -42,6 +44,17 @@ namespace Trinitarian.Items.Weapons.Summoner
             player.AddBuff(item.buffType, 2);
             position = Main.MouseWorld;
             return true;
+        }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<TrueStarSteel>(), 18);
+            recipe.AddIngredient(ModContent.ItemType<SummonShards>(), 8);
+            recipe.AddIngredient(ModContent.ItemType<EnchantedIceBall>(), 2);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 }

@@ -21,10 +21,13 @@ namespace Trinitarian.Subclasses.Necro
             item.value = Item.sellPrice(0, 0, 0, 1);
         }
 
-        public override void UpdateAccessory(Player player, bool hideVisual)
-        {
-            player.minionDamage += 0.9f;
-            player.maxMinions += 3;
+        public override void UpdateInventory(Player player)
+		{
+			if (base.item.favorited)
+			{
+               player.minionDamage += 0.9f;
+               player.maxMinions += 3;
+            } 
         }
 
         public override void AddRecipes()

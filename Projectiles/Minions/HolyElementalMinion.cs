@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;
+using Trinitarian.Buffs.Minion;
 using Terraria.ModLoader;
 
 namespace Trinitarian.Projectiles.Minions
@@ -42,7 +43,17 @@ namespace Trinitarian.Projectiles.Minions
 
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
+             Player player = Main.player[projectile.owner];
+            #region Active check
+            if (player.dead || !player.active)
+            {
+                player.ClearBuff(ModContent.BuffType<HEMinionBuff>());
+            }
+            if (player.HasBuff(ModContent.BuffType<HEMinionBuff>()))
+            {
+                projectile.timeLeft = 2;
+            }
+            #endregion
 
             Vector2 idlePosition = player.Center;
             idlePosition.Y -= 48f;
@@ -147,18 +158,6 @@ namespace Trinitarian.Projectiles.Minions
 
             projectile.rotation = projectile.velocity.X * 0.05f;
             projectile.spriteDirection = projectile.direction;
-
-            if (Main.rand.NextBool(3))
-            {
-                Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Ice, projectile.velocity.X * 0.1f, projectile.velocity.Y * 0.1f);
-            }
-            Lighting.AddLight(projectile.Center, Color.Aqua.ToVector3() * 0.78f);
-        }
-
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            target.AddBuff(BuffID.Frostburn, 300);
-            target.immune[projectile.owner] = 15;
         }
     }
 }
