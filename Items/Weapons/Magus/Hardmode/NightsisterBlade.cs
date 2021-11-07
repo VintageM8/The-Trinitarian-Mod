@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -17,22 +18,23 @@ namespace Trinitarian.Items.Weapons.Magus.Hardmode
 
         public override void SafeSetDefaults()
         {
-            item.damage = 59;
+            item.damage = 330;
             item.width = 66;
             item.height = 66;
-            item.useTime = 33;
-            item.useAnimation = 33;
+            item.useTime = 20;
+            item.noMelee = true;
+            item.useAnimation = 20;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.knockBack = 6;
             item.value = Item.sellPrice(0, 12, 0, 0);
             item.rare = ItemRarityID.Pink;
             item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<NightsisterMagic>();
-            item.shootSpeed = 0f;
+            item.shoot = ModContent.ProjectileType<NightsisterMagicMain>();
+            item.shootSpeed = 1f;
             item.channel = true;
+            item.noUseGraphic = true;
         }
-
+        //public override string Texture => "Trinitarian/Projectiles/Mage/Test";
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
@@ -42,10 +44,6 @@ namespace Trinitarian.Items.Weapons.Magus.Hardmode
             recipe.SetResult(this);
             recipe.AddRecipe();
         }
-
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
-        {
-            target.AddBuff(BuffID.Venom, 320);
-        }
+        //public override bool CanUseItem(Player player) => player.ownedProjectileCounts[ModContent.ProjectileType<NightsisterMagicMain>()] <= 0;
     }
 }

@@ -6,6 +6,7 @@ using Terraria.GameInput;
 using System;
 using Trinitarian.Buffs;
 using Terraria.ModLoader.IO;
+using Terraria.ID;
 
 namespace Trinitarian
 {
@@ -70,6 +71,7 @@ namespace Trinitarian
                         break;
                     case AbiltyID.Elf:
                         Main.NewText("Elf");
+                        ModAbilitys.ElfAbility(player);
                         p.AddBuff(ModContent.BuffType<Cooldown>(), 120);
                         break;
                     case AbiltyID.Paladin:

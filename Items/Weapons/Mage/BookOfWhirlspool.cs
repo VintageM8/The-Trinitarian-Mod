@@ -29,7 +29,7 @@ namespace Trinitarian.Items.Weapons.Mage
 			item.useAnimation = 40;
 			item.knockBack = 0;
 			item.value = 10000;
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.UseSound = SoundID.Item13;
 			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.autoReuse = true;

@@ -21,6 +21,7 @@ namespace Trinitarian.Items.Consumables
             item.consumable = true;
             item.autoReuse = false;
         }
+        
         public override bool UseItem(Player player)
         {
 

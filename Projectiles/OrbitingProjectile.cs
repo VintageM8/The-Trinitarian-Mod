@@ -10,12 +10,12 @@ namespace Trinitarian.Projectiles
 {
     abstract public class OrbitingProjectile : ModProjectile
     {
-        private const int State_Initializing = 0;       //This is used for initilizing all values.
-        private const int State_Spawning = 1;               
-        private const int State_Moving = 2;             //This is the state in which the projectiles moves on the circle with the fast period.
-        private const int State_Cycling = 3;            //Unused but might be needed for better controll over how the projectile moves when a new radius is set.
-        private const int State_Attacking = 4;          //Abstract state used to give the projectile Attacking behaviour or any other things like getting fired at a enemy.
-        private const int State_Empty = 5;             
+        public const int State_Initializing = 0;       //This is used for initilizing all values.
+        public const int State_Spawning = 1;
+        public const int State_Moving = 2;             //This is the state in which the projectiles moves on the circle with the fast period.
+        public const int State_Cycling = 3;            //Unused but might be needed for better controll over how the projectile moves when a new radius is set.
+        public const int State_Attacking = 4;          //Abstract state used to give the projectile Attacking behaviour or any other things like getting fired at a enemy.
+        public const int State_Empty = 5;             
 
         //This player is not neccesarily the target that gets orbited. We do need a player instance to make sure we have a suitable positions and projectile array we can use.
         public Player player;
@@ -33,6 +33,8 @@ namespace Trinitarian.Projectiles
         public Vector2 OrbitCenter;
         //The velocity of the position the projectiles are orbiting around.
         public Vector2 RelativeVelocity;
+        public int Snappingdistance = 20;
+        public int SpawnStyle = 0;
 
         public int TimerStart = 0;
         public double angle = 0;
@@ -64,8 +66,18 @@ namespace Trinitarian.Projectiles
             //This handles the spawning of the projectiles. 
             if (Proj_State == State_Initializing)
             {
-                ProjID = modplayer.OrbitingProjectileCount[ProjectileSlot];
-                modplayer.OrbitingProjectile[ProjectileSlot, modplayer.OrbitingProjectileCount[ProjectileSlot]] = projectile;
+                if (SpawnStyle == 0 && modplayer.OrbitingProjectileCount[ProjectileSlot] == 1)
+                {
+                    ProjID = 0;
+                    modplayer.OrbitingProjectile[ProjectileSlot, 0].localAI[0] = 1;
+                    modplayer.OrbitingProjectile[ProjectileSlot, 1] = modplayer.OrbitingProjectile[ProjectileSlot, 0];
+                    modplayer.OrbitingProjectile[ProjectileSlot, 0] = projectile;
+                }
+                else
+                {
+                    ProjID = modplayer.OrbitingProjectileCount[ProjectileSlot];
+                    modplayer.OrbitingProjectile[ProjectileSlot, modplayer.OrbitingProjectileCount[ProjectileSlot]] = projectile;
+                }
                 modplayer.OrbitingProjectileCount[ProjectileSlot]++;
                 //Make sure to update the array whenever the ProjectileSlot of projectiles changes.
                 GenerateProjectilePositions();
@@ -90,7 +102,7 @@ namespace Trinitarian.Projectiles
                 Vector2 WantedPosition = modplayer.OrbitingProjectilePositions[ProjectileSlot, ProjNumber - (int)ProjID - 1];
                 //Snapping distance of 20 meaning that once the projectile gets within 20 pixels of the ideal position it just snapps there and stays.
                 //!!!!Make sure this ProjectileSlot is never smaller than the rotational velocity of the cirlce (the fast one).!!!!            
-                if (projectile.DistanceSQ(WantedPosition) < 20 * 20)
+                if (projectile.DistanceSQ(WantedPosition) < Snappingdistance * Snappingdistance)
                 {
                     projectile.Center = WantedPosition;
                     //once spawning is done aka we reached the correct OrbitingRadius. We can switch to using the radial movement.
@@ -191,7 +203,10 @@ namespace Trinitarian.Projectiles
             }
         }
         //Abstract Attack() method.
-        abstract public void Attack();
+        virtual public void Attack()
+        {
+
+        }
 
     }
 }
