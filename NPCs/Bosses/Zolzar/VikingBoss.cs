@@ -213,7 +213,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                     }
                     Attack_State = nextAttackstate;
                     if (AddNumber == 0) Attack_State = 0;
-                    Attack_State = 1;
+                    //Attack_State = 1;
                     npc.netUpdate = true;
                 }
                 switch (Attack_State)
