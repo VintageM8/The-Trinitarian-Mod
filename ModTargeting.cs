@@ -72,8 +72,9 @@ namespace Trinitarian
                 }
                 if (temp < delay)   //if collision happened set new speed
                 {
-                    delay = temp;
-                    projectileVel = ModTargeting.TargetPosition(target.Center + Yoffset + target.velocity * temp, npc.Center, ShotSpeed);
+                    Vector2 newPos = target.Center + Yoffset + target.velocity * temp;
+                    delay = (newPos - npc.position).Length() / ShotSpeed;
+                    projectileVel = ModTargeting.TargetPosition(newPos, npc.Center, ShotSpeed);
                 }
             }
         }
