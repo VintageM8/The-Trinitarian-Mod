@@ -110,7 +110,7 @@ namespace Trinitarian.Projectiles.Magus
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             projectile.netImportant = true;
-            projectile.penetrate = 3;
+            projectile.penetrate = -1;
             projectile.timeLeft = 300;
             ProjectileSlot = 2;
             OrbitingRadius = 150;
@@ -124,6 +124,7 @@ namespace Trinitarian.Projectiles.Magus
         {
             TrinitarianPlayer modplayer = player.GetModPlayer<TrinitarianPlayer>();
             Vector2 ProjectileVelocity = (projectile.Center - player.Center) / 3 + Main.MouseWorld - projectile.Center;
+            projectile.penetrate = 3;
             if (ProjectileVelocity != Vector2.Zero)
             {
                 ProjectileVelocity.Normalize();
