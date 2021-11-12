@@ -46,10 +46,17 @@ namespace Trinitarian.Projectiles.Mage
 			//TODO maybe enable suck for bosses
 			for (int i = 0; i < Main.npc.Length; i++)
 			{
+				TrinitarianGlobalNPC globalnpc = Main.npc[0].GetGlobalNPC<TrinitarianGlobalNPC>();
+				if (Main.npc[i].active)
+                {
+					globalnpc = Main.npc[i].GetGlobalNPC<TrinitarianGlobalNPC>();
+				}
 				if (Main.npc[i].active && projectile.DistanceSQ(Main.npc[i].Center) < SuckDist && !Main.npc[i].boss && !Main.npc[i].friendly && Main.npc[i].type != NPCID.TargetDummy)
 				{
 					Vector2 SuckAcc = projectile.Center - Main.npc[i].Center;
-					float npcSpeed = Main.npc[i].velocity.Length();
+					float npcSpeed = Main.npc[i].velocity.Length();;
+					globalnpc.gettingSucked = true;
+					Main.npc[i].noGravity = true;
 					if (SuckAcc != Vector2.Zero) SuckAcc.Normalize();
 					Main.npc[i].velocity += SuckAcc * 1/15f;
 					//40 stands for the radius at which the tornado keeps the enemy in the center
@@ -58,6 +65,12 @@ namespace Trinitarian.Projectiles.Mage
 						Main.npc[i].velocity.Normalize();
 						Main.npc[i].velocity *= npcSpeed * projectile.DistanceSQ(Main.npc[i].Center)/(40*40);
 					}
+				}
+				else if (Main.npc[i].active && globalnpc.gettingSucked)
+                {
+					Main.npc[i].velocity = Vector2.Zero;
+					globalnpc.gettingSucked = false;
+					Main.npc[i].noGravity = false;
 				}
 			}
 		}
