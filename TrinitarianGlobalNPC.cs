@@ -15,6 +15,7 @@ namespace Trinitarian
         public override bool InstancePerEntity => true;
  
         public bool drowning = false;
+        public bool nosferatu = false;
         public bool gettingSucked = false;
 
         public Vector2[] AddPositions = new Vector2[50];
@@ -22,8 +23,9 @@ namespace Trinitarian
         public override void ResetEffects(NPC npc)
         {
             drowning = false;
+            nosferatu = false;
         }
-        public override void UpdateLifeRegen(NPC npc, ref int damage)
+       public override void UpdateLifeRegen(NPC npc, ref int damage)
         {
             if (drowning)
             {
@@ -32,6 +34,15 @@ namespace Trinitarian
                     npc.lifeRegen = 0;
                 }
                 npc.lifeRegen -= 8; //change this number to how fast you want the debuff to damage the players. Every 2 is 1 hp lost per second
+            }
+
+            if (nosferatu)
+            {
+                if (npc.lifeRegen > 0)
+                {
+                    npc.lifeRegen = 0;
+                }
+                npc.lifeRegen -= 16; //change this number to how fast you want the debuff to damage the players. Every 2 is 1 hp lost per second
             }
         }
         //public override bool CheckDead(NPC npc)
