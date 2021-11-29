@@ -20,6 +20,7 @@ namespace Trinitarian
         public AbiltyID CurrentA;
         public bool canFocus = true;
         public bool drowning = false;
+        public bool nosferatu = false;
         //These are all important for the Orbiting staff. They could be used for other uses though. The orbiting staff uses at most the first 15 of the OrbitingProjectile array so the rest are free to use for other weapons.
         public int RotationTimer = 0;
         public int[] OrbitingProjectileCount = new int[5];                               //Current upadted count of how many projectiles are active.
@@ -106,10 +107,12 @@ namespace Trinitarian
         public override void ResetEffects()
         {
             drowning = false;
+            nosferatu = false;
         }
         public override void UpdateDead()
         {
             drowning = false;
+            nosferatu = false;
             //Important for Orbiting projectiles.
             for (int i = 0; i < OrbitingProjectileCount.Length; i++)
             {
@@ -142,6 +145,17 @@ namespace Trinitarian
                 player.lifeRegenTime = 0;
                 player.lifeRegen -= 8; //change this number to how fast you want the debuff to damage the players. Every 2 is 1 hp lost per second
             }
+
+             if (nosferatu)
+            {
+                if (player.lifeRegen > 0)
+                {
+                    player.lifeRegen = 0;
+                }
+                player.lifeRegenTime = 0;
+                player.lifeRegen -= 16; 
+            }
+          
         }
 
          public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
@@ -165,11 +179,34 @@ namespace Trinitarian
                 {
                     damageSource = PlayerDeathReason.ByCustomReason(player.name + " is shark food.");
                 }
+
+            if (nosferatu)
+            {
+                int messageType = Main.rand.Next(4); //the number of different types of death messages you want to have
+                if (messageType == 0 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8) //messagetype == 0
+                {
+                    damageSource = PlayerDeathReason.ByCustomReason(player.name + " could not overpower the dark.");
+                }
+                else if (messageType == 1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8) //messagetype == 1
+                {
+                    damageSource = PlayerDeathReason.ByCustomReason(player.name + " has lost all light in their soul.");
+                }
+                else if (messageType == 2 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8) //messagetype == 2 etc
+                {
+                    damageSource = PlayerDeathReason.ByCustomReason(player.name + " life has deteriorated.");
+                }
+                else if (messageType == 3 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+                {
+                    damageSource = PlayerDeathReason.ByCustomReason(player.name + " is in the hands of death.");
+                }
+            }
+       
+   
             }
             return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
          }
 
-		    public override void ModifyScreenPosition()
+        public override void ModifyScreenPosition()
         {
             if (!Main.gamePaused)
             {
