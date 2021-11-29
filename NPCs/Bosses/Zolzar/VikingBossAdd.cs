@@ -216,7 +216,8 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 						projVel.Normalize();
 					}
 					projVel *= 7;
-					Projectile.NewProjectile(npc.Center, projVel, ProjectileID.CultistBossLightningOrbArc, LightningDMG, LightningKB, Main.myPlayer, projVel.ToRotation(), AI_Timer);
+					int rand = Main.rand.Next(80);					
+					Projectile.NewProjectile(npc.Center, projVel, ProjectileID.CultistBossLightningOrbArc, LightningDMG, LightningKB, Main.myPlayer, projVel.ToRotation(), rand);
 				}
 			}
 			else
@@ -246,7 +247,8 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 					float time = 0;
 					Vector2 projVel = ModTargeting.LinearAdvancedTargeting(npc.Center, target.Center, IntSpeed, 7 * 4, ref time);
 					ModTargeting.FallingTargeting(npc, target, new Vector2(0, -28), 7 * 4, ref time, ref projVel);
-					Projectile.NewProjectile(npc.Center, projVel / 4, ProjectileID.CultistBossLightningOrbArc, LightningDMG, LightningKB, Main.myPlayer, projVel.ToRotation(), AI_Timer);
+					int rand = Main.rand.Next(80);
+					Projectile.NewProjectile(npc.Center, projVel / 4, ProjectileID.CultistBossLightningOrbArc, LightningDMG, LightningKB, Main.myPlayer, projVel.ToRotation(), rand);
 				}
 
 			}
@@ -326,12 +328,9 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 			{
 				npc.frame.Y = 0; // Reset back to default
 			}
-
 			npc.spriteDirection = factor;
 		}
-		//this is probably really scuffed. Id handles the the reordering of the adds once one of them dies. I wrote the algorythm for reordering them but forgot that the way the spots are assigned is such that AddID 0 goes to the last spot on the circle.
-		//that lead to them rotating against the spinning direction which looked ugly. So i just fixed it by shifting the array to the left by one and then just overriding the AddIDs. The shifting makes it so the try to align with the previous point instead of the next one wich fixes it. 
-		//This logic can probably be reworked but it's important that the direction the adds move in after they get reassigned is in the direction of the spin. Because it looks really bad if thats not the case. So carefull !!!!
+		
 		public override bool CheckDead()
 		{
 			NPC Owner = Main.npc[(int)AI_Owner];

@@ -46,22 +46,59 @@ namespace Trinitarian.Projectiles.Mage
 			//TODO maybe enable suck for bosses
 			for (int i = 0; i < Main.npc.Length; i++)
 			{
+				TrinitarianGlobalNPC globalnpc = Main.npc[0].GetGlobalNPC<TrinitarianGlobalNPC>();
+				if (Main.npc[i].active)
+                {
+					globalnpc = Main.npc[i].GetGlobalNPC<TrinitarianGlobalNPC>();
+				}
 				if (Main.npc[i].active && projectile.DistanceSQ(Main.npc[i].Center) < SuckDist && !Main.npc[i].boss && !Main.npc[i].friendly && Main.npc[i].type != NPCID.TargetDummy)
 				{
+					globalnpc = Main.npc[i].GetGlobalNPC<TrinitarianGlobalNPC>();
 					Vector2 SuckAcc = projectile.Center - Main.npc[i].Center;
-					float npcSpeed = Main.npc[i].velocity.Length();
+					float npcSpeed = Main.npc[i].velocity.Length();;
+					globalnpc.gettingSucked = true;
+					Main.npc[i].noGravity = true;
 					if (SuckAcc != Vector2.Zero) SuckAcc.Normalize();
-					Main.npc[i].velocity += SuckAcc * 1/15f;
+					Main.npc[i].velocity += SuckAcc * 1/10f;
 					//40 stands for the radius at which the tornado keeps the enemy in the center
 					if (Main.npc[i].velocity != Vector2.Zero && projectile.DistanceSQ(Main.npc[i].Center) < 40*40)
                     {
 						Main.npc[i].velocity.Normalize();
 						Main.npc[i].velocity *= npcSpeed * projectile.DistanceSQ(Main.npc[i].Center)/(40*40);
 					}
+					else if (Main.npc[i].velocity.LengthSquared() > 6 * 6 && Main.npc[i].velocity != Vector2.Zero)
+                    {
+						Main.npc[i].velocity.Normalize();
+						Main.npc[i].velocity *= 6;
+					}
+				}
+				else if (Main.npc[i].active && globalnpc.gettingSucked)
+                {
+					Main.npc[i].velocity = Vector2.Zero;
+					globalnpc.gettingSucked = false;
+					Main.npc[i].noGravity = false;
 				}
 			}
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override void Kill(int timeLeft)
+        {
+			for (int i = 0; i < Main.npc.Length; i++)
+			{
+				TrinitarianGlobalNPC globalnpc = Main.npc[0].GetGlobalNPC<TrinitarianGlobalNPC>();
+				if (Main.npc[i].active)
+				{
+					globalnpc = Main.npc[i].GetGlobalNPC<TrinitarianGlobalNPC>();
+				}
+				if (Main.npc[i].active && projectile.DistanceSQ(Main.npc[i].Center) < SuckDist && globalnpc.gettingSucked && !Main.npc[i].boss && !Main.npc[i].friendly && Main.npc[i].type != NPCID.TargetDummy)
+				{
+					globalnpc = Main.npc[i].GetGlobalNPC<TrinitarianGlobalNPC>();
+					Main.npc[i].velocity = Vector2.Zero;
+					globalnpc.gettingSucked = false;
+					Main.npc[i].noGravity = false;
+				}
+			}
+		}
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			Texture2D texture = ModContent.GetTexture("Trinitarian/Projectiles/Mage/WaternadoTemp");
 			Color drawColor = projectile.GetAlpha(lightColor);
