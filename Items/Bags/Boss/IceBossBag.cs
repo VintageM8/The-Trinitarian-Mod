@@ -1,10 +1,10 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Trinitarian.Items.Weapons.Mage;
-using Trinitarian.Items.Weapons.Melee;
+using Trinitarian.Items.Weapons.Mage.PreHardmode;
+using Trinitarian.Items.Weapons.Melee.PreHardmode;
 using Trinitarian.Items.Weapons.Ranged;
-using Trinitarian.Items.Weapons.Summoner;
+using Trinitarian.Items.Weapons.Summoner.PreHardmode;
 using Trinitarian.NPCs.Bosses;
 
 namespace Trinitarian.Items.Bags.Boss
