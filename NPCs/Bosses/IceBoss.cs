@@ -29,7 +29,7 @@ namespace Trinitarian.NPCs.Bosses
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Njor, the Frozen Elemental");
-            Main.npcFrameCount[npc.type] = 6;
+            Main.npcFrameCount[npc.type] = 1;
         }
 
         public override void SetDefaults()
