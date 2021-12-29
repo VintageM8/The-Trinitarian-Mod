@@ -25,7 +25,7 @@ namespace Trinitarian.Races {
         public Race CurrentRace = new Norace();      
         public override void PreUpdateBuffs()
         {
-            Main.NewText($"{CurrentRace.GetCurrentRace()}");
+       //     Main.NewText($"{CurrentRace.GetCurrentRace()}");
             CurrentRace.DoRaceChanges(player);
             CurrentRace.Passive(player);
         }
