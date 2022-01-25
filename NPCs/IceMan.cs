@@ -1,7 +1,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Trinitarian.Items.Materials.Parts;
+using Microsoft.Xna.Framework;
 
 namespace Trinitarian.NPCs
 {
@@ -41,6 +41,18 @@ namespace Trinitarian.NPCs
             }
         }
 
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (Main.hardMode)
+            {
+                return spawnInfo.player.ZoneSnow && !Main.dayTime ? .1f : 0f;
+            }
+            else
+            {
+                return 0f;
+            }
+        }
+
         public override void FindFrame(int frameHeight)
         {
             npc.spriteDirection = -npc.direction;
@@ -55,15 +67,5 @@ namespace Trinitarian.NPCs
                 npc.frame.Y = 0; // Reset back to default
             }
         }
-
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-            if (!spawnInfo.player.ZoneSnow || !Main.hardMode)
-            {
-                return 7f;
-            }
-            return 0.7f;
-        }
-
     }
 }

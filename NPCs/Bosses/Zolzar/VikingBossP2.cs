@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Trinitarian.Projectiles.Boss.Zolzar;
+using Trinitarian.Items.Materials.Parts;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
@@ -29,14 +30,6 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
             // Afterimage effect
             NPCID.Sets.TrailCacheLength[npc.type] = 7;
             NPCID.Sets.TrailingMode[npc.type] = 1;
-
-            // Reduced size
-            npc.width = 368;
-            npc.height = 338;
-
-            // Actual dimensions
-            //npc.width = 368;
-            //npc.height = 338;
 
             npc.aiStyle = -1;
             npc.width = 102;
@@ -82,7 +75,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
         public override void AI()
         {
             StopHeal--;
-            // Death animation code
+            // Messages be delete soon
             if (npc.ai[3] > 0f)
             {
                 npc.velocity = Vector2.Zero;
@@ -269,6 +262,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(npc.Center, direction * shootSpeed, ModContent.ProjectileType<LightningScythe>(), npc.damage / 80, 3f, Main.myPlayer, 0, 0);
+                                Projectile.NewProjectile(npc.Center, direction * shootSpeed, ModContent.ProjectileType<VikingBlast>(), npc.damage / 80, 3f, Main.myPlayer, 0, 0);
                             }
                         }
 
@@ -309,8 +303,8 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
                                         float ProjectileSpawnX = npc.Center.X + 150 + (333 * i);
-                                        Projectile.NewProjectile(new Vector2(ProjectileSpawnX, npc.TopLeft.Y - 50), Vector2.UnitY * 5, ProjectileID.CultistBossLightningOrb, 55, 1f, Main.myPlayer, 0, 1);
-                                        Projectile.NewProjectile(new Vector2(ProjectileSpawnX, npc.BottomLeft.Y + 50), -Vector2.UnitY * 5, ModContent.ProjectileType<LightningScythe>(), 55, 1f, Main.myPlayer, 0, 1);
+                                        Projectile.NewProjectile(new Vector2(ProjectileSpawnX, npc.TopLeft.Y - 50), Vector2.UnitY * 5, ProjectileID.CultistBossLightningOrbArc, 55, 1f, Main.myPlayer, 0, 1);
+                                        Projectile.NewProjectile(new Vector2(ProjectileSpawnX, npc.BottomLeft.Y + 50), -Vector2.UnitY * 5, ModContent.ProjectileType<NorseRune>(), 55, 1f, Main.myPlayer, 0, 1);
                                     }
                                 }
                             }
@@ -321,7 +315,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
                                         float ProjectileSpawnX = npc.Center.X - 150 - (333 * i);
-                                        Projectile.NewProjectile(new Vector2(ProjectileSpawnX, npc.TopRight.Y - 50), Vector2.UnitY * 5, ProjectileID.CultistBossLightningOrb, 55, 1f, Main.myPlayer, 0, 1);
+                                        Projectile.NewProjectile(new Vector2(ProjectileSpawnX, npc.TopRight.Y - 50), Vector2.UnitY * 5, ProjectileID.CultistBossLightningOrbArc, 55, 1f, Main.myPlayer, 0, 1);
                                         Projectile.NewProjectile(new Vector2(ProjectileSpawnX, npc.BottomRight.Y + 50), -Vector2.UnitY * 5, ModContent.ProjectileType<LightningScythe>(), 55, 1f, Main.myPlayer, 0, 1);
                                     }
                                 }
@@ -349,6 +343,8 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                         {
                             Projectile.NewProjectile(playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<LightningScythe>(), 26, 2.5f, Main.myPlayer, 0f, 0f);
                             Projectile.NewProjectile(playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<ThorLightning>(), 26, 2.5f, Main.myPlayer, 0f, 0f);
+                            Projectile.NewProjectile(playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<LightningCrystal>(), 26, 2.5f, Main.myPlayer, 0f, 0f);
+                            Projectile.NewProjectile(playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<LightningCrystal>(), 26, 2.5f, Main.myPlayer, 0f, 0f);
                         }
                     }
                     if (npc.ai[1] > 240)
@@ -357,7 +353,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                         npc.ai[1] = 0;
                     }
                     break;
-                case 4: // more lightning scythes
+                case 4: // more attacks
                     {
                         Vector2 moveTo = player.Center;
                         moveTo.X += 50 * (npc.Center.X < moveTo.X ? -1 : 1);
@@ -388,7 +384,8 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                                     {
                                         float ProjectileSpawnX = npc.Center.X + 150 + (333 * i);
                                         Projectile.NewProjectile(new Vector2(ProjectileSpawnX, npc.TopLeft.Y - 50), Vector2.UnitY * 5, ModContent.ProjectileType<LightningScythe>(), 17, 1f, Main.myPlayer, 0, 1);
-                                        Projectile.NewProjectile(new Vector2(ProjectileSpawnX, npc.BottomLeft.Y + 50), -Vector2.UnitY * 5, ModContent.ProjectileType<LightningScythe>(), 17, 1f, Main.myPlayer, 0, 1);
+                                        Projectile.NewProjectile(new Vector2(ProjectileSpawnX, npc.BottomLeft.Y + 50), -Vector2.UnitY * 5, ModContent.ProjectileType<NorseRune>(), 17, 1f, Main.myPlayer, 0, 1);
+                                        Projectile.NewProjectile(new Vector2(ProjectileSpawnX, npc.BottomLeft.Y + 50), -Vector2.UnitY * 5, ModContent.ProjectileType<VikingBlast>(), 17, 1f, Main.myPlayer, 0, 1);
                                     }
                                 }
                             }
@@ -400,7 +397,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
                                     {
                                         float ProjectileSpawnX = npc.Center.X - 150 - (333 * i);
                                         Projectile.NewProjectile(new Vector2(ProjectileSpawnX, npc.TopRight.Y - 50), Vector2.UnitY * 5, ModContent.ProjectileType<LightningScythe>(), 17, 1f, Main.myPlayer, 0, 1);
-                                        Projectile.NewProjectile(new Vector2(ProjectileSpawnX, npc.BottomRight.Y + 50), -Vector2.UnitY * 5, ModContent.ProjectileType<LightningScythe>(), 17, 1f, Main.myPlayer, 0, 1);
+                                        Projectile.NewProjectile(new Vector2(ProjectileSpawnX, npc.BottomRight.Y + 50), -Vector2.UnitY * 5, ModContent.ProjectileType<VikingBlast>(), 17, 1f, Main.myPlayer, 0, 1);
                                     }
                                 }
                             }
@@ -460,11 +457,16 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
 
         public override void NPCLoot()
         {
-            //void
+             int choice = Main.rand.Next(1);
+                // Always drops one of:
+                if (choice == 1) 
+                {
+                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<UlvkilSoul>());
+                }
         }
         public override void BossLoot(ref string name, ref int potionType)
         {
-            potionType = ItemID.LesserHealingPotion;
+            potionType = ItemID.GreaterHealingPotion;
         }
     }
 }

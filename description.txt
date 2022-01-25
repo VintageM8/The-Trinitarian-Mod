@@ -1,23 +1,25 @@
-Welcome to Trinitarian Mod. (This mod has lost several content, most has been restored!!!!)
-The Trinitarian Mod is a small genreal content mod that focuses on spicing up your playthrough. The Trinitarian mod aims to
-revamp all biome content, make a complete new soundtrack, improve upon the lore, and amongst other things. 
+Welcome to Trinitarian Mod.
+The Trinitarian Mod is a general content mod that focuses content and spicing up your playthrough. 
+The mod plans to update and enhance each and every biome, add a plethora of unique items, mobs, and new RPG elements to the game. 
+Some features the mod adds in is:
+Increased RPG elements 
+-Quests
+-Class Specalties
+The Magus Class: A class focused on giving effects to both players and mobs
+Revamped Ocean and Snow biome content. (Maybe more coming)
+Re-vamped soundtrack (Most tracks are still being composed, all will be released as its own mod)
 
-Some feature the mod adds in is:
-Radiated subclass: (Soon to be the Occulist class) This subclass of weapons focuses on damage via buffs.
-Subclasses: This adds to the Terraria base classes. Each subclass adds its own pro's and con's, this is still in its infintcy, but plans to be expanded.
-Increased Biome content
-Re-vamped soundtrack (Most tracks are still being composed, all will be released on its own update)
 
+Public Beta relase 0.3.1
+-Quests 
+-Class Specalties
+-Magus class visuals 
+-Kinda balanced progression
+Most features in this mod are in a beta build and there will be bugs. 
 
-
-Hotfix 0.2.2.1
-Added Snow biome weapons/Armors
-Added first boss
-Added muliple new mobs
-Removed a few buggy items
-
-We hope you enjoy this mod and have fun!
-
-**Planned Updates**
-Another mod merge
-Upgraded Ocean biome content
+Planned Beta 0.3.2
+-Races
+-Necromancer Class Specalty ability 
+-More progression balancing
+-More Quests
+-More Mobs

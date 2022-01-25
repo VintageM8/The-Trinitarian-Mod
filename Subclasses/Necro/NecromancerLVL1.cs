@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Trinitarian.Buffs.ClassSpecialty;
 
 namespace Trinitarian.Subclasses.Necro
 {
@@ -20,13 +21,12 @@ namespace Trinitarian.Subclasses.Necro
             item.value = Item.sellPrice(0, 0, 0, 1);
         }
 
-        public override void AddRecipes()
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Wood, 20);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this, 1);
-            recipe.AddRecipe();
+        public override void UpdateInventory(Player player)
+		{
+			if (base.item.favorited)
+			{
+               player.AddBuff(ModContent.BuffType<NecroHeal>(), 60);
+            }
         }
     }
 }

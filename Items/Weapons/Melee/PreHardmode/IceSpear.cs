@@ -9,7 +9,7 @@ namespace Trinitarian.Items.Weapons.Melee.PreHardmode
     {
         public override void SetDefaults()
         {
-            item.damage = 23;
+            item.damage = 15;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.useAnimation = 28;
             item.useTime = 32;
@@ -26,6 +26,23 @@ namespace Trinitarian.Items.Weapons.Melee.PreHardmode
             item.noUseGraphic = true;
             item.melee = true;
             item.autoReuse = false;
+        }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddTile(TileID.Anvils);
+            recipe.AddIngredient(ModContent.ItemType<IceShards>(), 12);
+            recipe.AddIngredient(ItemID.TissueSample, 15);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+
+             ModRecipe recipe2 = new ModRecipe(mod);
+            recipe2.AddTile(TileID.Anvils);
+            recipe2.AddIngredient(ItemID.ShadowScale, 15);
+            recipe.AddIngredient(ModContent.ItemType<IceShards>(), 12);
+            recipe2.SetResult(this);
+            recipe2.AddRecipe();
         }
     }
 }

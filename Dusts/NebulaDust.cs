@@ -1,10 +1,11 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Trinitarian.Dusts
 {
-    public class NebulaDust : ModDust
-    {
+	public class NebulaDust : ModDust
+	{
         public override bool MidUpdate(Dust dust)
         {
             if (!dust.noGravity)

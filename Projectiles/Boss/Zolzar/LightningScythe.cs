@@ -57,14 +57,14 @@ namespace Trinitarian.Projectiles.Boss.Zolzar
 
             if (!reverseDirection)
             {
-                if (projectile.ai[0] == 60) 
+                if (projectile.ai[0] == 60)
                 {
                     projectile.velocity = storeVelocity;
                 }
 
                 if (projectile.ai[0] > 66)
                 {
-                    if (projectile.ai[0] % 15 == 0) 
+                    if (projectile.ai[0] % 15 == 0)
                     {
                         projectile.velocity *= 1.25f;
                     }
@@ -80,18 +80,31 @@ namespace Trinitarian.Projectiles.Boss.Zolzar
             {
                 if (projectile.ai[0] == 161)
                 {
-                    
+
                     projectile.velocity = storeVelocity * -1;
                 }
 
                 if (projectile.ai[0] > 226)
                 {
-                    if (projectile.ai[0] % 15 == 0) 
+                    if (projectile.ai[0] % 15 == 0)
                     {
                         projectile.velocity *= 1.25f;
                     }
                 }
             }
+        }
+
+        public override void Kill(int TimeLeft)
+        {
+            for (int i = 0; i < 30; i++)
+                Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Smoke);
+            Main.PlaySound(SoundID.Dig, projectile.position);
+            for (int i = 0; i < Main.rand.Next(3, 5); i++)
+            {
+                Vector2 perturbedSpeed = projectile.velocity.RotatedByRandom(MathHelper.ToRadians(360));
+                Projectile.NewProjectile(projectile.position.X, projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ProjectileID.CultistBossLightningOrb, 40, 5f, projectile.owner);
+            }
+
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

@@ -33,9 +33,17 @@ namespace Trinitarian.Items.Armor.RadiatedSubclass
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<OceanBar>(), 5);
+            recipe.AddIngredient(ItemID.TissueSample, 5);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
+
+              ModRecipe recipe2 = new ModRecipe(mod);
+            recipe2.AddTile(TileID.Anvils);
+            recipe2.AddIngredient(ItemID.ShadowScale, 5);
+            recipe.AddIngredient(ModContent.ItemType<OceanBar>(), 5);
+            recipe2.SetResult(this);
+            recipe2.AddRecipe();
         }
     }
 }

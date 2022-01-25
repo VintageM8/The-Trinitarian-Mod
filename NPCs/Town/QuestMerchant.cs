@@ -1,13 +1,18 @@
-﻿using Trinitarian.Quests.Snow;
-using Trinitarian.Quests.Ocean;
+﻿using Trinitarian.Quests.Hunts;
+using Trinitarian.Quests.Mob.ChaosScout;
+using Trinitarian.Quests.Mob.FrostedSpirit;
+using Trinitarian.Quests.Mob.Sludge;
+using Trinitarian.Quests.Mob.ForestEye;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Trinitarian.Items.QuestItems.Paladins;
-using Trinitarian.Items.QuestItems.Wizard;
+using Trinitarian.Subclasses.Necro;
+using Trinitarian.Subclasses.Paladin;
+using Trinitarian.Subclasses.Wizard;
+using Trinitarian.Subclasses.Elf;
 
 namespace OvermorrowMod.NPCs.Town
 {
@@ -69,11 +74,12 @@ namespace OvermorrowMod.NPCs.Town
             List<string> dialogue = new List<string>
             {
                 "You seek quests, well here I am.",
-                "Adventure you seek, death you shall have.",
-                "The world is full of adventure",
+                "Adventure you seek, adventure I give.",
+                "The world is full of unruly creatures",
                 "You wouldn't happen to know anybody named [Redacted] would you?",
                 "You want quests, I can supply you.",
                 "Beware of Vintage's alt Lucy, she brings trouble.", 
+                "Some mobs can open diffrent uiverses and cause chaos in our own. They must be destroyed.", 
             };
 
             return Main.rand.Next(dialogue);
@@ -81,21 +87,64 @@ namespace OvermorrowMod.NPCs.Town
 
         public override void SetupShop(Chest shop, ref int nextSlot)
         {
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<OceanQuestBag>());
+            //Starter Quests
+            shop.item[nextSlot].SetDefaults(ModContent.ItemType<DarkInvasion>());
             nextSlot++;
 
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<SnowQuestBag>());
+            shop.item[nextSlot].SetDefaults(ModContent.ItemType<WinterDepths>());
             nextSlot++;
 
-            if (Main.LocalPlayer.HasItem(ModContent.ItemType<PaladinToken>()))
+            shop.item[nextSlot].SetDefaults(ModContent.ItemType<SludgyMess>());
+            nextSlot++;
+
+            shop.item[nextSlot].SetDefaults(ModContent.ItemType<ForestFraud>());
+            nextSlot++;
+
+            if (Main.LocalPlayer.HasItem(ModContent.ItemType<WinterDepths>()))
             {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<PaladinScroll>());
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<UlrichStone>());
                 nextSlot++;
             }
 
-            if (Main.LocalPlayer.HasItem(ModContent.ItemType<WizardToken>()))
+            if (Main.LocalPlayer.HasItem(ModContent.ItemType<FrozenRemains>()))
             {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<FrozenHeart>());
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<WizardLVL1>());
+                nextSlot++;
+            }
+
+            if (Main.LocalPlayer.HasItem(ModContent.ItemType<DarkInvasion>()))
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<CallofDarkness>());
+                nextSlot++;
+            }
+
+            if (Main.LocalPlayer.HasItem(ModContent.ItemType<ChaosSoul>()))
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<NecromancerLVL1>());
+                nextSlot++;
+            }
+
+            if (Main.LocalPlayer.HasItem(ModContent.ItemType<SludgyMess>()))
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<UnholyGel>());
+                nextSlot++;
+            }
+
+            if (Main.LocalPlayer.HasItem(ModContent.ItemType<DarkSludge>()))
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<PaladinLVL1>());
+                nextSlot++;
+            }
+
+            if (Main.LocalPlayer.HasItem(ModContent.ItemType<ForestFraud>()))
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<CryofTree>());
+                nextSlot++;
+            }
+
+            if (Main.LocalPlayer.HasItem(ModContent.ItemType<Pupil>()))
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<ElfLVL1>());
                 nextSlot++;
             }
         }

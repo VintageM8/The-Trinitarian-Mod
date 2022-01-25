@@ -4,14 +4,23 @@ using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Terraria.GameInput;
 using System;
+using System.IO;
+using System.Linq;
+using System.Collections.Generic;
 using Trinitarian.Buffs;
 using Terraria.ModLoader.IO;
 using Terraria.ID;
+using Terraria.Localization;
+using Trinitarian.Items.Accessories.Mage;
+using Trinitarian.Projectiles.Magus.Runes;
+using Trinitarian.Projectiles.Abilltys;
+using Trinitarian.Projectiles.Mage;
 
 namespace Trinitarian
 {
 	public class TrinitarianPlayer : ModPlayer
 	{
+        //Shit for shit
 		public int TitleID;
 		public bool FocusBoss;
 	    public bool ShowText;
@@ -19,8 +28,17 @@ namespace Trinitarian
 		public int ScreenShake;
         public AbiltyID CurrentA;
         public bool canFocus = true;
+
+        //Buffs
         public bool drowning = false;
         public bool nosferatu = false;
+        public bool WizardBuff = false;
+
+        //More Buffs
+        public bool holyWrath;
+        public bool mirrorBuff;
+        public bool NecroHeal = false;
+
         //These are all important for the Orbiting staff. They could be used for other uses though. The orbiting staff uses at most the first 15 of the OrbitingProjectile array so the rest are free to use for other weapons.
         public int RotationTimer = 0;
         public int[] OrbitingProjectileCount = new int[5];                               //Current upadted count of how many projectiles are active.
@@ -28,18 +46,15 @@ namespace Trinitarian
         public Projectile[,] OrbitingProjectile = new Projectile[5, 50];                //This stores all the projectiles that are currently beeing used. A projectiles ID is equal to the index in this array.
         //End of orbiting projectile stuff.
 
+        //Accessories
+        public bool TrueHeart;
+
+        //Weapons 'n shit
+        public float ammoReduction = 1f;
+
         public Vector2[] PreviousVelocity = new Vector2[30];
         // private float amount = 0;
 
-        //fuck me
-        /* Related to non-functional boss code below
-         * Vector2 screenPositionStore;
-        private Vector2 focusTo;
-        private float towardsLength;
-        private bool holdPosition;
-        private int holdCounter = 0;
-        private int holdCameraLength;
-        private float returnLength; */
 
         public enum AbiltyID : int         
         {    
@@ -51,7 +66,8 @@ namespace Trinitarian
         }
         public override TagCompound Save()
         {
-            return new TagCompound {
+            return new TagCompound 
+            {
 				{"CurrentA", (int)CurrentA},
             };
         }
@@ -73,11 +89,13 @@ namespace Trinitarian
                     case AbiltyID.Elf:
                         Main.NewText("Elf");
                         ModAbilitys.ElfAbility(player);
-                        p.AddBuff(ModContent.BuffType<Cooldown>(), 120);
+                        p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
+                          Projectile.NewProjectile(Main.MouseWorld+ new Vector2(0,-50), new Vector2(0, 0), ModContent.ProjectileType<ElfAbilityMirror>(), 10, 0f, p.whoAmI);
                         break;
                     case AbiltyID.Paladin:
                         Main.NewText("Paladin");
                         p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
+                        Projectile.NewProjectile(Main.MouseWorld+ new Vector2(0,-50), new Vector2(0, 0), ModContent.ProjectileType<LightSpawner>(), 10, 0f, p.whoAmI);
                         break;
                     case AbiltyID.Necromancer:
                         Main.NewText("Necromancer");
@@ -86,6 +104,7 @@ namespace Trinitarian
                     case AbiltyID.Wizard:
                         Main.NewText("Wizard");
                         p.AddBuff(ModContent.BuffType<Cooldown>(), 120);
+                        Projectile.NewProjectile(Main.MouseWorld+ new Vector2(0,-50), new Vector2(0, 0), ModContent.ProjectileType<ElementalStormBottom>(), 10, 0f, p.whoAmI);
                         break;
                     default:
                         Main.NewText("That wasnt supposed to happen \n Your abilty isnt set to anything, or no abilty!", new Color(255, 0, 0));
@@ -106,8 +125,21 @@ namespace Trinitarian
 
         public override void ResetEffects()
         {
+            //Buffs
             drowning = false;
             nosferatu = false;
+            mirrorBuff = false;
+            WizardBuff = false;
+
+            //More Buffs
+            holyWrath = false;
+            NecroHeal = false;
+
+            //Accessories
+            TrueHeart = false;
+
+            //Weapons
+            ammoReduction = 1f;
         }
         public override void UpdateDead()
         {
@@ -203,6 +235,14 @@ namespace Trinitarian
             return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
          }
 
+        public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
+        {
+            if (mirrorBuff)
+            {
+                damage /= 2;
+            }
+        }
+
 		public override void ModifyScreenPosition()
         {
             if (!Main.gamePaused)
@@ -223,6 +263,148 @@ namespace Trinitarian
                 //Radius 200.
                 OrbitingProjectilePositions[0, i] = player.Center + new Vector2(200 * (float)Math.Cos(period * (RotationTimer + (300 / OrbitingProjectileCount[0] * i))), 200 * (float)Math.Sin(period * (RotationTimer + (300 / OrbitingProjectileCount[0] * i))));
             }
+        }
+
+        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
+        {
+            if (TrueHeart)
+            {
+                int projectiles = 3;
+                if (Main.netMode != NetmodeID.MultiplayerClient && Main.myPlayer == player.whoAmI)
+                {
+                    for (int i = 0; i < projectiles; i++)
+                    {
+                        Projectile.NewProjectile(player.Center, new Vector2(7).RotatedBy(MathHelper.ToRadians((360 / projectiles) * i + i)), ModContent.ProjectileType<BloodRune>(), 19, 2, player.whoAmI);
+                    }
+                }
+            }
+
+            if (WizardBuff)
+            {
+                Main.PlaySound(SoundID.Item74);
+                int projectiles = 9;
+                for (int i = 0; i < projectiles; i++)
+                {
+                    Projectile.NewProjectile(player.Center, new Vector2(4).RotatedBy(MathHelper.ToRadians((360 / projectiles) * i + i)), ModContent.ProjectileType<OceanCurseProj>(), 60, 9, player.whoAmI);
+                }
+            }
+        }
+
+
+        public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+		{
+            if (item.melee)
+			{
+                if (holyWrath)
+                { 
+                    target.AddBuff(ModContent.BuffType<HolySmite>(), 600);
+                }
+            }
+        }
+
+        public void PickRandomAmmo(Item sItem, ref int shoot, ref float speed, ref bool canShoot, ref int Damage, ref float KnockBack, bool dontConsume = false)
+        {
+            Item item = new Item();
+            List<int> possibleAmmo = new List<int>();
+
+            for (int i = 0; i < 58; i++)
+            {
+                if (player.inventory[i].ammo == sItem.useAmmo && player.inventory[i].stack > 0)
+                {
+                    //item = player.inventory[i];
+
+                    possibleAmmo.Add(i);
+
+                    canShoot = true;
+                }
+            }
+
+            if (canShoot)
+            {
+                item = player.inventory[possibleAmmo[Main.rand.Next(possibleAmmo.Count)]];
+                speed += item.shootSpeed;
+                if (item.ranged)
+                {
+                    if (item.damage > 0)
+                    {
+                        Damage += (int)((float)item.damage * player.rangedDamage);
+                    }
+                }
+                else
+                {
+                    Damage += item.damage;
+                }
+                if (sItem.useAmmo == AmmoID.Arrow && player.archery)
+                {
+                    if (speed < 20f)
+                    {
+                        speed *= 1.2f;
+                        if (speed > 20f)
+                        {
+                            speed = 20f;
+                        }
+                    }
+                    Damage = (int)((double)((float)Damage) * 1.2);
+                }
+                KnockBack += item.knockBack;
+                shoot = item.shoot;
+                if (!dontConsume && item.maxStack > 1)
+                {
+                    item.stack--;
+                }
+                ItemLoader.PickAmmo(sItem, item, player, ref shoot, ref speed, ref Damage, ref KnockBack);
+                bool flag2 = dontConsume;
+
+                if (player.magicQuiver && sItem.useAmmo == AmmoID.Arrow && Main.rand.Next(5) == 0)
+                {
+                    flag2 = true;
+                }
+                if (player.ammoBox && Main.rand.Next(5) == 0)
+                {
+                    flag2 = true;
+                }
+                if (player.ammoPotion && Main.rand.Next(5) == 0)
+                {
+                    flag2 = true;
+                }
+
+                if (player.ammoCost80 && Main.rand.Next(5) == 0)
+                {
+                    flag2 = true;
+                }
+                if (player.ammoCost75 && Main.rand.Next(4) == 0)
+                {
+                    flag2 = true;
+                }
+                if (Main.rand.NextFloat() > ammoReduction)
+                {
+                    flag2 = true;
+                }
+                if (shoot == 85 && player.itemAnimation < player.itemAnimationMax - 6)
+                {
+                    flag2 = true;
+                }
+
+                if (!PlayerHooks.ConsumeAmmo(player, sItem, item))
+                {
+                    flag2 = true;
+                }
+                if (!ItemLoader.ConsumeAmmo(sItem, item, player))
+                {
+                    flag2 = true;
+                }
+            }
+        }
+
+        public override void OnHitAnything(float x, float y, Entity victim)
+        {
+			if(NecroHeal&& Main.rand.Next(4) == 0)
+            { 
+				int newLife = Main.rand.Next(2,6);
+                player.statLife += newLife;
+                player.HealEffect(newLife);
+                NetMessage.SendData(MessageID.SpiritHeal, -1, -1, null, player.whoAmI, newLife);
+			}
         }
     }
 }

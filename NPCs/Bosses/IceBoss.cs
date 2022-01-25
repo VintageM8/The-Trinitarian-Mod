@@ -9,7 +9,7 @@ using Trinitarian.Items.Weapons.Mage.PreHardmode;
 using Trinitarian.Items.Weapons.Melee.PreHardmode;
 using Trinitarian.Items.Weapons.Ranged;
 using Trinitarian.Items.Weapons.Summoner.PreHardmode;
-using Trinitarian.Items.Weapons.Magus.PreHardmode;
+using Trinitarian.Items.Weapons.Magus.Tomes.PreHardmode;
 
 namespace Trinitarian.NPCs.Bosses
 {
@@ -37,7 +37,7 @@ namespace Trinitarian.NPCs.Bosses
             npc.width = 136;
             npc.height = 112;
             npc.aiStyle = -1;
-            npc.damage = 24;
+            npc.damage = 8;
             npc.defense = 12;
             npc.lifeMax = 4300;
             npc.HitSound = SoundID.NPCHit23;
@@ -502,73 +502,6 @@ namespace Trinitarian.NPCs.Bosses
             }
         }
 
-        public override void FindFrame(int frameHeight)
-        {
-            npc.frameCounter++;
-
-            if (npc.frameCounter % 12f == 11f) // Ticks per frame
-            {
-                npc.frame.Y += frameHeight;
-            }
-            if (npc.frame.Y >= frameHeight * 6) // 6 is max # of frames
-            {
-                npc.frame.Y = 0; // Reset back to default
-            }
-        }
-
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-        {
-            if (npc.ai[0] != 2 && npc.ai[0] != 3 && circleactive != true)
-            {
-                Vector2 drawOrigin = new Vector2(Main.npcTexture[npc.type].Width * 0.5f, npc.height * 0.5f);
-                Texture2D texture2D16 = mod.GetTexture("NPCs/Bosses/IceBoss");
-
-
-                // this gets the npc's frame
-                Vector2 vector47 = drawOrigin;
-                Color color55 = Color.White; // This is just white lol
-                float amount10 = 0f; // I think this controls amount of color
-                int num178 = 120; // i think this controls the distance of the pulse, maybe color too, if we make it high: it is weaker
-                int num179 = 60; // changing this value makes the pulsing effect rapid when lower, and slower when higher
-
-
-                // default value
-                int num177 = 6; // ok i think this controls the number of afterimage frames
-                float num176 = 1f - (float)Math.Cos((npc.ai[1] - (float)num178) / (float)num179 * ((float)Math.PI * 2f));  // this controls pulsing effect
-                num176 /= 3f;
-                float scaleFactor10 = 7f; // Change scale factor of the pulsing effect and how far it draws outwards
-
-                Color color47 = Color.Lerp(Color.White, Color.Yellow, 0.5f);
-                color55 = Color.LightGoldenrodYellow;
-                amount10 = 1f;
-
-                // ok this is the pulsing effect drawing
-                for (int num164 = 1; num164 < num177; num164++)
-                {
-                    // these assign the color of the pulsing
-                    Color color45 = color47;
-                    color45 = Color.Lerp(color45, color55, amount10);
-                    color45 = ((ModNPC)this).npc.GetAlpha(color45);
-                    color45 *= 1f - num176; // num176 is put in here to effect the pulsing
-
-                    // num176 is used here too
-                    Vector2 vector45 = ((Entity)((ModNPC)this).npc).Center + Terraria.Utils.ToRotationVector2((float)num164 / (float)num177 * ((float)Math.PI * 2f) + ((ModNPC)this).npc.rotation) * scaleFactor10 * num176 - Main.screenPosition;
-                    vector45 -= new Vector2(texture2D16.Width, texture2D16.Height / Main.npcFrameCount[((ModNPC)this).npc.type]) * ((ModNPC)this).npc.scale / 2f;
-                    vector45 += vector47 * ((ModNPC)this).npc.scale + new Vector2(0f, 4f + ((ModNPC)this).npc.gfxOffY);
-
-                    // the actual drawing of the pulsing effect
-                    spriteBatch.Draw(texture2D16, vector45 /*- new Vector2(0, 290 / 2)*/, ((ModNPC)this).npc.frame, color45, ((ModNPC)this).npc.rotation, vector47, ((ModNPC)this).npc.scale, npc.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-                }
-            }
-
-            if (npc.ai[0] == 2 || npc.ai[0] == 3 || circleactive == true)
-            {
-                return false;
-            }
-
-            return base.PreDraw(spriteBatch, drawColor);
-        }
-
         public override void NPCLoot()
         {
 
@@ -578,7 +511,7 @@ namespace Trinitarian.NPCs.Bosses
             }
             else
             {
-                int choice = Main.rand.Next(4);
+                int choice = Main.rand.Next(5);
                 // Always drops one of:
                 if (choice == 0) // Warrior
                 {

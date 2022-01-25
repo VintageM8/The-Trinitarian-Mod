@@ -37,7 +37,7 @@ namespace Trinitarian.Items.Weapons.Ranged
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.AddIngredient(ItemID.GrenadeLauncher, 3);
-            recipe.AddIngredient(ModContent.ItemType<CyroOrb>(), 8);
+            recipe.AddIngredient(ModContent.ItemType<EnchantedIceBall>(), 2);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

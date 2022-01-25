@@ -27,13 +27,12 @@ namespace Trinitarian.NPCs
             animationType = 99;
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-            if (!spawnInfo.player.ZoneSnow || !Main.hardMode)
-            {
-                return 3f;
-            }
-            return 0.03f;
-        }
+       // public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        //{
+          //  if (Main.hardMode)
+            //{
+              //  return spawnInfo.player.ZoneSnow && !Main.dayTime ? .1f : 0f;
+            //}
+        //}
     }
 }

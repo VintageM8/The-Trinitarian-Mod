@@ -722,7 +722,7 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
         public override void NPCLoot()
         {
             TrinitarianGlobalNPC globalnpc = npc.GetGlobalNPC<TrinitarianGlobalNPC>();
-            //NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<VikingBossP2>(), 0, 0f, 0f, 0f, 0f);
+            NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<VikingBossP2>(), 0, 0f, 0f, 0f, 0f);
             for (int i = 0; i < globalnpc.Add.Length; i++)
             {
                 if (Main.npc[globalnpc.Add[i]].type == ModContent.NPCType<VikingBossAdd>())
@@ -733,11 +733,11 @@ namespace Trinitarian.NPCs.Bosses.Zolzar
             // Spawn 2nd Phase
             if (Main.netMode == NetmodeID.SinglePlayer) // Singleplayer
             {
-                Main.NewText("You have truley angred the Berserker....YOU FOOL", Color.Blue);
+                Main.NewText("You feel static in the air.", Color.Blue);
             }
             else if (Main.netMode == NetmodeID.Server) // Server
             {
-                NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("You have truley angred the Berserker...YOU FOOL"), Color.Blue);
+                NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("You feel static in the air."), Color.Blue);
             }
         }
     }

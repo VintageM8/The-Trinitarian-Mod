@@ -138,6 +138,7 @@ namespace Trinitarian
                 Generate2Algea();
             }
         }*/
+<<<<<<< HEAD
         
         public static HashSet<Point16> placedSpots;//for dwarf passive
         #region Arrays of doom
@@ -450,6 +451,34 @@ namespace Trinitarian
             for (int i = (int)(m.X); i < m.X + x; i++)
             {
                 for (int j = (int)m.Y; j < m.Y + y; j++)
+=======
+       
+
+               // WolrdMakeAlg();
+            
+           
+    
+        private void Generate2Algea()
+        {
+            int attempts = 0;
+            int Placer = ModContent.TileType<Tiles.Algae>();
+            Tile tile;
+            Tile tileL;
+            Tile tileR;
+            Tile tileBelow;
+            bool placeSuccessful = false;
+            while (!placeSuccessful)
+            {
+                attempts++;
+                // Pick a location.
+                int x = WorldGen.genRand.Next(20, Main.maxTilesX/10 - 1);
+                int y = WorldGen.genRand.Next(20, Main.maxTilesY);
+                tile = Framing.GetTileSafely(x, y);
+                tileL = Framing.GetTileSafely(x - 1, y);
+                tileR = Framing.GetTileSafely(x +1, y);
+                tileBelow = Framing.GetTileSafely(x, y + 1);
+                if ((tileBelow.type == TileID.Sand || tileBelow.type == ModContent.TileType<Tiles.Algae>() || tileR.type == ModContent.TileType<Tiles.Algae>() ||tileL.type == ModContent.TileType<Tiles.Algae>()) && tile.liquid > 0  && !tile.active())
+>>>>>>> 4c083d391a1410af701648b0c926f78c21dfc4f0
                 {
                     int Ttype;
                     Tile t = Framing.GetTileSafely(i, j);
@@ -567,6 +596,7 @@ namespace Trinitarian
                 }
             }
         }
+<<<<<<< HEAD
 
     }
     private void Generate2Algea()
@@ -626,6 +656,9 @@ namespace Trinitarian
             }
         }
 
+=======
+       
+>>>>>>> 4c083d391a1410af701648b0c926f78c21dfc4f0
     }
 
     public static bool JustPressed(Keys key)

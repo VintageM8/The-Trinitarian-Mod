@@ -40,16 +40,17 @@ namespace Trinitarian.Items.Consumables
         {
             player.GetModPlayer<TrinitarianPlayer>().FocusBoss = true;
             player.GetModPlayer<TrinitarianPlayer>().ShowText = true;
+            player.GetModPlayer<TrinitarianPlayer>().ScreenShake = 30;
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (Main.netMode == NetmodeID.SinglePlayer)
                 {
-                    Main.NewText("Ragnarök comes, your doom arrives!", 175, 75, 255);
+                    Main.NewText("The sound of thunder echoes around you...", 175, 75, 255);
                 }
                 else if (Main.netMode == NetmodeID.Server)
                 {
-                    NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Ragnarök comes, your doom arrives!"), new Color(175, 75, 255));
+                    NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("The sound of thunder echoes around you..."), new Color(175, 75, 255));
                 }
 
                 NPC.NewNPC((int)player.position.X, (int)(player.position.Y - 50f), ModContent.NPCType<VikingBoss>(), 0, 0f, 0f, 0f, 0f, 255);

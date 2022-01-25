@@ -6,7 +6,13 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Trinitarian.Subclasses.Elf;
+using Trinitarian.Subclasses.Elf.Weapon;
+using Trinitarian.Subclasses.Paladin;
+using Trinitarian.Subclasses.Paladin.Weapon;
 using Trinitarian.Subclasses.Wizard;
+using Trinitarian.Subclasses.Wizard.Weapon;
+using Trinitarian.Items.Consumables;
+using Trinitarian.Items.Weapons.Magus.Tomes.Hardmode;
 
 namespace Trinitarian.NPCs.Town
 {
@@ -53,16 +59,7 @@ namespace Trinitarian.NPCs.Town
 
         public override bool CanTownNPCSpawn(int numTownNPCs, int money)
         {
-            for (int k = 0; k < 255; k++)
-            {
-                Player player = Main.player[k];
-                if (!player.active)
-                {
-                    if (player.inventory.Any(item => item.type == ItemID.GoldBar))
-                        return true;
-                }
-            }
-            return false;
+            return NPC.downedBoss2 && Main.player.Any(x => x.active);
         }
 
         public override string TownNPCName()
@@ -75,15 +72,13 @@ namespace Trinitarian.NPCs.Town
         {
             List<string> dialogue = new List<string>
             {
-                "For a price, I can enchance your subclass.",
+                "For a price, I can enchance your class.",
                 "Overmorrow Mod? Bah, a joke of a mod.",
                 "The anarchist mod is not ran by an anarchist...funny",
                 "Calamity mod? People still play that dead and boring abomination?",
                 "Thorium....why?",
                 "Hello there.....General Kenobi",
-                "Just Req isnt a real Marvel fan :troll:",
                 "Trying to save Terraria with that gitup? Funny...",
-                "Deposed Radiance hasnt deposed their radince, disgusting",
                 "You are weak, let me make you stronger.",
                 "Strkye is a simp",
             };
@@ -91,6 +86,117 @@ namespace Trinitarian.NPCs.Town
             return Main.rand.Next(dialogue);
         }
 
+        public override void SetupShop(Chest shop, ref int nextSlot)
+        {
+            //Elf Pre-HM
+            if (Main.LocalPlayer.HasItem(ModContent.ItemType<ElfLVL1>()))
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<ElfBow>());
+                nextSlot++;
+            }
+
+            if (NPC.downedQueenBee)
+            { 
+                if (Main.LocalPlayer.HasItem(ModContent.ItemType<ElfLVL1>()))
+                {
+                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<SonForest>());
+                    nextSlot++;
+                }
+            }
+
+            if (NPC.downedBoss3)
+            { 
+                if (Main.LocalPlayer.HasItem(ModContent.ItemType<ElfLVL1>()))
+                {
+                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<BlossomedBow>());
+                    nextSlot++;
+                }
+            }
+
+            if (NPC.downedBoss3)
+            { 
+                if (Main.LocalPlayer.HasItem(ModContent.ItemType<ElfLVL1>()))
+                {
+                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<ElfItem>());
+                    nextSlot++;
+                }
+            }
+
+            //Paladin Pre-HM
+            if (Main.LocalPlayer.HasItem(ModContent.ItemType<PaladinLVL1>()))
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<HolyBlade>());
+                nextSlot++;
+            }
+
+            if (NPC.downedQueenBee)
+            { 
+                if (Main.LocalPlayer.HasItem(ModContent.ItemType<PaladinLVL1>()))
+                {
+                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<HolySpear>());
+                    nextSlot++;
+                }
+            }
+
+            if (NPC.downedBoss3)
+            { 
+                if (Main.LocalPlayer.HasItem(ModContent.ItemType<PaladinLVL1>()))
+                {
+                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<KnightSaber>());
+                    nextSlot++;
+                }
+            }
+
+            if (NPC.downedBoss3)
+            { 
+                if (Main.LocalPlayer.HasItem(ModContent.ItemType<PaladinLVL1>()))
+                {
+                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<PaladinItem>());
+                    nextSlot++;
+                }
+            }
+
+            //Wizard Pre-HM
+            if (Main.LocalPlayer.HasItem(ModContent.ItemType<WizardLVL1>()))
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<FireballStaff>());
+                nextSlot++;
+            }
+
+            if (NPC.downedQueenBee)
+            { 
+                if (Main.LocalPlayer.HasItem(ModContent.ItemType<WizardLVL1>()))
+                {
+                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<WaterStaff>());
+                    nextSlot++;
+                }
+            }
+
+            if (NPC.downedBoss3)
+            { 
+                if (Main.LocalPlayer.HasItem(ModContent.ItemType<WizardLVL1>()))
+                {
+                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<ElementalStaff>());
+                    nextSlot++;
+                }
+            }
+
+            if (NPC.downedBoss3)
+            { 
+                if (Main.LocalPlayer.HasItem(ModContent.ItemType<WizardLVL1>()))
+                {
+                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<WizardItem>());
+                    nextSlot++;
+                }
+            }
+            
+            if (NPC.downedAncientCultist)
+            { 
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<PlutonicGuide>());
+                    nextSlot++;
+            }
+        }
+  
         public override void OnChatButtonClicked(bool firstButton, ref bool shop)
         {
             if (firstButton)

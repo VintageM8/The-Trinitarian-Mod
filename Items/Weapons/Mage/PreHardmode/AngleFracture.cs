@@ -12,7 +12,7 @@ namespace Trinitarian.Items.Weapons.Mage.PreHardmode
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Angle Fracture");
+            DisplayName.SetDefault("Angel Fracture");
             Tooltip.SetDefault("A prehardmode Sky Fracture");
             Item.staff[item.type] = true;
         }
@@ -29,7 +29,7 @@ namespace Trinitarian.Items.Weapons.Mage.PreHardmode
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 4;
-            item.value = 10000;
+            item.value = Item.sellPrice(0, 1, 0, 0);
             item.rare = ItemRarityID.Green;
             item.UseSound = SoundID.Item43;
             item.autoReuse = true;

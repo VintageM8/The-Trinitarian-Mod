@@ -9,10 +9,9 @@ namespace Trinitarian.Projectiles.Ranged
 {
     public class Elfarrow : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_" + ProjectileID.UnholyArrow;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Elfarrow");
+            DisplayName.SetDefault("Elf Arrow");
         }
         public bool stopped = false;
         public override void SetDefaults()

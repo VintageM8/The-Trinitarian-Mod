@@ -17,7 +17,7 @@ namespace Trinitarian.Items.Weapons.Mage.PreHardmode
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Sharknado is a great movie :).");
-            DisplayName.SetDefault("Book of Whirlpool");
+            DisplayName.SetDefault("Book of Whirlspool");
         }
         public override void SetDefaults()
         {
@@ -29,7 +29,7 @@ namespace Trinitarian.Items.Weapons.Mage.PreHardmode
             item.useTime = 40;
             item.useAnimation = 40;
             item.knockBack = 0;
-            item.value = 10000;
+            item.value = Item.sellPrice(0, 0, 80, 0);
             item.rare = ItemRarityID.Green;
             item.UseSound = SoundID.Item13;
             item.useStyle = ItemUseStyleID.HoldingOut;

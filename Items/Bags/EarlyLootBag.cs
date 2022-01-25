@@ -33,12 +33,13 @@ namespace Trinitarian.Items.Bags
         {
             if (Main.rand.Next(4) == 0)
                 player.QuickSpawnItem(ItemID.ManaCrystal, 2);
-            player.QuickSpawnItem(ModContent.ItemType<RustyMetal>(), 10);
+            player.QuickSpawnItem(ModContent.ItemType<RustyMetal>(), 2);
             player.QuickSpawnItem(ItemID.IronBar, 3);
             if (Main.rand.Next(5) == 0)
                 player.QuickSpawnItem(ModContent.ItemType<IceShards>(), 2);
             player.QuickSpawnItem(ModContent.ItemType<FirePart>(), 1);
             if (Main.rand.Next(7) == 0)
+                player.QuickSpawnItem(ItemID.IronAnvil, 1);
                 player.QuickSpawnItem(ItemID.LifeCrystal, 1);
         }
     }

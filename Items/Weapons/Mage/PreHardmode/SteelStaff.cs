@@ -40,12 +40,14 @@ namespace Trinitarian.Items.Weapons.Mage.PreHardmode
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<SteelBar>(), 10);
             recipe.AddIngredient(ItemID.GoldBar, 2);
+            recipe.AddIngredient(ItemID.Bone, 10);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
 
             ModRecipe recipe2 = new ModRecipe(mod);
             recipe2.AddIngredient(ItemType<SteelBar>(), 10);
+            recipe2.AddIngredient(ItemID.Bone, 10);
             recipe2.AddIngredient(ItemID.PlatinumBar, 2);
             recipe2.SetResult(this);
             recipe2.AddRecipe();

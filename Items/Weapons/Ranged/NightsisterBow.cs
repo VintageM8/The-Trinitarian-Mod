@@ -14,13 +14,13 @@ namespace Trinitarian.Items.Weapons.Ranged
 
         public override void SetDefaults()
         {
-            item.damage = 14;
+            item.damage = 48;
             item.ranged = true;
             item.width = 32;
             item.height = 161;
             item.useTime = 16;
             item.useAnimation = 16;
-            item.crit = 1;
+            item.crit = 8;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 2;

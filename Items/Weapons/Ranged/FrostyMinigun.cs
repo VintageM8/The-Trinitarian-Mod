@@ -1,4 +1,6 @@
 using Terraria.ID;
+using Terraria;
+using Trinitarian.Items.Materials.Parts;
 using Terraria.ModLoader;
 
 namespace Trinitarian.Items.Weapons.Ranged
@@ -29,6 +31,25 @@ namespace Trinitarian.Items.Weapons.Ranged
             item.shoot = ProjectileID.PurificationPowder;
             item.shootSpeed = 27f;
             item.useAmmo = AmmoID.Bullet;
+        }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddTile(TileID.Anvils);
+            recipe.AddIngredient(ModContent.ItemType<IceShards>(), 4);
+            recipe.AddIngredient(ItemID.Minishark, 1);
+            recipe.AddIngredient(ItemID.TissueSample, 8);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+
+             ModRecipe recipe2 = new ModRecipe(mod);
+            recipe2.AddTile(TileID.Anvils);
+            recipe2.AddIngredient(ItemID.Minishark, 1);
+            recipe2.AddIngredient(ItemID.ShadowScale, 8);
+            recipe.AddIngredient(ModContent.ItemType<IceShards>(), 4);
+            recipe2.SetResult(this);
+            recipe2.AddRecipe();
         }
     }
 }

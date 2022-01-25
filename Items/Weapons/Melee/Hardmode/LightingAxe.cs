@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Items.Materials.Parts;
 using static Terraria.ModLoader.ModContent;
+using Trinitarian.Projectiles.Melee;
 
 namespace Trinitarian.Items.Weapons.Melee.Hardmode
 {
@@ -28,6 +29,8 @@ namespace Trinitarian.Items.Weapons.Melee.Hardmode
             item.rare = ItemRarityID.Lime;
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
+            item.shoot = ModContent.ProjectileType<LightAxe>();
+            item.shootSpeed = 10;
         }
 
         public override void AddRecipes()

@@ -10,7 +10,7 @@ namespace Trinitarian.NPCs.Ocean
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sea Snake");
-            Main.npcFrameCount[base.npc.type] = 6;
+            Main.npcFrameCount[base.npc.type] = 1;
         }
 
         public override void SetDefaults()
@@ -339,21 +339,6 @@ namespace Trinitarian.NPCs.Ocean
             else
             {
                 return 0f;
-            }
-        }
-
-        public override void FindFrame(int frameHeight)
-        {
-            npc.spriteDirection = npc.direction;
-            npc.frameCounter++;
-
-            if (npc.frameCounter % 24f == 23f)
-            {
-                npc.frame.Y += frameHeight;
-            }
-            if (npc.frame.Y >= frameHeight * 6)
-            {
-                npc.frame.Y = 0;
             }
         }
     }

@@ -4,6 +4,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Trinitarian.Buffs.Rune;
 
 namespace Trinitarian.Projectiles.Magus
 {
@@ -151,7 +152,7 @@ namespace Trinitarian.Projectiles.Magus
         {
             TrinitarianPlayer modplayer = player.GetModPlayer<TrinitarianPlayer>();
             target.AddBuff(BuffID.Venom, 320);
-
+            Main.player[projectile.owner].AddBuff(ModContent.BuffType<DarkRune>(), 300);
         }
         public override void AI()
         {
@@ -222,6 +223,7 @@ namespace Trinitarian.Projectiles.Magus
             //}
 
         }
+
         public override void Kill(int timeLeft)
         {
 

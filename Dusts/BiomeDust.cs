@@ -26,13 +26,13 @@ namespace Trinitarian.Dusts
             }
             if (Main.player[Main.myPlayer].ZoneBeach)
             {
-                dust.color = new Color(0, 86, 214);
+                dust.color = new Color(0,86, 214);
             }
             if (Main.player[Main.myPlayer].ZoneDesert)
             {
                 dust.color = new Color(156, 166, 49);
             }
-            if (Main.player[Main.myPlayer].ZoneHoly)
+            if (Main.player[Main.myPlayer].ZoneHallow)
             {
                 dust.color = new Color(0, 255, 149);
             }

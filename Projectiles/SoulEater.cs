@@ -1,6 +1,8 @@
 using Terraria;
+using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Trinitarian.Projectiles.Ranged;
 
 namespace Trinitarian.Projectiles
 {
@@ -25,8 +27,21 @@ namespace Trinitarian.Projectiles
         {
             if (Main.rand.NextBool(6))
             {
-                Dust.NewDust(projectile.Center, projectile.width, projectile.height, DustID.Blood); //Filler dust
+                Dust.NewDust(projectile.Center, projectile.width, projectile.height, 199); 
             }
         }
+
+        public override void Kill(int TimeLeft)
+		{
+			for (int i = 0; i < 30; i++)
+				Dust.NewDust(projectile.position, projectile.width, projectile.height, 199);
+			Main.PlaySound(SoundID.Dig, projectile.position);
+			for (int i = 0; i < Main.rand.Next(1, 2); i++)
+			{
+				Vector2 perturbedSpeed = projectile.velocity.RotatedByRandom(MathHelper.ToRadians(360));
+				Projectile.NewProjectile(projectile.position.X, projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<CorruptHead>(), 40, 5f, projectile.owner);
+			}
+
+		}
     }
 }

@@ -26,7 +26,7 @@ namespace Trinitarian.Items.Weapons.Ranged
             item.noMelee = true;
             item.knockBack = 6;
             item.value = 35;
-            item.rare = ItemRarityID.White;
+            item.rare = ItemRarityID.LightRed;
             item.UseSound = SoundID.Item11;
             item.autoReuse = true;
             item.shoot = ProjectileID.PurificationPowder;

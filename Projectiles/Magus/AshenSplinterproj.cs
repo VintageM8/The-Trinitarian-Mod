@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria.Localization;
+using Trinitarian.Buffs.Rune;
 
 namespace Trinitarian.Projectiles.Magus
 {
@@ -16,7 +17,7 @@ namespace Trinitarian.Projectiles.Magus
             projectile.penetrate = 1;
             projectile.height = 30;
             projectile.friendly = true;
-            projectile.light = 1f;
+            projectile.light = 0f;
             projectile.tileCollide = false;
             projectile.aiStyle = -1;
             projectile.timeLeft = 60 * 60 * 3;
@@ -41,6 +42,12 @@ namespace Trinitarian.Projectiles.Magus
                 GeneratePositionsAfterKill();
             }
         }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            Main.player[projectile.owner].AddBuff(ModContent.BuffType<UraniumRuneBuff>(), 300);
+        }
+
         public override void Attack()
         {
             Vector2 ProjectileVelocity = Main.MouseWorld - projectile.Center;

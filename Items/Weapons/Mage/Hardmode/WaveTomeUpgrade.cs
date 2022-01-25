@@ -21,18 +21,18 @@ namespace Trinitarian.Items.Weapons.Mage.Hardmode
 
         public override void SetDefaults()
         {
-            item.damage = 16;
+            item.damage = 61;
             item.magic = true;
-            item.mana = 8;
+            item.mana = 18;
             item.width = 42;
             item.height = 40;
-            item.useTime = 19;
-            item.useAnimation = 19;
+            item.useTime = 25;
+            item.useAnimation = 25;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 8;
             item.value = Item.sellPrice(0, 50, 60, 70);
-            item.rare = ItemRarityID.Red;
+            item.rare = ItemRarityID.Yellow;
             item.UseSound = SoundID.Item43;
             item.autoReuse = true;
             item.shoot = ModContent.ProjectileType<TidalWave>();
@@ -88,6 +88,8 @@ namespace Trinitarian.Items.Weapons.Mage.Hardmode
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<OceanBar>(), 4);
+            recipe.AddIngredient(ItemID.ShroomiteBar, 2);
+            recipe.AddIngredient(ModContent.ItemType<TrueStarSteel>(), 8);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();

@@ -49,7 +49,7 @@ namespace Trinitarian.Items.Weapons.Summoner.PreHardmode
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<TrueStarSteel>(), 8);
+            recipe.AddIngredient(ModContent.ItemType<StarSteel>(), 8);
             recipe.AddIngredient(ModContent.ItemType<SummonShards>(), 5);
             recipe.AddIngredient(ItemID.ObsidianRose, 1);
             recipe.AddTile(TileID.Anvils);

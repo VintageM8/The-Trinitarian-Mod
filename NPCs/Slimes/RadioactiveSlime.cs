@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Items.Materials.RadiatedSubclass;
+using Microsoft.Xna.Framework;
 
 namespace Trinitarian.NPCs.Slimes
 {
@@ -33,9 +34,34 @@ namespace Trinitarian.NPCs.Slimes
             return SpawnCondition.OverworldDaySlime.Chance * 0.3f;
         }
 
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            int dmg = 10;
+            if (npc.life > 0)
+            {
+                for (int num333 = 0; (double)num333 < dmg / (double)npc.lifeMax * 50.0; num333++)
+                {
+                    Dust.NewDust(npc.position, npc.width, npc.height, 3, hitDirection, -1f);
+                }
+                return;
+            }
+            for (int num331 = 0; num331 < 20; num331++)
+            {
+                Dust.NewDust(npc.position, npc.width, npc.height, DustID.Bone, 2.5f * (float)hitDirection, -2.5f);
+            }
+
+            Gore.NewGore(npc.position, npc.velocity, 42, npc.scale);
+            Gore.NewGore(new Vector2(npc.position.X, npc.position.Y + 20f), npc.velocity, 43, npc.scale);
+            Gore.NewGore(new Vector2(npc.position.X, npc.position.Y + 20f), npc.velocity, 43, npc.scale);
+            Gore.NewGore(new Vector2(npc.position.X, npc.position.Y + 34f), npc.velocity, 44, npc.scale);
+            Gore.NewGore(new Vector2(npc.position.X, npc.position.Y + 34f), npc.velocity, 44, npc.scale);
+        }
+
+
         public override void NPCLoot()
         {
             Item.NewItem(npc.getRect(), ModContent.ItemType<Uranium>(), 5);
+            Item.NewItem(npc.getRect(), ItemID.Gel, 2);
         }
     }
 }

@@ -2,6 +2,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Items.Materials.Bars;
+using Microsoft.Xna.Framework;
+using Trinitarian.Projectiles.Ammo;
 
 namespace Trinitarian.Items.Weapons.Ranged
 {
@@ -40,11 +42,21 @@ namespace Trinitarian.Items.Weapons.Ranged
             return !(player.itemAnimation < item.useAnimation - 2);
         }
 
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        {
+            if (type == ProjectileID.WoodenArrowFriendly)
+            {
+                type = ModContent.ProjectileType<GemArrowProj>();
+            }
+            return true;
+        }
+
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddTile(TileID.Anvils);
             recipe.AddIngredient(ModContent.ItemType<SteelBar>(), 8);
+            recipe.AddIngredient(ItemID.Bone, 12);
             recipe.AddIngredient(ItemID.Ruby, 2);
             recipe.AddIngredient(ItemID.Sapphire, 2);
             recipe.AddIngredient(ItemID.Topaz, 2);

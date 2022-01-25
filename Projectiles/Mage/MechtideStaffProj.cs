@@ -21,16 +21,10 @@ namespace Trinitarian.Projectiles.Mage
             projectile.height = 16;
             projectile.aiStyle = 29;
             projectile.friendly = true;
-            projectile.ranged = true;
+            projectile.magic = true;
+            aiType = ProjectileID.AmethystBolt;
         }
 
-        public override void AI()
-        {
-            if (Main.rand.NextBool(6))
-            {
-                Dust.NewDust(projectile.Center, projectile.width, projectile.height, DustType<Dusts.MechtideDust>());
-            }
-        }
         public override void Kill(int timeLeft)
         {
             Vector2 origin = projectile.Center;

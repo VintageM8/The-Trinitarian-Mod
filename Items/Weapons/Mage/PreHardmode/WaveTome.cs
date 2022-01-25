@@ -11,7 +11,7 @@ namespace Trinitarian.Items.Weapons.Mage.PreHardmode
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tidel Wave");
+            DisplayName.SetDefault("Tidal Wave");
             Item.staff[item.type] = true;
         }
 

@@ -20,7 +20,7 @@ namespace Trinitarian.Items.Weapons.Mage.Hardmode
 
         public override void SetDefaults()
         {
-            item.damage = 70;
+            item.damage = 60;
             item.magic = true;
             item.mana = 18;
             item.width = 42;

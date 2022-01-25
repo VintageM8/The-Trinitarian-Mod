@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Items.Materials.Parts;
 using static Terraria.ModLoader.ModContent;
+using Microsoft.Xna.Framework;
+using Trinitarian.Projectiles.Ranged;
 
 namespace Trinitarian.Items.Weapons.Ranged
 {
@@ -32,6 +34,12 @@ namespace Trinitarian.Items.Weapons.Ranged
             item.value = Item.sellPrice(gold: 78);
             item.useAmmo = AmmoID.Arrow;
         }
+
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		{
+			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<BowAxe>(), damage, knockBack, player.whoAmI);
+			return true;
+		}
 
         public override void AddRecipes()
         {

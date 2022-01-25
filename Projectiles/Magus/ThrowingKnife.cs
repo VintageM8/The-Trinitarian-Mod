@@ -4,6 +4,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Trinitarian.Buffs.Rune;
 
 namespace Trinitarian.Projectiles.Magus
 {
@@ -72,6 +73,7 @@ namespace Trinitarian.Projectiles.Magus
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[projectile.owner] = 3;
+            Main.player[projectile.owner].AddBuff(ModContent.BuffType<BlazeRune>(), 300);
         }
     }
 }

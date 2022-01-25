@@ -29,6 +29,14 @@ namespace Trinitarian.Items.Weapons.Melee.PreHardmode
             item.autoReuse = false;
         }
 
+        public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
+        {
+            if (TrinitarianLists.unholyEnemies.Contains(target.type))
+            {
+                damage = (int)(damage * 1.8f);
+            }
+        }
+
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
