@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Trinitarian.Items.Materials.Parts;
 using Trinitarian.Projectiles.Melee;
 
 namespace Trinitarian.Items.Weapons.Melee.PreHardmode
