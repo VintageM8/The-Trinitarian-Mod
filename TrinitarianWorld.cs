@@ -16,6 +16,7 @@ using Trinitarian.Races;
 using System.IO;
 using Terraria.World.Generation;
 using System;
+using Terraria.GameContent.Generation;
 
 namespace Trinitarian
 {
@@ -28,7 +29,10 @@ namespace Trinitarian
         }
         public override TagCompound Save()
         {
-
+            if (JustPressed(Keys.LeftControl))
+            {
+                MakeShipWreck(new GenerationProgress());
+            }
             int count = placedSpots.Count;
             if (count == 0) return null;
 
@@ -102,20 +106,10 @@ namespace Trinitarian
         }
         public static bool downedViking;
         public static bool downedIceBoss;
-        int Tester;
+        
         public override void PostUpdate()
         {
-            if (JustPressed(Keys.LeftAlt))
-            {
-                Tile t = Framing.GetTileSafely(Main.MouseWorld.ToTileCoordinates());
-                Main.NewText($"{t.frameX} and {t.frameY}");
-            }
-            if (JustPressed(Keys.LeftControl))
-            {
-                //WORLD GEN TEST AREA
-                //Comment the methods below on publishing if there still there 
-                MakeShipWreck((int)(Main.MouseWorld.X / 16), (int)(Main.MouseWorld.Y / 16));
-            }
+
             // Complex math copied from source code. It's weirdly specific, but whatever, it works.
             int Shouldplant = (int)MathHelper.Lerp(151, (float)151 * 2.8f, MathHelper.Clamp((float)Main.maxTilesX / 4200f - 1f, 0f, 1f));
             // Value from 151.2 to 604.8 also representing world size.
@@ -317,10 +311,26 @@ namespace Trinitarian
 { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         };
         #endregion
-        private void MakeShipWreck(int i, int j)
+        private void MakeShipWreck(GenerationProgress progress)
         {
-            
-           
+            progress.Message = "Making Ship (Trinitarian)";
+           int i = 50;
+           int j = (int)Main.worldSurface - 50;
+            mod.Logger.Info(j);
+             Tile WF = Framing.GetTileSafely(i, j);
+            while (WF.active() || WF.liquid > 5)
+            {
+                if (j < 10)
+                {
+                    mod.Logger.Error("Error Making ship, cannot find a vaild y. \n please report this error to our discord if you see it -- Trinitarian Devs");
+                    break;
+                }
+
+                mod.Logger.Info(j);
+                j--;
+                WF = Framing.GetTileSafely(i, j);
+            }
+            j -= 15;
             for (int x = 0; x < ShipShape.GetLength(0); x++)
             {
                 for (int y = 0; y < ShipShape.GetLength(1); y++)
@@ -351,6 +361,8 @@ namespace Trinitarian
                         switch (ShipWalls[x, y])
                         {
                             case 1:
+                                Tile t = Framing.GetTileSafely(i + x, j + y);
+                                t.liquid = 0;
                                 WorldGen.PlaceWall(i + x, j + y, WallID.Wood, false);
                                 break;
 
@@ -368,21 +380,12 @@ namespace Trinitarian
             };
             int Added = 0;
             Chest chest = Main.chest[GoldCapChest];
-            for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
+           foreach(int t in ChestItems)
             {
-                {
-                    if (Main.rand.NextFloat() < .25f)
-                    {
-                        if (chest.item[inventoryIndex].type == ItemID.None)
-                        {
-                            chest.item[inventoryIndex].SetDefaults(ChestItems[Added]);
-                           
-                                Added = (Added + 1) % ChestItems.Length;
-                            
-                        }
-                    }
-                }
+                Main.chest[GoldCapChest].AddItem(t, Main.rand.Next(1, 5));
             }
+           
+           
             MakeCrate(i, j);
         }
         
@@ -569,7 +572,11 @@ namespace Trinitarian
             }
         }
     }
-    private void Generate2Algea()
+        public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
+        {
+            tasks.Add(new PassLegacy("Tri Ship", MakeShipWreck));
+        }
+        private void Generate2Algea()
     {
         int attempts = 0;
         int Placer = ModContent.TileType<Tiles.Algae>();
