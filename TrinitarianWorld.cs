@@ -138,8 +138,7 @@ namespace Trinitarian
                 Generate2Algea();
             }
         }*/
-<<<<<<< HEAD
-        
+
         public static HashSet<Point16> placedSpots;//for dwarf passive
         #region Arrays of doom
         //all made with the log arrays methods, dont worry
@@ -365,7 +364,7 @@ namespace Trinitarian
             int GoldCapChest = WorldGen.PlaceChest(i + Main.rand.Next(43,48), j + 6, 21, false, 1);
             int[] ChestItems =
             {
-                5,5,4,3,2
+                ItemID.HealingPotion, ItemID.WaterBucket , ItemID.CratePotion, ItemID.SonarPotion, ItemID.JourneymanBait
             };
             int Added = 0;
             Chest chest = Main.chest[GoldCapChest];
@@ -384,9 +383,9 @@ namespace Trinitarian
                     }
                 }
             }
-           
             MakeCrate(i, j);
         }
+        
         /// <summary>
         /// Really scuffed rn, dont use outside of the place its hard coded for
         /// </summary>
@@ -451,34 +450,6 @@ namespace Trinitarian
             for (int i = (int)(m.X); i < m.X + x; i++)
             {
                 for (int j = (int)m.Y; j < m.Y + y; j++)
-=======
-       
-
-               // WolrdMakeAlg();
-            
-           
-    
-        private void Generate2Algea()
-        {
-            int attempts = 0;
-            int Placer = ModContent.TileType<Tiles.Algae>();
-            Tile tile;
-            Tile tileL;
-            Tile tileR;
-            Tile tileBelow;
-            bool placeSuccessful = false;
-            while (!placeSuccessful)
-            {
-                attempts++;
-                // Pick a location.
-                int x = WorldGen.genRand.Next(20, Main.maxTilesX/10 - 1);
-                int y = WorldGen.genRand.Next(20, Main.maxTilesY);
-                tile = Framing.GetTileSafely(x, y);
-                tileL = Framing.GetTileSafely(x - 1, y);
-                tileR = Framing.GetTileSafely(x +1, y);
-                tileBelow = Framing.GetTileSafely(x, y + 1);
-                if ((tileBelow.type == TileID.Sand || tileBelow.type == ModContent.TileType<Tiles.Algae>() || tileR.type == ModContent.TileType<Tiles.Algae>() ||tileL.type == ModContent.TileType<Tiles.Algae>()) && tile.liquid > 0  && !tile.active())
->>>>>>> 4c083d391a1410af701648b0c926f78c21dfc4f0
                 {
                     int Ttype;
                     Tile t = Framing.GetTileSafely(i, j);
@@ -497,6 +468,7 @@ namespace Trinitarian
         }
         mod.Logger.Info(s);
     }
+
         private void LogSlopes()
         {
             int Tr = 0;
@@ -596,8 +568,6 @@ namespace Trinitarian
                 }
             }
         }
-<<<<<<< HEAD
-
     }
     private void Generate2Algea()
     {
@@ -656,9 +626,7 @@ namespace Trinitarian
             }
         }
 
-=======
-       
->>>>>>> 4c083d391a1410af701648b0c926f78c21dfc4f0
+
     }
 
     public static bool JustPressed(Keys key)
