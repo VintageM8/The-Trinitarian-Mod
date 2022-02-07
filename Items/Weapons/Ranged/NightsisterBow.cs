@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,8 +11,9 @@ namespace Trinitarian.Items.Weapons.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("NightSister's Bow");
+            Tooltip.SetDefault("Holding left click summons arrows around you, which can damage enemys. \n Realsing click launch all of them at your cursor  \n converts certain arrows to wooden ones");
         }
-
+        
         public override void SetDefaults()
         {
             item.damage = 48;
@@ -23,13 +25,15 @@ namespace Trinitarian.Items.Weapons.Ranged
             item.crit = 8;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
+            item.shoot = ProjectileID.WoodenArrowFriendly;
             item.knockBack = 2;
             item.value = Item.sellPrice(0, 0, 60, 0);
             item.rare = ItemRarityID.Blue;
             item.UseSound = SoundID.Item5;
             item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<NightLaser>();
+            item.useAmmo = AmmoID.Arrow;
             item.shootSpeed = 20f;
+            item.channel = true;
         }
 
         public override void AddRecipes()
@@ -41,6 +45,21 @@ namespace Trinitarian.Items.Weapons.Ranged
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
+        }
+        private readonly int[] BrokenOnes =
+       {
+            ProjectileID.JestersArrow,
+            ProjectileID.PhantasmArrow
+        };
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        {
+            foreach(int j in BrokenOnes)
+            {
+                type = (type == j ? ProjectileID.WoodenArrowFriendly : type);
+            }
+           int i = Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
+            TrinitarianGlobalProjectile.NightBowArrows.Add(i);
+            return false;
         }
     }
 }

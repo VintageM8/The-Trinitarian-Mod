@@ -27,12 +27,10 @@ namespace Trinitarian
         {
             placedSpots = new HashSet<Point16>();
         }
+        int Teseter;
         public override TagCompound Save()
         {
-            if (JustPressed(Keys.LeftControl))
-            {
-                MakeShipWreck(new GenerationProgress());
-            }
+
             int count = placedSpots.Count;
             if (count == 0) return null;
 
@@ -46,6 +44,8 @@ namespace Trinitarian
                 {"TriPoints", Point16List}
             };
         }
+        
+
         public override void NetReceive(BinaryReader reader)
         {
             int count = reader.ReadInt32();
@@ -106,10 +106,10 @@ namespace Trinitarian
         }
         public static bool downedViking;
         public static bool downedIceBoss;
-        
+       
         public override void PostUpdate()
         {
-
+            
             // Complex math copied from source code. It's weirdly specific, but whatever, it works.
             int Shouldplant = (int)MathHelper.Lerp(151, (float)151 * 2.8f, MathHelper.Clamp((float)Main.maxTilesX / 4200f - 1f, 0f, 1f));
             // Value from 151.2 to 604.8 also representing world size.
@@ -193,8 +193,8 @@ namespace Trinitarian
 { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
 { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
 };
-      private readonly int[,] ShipWalls =
-        {
+        private readonly int[,] ShipWalls =
+          {
 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
@@ -251,9 +251,9 @@ namespace Trinitarian
 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,}
         };
-       
+
         private readonly int[,] ShipShape =
-         {  
+         {
 { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 { 0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 { 0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -314,10 +314,10 @@ namespace Trinitarian
         private void MakeShipWreck(GenerationProgress progress)
         {
             progress.Message = "Making Ship (Trinitarian)";
-           int i = 50;
-           int j = (int)Main.worldSurface - 50;
+            int i = 50;
+            int j = (int)Main.worldSurface - 50;
             mod.Logger.Info(j);
-             Tile WF = Framing.GetTileSafely(i, j);
+            Tile WF = Framing.GetTileSafely(i, j);
             while (WF.active() || WF.liquid > 5)
             {
                 if (j < 10)
@@ -373,22 +373,22 @@ namespace Trinitarian
                 }
             }
             //5, 14, 17
-            int GoldCapChest = WorldGen.PlaceChest(i + Main.rand.Next(43,48), j + 6, 21, false, 1);
+            int GoldCapChest = WorldGen.PlaceChest(i + Main.rand.Next(43, 48), j + 6, 21, false, 1);
             int[] ChestItems =
             {
                 ItemID.HealingPotion, ItemID.WaterBucket , ItemID.CratePotion, ItemID.SonarPotion, ItemID.JourneymanBait
             };
             int Added = 0;
             Chest chest = Main.chest[GoldCapChest];
-           foreach(int t in ChestItems)
+            foreach (int t in ChestItems)
             {
                 Main.chest[GoldCapChest].AddItem(t, Main.rand.Next(1, 5));
             }
-           
-           
+
+
             MakeCrate(i, j);
         }
-        
+
         /// <summary>
         /// Really scuffed rn, dont use outside of the place its hard coded for
         /// </summary>
@@ -412,44 +412,44 @@ namespace Trinitarian
                 WorldGen.Place2x2(i + it, j + 10, TileID.FishingCrate, 0);
             }
 
-            WorldGen.Place3x2(i + 28, j + 14, TileID.Tables,16);
+            WorldGen.Place3x2(i + 28, j + 14, TileID.Tables, 16);
             WorldGen.PlaceChest(i + 25, j + 14, 21, false, 5);
             WorldGen.PlaceChest(i + 29, j + 14, 21, false, 5);
             int CurrentR = 12;
-            for(int c = 0; c < Main.rand.Next(2, 4); c++)
+            for (int c = 0; c < Main.rand.Next(2, 4); c++)
             {
                 CurrentR += Main.rand.Next(5, 10);
-                WorldGen.Place2x2Horizontal(i + CurrentR, j + 17, TileID.FishingCrate, Main.rand.NextBool(5) ? 2 :1);
+                WorldGen.Place2x2Horizontal(i + CurrentR, j + 17, TileID.FishingCrate, Main.rand.NextBool(5) ? 2 : 1);
             }
         }
         private void GenRoom(int x, int y, int w, int h, int type = TileID.WoodBlock, int wall = WallID.Wood, bool door = false, bool left = false)
-    {
-        Point point = new Point(x, y);
-        WorldUtils.Gen(point, new Shapes.Rectangle(w, h), Actions.Chain(new GenAction[]{
+        {
+            Point point = new Point(x, y);
+            WorldUtils.Gen(point, new Shapes.Rectangle(w, h), Actions.Chain(new GenAction[]{
              new Actions.SetTile((ushort)type),
             }));
-        // new Actions.PlaceWall(WallID.Wood),
-        WorldUtils.Gen(new Point(point.X + 1, point.Y + 1), new Shapes.Rectangle(w - 2, h - 2), Actions.Chain(new GenAction[]{
+            // new Actions.PlaceWall(WallID.Wood),
+            WorldUtils.Gen(new Point(point.X + 1, point.Y + 1), new Shapes.Rectangle(w - 2, h - 2), Actions.Chain(new GenAction[]{
              new Actions.ClearTile(),
              new Actions.PlaceWall((byte)wall),
             }));
-        if (door)
-        {
-            //WorldGen.KillTile(x,)
-            WorldGen.PlaceDoor(x, y + h - 3, TileID.ClosedDoor);
+            if (door)
+            {
+                //WorldGen.KillTile(x,)
+                WorldGen.PlaceDoor(x, y + h - 3, TileID.ClosedDoor);
+            }
         }
-    }
         #region Log Array Tools
         //all impressivly HardCoded
         //for testing
         Dictionary<int, int> TileToID = new Dictionary<int, int>();
-    private void LogArray()
-    {
-        int Tr = 0;
-        String s = "The Below was used for help making 2d arrays for world gen, IF YOU SEE THIS IN YOUR LOG AND YOUR NOT A DEV(hi vintage) please report it on our homepage or server\n {";
-        int x = 54;
-        int y = 22;
-        Vector2 m = Main.MouseWorld / 16f;
+        private void LogArray()
+        {
+            int Tr = 0;
+            String s = "The Below was used for help making 2d arrays for world gen, IF YOU SEE THIS IN YOUR LOG AND YOUR NOT A DEV(hi vintage) please report it on our homepage or server\n {";
+            int x = 54;
+            int y = 22;
+            Vector2 m = Main.MouseWorld / 16f;
             for (int i = (int)(m.X); i < m.X + x; i++)
             {
                 for (int j = (int)m.Y; j < m.Y + y; j++)
@@ -467,10 +467,10 @@ namespace Trinitarian
                     }
                     s += ",";
                 }
-                s += "\n}" ;
+                s += "\n}";
+            }
+            mod.Logger.Info(s);
         }
-        mod.Logger.Info(s);
-    }
 
         private void LogSlopes()
         {
@@ -520,127 +520,127 @@ namespace Trinitarian
         }
         #endregion
 
-    public override void PostWorldGen()
-    {
-
-        int[] itemsToPlaceInChests = { ModContent.ItemType<Uranium>() };
-        int itemsToPlaceInChestsChoice = 0;
-        for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
+        public override void PostWorldGen()
         {
-            Chest chest = Main.chest[chestIndex];
 
-            if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 0 * 36)
+            int[] itemsToPlaceInChests = { ModContent.ItemType<Uranium>() };
+            int itemsToPlaceInChestsChoice = 0;
+            for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
             {
-                for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
+                Chest chest = Main.chest[chestIndex];
+
+                if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 0 * 36)
                 {
+                    for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
                     {
-                        if (Main.rand.NextFloat() < .25f)
                         {
-                            if (chest.item[inventoryIndex].type == ItemID.None)
+                            if (Main.rand.NextFloat() < .25f)
                             {
-                                chest.item[inventoryIndex].SetDefaults(itemsToPlaceInChests[itemsToPlaceInChestsChoice]);
-                                itemsToPlaceInChestsChoice = (itemsToPlaceInChestsChoice + 1) % itemsToPlaceInChests.Length;
-                                break;
+                                if (chest.item[inventoryIndex].type == ItemID.None)
+                                {
+                                    chest.item[inventoryIndex].SetDefaults(itemsToPlaceInChests[itemsToPlaceInChestsChoice]);
+                                    itemsToPlaceInChestsChoice = (itemsToPlaceInChestsChoice + 1) % itemsToPlaceInChests.Length;
+                                    break;
+                                }
                             }
                         }
                     }
                 }
             }
-        }
 
-        // WolrdMakeAlg();
+            // WolrdMakeAlg();
 
 
-        int[] itemsToPlaceInIceChests = { ModContent.ItemType<FrostyMinigun>(), ModContent.ItemType<IceSpear>(), ItemID.PinkJellyfishJar };
-        int itemsToPlaceInIceChestsChoice = 0;
-        for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
-        {
-            Chest chest = Main.chest[chestIndex];
-            // If you look at the sprite for Chests by extracting Tiles_21.xnb, you'll see that the 12th chest is the Ice Chest. Since we are counting from 0, this is where 11 comes from. 36 comes from the width of each tile including padding. 
-            if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 11 * 36)
+            int[] itemsToPlaceInIceChests = { ModContent.ItemType<FrostyMinigun>(), ModContent.ItemType<IceSpear>(), ItemID.PinkJellyfishJar };
+            int itemsToPlaceInIceChestsChoice = 0;
+            for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
             {
-                for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
+                Chest chest = Main.chest[chestIndex];
+                // If you look at the sprite for Chests by extracting Tiles_21.xnb, you'll see that the 12th chest is the Ice Chest. Since we are counting from 0, this is where 11 comes from. 36 comes from the width of each tile including padding. 
+                if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 11 * 36)
                 {
-                    if (chest.item[inventoryIndex].type == ItemID.None)
+                    for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
                     {
-                        chest.item[inventoryIndex].SetDefaults(itemsToPlaceInIceChests[itemsToPlaceInIceChestsChoice]);
-                        itemsToPlaceInIceChestsChoice = (itemsToPlaceInIceChestsChoice + 1) % itemsToPlaceInIceChests.Length;
-                        // Alternate approach: Random instead of cyclical: chest.item[inventoryIndex].SetDefaults(Main.rand.Next(itemsToPlaceInIceChests));
-                        break;
+                        if (chest.item[inventoryIndex].type == ItemID.None)
+                        {
+                            chest.item[inventoryIndex].SetDefaults(itemsToPlaceInIceChests[itemsToPlaceInIceChestsChoice]);
+                            itemsToPlaceInIceChestsChoice = (itemsToPlaceInIceChestsChoice + 1) % itemsToPlaceInIceChests.Length;
+                            // Alternate approach: Random instead of cyclical: chest.item[inventoryIndex].SetDefaults(Main.rand.Next(itemsToPlaceInIceChests));
+                            break;
+                        }
                     }
                 }
             }
         }
-    }
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
         {
             tasks.Add(new PassLegacy("Tri Ship", MakeShipWreck));
         }
         private void Generate2Algea()
-    {
-        int attempts = 0;
-        int Placer = ModContent.TileType<Tiles.Algae>();
-        Tile tile;
-        Tile tileL;
-        Tile tileR;
-        Tile tileBelow;
-        bool placeSuccessful = false;
-        while (!placeSuccessful)
         {
-            attempts++;
-            // Pick a location.
-            int x = WorldGen.genRand.Next(20, Main.maxTilesX / 10 - 1);
-            int y = WorldGen.genRand.Next(20, Main.maxTilesY);
-            tile = Framing.GetTileSafely(x, y);
-            tileL = Framing.GetTileSafely(x - 1, y);
-            tileR = Framing.GetTileSafely(x + 1, y);
-            tileBelow = Framing.GetTileSafely(x, y + 1);
-            if ((tileBelow.type == TileID.Sand || tileBelow.type == ModContent.TileType<Tiles.Algae>() || tileR.type == ModContent.TileType<Tiles.Algae>() || tileL.type == ModContent.TileType<Tiles.Algae>()) && tile.liquid > 0 && !tile.active())
+            int attempts = 0;
+            int Placer = ModContent.TileType<Tiles.Algae>();
+            Tile tile;
+            Tile tileL;
+            Tile tileR;
+            Tile tileBelow;
+            bool placeSuccessful = false;
+            while (!placeSuccessful)
             {
-                WorldGen.PlaceTile(x, y, Placer, true);
-                //Player nlayer = Main.player[Main.myPlayer];
-                //nlayer.Center = new Vector2(x*16, y *16);
-                placeSuccessful = tile.active() && tile.type == Placer;
-            }
-            if (attempts >= 30000)
-            {
+                attempts++;
+                // Pick a location.
+                int x = WorldGen.genRand.Next(20, Main.maxTilesX / 10 - 1);
+                int y = WorldGen.genRand.Next(20, Main.maxTilesY);
+                tile = Framing.GetTileSafely(x, y);
+                tileL = Framing.GetTileSafely(x - 1, y);
+                tileR = Framing.GetTileSafely(x + 1, y);
+                tileBelow = Framing.GetTileSafely(x, y + 1);
+                if ((tileBelow.type == TileID.Sand || tileBelow.type == ModContent.TileType<Tiles.Algae>() || tileR.type == ModContent.TileType<Tiles.Algae>() || tileL.type == ModContent.TileType<Tiles.Algae>()) && tile.liquid > 0 && !tile.active())
+                {
+                    WorldGen.PlaceTile(x, y, Placer, true);
+                    //Player nlayer = Main.player[Main.myPlayer];
+                    //nlayer.Center = new Vector2(x*16, y *16);
+                    placeSuccessful = tile.active() && tile.type == Placer;
+                }
+                if (attempts >= 30000)
+                {
 
-                placeSuccessful = true;
+                    placeSuccessful = true;
+                }
             }
+            placeSuccessful = false;
+            while (!placeSuccessful)
+            {
+                attempts++;
+                // Pick a location.
+                int x = WorldGen.genRand.Next(Main.maxTilesX / 10 * 9, Main.maxTilesX);
+                int y = WorldGen.genRand.Next(20, Main.maxTilesY);
+                tile = Framing.GetTileSafely(x, y);
+                tileL = Framing.GetTileSafely(x - 1, y);
+                tileR = Framing.GetTileSafely(x + 1, y);
+                tileBelow = Framing.GetTileSafely(x, y + 1);
+                if ((tileBelow.type == TileID.Sand || tileBelow.type == ModContent.TileType<Tiles.Algae>() || tileR.type == ModContent.TileType<Tiles.Algae>() || tileL.type == ModContent.TileType<Tiles.Algae>()) && tile.liquid > 0 && !tile.active())
+                {
+                    WorldGen.PlaceTile(x, y, Placer, true);
+                    //Player nlayer = Main.player[Main.myPlayer];Testing
+                    //nlayer.Center = new Vector2(x * 16, y * 16);
+                    placeSuccessful = tile.active() && tile.type == Placer;
+                }
+                if (attempts >= 30000)
+                {
+
+                    return;
+                }
+            }
+
+
         }
-        placeSuccessful = false;
-        while (!placeSuccessful)
+
+        public static bool JustPressed(Keys key)
         {
-            attempts++;
-            // Pick a location.
-            int x = WorldGen.genRand.Next(Main.maxTilesX / 10 * 9, Main.maxTilesX);
-            int y = WorldGen.genRand.Next(20, Main.maxTilesY);
-            tile = Framing.GetTileSafely(x, y);
-            tileL = Framing.GetTileSafely(x - 1, y);
-            tileR = Framing.GetTileSafely(x + 1, y);
-            tileBelow = Framing.GetTileSafely(x, y + 1);
-            if ((tileBelow.type == TileID.Sand || tileBelow.type == ModContent.TileType<Tiles.Algae>() || tileR.type == ModContent.TileType<Tiles.Algae>() || tileL.type == ModContent.TileType<Tiles.Algae>()) && tile.liquid > 0 && !tile.active())
-            {
-                WorldGen.PlaceTile(x, y, Placer, true);
-                //Player nlayer = Main.player[Main.myPlayer];Testing
-                //nlayer.Center = new Vector2(x * 16, y * 16);
-                placeSuccessful = tile.active() && tile.type == Placer;
-            }
-            if (attempts >= 30000)
-            {
-
-                return;
-            }
-        }
-
-
-    }
-
-    public static bool JustPressed(Keys key)
-    {
             return Main.keyState.IsKeyDown(key) && !Main.oldKeyState.IsKeyDown(key);
-    }
+        }
 
+    }
 }
-}                        
 
