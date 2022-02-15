@@ -19,7 +19,7 @@ namespace Trinitarian
             if (NightBowArrows.Contains(projectile.whoAmI))
             {
                 NightBowArrows.Remove(projectile.whoAmI);
-            }                        
+            }
         }
         public override void AI(Projectile projectile)
         {
@@ -57,7 +57,13 @@ namespace Trinitarian
         }
         public override bool? CanHitNPC(Projectile projectile, NPC target)
         {
-            return target.immune[projectile.owner] <1;
+            if (!(target.immune[projectile.owner] < 1) || !NightBowArrows.Contains(projectile.whoAmI)) {
+                return   base.CanHitNPC(projectile, target); 
+            }
+            else
+            {
+                return true;
+            }
         }
         //for nightsister bow
         //Speed of arrows.
@@ -70,9 +76,11 @@ namespace Trinitarian
        
         public override bool PreAI(Projectile p)
         {
-            if (NightBowArrows.Contains(p.whoAmI)) {
+            if (NightBowArrows.Contains(p.whoAmI))
+            {
                 int i = 0;
-                for (int j = 0; j < NightBowArrows.Count; j++) {
+                for (int j = 0; j < NightBowArrows.Count; j++)
+                {
                     if (NightBowArrows[j] == p.whoAmI)
                     {
                         i = j;
@@ -85,7 +93,7 @@ namespace Trinitarian
                 }
 
                 Player o = Main.player[p.owner];
-                if (!o.channel)//o.channel
+                if (!o.channel )//o.channel
                 {
                     Projectile PenR = new Projectile();
                     PenR.SetDefaults(p.type);
@@ -96,24 +104,27 @@ namespace Trinitarian
                 }
                 else
                 {
-                    p.penetrate = -1;
+                   if(p.type > ProjectileID.Count)
+                    {
+                        if (Main.myPlayer == p.owner)
+                            p.rotation = p.DirectionTo(Main.MouseWorld).ToRotation();
+                    }
+                    else
+                    {
+                        p.rotation = MathHelper.ToRadians(90) + p.DirectionTo(Main.MouseWorld).ToRotation();
+                    }
                     p.position = o.MountedCenter + new Vector2(CirlceSize).RotatedBy(MathHelper.ToRadians(i * ArrowSpacing));
-                    if (Main.myPlayer == p.owner)
-                    p.rotation = MathHelper.ToRadians(90) + p.DirectionTo(Main.MouseWorld).ToRotation();
-
                 }
-
-                
             }
-            return !NightBowArrows.Contains(p.whoAmI);
+
+                return !NightBowArrows.Contains(p.whoAmI);
         }
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
         {
-            int OldIm = target.immune[projectile.owner];
-            target.immune[projectile.owner] = 20;
-            if (!NightBowArrows.Contains(projectile.whoAmI))
+           
+            if (NightBowArrows.Contains(projectile.whoAmI))
             {
-                target.immune[projectile.owner] = OldIm;
+                target.immune[projectile.owner] = 20;
             }
         }
         //public override bool PreDraw(Projectile projectile, SpriteBatch spriteBatch, Color lightColor)
