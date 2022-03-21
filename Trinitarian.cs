@@ -13,26 +13,32 @@ using Trinitarian.Items.Weapons.Melee;
 using Trinitarian.Items.Weapons.Ranged;
 using Trinitarian.Items.Weapons.Summoner;
 using static Terraria.ModLoader.ModContent;
+using Terraria.UI;
+using MonoMod.Cil;
 
 namespace Trinitarian
 {
     public class Trinitarian : Mod
     {
-	    public static Trinitarian Mod { get; set; }
+		
+		
+		public static Trinitarian Mod { get; set; }
 	     public static ModHotKey UseAbilty;
-	    public Trinitarian()
+		public Trinitarian()
 	    {
 		    Mod = this;
 		    
 	    }
 	    public override void Unload()
 	    {
+			
 		    Mod = null;
 		      UseAbilty = null;
 	    }
 	    public override void Load()
         {
-	       UseAbilty = RegisterHotKey("Use Abilty", "R");
+			Prims.Load();
+			UseAbilty = RegisterHotKey("Use Abilty", "R");
 	    }
 
 		public override void PostSetupContent()

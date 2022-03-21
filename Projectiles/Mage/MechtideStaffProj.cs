@@ -5,6 +5,8 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Trinitarian.Dusts;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using System;
 
 namespace Trinitarian.Projectiles.Mage
 {
@@ -13,10 +15,13 @@ namespace Trinitarian.Projectiles.Mage
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mechtide Staff");
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
-
+        const int TimeLeftStart = 360;
         public override void SetDefaults()
         {
+            projectile.timeLeft = TimeLeftStart;
             projectile.arrow = true;
             projectile.width = 16;
             projectile.height = 16;
@@ -29,13 +34,9 @@ namespace Trinitarian.Projectiles.Mage
         Vector2 SpawnVel;
         public override void AI()
         {
-           for(int i = 0; i < 360; i += 90)
-            {
-                Vector2 pos = projectile.Center + new Vector2(50).RotatedBy(MathHelper.ToRadians(i + Timer * 4));
-                int D = Dust.NewDust(pos, 1,1, DustID.Clentaminator_Red);
-                Main.dust[D].noGravity = true;
-                   // Main.dust[D].
-            }
+           
+            
+          
             if (Timer == 0)
             {
                 SpawnVel = projectile.velocity;
@@ -46,6 +47,11 @@ namespace Trinitarian.Projectiles.Mage
             {
                 projectile.velocity = SpawnVel * (Timer - 80) / 20;
             }
+        }
+        //public override 
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            return true;
         }
 
         public override void Kill(int timeLeft)
