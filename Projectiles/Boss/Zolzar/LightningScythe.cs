@@ -13,8 +13,8 @@ namespace Trinitarian.Projectiles.Boss.Zolzar
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lightning Scythe");
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;   
-            ProjectileID.Sets.TrailingMode[projectile.type] = 2;        
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 0;      
         }
 
         public override void SetDefaults()
@@ -107,27 +107,35 @@ namespace Trinitarian.Projectiles.Boss.Zolzar
 
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(SpriteBatch sb, Color lightColor)
         {
-            Color color26 = Color.Cyan;
-            Texture2D texture2D16 = mod.GetTexture("Projectiles/Boss/Zolzar/LightningScythe");
-
-            int num154 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type];
-            int y2 = num154 * projectile.frame;
-            Rectangle drawRectangle = new Microsoft.Xna.Framework.Rectangle(0, y2, Main.projectileTexture[projectile.type].Width, num154);
-
-            Vector2 origin2 = drawRectangle.Size() / 2f;
-
-            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
+            Vector2 vector = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
+            for (int i = 0; i < projectile.oldPos.Length; i++)
             {
-                Color color27 = color26;
-                color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
-                Vector2 value4 = projectile.oldPos[i];
-                float num165 = projectile.oldRot[i];
-                Main.spriteBatch.Draw(texture2D16, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(drawRectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
+                Vector2 position = projectile.oldPos[i] - Main.screenPosition + vector + new Vector2(0f, projectile.gfxOffY);
+                Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - i) / projectile.oldPos.Length);
+                sb.Draw(Main.projectileTexture[projectile.type], position, null, color, projectile.rotation, vector, projectile.scale, SpriteEffects.None, 0f);
             }
-
-            return base.PreDraw(spriteBatch, lightColor);
+            return true;
+        }
+        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            Texture2D texture = ModContent.GetTexture("Trinitarian/Projectiles/Boss/Zolzar/VikingAxe_Glow");
+            spriteBatch.Draw(
+                texture,
+                new Vector2
+                (
+                    projectile.Center.Y - Main.screenPosition.X,
+                    projectile.Center.X - Main.screenPosition.Y
+                ),
+                new Rectangle(0, 0, texture.Width, texture.Height),
+                Color.White,
+                projectile.rotation,
+                texture.Size(),
+                projectile.scale,
+                SpriteEffects.None,
+                0f
+            );
         }
 
         public override Color? GetAlpha(Color lightColor)

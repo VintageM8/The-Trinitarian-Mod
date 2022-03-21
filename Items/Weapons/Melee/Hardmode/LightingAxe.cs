@@ -1,6 +1,8 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Trinitarian.Items.Materials.Parts;
 using static Terraria.ModLoader.ModContent;
 using Trinitarian.Projectiles.Melee;
@@ -18,19 +20,21 @@ namespace Trinitarian.Items.Weapons.Melee.Hardmode
         public override void SetDefaults()
         {
             item.damage = 103;
-            item.melee = true;
-            item.width = 64;
-            item.height = 64;
-            item.useTime = 21;
-            item.useAnimation = 21;
+            item.width = 60;
+            item.height = 60;
+            item.useTime = 20;
+            item.useAnimation = 20;
+            item.crit = 8;
             item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 5;
+            item.melee = true;
+            item.noMelee = true;
+            item.knockBack = 1;
+            item.useTurn = false;
             item.value = Item.sellPrice(0, 25, 0, 0);
             item.rare = ItemRarityID.Lime;
-            item.UseSound = SoundID.Item1;
             item.autoReuse = true;
             item.shoot = ModContent.ProjectileType<LightAxe>();
-            item.shootSpeed = 10;
+            item.shootSpeed = 6f;
         }
 
         public override void AddRecipes()

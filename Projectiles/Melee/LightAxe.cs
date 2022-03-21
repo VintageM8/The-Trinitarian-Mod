@@ -1,135 +1,84 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System.IO;
+using System;
 
 namespace Trinitarian.Projectiles.Melee
 {
-    internal sealed class LightAxe : ModProjectile
+    public class LightAxe : ModProjectile
     {
-        int i;
-        private readonly int oneHelixRevolutionInUpdateTicks = 30;
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Light Axe");
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+        }
         public override void SetDefaults()
         {
-            projectile.width = projectile.height = 20;
-            projectile.penetrate = 5;
-            projectile.alpha = 3;
-            projectile.timeLeft = 200;
+            projectile.width = 50;
+            projectile.height = 50;
             projectile.friendly = true;
+            projectile.melee = true;
+            projectile.penetrate = 7;
+            projectile.timeLeft = 200;
+            projectile.alpha = 100;
         }
-        public override bool PreAI()
+        public override bool PreDraw(SpriteBatch sb, Color lightColor)
         {
-            i++;
-            RunHomingAI();
-            ++projectile.localAI[0];
-            float piFraction = MathHelper.Pi / oneHelixRevolutionInUpdateTicks;
-            float piFractionVelocity = MathHelper.Pi / oneHelixRevolutionInUpdateTicks;
-            float ReversepiFraction = MathHelper.Pi + oneHelixRevolutionInUpdateTicks;
-            Vector2 newDustPosition = new Vector2(0, (float)Math.Sin((projectile.localAI[0] % oneHelixRevolutionInUpdateTicks) * piFraction)) * projectile.height;
-            Dust newDust = Dust.NewDustPerfect(projectile.Center + newDustPosition.RotatedBy(projectile.velocity.ToRotation()), 67);
-            newDust.noGravity = true;
-            newDustPosition.Y *= -1;
-            newDust = Dust.NewDustPerfect(projectile.Center + newDustPosition.RotatedBy(projectile.velocity.ToRotation()), 67);
-            newDust.noGravity = true;
-            newDust.velocity *= 0f;
-            if (i % 50 == 0)
+            Vector2 vector = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
+            for (int i = 0; i < projectile.oldPos.Length; i++)
             {
-                Projectile.NewProjectile(projectile.Center, projectile.velocity / 2, ModContent.ProjectileType<LightningFragment>(), projectile.damage, projectile.knockBack);
+                Vector2 position = projectile.oldPos[i] - Main.screenPosition + vector + new Vector2(0f, projectile.gfxOffY);
+                Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - i) / projectile.oldPos.Length);
+                sb.Draw(Main.projectileTexture[projectile.type], position, null, color, projectile.rotation, vector, projectile.scale, SpriteEffects.None, 0f);
             }
-            Vector2 newDustPosition2 = new Vector2(0, (float)Math.Sin((projectile.localAI[0] % oneHelixRevolutionInUpdateTicks) * ReversepiFraction)) * projectile.height;
-            Dust newDust2 = Dust.NewDustPerfect(projectile.Center + newDustPosition2.RotatedBy(projectile.velocity.ToRotation()), 68);
-            newDust2.noGravity = true;
-            newDustPosition2.Y *= -1;
-            newDust2 = Dust.NewDustPerfect(projectile.Center + newDustPosition2.RotatedBy(projectile.velocity.ToRotation()), 160);
-            newDust2.noGravity = true;
-            newDust2.velocity *= 0f;
-            projectile.rotation += projectile.velocity.Length() * 0.1f * projectile.direction;
-            Vector2 Velocity2 = new Vector2(0, (float)Math.Sin(projectile.localAI[0] % oneHelixRevolutionInUpdateTicks * piFraction)) * projectile.height;
-            return (false);
+            return true;
+        }
+        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            Texture2D texture = ModContent.GetTexture("Trinitarian/Projectiles/Melee/LightAxe_Glow");
+            spriteBatch.Draw(
+                texture,
+                new Vector2
+                (
+                    projectile.Center.Y - Main.screenPosition.X,
+                    projectile.Center.X - Main.screenPosition.Y
+                ),
+                new Rectangle(0, 0, texture.Width, texture.Height),
+                Color.White,
+                projectile.rotation,
+                texture.Size(),
+                projectile.scale,
+                SpriteEffects.None,
+                0f
+            );
+        }
+        public override void AI()
+        {
+            projectile.scale *= 1.002f;
+            projectile.rotation += 100;
+            int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 63, projectile.velocity.X, projectile.velocity.Y, 0, Color.White, 1);
+            Main.dust[dust].velocity /= 1.2f;
+            Main.dust[dust].noGravity = true;
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Vector2 offset = new Vector2(0, 0);
             Main.PlaySound(SoundID.Item10);
+
             for (float i = 0; i < 360; i += 0.5f)
             {
                 float ang = (float)(i * Math.PI) / 180;
                 float x = (float)(Math.Cos(ang) * 15) + projectile.Center.X;
                 float y = (float)(Math.Sin(ang) * 15) + projectile.Center.Y;
                 Vector2 vel = Vector2.Normalize(new Vector2(x - projectile.Center.X, y - projectile.Center.Y)) * 7;
-                int dustIndex = Dust.NewDust(new Vector2(x - 3, y - 3), 6, 6, DustID.MagnetSphere, vel.X, vel.Y);
+                int dustIndex = Dust.NewDust(new Vector2(x - 3, y - 3), 6, 6, 63, vel.X, vel.Y);
                 Main.dust[dustIndex].noGravity = true;
             }
-            return true;
-        }
-        public override void Kill(int timeLeft)
-        {
-            timeLeft = 20;
-            for (float i = 0; i < 360; i += 0.5f)
-            {
-                float ang = (float)(i * Math.PI) / 180;
-
-                float x = (float)(Math.Cos(ang) * 15) + projectile.Center.X;
-                float y = (float)(Math.Sin(ang) * 15) + projectile.Center.Y;
-
-                Vector2 vel = Vector2.Normalize(new Vector2(x - projectile.Center.X, y - projectile.Center.Y)) * 7;
-
-                int dustIndex = Dust.NewDust(new Vector2(x - 3, y - 3), 6, 6, DustID.MagnetSphere, vel.X, vel.Y);
-                Main.dust[dustIndex].noGravity = true;
-            }
-        }
-        private void RunHomingAI()
-        {
-            Projectile proj = projectile;
-            float projPosMidX = proj.position.X + proj.width / 2;
-            float projPosMidY = proj.position.Y + proj.height / 2;
-            float closestNpcPosX = proj.Center.X;
-            float closestNpcPosY = proj.Center.Y;
-            float closestNpcDistBothAxis = 400f;
-            bool targetNpcFound = false;
-
-            for (int npcWho = 0; npcWho < 200; npcWho++)
-            {
-                NPC npc = Main.npc[npcWho];
-                if (!npc.CanBeChasedBy(proj, false))
-                {
-                    continue;
-                }
-                if (proj.Distance(npc.Center) >= closestNpcDistBothAxis)
-                {
-                    continue;
-                }
-                if (!Collision.CanHit(proj.Center, 1, 1, npc.Center, 1, 1))
-                {
-                    continue;
-                }
-                float npcPosMidX = npc.position.X + npc.width / 2;
-                float npcPosMidY = npc.position.Y + npc.height / 2;
-
-                float bothAxisDist = Math.Abs(projPosMidX - npcPosMidX) + Math.Abs(projPosMidY - npcPosMidY);
-                if (bothAxisDist < closestNpcDistBothAxis)
-                {
-                    closestNpcDistBothAxis = bothAxisDist;
-                    closestNpcPosX = npcPosMidX;
-                    closestNpcPosY = npcPosMidY;
-                    targetNpcFound = true;
-                }
-            }
-            if (!targetNpcFound)
-            {
-                return;
-            }
-            Vector2 projPosMid = new Vector2(projPosMidX, projPosMidY);
-            float closestNpcDistX = closestNpcPosX - projPosMid.X;
-            float closestNpcDistY = closestNpcPosY - projPosMid.Y;
-            float closestNpcDist = (float)Math.Sqrt((closestNpcDistX * closestNpcDistX) + (closestNpcDistY * closestNpcDistY));
-            closestNpcDist = 6f / closestNpcDist;
-            closestNpcDistX *= closestNpcDist;
-            closestNpcDistY *= closestNpcDist;
-            proj.velocity.X = ((proj.velocity.X * 20f) + closestNpcDistX) / 21f;
-            proj.velocity.Y = ((proj.velocity.Y * 20f) + closestNpcDistY) / 21f;
-            projectile.velocity *= 1.005f;
+            return false;
         }
     }
 }

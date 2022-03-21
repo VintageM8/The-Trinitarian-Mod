@@ -15,6 +15,8 @@ using Trinitarian.Items.Accessories.Mage;
 using Trinitarian.Projectiles.Magus.Runes;
 using Trinitarian.Projectiles.Abilltys;
 using Trinitarian.Projectiles.Mage;
+using Trinitarian.Projectiles.Melee;
+using Trinitarian.NPCs.Bosses.Zolzar;
 
 namespace Trinitarian
 {
@@ -24,18 +26,30 @@ namespace Trinitarian
 		public int TitleID;
 		public bool FocusBoss;
 	    public bool ShowText;
+        bool useViking = false;
+        Vector2 screenPositionStore;
+        private float amount = 0;
 
 		public int ScreenShake;
         public AbiltyID CurrentA;
         public bool canFocus = true;
 
+        //Boss stuff
+        public int constantDamage = 0;
+        public float percentDamage = 0f;
+        public bool chaosDefense = false;
+        public float defenseEffect = -1f;
+
         //Buffs
         public bool drowning = false;
         public bool nosferatu = false;
+        public bool burningAboleth = false;
         public bool WizardBuff = false;
+        public bool rainedOn = false;
 
         //More Buffs
         public bool holyWrath;
+        public bool blazeRune;
         public bool mirrorBuff;
         public bool NecroHeal = false;
 
@@ -48,9 +62,11 @@ namespace Trinitarian
 
         //Accessories
         public bool TrueHeart;
+        public bool oceanSet;
 
         //Weapons 'n shit
         public float ammoReduction = 1f;
+        public int MechtideCharge = 0;
 
         public Vector2[] PreviousVelocity = new Vector2[30];
         // private float amount = 0;
@@ -103,7 +119,7 @@ namespace Trinitarian
                         break;
                     case AbiltyID.Wizard:
                         Main.NewText("Wizard");
-                        p.AddBuff(ModContent.BuffType<Cooldown>(), 120);
+                        p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
                         Projectile.NewProjectile(Main.MouseWorld+ new Vector2(0,-50), new Vector2(0, 0), ModContent.ProjectileType<ElementalStormBottom>(), 10, 0f, p.whoAmI);
                         break;
                     default:
@@ -130,19 +146,31 @@ namespace Trinitarian
             nosferatu = false;
             mirrorBuff = false;
             WizardBuff = false;
+            burningAboleth = false;
+            rainedOn = false;
 
             //More Buffs
             holyWrath = false;
             NecroHeal = false;
+            blazeRune = false;
 
             //Accessories
             TrueHeart = false;
+            oceanSet = false;
 
             //Weapons
             ammoReduction = 1f;
+
+            //Boss Stuff
+            constantDamage = 0;
+            percentDamage = 0f;
+            chaosDefense = false;
+            defenseEffect = -1f;
         }
         public override void UpdateDead()
         {
+            MechtideCharge = 0;
+
             drowning = false;
             nosferatu = false;
             //Important for Orbiting projectiles.
@@ -166,6 +194,21 @@ namespace Trinitarian
             }
             else RotationTimer = 0;
         }
+
+        public override void PreUpdate()
+        {   
+            if (Main.mouseRight)
+            {
+                while (MechtideCharge > 0)
+                {
+                    float angle = (Main.MouseWorld - player.Center).ToRotation() + MathHelper.ToRadians(Main.rand.Next(-100, 101) * .05f);
+
+                    Projectile.NewProjectile(player.Center.X, player.Center.Y, (float)Math.Cos(angle) * 12f, (float)Math.Sin(angle) * 12f, ModContent.ProjectileType<MechtideCharge>(), 20, 2f, player.whoAmI);
+                    MechtideCharge--;
+                }
+            }
+        }
+
         public override void UpdateLifeRegen()
         {
             if (drowning)
@@ -186,6 +229,26 @@ namespace Trinitarian
                 }
                 player.lifeRegenTime = 0;
                 player.lifeRegen -= 16; //change this number to how fast you want the debuff to damage the players. Every 2 is 1 hp lost per second
+            }
+
+            if (burningAboleth)
+            {
+                if (player.lifeRegen > 0)
+                {
+                    player.lifeRegen = 0;
+                }
+                player.lifeRegenTime = 0;
+                player.lifeRegen -= 2; //change this number to how fast you want the debuff to damage the players. Every 2 is 1 hp lost per second
+            }
+
+            if (rainedOn)
+            {
+                if (player.lifeRegen > 0)
+                {
+                    player.lifeRegen = 0;
+                }
+                player.lifeRegenTime = 0;
+                player.lifeRegen -= 4; //change this number to how fast you want the debuff to damage the players. Every 2 is 1 hp lost per second
             }
         }
 
@@ -232,6 +295,24 @@ namespace Trinitarian
                     damageSource = PlayerDeathReason.ByCustomReason(player.name + " is in the hands of death.");
                 }
             }
+
+            if (burningAboleth)
+            {
+                int messageType = Main.rand.Next(1); //the number of different types of death messages you want to have
+                if (messageType == 0 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8) //messagetype == 0
+                {
+                    damageSource = PlayerDeathReason.ByCustomReason(player.name + " suffered Aboleth's revenge.");
+                }
+            }
+            
+            if (rainedOn)
+            {
+                int messageType = Main.rand.Next(1); //the number of different types of death messages you want to have
+                if (messageType == 0 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8) //messagetype == 0
+                {
+                    damageSource = PlayerDeathReason.ByCustomReason(player.name + " could not handle the storm.");
+                }
+            }
             return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
          }
 
@@ -243,8 +324,86 @@ namespace Trinitarian
             }
         }
 
+        private bool holdPosition;
+        private int holdCounter = 0;
+        private Vector2 focusTo;
+        private int holdCameraLength;
+        private float towardsLength;
+        private float returnLength;
+        public void PlayerFocusCamera(Vector2 focusTo, int holdCameraLength, float towardsLength, float returnLength)
+        {
+            // The position to move to and from
+            this.focusTo = focusTo;
+
+            // How long the camera stays in place
+            this.holdCameraLength = holdCameraLength;
+
+            // How long it takes to travel to the position
+            this.towardsLength = towardsLength;
+
+            // How long it takes to return to the player
+            this.returnLength = returnLength;
+
+            // Finally, flag boolean to activate ModifyScreenPosition hook
+            FocusBoss = true;
+            canFocus = true;
+        }
+
 		public override void ModifyScreenPosition()
         {
+
+            if (FocusBoss)
+            {
+                if (canFocus)
+                {
+                    if (!Main.gamePaused)
+                    {
+                        screenPositionStore = new Vector2(MathHelper.Lerp(player.Center.X - Main.screenWidth / 2, focusTo.X - Main.screenWidth / 2, amount), MathHelper.Lerp(player.Center.Y - Main.screenHeight / 2, focusTo.Y - Main.screenHeight / 2, amount));
+                    }
+
+                    Main.screenPosition = screenPositionStore;
+                    amount += 1 / towardsLength;
+                    if (amount >= 1f)
+                    {
+                        holdPosition = true;
+                        canFocus = false;
+                        amount = 0;
+                    }
+                }
+                else
+                {
+                    if (holdPosition)
+                    {
+                        Main.screenPosition = screenPositionStore;
+                        holdCounter++;
+
+                        if (holdCounter == holdCameraLength)
+                        {
+                            holdCounter = 0;
+                            holdPosition = false;
+                        }
+                    }
+                    else
+                    {
+                        if (!Main.gamePaused)
+                        {
+                            screenPositionStore = new Vector2(MathHelper.SmoothStep(focusTo.X - Main.screenWidth / 2, player.Center.X - Main.screenWidth / 2, amount), MathHelper.SmoothStep(focusTo.Y - Main.screenHeight / 2, player.Center.Y - Main.screenHeight / 2, amount));
+                        }
+                        Main.screenPosition = screenPositionStore;
+
+                        amount += 1 / returnLength;
+
+                        if (amount >= 1f)
+                        {
+                            amount = 0;
+                            FocusBoss = false;
+                            canFocus = true;
+                            ShowText = false;
+                        }
+                    }
+                }
+            }
+
             if (!Main.gamePaused)
             {
                 if (ScreenShake > 0)
@@ -267,6 +426,7 @@ namespace Trinitarian
 
         public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
         {
+
             if (TrueHeart)
             {
                 int projectiles = 3;
@@ -290,7 +450,6 @@ namespace Trinitarian
             }
         }
 
-
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
 		{
             if (item.melee)
@@ -299,6 +458,21 @@ namespace Trinitarian
                 { 
                     target.AddBuff(ModContent.BuffType<HolySmite>(), 600);
                 }
+            }
+
+            if (burningAboleth)
+            { 
+                target.AddBuff(BuffID.OnFire, 300);
+            }
+
+            if (rainedOn)
+            { 
+                target.AddBuff(ModContent.BuffType<Drowning>(), 300);
+            }
+
+            if (blazeRune)
+            { 
+                target.AddBuff(BuffID.OnFire, 300);
             }
         }
 
@@ -406,5 +580,60 @@ namespace Trinitarian
                 NetMessage.SendData(MessageID.SpiritHeal, -1, -1, null, player.whoAmI, newLife);
 			}
         }
+
+        public override void UpdateBiomeVisuals()
+        {           
+            if (NPC.AnyNPCs(mod.NPCType("VikingBoss")))
+            {
+                useViking = true;
+            }
+            player.ManageSpecialBiomeVisuals("Trinitarian:VikingBoss", useViking);
+        }
+
+
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit,
+            ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        {
+          
+            if (constantDamage > 0 || percentDamage > 0f)
+            {
+                int damageFromPercent = (int)(player.statLifeMax2 * percentDamage);
+                damage = Math.Max(constantDamage, damageFromPercent);
+                if (chaosDefense)
+                {
+                    double cap = Main.expertMode ? 75.0 : 50.0;
+                    int reduction = (int)(cap * (1.0 - Math.Exp(-player.statDefense / 150.0)));
+                    if (reduction < 0)
+                    {
+                        reduction = player.statDefense / 2;
+                    }
+                    damage -= reduction;
+                    if (damage < 0)
+                    {
+                        damage = 1;
+                    }
+                }
+                customDamage = true;
+            }
+            else if (defenseEffect >= 0f)
+            {
+                if (Main.expertMode)
+                {
+                    defenseEffect *= 1.5f;
+                }
+                damage -= (int)(player.statDefense * defenseEffect);
+                if (damage < 0)
+                {
+                    damage = 1;
+                }
+                customDamage = true;
+            }
+            constantDamage = 0;
+            percentDamage = 0f;
+            defenseEffect = -1f;
+            chaosDefense = false;
+            return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource);
+        }
     }
 }
+                
