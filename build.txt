@@ -1,4 +1,0 @@
-displayName = [c/230097:The] [c/5200ae:Trinitarian] [c/8400c6:Mod]
-author = Vintage, and The Devs
-version = 0.3.2
-homepage = https://forums.terraria.org/index.php?threads/trinitarian-mod.105759/
