@@ -4,6 +4,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Trinitarian.Dusts;
+using Microsoft.Xna.Framework.Graphics;
+using Trinitarian.Common;
 
 namespace Trinitarian.Content.Projectiles.Weapon.Mage
 {
@@ -24,7 +26,7 @@ namespace Trinitarian.Content.Projectiles.Weapon.Mage
             projectile.magic = true;
             aiType = ProjectileID.AmethystBolt;
         }
-
+        
         public override void Kill(int timeLeft)
         {
             Vector2 origin = projectile.Center;
