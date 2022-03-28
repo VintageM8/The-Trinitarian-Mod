@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "c8l50HH7uUhWu6bQpIL8g03SM+4nX9uFIrt5CRi5AA7W+c/YTJ5jNrw2tci7YMn+pJ4NZhQjgSIoA8mzmAFhpg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\noahs\\OneDrive\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\Trinitarian\\Trinitarian.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\noahs\\.nuget\\packages\\tmodloader.codeassist\\0.1.2\\tmodloader.codeassist.0.1.2.nupkg.sha512"
+  ],
+  "logs": []
+}

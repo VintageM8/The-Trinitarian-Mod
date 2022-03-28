@@ -44,6 +44,7 @@ namespace Trinitarian.Common
 	    }
 	    public override void Load()
         {
+            Prims.Load();
             TrinitarianLists.LoadLists();
 	       UseAbilty = RegisterHotKey("Use Abilty", "R");
 
