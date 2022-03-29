@@ -8,7 +8,7 @@ namespace Trinitarian.Content.Buffs
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Cooldown");
-            Description.SetDefault("wait to use your abilty");
+            Description.SetDefault("wait to use your abilty!");
             Main.buffNoTimeDisplay[Type] = false;
             Main.debuff[Type] = true; //Add this so the nurse doesn't remove the buff when healing
         }
