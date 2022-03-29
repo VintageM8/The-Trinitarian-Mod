@@ -34,7 +34,7 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic
             item.UseSound = SoundID.Item43;
             item.autoReuse = true;
             item.shoot = ProjectileID.SkyFracture;
-            item.shootSpeed = 19;
+            item.shootSpeed = 18;
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
