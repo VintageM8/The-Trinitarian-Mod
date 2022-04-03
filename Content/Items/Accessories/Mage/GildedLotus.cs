@@ -10,7 +10,7 @@ namespace Trinitarian.Content.Items.Accessories.Mage
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Gilded Lotus");
-            Tooltip.SetDefault("Increased max mana by 15 and increases mana regen by 10%");
+            Tooltip.SetDefault("Increased max mana by 15 and increases mana regen by 10%.");
         }
 
         public override void SetDefaults()

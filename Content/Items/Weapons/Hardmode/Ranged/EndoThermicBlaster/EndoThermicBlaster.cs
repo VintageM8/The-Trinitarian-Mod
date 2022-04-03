@@ -10,7 +10,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged.EndoThermicBlaster
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Endothermic Blaster");
-            Tooltip.SetDefault("Freeze! Don't move!");
+            Tooltip.SetDefault("Your effects are boosted in the Snow Biome\nFreeze! Don't move!");
         }
 
         public override void SetDefaults()
@@ -24,11 +24,11 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged.EndoThermicBlaster
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 4;
-            item.value = Item.sellPrice(0, 3, 0, 0);
+            item.value = Item.sellPrice(0, 0, 80, 0);
             item.rare = ItemRarityID.LightRed;
             item.UseSound = SoundID.Item11;
             item.autoReuse = true;
-            item.shoot = ProjectileID.SnowBallFriendly;
+            item.shoot = ModContent.ProjectileType<EndothermicProj>();
             item.shootSpeed = 16f;
             item.useAmmo = AmmoID.Snowball;
         }
