@@ -1,4 +1,4 @@
-﻿/*using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using Terraria;
 namespace Trinitarian.Races
@@ -52,20 +52,9 @@ namespace Trinitarian.Races
             }
             return 0;
         }
-     //   public int type
-    /// <summary>
-    /// Sets a player based on a number provieded. use get race type for the ID
-    /// also used for saving and load
-    /// MAKE SURE TO UPDATE FOR SAVE AND LOAD WHEN MAKING A NEW CLASS
-    /// </summary>
-    /// <param name="p">player getting their race changed</param>
-    /// <param name="type">Type</param>
         public static void SetFromType(Player p, int type)
         {
             p.GetModPlayer<RacePlayer>().CurrentRace = RacePlayer.Races[type];
-
-
-            
         }
         /// <summary>
         /// Call after changing race
@@ -81,4 +70,4 @@ namespace Trinitarian.Races
 
 
     }
-}*/
+}

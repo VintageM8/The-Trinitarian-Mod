@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using Terraria;
 
 namespace Trinitarian.Races
@@ -15,4 +15,4 @@ namespace Trinitarian.Races
     }
 
    
-}*/
+}

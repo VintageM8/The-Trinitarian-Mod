@@ -27,85 +27,15 @@ namespace Trinitarian.Common
         public static bool downedIceBoss;
         public static bool downedOceanGhost;
 
-        public override void Initialize()
-        {
-            placedSpots = new HashSet<Point16>();
-        }
-        public override TagCompound Save()
-        {
-           
-            int count = placedSpots.Count;
-            if (count == 0) return null;
-
-            Point16[] Point16Array = new Point16[count];
-            placedSpots.CopyTo(Point16Array);
-
-            List<Point16> Point16List = Point16Array.ToList();
-
-            return new TagCompound
-            {
-                {"TriPoints", Point16List}
-            };
-        }
-        public override void NetReceive(BinaryReader reader)
-        {
-            int count = reader.ReadInt32();
-            Point16[] Point16Array = new Point16[count];
-
-            for (int i = 0; i < count; i++)
-            {
-                short x = reader.ReadInt16();
-                short y = reader.ReadInt16();
-                Point16Array[i] = new Point16(x, y);
-            }
-
-            placedSpots = new HashSet<Point16>(Point16Array);
-        }
-
-        public override void NetSend(BinaryWriter writer)
-        {
-            int count = placedSpots.Count;
-            Point16[] Point16Array = new Point16[count];
-            placedSpots.CopyTo(Point16Array);
-
-            writer.Write((int)count);
-
-            for (int i = 0; i < count; i++)
-            {
-                Point16 spot = Point16Array[i];
-                writer.Write(spot.X);
-                writer.Write(spot.Y);
-            }
-        }
-
-
-        public static void TryAddSpot(Point16 spot, bool clientWantsBroadcast = false)
-        {
-            if (!placedSpots.Contains(spot))
-            {
-
-                placedSpots.Add(spot);
-            }
-
-
-        }
-
-        public static void RemoveSpot(Point16 spot)
-        {
-
-            placedSpots.Remove(spot);
-
-
-        }
-
-
-        public override void Load(TagCompound tag)
-        {
-
-            var Point16IList = tag.GetList<Point16>("TriPoints");
-            placedSpots = new HashSet<Point16>(Point16IList);
-        }
         
+
+       
+       
+
+
+
+
+       
         public override void PostUpdate()
         {
 
@@ -130,7 +60,7 @@ namespace Trinitarian.Common
             }
         }*/
 
-        public static HashSet<Point16> placedSpots;//for dwarf passive
+        
         #region Arrays of doom
         //all made with the log arrays methods, dont worry
         private readonly int[,] ShipSlope = {
@@ -517,11 +447,7 @@ namespace Trinitarian.Common
         }
         #endregion
 
-    public override void PostWorldGen()
-    {
-        // WolrdMakeAlg();
-
-    }
+   
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
         {
             tasks.Add(new PassLegacy("Tri Ship", MakeShipWreck));
