@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Content.Items.Materials.Parts;
 using Microsoft.Xna.Framework;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Trinitarian.Content.NPCs.Enemies.Slimes
 {
@@ -60,8 +61,7 @@ namespace Trinitarian.Content.NPCs.Enemies.Slimes
 
         public override void NPCLoot()
         {
-            Item.NewItem(NPC.getRect(), ModContent.ItemType<Uranium>(), 5);
-            Item.NewItem(NPC.getRect(), ItemID.Gel, 2);
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Uranium>(), 5));
         }
     }
 }
