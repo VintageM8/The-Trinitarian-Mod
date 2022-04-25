@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Trinitarian.Content.NPCs.Enemies.Cubeboi
 {
@@ -69,9 +70,9 @@ namespace Trinitarian.Content.NPCs.Enemies.Cubeboi
             return SpawnCondition.OverworldDaySlime.Chance * 0.3f;
         }
         
-        public override void NPCLoot()
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            Item.NewItem(NPC.getRect(), ModContent.ItemType<RustyScraps>(), 3);
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RustyScraps>(), 3));
         }
 
         public override void FindFrame(int frameHeight)
