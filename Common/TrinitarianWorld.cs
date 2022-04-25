@@ -20,7 +20,7 @@ using Terraria.GameContent.Generation;
 
 namespace Trinitarian.Common
 {
-    public class TrinitarianWorld : ModWorld
+    public class TrinitarianWorld : ModSystem
     {
         //bosses
         public static bool downedViking;
@@ -36,7 +36,7 @@ namespace Trinitarian.Common
 
 
        
-        public override void PostUpdate()
+        public override void PostWorldGen()
         {
 
             // Complex math copied from source code. It's weirdly specific, but whatever, it works.
