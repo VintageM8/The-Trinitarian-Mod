@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Utilities;
 using Trinitarian.Content.Items.Materials.Parts;
 
 namespace Trinitarian.Content.NPCs.Enemies.Ocean
@@ -30,11 +31,11 @@ namespace Trinitarian.Content.NPCs.Enemies.Ocean
         {
             return SpawnCondition.Ocean.Chance * 0.50f;
         }
-
-        public override void NPCLoot()
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit)
         {
-            Item.NewItem(NPC.getRect(), ModContent.ItemType<SummonShards>(), 2);
+            
         }
+
 
         private float speed = 7f;
         private float speedY = 4f;

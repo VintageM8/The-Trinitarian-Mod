@@ -7,6 +7,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Content.Projectiles.Bonuses;
 using Terraria.Audio;
+using Terraria.GameContent;
+
 
 namespace Trinitarian.Content.Items.Weapons.PreHardmode.Melee.BloodyChakrum
 {
@@ -53,25 +55,25 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Melee.BloodyChakrum
 			for (int i = 0; i < Main.rand.Next(2, 3); i++)
 			{
 				Vector2 perturbedSpeed = Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(360));
-				Projectile.NewProjectile(Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<ReaperProjectile>(), 40, 5f, Projectile.owner);
+				Projectile.NewProjectile(Projectile.GetSource_OnHurt(target), Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<ReaperProjectile>(), 40, 5f, Projectile.owner);
 			}
         }
 
-        public override bool PreDraw(SpriteBatch sb, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            Vector2 vector = new Vector2(Main.projectileTexture[Projectile.type].Width * 0.5f, Projectile.height * 0.5f);
+            Vector2 vector = new Vector2(TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
             for (int i = 0; i < Projectile.oldPos.Length; i++)
             {
                 Vector2 position = Projectile.oldPos[i] - Main.screenPosition + vector + new Vector2(0f, Projectile.gfxOffY);
                 Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - i) / Projectile.oldPos.Length);
-                sb.Draw(Main.projectileTexture[Projectile.type], position, null, color, Projectile.rotation, vector, Projectile.scale, SpriteEffects.None, 0f);
+                Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, position, null, color, Projectile.rotation, vector, Projectile.scale, SpriteEffects.None, 0f);
             }
             return true;
         }
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override void PostDraw(Color lightColor)
         {
-            Texture2D texture = ModContent.Request<Texture2D>("Trinitarian/Content/Items/Weapons/PreHardmode/Melee/BloodyChakrum/BloodChak_Glow");
-            spriteBatch.Draw(
+            Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("Trinitarian/Content/Items/Weapons/PreHardmode/Melee/BloodyChakrum/BloodChak_Glow");
+            Main.EntitySpriteDraw(
                 texture,
                 new Vector2
                 (
@@ -84,7 +86,7 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Melee.BloodyChakrum
                 texture.Size(),
                 Projectile.scale,
                 SpriteEffects.None,
-                0f
+                0
             );
         }
     }

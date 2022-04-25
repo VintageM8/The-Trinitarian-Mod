@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Content.Items.Materials.Parts;
@@ -35,18 +36,18 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged
             Item.useAmmo = AmmoID.Bullet;
         }
 
-        public override bool ConsumeAmmo(Player player)
+        public override bool CanConsumeAmmo(Player player)
         {
             return Main.rand.NextFloat() >= .11f;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             if (type == ProjectileID.Bullet)
             {
                 type = ModContent.ProjectileType<RustedBulletproj>();
             }
-            return true;
+        //    return true;
         }
 
         public override void AddRecipes()

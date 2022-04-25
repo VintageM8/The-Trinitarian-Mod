@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Content.Items.Weapons.Hardmode.Melee.BlueBlade;
@@ -38,18 +39,19 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.BlueBlade
             return true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            type = ModContent.ProjectileType<SunWrath>();
+            type = ModContent.ProjectileType<SunWrath>();            
+        }
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            for (int i = -4; i < 4; i++)
             {
-                for (int i = -4; i < 4; i++)
-                {
-                    position = Main.MouseWorld + new Vector2(i * 20, -850);
-                    Vector2 velocity = (Main.MouseWorld - position).SafeNormalize(Vector2.Zero).RotatedByRandom(0.05f) * Item.shootSpeed;
-                    Projectile.NewProjectile(position, velocity, type, damage, knockBack, player.whoAmI);
-                }
-                return false;
+                position = Main.MouseWorld + new Vector2(i * 20, -850);
+                Vector2 vel = (Main.MouseWorld - position).SafeNormalize(Vector2.Zero).RotatedByRandom(0.05f) * Item.shootSpeed;
+                Projectile.NewProjectile(source, position, vel, type, damage, knockback, player.whoAmI);
             }
+            return false;
         }
 
         public override void AddRecipes()

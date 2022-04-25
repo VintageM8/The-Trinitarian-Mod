@@ -20,7 +20,7 @@ namespace Trinitarian.Content.Projectiles.Weapon.Mage
             Projectile.tileCollide = true;
             Projectile.aiStyle = 25;
             Projectile.alpha = 261;
-            aiType = ProjectileID.Boulder;
+            AIType = ProjectileID.Boulder;
         }
         public override void AI()
         {
@@ -30,11 +30,11 @@ namespace Trinitarian.Content.Projectiles.Weapon.Mage
             }
             else Projectile.alpha--;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref  Color lightColor)
         {
-            Texture2D texture = ModContent.Request<Texture2D>(Texture);
+            Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
             Color drawColor = Projectile.GetAlpha(lightColor);
-            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 44, 40), drawColor, Projectile.rotation, new Vector2(9 + 31 * 0.5f, 7 + 31 * 0.5f), 1, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 44, 40), drawColor, Projectile.rotation, new Vector2(9 + 31 * 0.5f, 7 + 31 * 0.5f), 1, SpriteEffects.None, 0);
             return false;
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
