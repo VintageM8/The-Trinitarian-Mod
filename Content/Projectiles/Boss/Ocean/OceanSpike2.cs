@@ -8,14 +8,14 @@ namespace Trinitarian.Content.Projectiles.Boss.Ocean
     {
         public override void SetDefaults()
         {
-            projectile.hostile = true;
-            projectile.friendly = false;
-            projectile.timeLeft = 360;
-            projectile.tileCollide = false;
+            Projectile.hostile = true;
+            Projectile.friendly = false;
+            Projectile.timeLeft = 360;
+            Projectile.tileCollide = false;
         }
         public override void AI()
         {
-            projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
         }
     }
 }

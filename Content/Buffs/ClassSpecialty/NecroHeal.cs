@@ -6,7 +6,7 @@ namespace Trinitarian.Content.Buffs.ClassSpecialty
 {
 	public class NecroHeal : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Necromatic Heal");
 			base.Description.SetDefault("Your summons steal life to heal you.");

@@ -7,7 +7,7 @@ namespace Trinitarian.Content.Buffs.Damage
 {
     public class HolySmite : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Holy Smite");
             Description.SetDefault("Thou brûcan onemn dôð Sôðcyning.");

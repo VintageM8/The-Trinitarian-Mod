@@ -17,15 +17,15 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
         public override void SetDefaults()
         {
             delay = 0;
-            projectile.width = 80;
-            projectile.height = 21;
-            projectile.timeLeft = 300;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.ignoreWater = true;
-            projectile.tileCollide = false;
-            Main.projFrames[projectile.type] = 6;
-            projectile.penetrate = -1;
+            Projectile.width = 80;
+            Projectile.height = 21;
+            Projectile.timeLeft = 300;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Main.projFrames[Projectile.type] = 6;
+            Projectile.penetrate = -1;
         }
 
         public override void AI()
@@ -36,25 +36,25 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
 
         private void MovementAnimation()
         {
-            projectile.scale = (projectile.ai[1] / 4f + .5f) / 2;
+            Projectile.scale = (Projectile.ai[1] / 4f + .5f) / 2;
             theta += (float)Math.PI / 60;
-            projectile.position.Y = Main.projectile[(int)projectile.ai[0]].position.Y - projectile.height * (projectile.ai[1] - 1) + 1;
-            projectile.position.X = Main.projectile[(int)projectile.ai[0]].position.X + (float)Math.Cos(theta) * 12 * (projectile.ai[1] - 1);
-            if (!Main.projectile[(int)projectile.ai[0]].active)
-                projectile.Kill();
+            Projectile.position.Y = Main.projectile[(int)Projectile.ai[0]].position.Y - Projectile.height * (Projectile.ai[1] - 1) + 1;
+            Projectile.position.X = Main.projectile[(int)Projectile.ai[0]].position.X + (float)Math.Cos(theta) * 12 * (Projectile.ai[1] - 1);
+            if (!Main.projectile[(int)Projectile.ai[0]].active)
+                Projectile.Kill();
         }
 
         private void FrameAnimation()
         {
-            projectile.frameCounter++;
-            if (projectile.frameCounter > 2)
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter > 2)
             {
-                projectile.frame++;
-                projectile.frameCounter = 0;
+                Projectile.frame++;
+                Projectile.frameCounter = 0;
             }
-            if (projectile.frame > 5)
+            if (Projectile.frame > 5)
             {
-                projectile.frame = 0;
+                Projectile.frame = 0;
             }
         }
 

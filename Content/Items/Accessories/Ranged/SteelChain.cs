@@ -16,25 +16,24 @@ namespace Trinitarian.Content.Items.Accessories.Ranged
 
         public override void SetDefaults()
         {
-            item.accessory = true;
-            item.width = 26;
-            item.height = 24;
-            item.rare = ItemRarityID.Blue;
-            item.value = Item.sellPrice(0, 0, 85, 0);
+            Item.accessory = true;
+            Item.width = 26;
+            Item.height = 24;
+            Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(0, 0, 85, 0);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.rangedDamage += 0.05f;
+            player.GetDamage(DamageClass.Ranged) += 0.05f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<SteelBar>(), 3);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemType<SteelBar>(), 3)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

@@ -107,7 +107,7 @@ namespace Trinitarian.Assets
 			Vector2 origin = Vector2.Zero;
 			float rotOffset = 0;
 
-			if (item.useStyle == ItemUseStyleID.HoldingOut)
+			if (item.useStyle == ItemUseStyleID.Shoot)
 			{
 				if (Item.staff[item.type])
 				{

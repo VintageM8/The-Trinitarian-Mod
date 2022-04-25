@@ -6,7 +6,7 @@ namespace Trinitarian.Content.Buffs.ClassSpecialty
 {
     public class WizardBuff : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Flames of Mutilation");
             Description.SetDefault("Conjures bursts of flame whenever damaged");

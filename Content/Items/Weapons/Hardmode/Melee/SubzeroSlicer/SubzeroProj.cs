@@ -3,6 +3,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 
 namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.SubzeroSlicer
 {
@@ -12,52 +13,52 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.SubzeroSlicer
         private readonly int oneHelixRevolutionInUpdateTicks = 30;
         public override void SetDefaults()
         {
-            projectile.width = projectile.height = 20;
-            projectile.penetrate = 5;
-            projectile.alpha = 3;
-            projectile.timeLeft = 200;
-            projectile.friendly = true;
+            Projectile.width = Projectile.height = 20;
+            Projectile.penetrate = 5;
+            Projectile.alpha = 3;
+            Projectile.timeLeft = 200;
+            Projectile.friendly = true;
         }
         public override bool PreAI()
         {
             i++;
             RunHomingAI();
-            ++projectile.localAI[0];
+            ++Projectile.localAI[0];
             float piFraction = MathHelper.Pi / oneHelixRevolutionInUpdateTicks;
             float piFractionVelocity = MathHelper.Pi / oneHelixRevolutionInUpdateTicks;
             float ReversepiFraction = MathHelper.Pi + oneHelixRevolutionInUpdateTicks;
-            Vector2 newDustPosition = new Vector2(0, (float)Math.Sin((projectile.localAI[0] % oneHelixRevolutionInUpdateTicks) * piFraction)) * projectile.height;
-            Dust newDust = Dust.NewDustPerfect(projectile.Center + newDustPosition.RotatedBy(projectile.velocity.ToRotation()), 67);
+            Vector2 newDustPosition = new Vector2(0, (float)Math.Sin((Projectile.localAI[0] % oneHelixRevolutionInUpdateTicks) * piFraction)) * Projectile.height;
+            Dust newDust = Dust.NewDustPerfect(Projectile.Center + newDustPosition.RotatedBy(Projectile.velocity.ToRotation()), 67);
             newDust.noGravity = true;
             newDustPosition.Y *= -1;
-            newDust = Dust.NewDustPerfect(projectile.Center + newDustPosition.RotatedBy(projectile.velocity.ToRotation()), 67);
+            newDust = Dust.NewDustPerfect(Projectile.Center + newDustPosition.RotatedBy(Projectile.velocity.ToRotation()), 67);
             newDust.noGravity = true;
             newDust.velocity *= 0f;
             if (i % 50 == 0)
             {
-                Projectile.NewProjectile(projectile.Center, projectile.velocity / 2, ModContent.ProjectileType<SubzeroProj2>(), projectile.damage, projectile.knockBack);
+                Projectile.NewProjectile(Projectile.Center, Projectile.velocity / 2, ModContent.ProjectileType<SubzeroProj2>(), Projectile.damage, Projectile.knockBack);
             }
-            Vector2 newDustPosition2 = new Vector2(0, (float)Math.Sin((projectile.localAI[0] % oneHelixRevolutionInUpdateTicks) * ReversepiFraction)) * projectile.height;
-            Dust newDust2 = Dust.NewDustPerfect(projectile.Center + newDustPosition2.RotatedBy(projectile.velocity.ToRotation()), 68);
+            Vector2 newDustPosition2 = new Vector2(0, (float)Math.Sin((Projectile.localAI[0] % oneHelixRevolutionInUpdateTicks) * ReversepiFraction)) * Projectile.height;
+            Dust newDust2 = Dust.NewDustPerfect(Projectile.Center + newDustPosition2.RotatedBy(Projectile.velocity.ToRotation()), 68);
             newDust2.noGravity = true;
             newDustPosition2.Y *= -1;
-            newDust2 = Dust.NewDustPerfect(projectile.Center + newDustPosition2.RotatedBy(projectile.velocity.ToRotation()), 160);
+            newDust2 = Dust.NewDustPerfect(Projectile.Center + newDustPosition2.RotatedBy(Projectile.velocity.ToRotation()), 160);
             newDust2.noGravity = true;
             newDust2.velocity *= 0f;
-            projectile.rotation += projectile.velocity.Length() * 0.1f * projectile.direction;
-            Vector2 Velocity2 = new Vector2(0, (float)Math.Sin(projectile.localAI[0] % oneHelixRevolutionInUpdateTicks * piFraction)) * projectile.height;
+            Projectile.rotation += Projectile.velocity.Length() * 0.1f * Projectile.direction;
+            Vector2 Velocity2 = new Vector2(0, (float)Math.Sin(Projectile.localAI[0] % oneHelixRevolutionInUpdateTicks * piFraction)) * Projectile.height;
             return (false);
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Vector2 offset = new Vector2(0, 0);
-            Main.PlaySound(SoundID.Item10);
+            SoundEngine.PlaySound(SoundID.Item10);
             for (float i = 0; i < 360; i += 0.5f)
             {
                 float ang = (float)(i * Math.PI) / 180;
-                float x = (float)(Math.Cos(ang) * 15) + projectile.Center.X;
-                float y = (float)(Math.Sin(ang) * 15) + projectile.Center.Y;
-                Vector2 vel = Vector2.Normalize(new Vector2(x - projectile.Center.X, y - projectile.Center.Y)) * 7;
+                float x = (float)(Math.Cos(ang) * 15) + Projectile.Center.X;
+                float y = (float)(Math.Sin(ang) * 15) + Projectile.Center.Y;
+                Vector2 vel = Vector2.Normalize(new Vector2(x - Projectile.Center.X, y - Projectile.Center.Y)) * 7;
                 int dustIndex = Dust.NewDust(new Vector2(x - 3, y - 3), 6, 6, DustID.MagnetSphere, vel.X, vel.Y);
                 Main.dust[dustIndex].noGravity = true;
             }
@@ -70,10 +71,10 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.SubzeroSlicer
             {
                 float ang = (float)(i * Math.PI) / 180;
 
-                float x = (float)(Math.Cos(ang) * 15) + projectile.Center.X;
-                float y = (float)(Math.Sin(ang) * 15) + projectile.Center.Y;
+                float x = (float)(Math.Cos(ang) * 15) + Projectile.Center.X;
+                float y = (float)(Math.Sin(ang) * 15) + Projectile.Center.Y;
 
-                Vector2 vel = Vector2.Normalize(new Vector2(x - projectile.Center.X, y - projectile.Center.Y)) * 7;
+                Vector2 vel = Vector2.Normalize(new Vector2(x - Projectile.Center.X, y - Projectile.Center.Y)) * 7;
 
                 int dustIndex = Dust.NewDust(new Vector2(x - 3, y - 3), 6, 6, DustID.MagnetSphere, vel.X, vel.Y);
                 Main.dust[dustIndex].noGravity = true;
@@ -81,7 +82,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.SubzeroSlicer
         }
         private void RunHomingAI()
         {
-            Projectile proj = projectile;
+            Projectile proj = Projectile;
             float projPosMidX = proj.position.X + proj.width / 2;
             float projPosMidY = proj.position.Y + proj.height / 2;
             float closestNpcPosX = proj.Center.X;
@@ -129,7 +130,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.SubzeroSlicer
             closestNpcDistY *= closestNpcDist;
             proj.velocity.X = ((proj.velocity.X * 20f) + closestNpcDistX) / 21f;
             proj.velocity.Y = ((proj.velocity.Y * 20f) + closestNpcDistY) / 21f;
-            projectile.velocity *= 1.005f;
+            Projectile.velocity *= 1.005f;
         }
     }
 }

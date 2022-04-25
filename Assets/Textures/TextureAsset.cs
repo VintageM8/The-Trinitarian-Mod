@@ -32,14 +32,14 @@ namespace Trinitarian.Assets
         {
             ModPath = path;
             Path = path;
-            Texture = new Ref<Texture2D>(ModContent.GetTexture(path));
+            Texture = new Ref<Texture2D>(ModContent.Request<Texture2D>(path));
         }
 
         public TextureAsset(Mod mod, string path)
         {
             ModPath = path;
             Path = mod.Name + "/" + path;
-            Texture = new Ref<Texture2D>(mod.GetTexture(path));
+            Texture = new Ref<Texture2D>(mod.Assets.Request<Texture2D>(path).Value);
         }
 
         public static implicit operator string(TextureAsset asset)

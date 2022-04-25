@@ -15,23 +15,23 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic.SnowHeartStaff
 
         public override void SetDefaults()
         {
-            projectile.width = 14;
-            projectile.height = 14;
-            projectile.timeLeft = 100;
-            projectile.penetrate = -1;
-            projectile.hostile = false;
-            projectile.friendly = true;
-            projectile.magic = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
+            Projectile.width = 14;
+            Projectile.height = 14;
+            Projectile.timeLeft = 100;
+            Projectile.penetrate = -1;
+            Projectile.hostile = false;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
         }
         public override void AI()
         {
-            projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
             timer++;
             if (timer > 20)
             {
-                projectile.tileCollide = true;
+                Projectile.tileCollide = true;
             }
         }
     }

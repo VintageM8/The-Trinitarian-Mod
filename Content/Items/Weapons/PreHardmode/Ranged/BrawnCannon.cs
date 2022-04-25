@@ -15,35 +15,34 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged
 
         public override void SetDefaults()
         {
-            item.damage = 15;
-            item.ranged = true;
-            item.width = 44;
-            item.height = 16;
-            item.useTime = 20;
-            item.useAnimation = 20;
-            item.crit = 0;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 0;
-            item.value = Item.sellPrice(0, 3, 0, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item34;
-            item.autoReuse = true;
-            item.shoot = ProjectileID.Flames;
-            item.shootSpeed = 5f;
-            item.useAmmo = AmmoID.Gel;
-            item.scale = 1.15f;
+            Item.damage = 15;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 44;
+            Item.height = 16;
+            Item.useTime = 20;
+            Item.useAnimation = 20;
+            Item.crit = 0;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 0;
+            Item.value = Item.sellPrice(0, 3, 0, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item34;
+            Item.autoReuse = true;
+            Item.shoot = ProjectileID.Flames;
+            Item.shootSpeed = 5f;
+            Item.useAmmo = AmmoID.Gel;
+            Item.scale = 1.15f;
         }
 
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.CrimtaneBar, 10);
-            recipe.AddIngredient(ItemID.TissueSample, 12);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.CrimtaneBar, 10)
+                .AddIngredient(ItemID.TissueSample, 12)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
 
         public override Vector2? HoldoutOffset()

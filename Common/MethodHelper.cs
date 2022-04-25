@@ -23,7 +23,7 @@ namespace Trinitarian.Common
         public static Vector2 FindBelowTile(Vector2 vec)
         {
             vec.Y /= 16;
-            while (!Framing.GetTileSafely((int)vec.X / 16, (int)vec.Y).active() && Framing.GetTileSafely((int)vec.X / 16, (int)vec.Y).type != TileID.Tombstones && Framing.GetTileSafely((int)vec.X / 16, (int)vec.Y).type != TileID.Trees)
+            while (!Framing.GetTileSafely((int)vec.X / 16, (int)vec.Y).HasTile && Framing.GetTileSafely((int)vec.X / 16, (int)vec.Y).TileType != TileID.Tombstones && Framing.GetTileSafely((int)vec.X / 16, (int)vec.Y).TileType != TileID.Trees)
                 vec.Y++;
             vec.Y *= 16;
             return vec;

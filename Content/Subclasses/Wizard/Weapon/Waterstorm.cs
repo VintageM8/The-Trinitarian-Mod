@@ -15,22 +15,22 @@ namespace Trinitarian.Content.Subclasses.Wizard.Weapon
 
         public override void SetDefaults()
         {
-            item.damage = 80;
-            item.ranged = true;
-            item.width = 46;
-            item.height = 24;
-            item.useTime = 15;
-            item.useAnimation = 15;
-            item.crit = 8;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 2;
-            item.value = Item.sellPrice(0, 0, 60, 0);
-            item.rare = ItemRarityID.Pink;
-            item.UseSound = SoundID.Item5;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<WaterstormBubble>();
-            item.shootSpeed = 18f;
+            Item.damage = 80;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 46;
+            Item.height = 24;
+            Item.useTime = 15;
+            Item.useAnimation = 15;
+            Item.crit = 8;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 2;
+            Item.value = Item.sellPrice(0, 0, 60, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.UseSound = SoundID.Item5;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<WaterstormBubble>();
+            Item.shootSpeed = 18f;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

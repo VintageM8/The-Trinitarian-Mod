@@ -17,31 +17,30 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.SubzeroSlicer
 
         public override void SetDefaults()
         {
-            item.damage = 62;
-            item.melee = true;
-            item.width = 64;
-            item.height = 64;
-            item.useTime = 21;
-            item.useAnimation = 21;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 7f;
-            item.crit = 4;
-            item.value = Item.sellPrice(0, 12, 0, 0);
-            item.rare = ItemRarityID.Lime;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<SubzeroProj>();
-            item.shootSpeed = 15f;
+            Item.damage = 62;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 64;
+            Item.height = 64;
+            Item.useTime = 21;
+            Item.useAnimation = 21;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 7f;
+            Item.crit = 4;
+            Item.value = Item.sellPrice(0, 12, 0, 0);
+            Item.rare = ItemRarityID.Lime;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<SubzeroProj>();
+            Item.shootSpeed = 15f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.HallowedBar, 3);
-            recipe.AddIngredient(ItemType<EnchantedIceBall>(), 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.HallowedBar, 3)
+                .AddIngredient(ItemType<EnchantedIceBall>(), 1)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)

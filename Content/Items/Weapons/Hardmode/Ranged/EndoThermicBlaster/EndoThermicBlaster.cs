@@ -15,32 +15,31 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged.EndoThermicBlaster
 
         public override void SetDefaults()
         {
-            item.damage = 50;
-            item.ranged = true;
-            item.width = 50;
-            item.height = 50;
-            item.useTime = 30;
-            item.useAnimation = 30;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 4;
-            item.value = Item.sellPrice(0, 0, 80, 0);
-            item.rare = ItemRarityID.LightRed;
-            item.UseSound = SoundID.Item11;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<EndothermicProj>();
-            item.shootSpeed = 16f;
-            item.useAmmo = AmmoID.Snowball;
+            Item.damage = 50;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 50;
+            Item.height = 50;
+            Item.useTime = 30;
+            Item.useAnimation = 30;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 4;
+            Item.value = Item.sellPrice(0, 0, 80, 0);
+            Item.rare = ItemRarityID.LightRed;
+            Item.UseSound = SoundID.Item11;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<EndothermicProj>();
+            Item.shootSpeed = 16f;
+            Item.useAmmo = AmmoID.Snowball;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<IceShards>(), 28);
-            recipe.AddIngredient(ItemID.SoulofLight, 14);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ModContent.ItemType<IceShards>(), 28)
+                .AddIngredient(ItemID.SoulofLight, 14)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

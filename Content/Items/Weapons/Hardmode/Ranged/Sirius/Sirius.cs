@@ -15,22 +15,22 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged.Sirius
 
         public override void SetDefaults()
         {
-            item.damage = 140;
-            item.ranged = true;
-            item.width = 50;
-            item.height = 28;
-            item.useTime = 6;
-            item.useAnimation = 6;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 6;
-            item.value = Item.sellPrice(0, 28, 0, 0);
-            item.rare = ItemRarityID.Red;
-            item.UseSound = SoundID.Item11;
-            item.autoReuse = true;
-            item.shoot = ProjectileID.PurificationPowder;
-            item.shootSpeed = 18f;
-            item.useAmmo = AmmoID.Bullet;
+            Item.damage = 140;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 50;
+            Item.height = 28;
+            Item.useTime = 6;
+            Item.useAnimation = 6;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 6;
+            Item.value = Item.sellPrice(0, 28, 0, 0);
+            Item.rare = ItemRarityID.Red;
+            Item.UseSound = SoundID.Item11;
+            Item.autoReuse = true;
+            Item.shoot = ProjectileID.PurificationPowder;
+            Item.shootSpeed = 18f;
+            Item.useAmmo = AmmoID.Bullet;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -50,11 +50,10 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged.Sirius
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddTile(TileID.Anvils);
-            recipe.AddIngredient(ItemID.FragmentVortex, 25);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddTile(TileID.Anvils)
+                .AddIngredient(ItemID.FragmentVortex, 25)
+                .Register();
         }
     }
 }

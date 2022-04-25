@@ -14,21 +14,20 @@ namespace Trinitarian.Content.Items.Materials.Bars
 
         public override void SetDefaults()
         {
-            item.width = 26;
-            item.height = 24;
-            item.rare = ItemRarityID.Blue;
-            item.value = Item.sellPrice(0, 0, 5, 0);
-            item.maxStack = 999;
+            Item.width = 26;
+            Item.height = 24;
+            Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(0, 0, 5, 0);
+            Item.maxStack = 999;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Charcoal>(), 3);
-            recipe.AddIngredient(ModContent.ItemType<RustyScraps>(), 10);
-            recipe.AddTile(TileID.Furnaces);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ModContent.ItemType<Charcoal>(), 3)
+                .AddIngredient(ModContent.ItemType<RustyScraps>(), 10)
+                .AddTile(TileID.Furnaces)
+                .Register();
         }
     }
 }

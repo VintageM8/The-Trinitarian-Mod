@@ -6,7 +6,7 @@ namespace Trinitarian.Content.Buffs.Damage
 {
     public class Stunned : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Stunned");
             Description.SetDefault("Bruh, Why you reading this, you shouldnt be....SMH YOU LOSER");

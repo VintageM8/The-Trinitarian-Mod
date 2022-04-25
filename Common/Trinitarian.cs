@@ -175,12 +175,11 @@ namespace Trinitarian.Common
 
 		public override void AddRecipes()
         {
-			ModRecipe recipe = new ModRecipe(this);
-			recipe.AddIngredient(ModContent.ItemType<Charcoal>(), 3);
-			recipe.AddIngredient(ItemID.Wood, 8);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.SetResult(ItemID.Torch, 10); 
-			recipe.AddRecipe();
+			Mod.CreateRecipe(ItemID.Torch, 10)
+				.AddIngredient(ModContent.ItemType<Charcoal>(), 3)
+				.AddIngredient(ItemID.Wood, 8)
+				.AddTile(TileID.WorkBenches)
+				.Register();
 		}
 	}
 }

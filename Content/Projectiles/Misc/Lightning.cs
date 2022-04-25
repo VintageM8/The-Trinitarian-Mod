@@ -18,58 +18,58 @@ namespace Trinitarian.Content.Projectiles.Misc
 
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);
+            Projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);
             //aiType = ProjectileID.CultistBossLightningOrbArc;
-            projectile.aiStyle = 88;
-            projectile.width = 14;
-            projectile.height = 14;
-            projectile.aiStyle = 88;
-            projectile.hostile = true;
-            projectile.alpha = 255;
-            projectile.ignoreWater = true;
-            projectile.tileCollide = true;
-            projectile.extraUpdates = 4;
-            projectile.timeLeft = 120 * (projectile.extraUpdates + 1);
+            Projectile.aiStyle = 88;
+            Projectile.width = 14;
+            Projectile.height = 14;
+            Projectile.aiStyle = 88;
+            Projectile.hostile = true;
+            Projectile.alpha = 255;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = true;
+            Projectile.extraUpdates = 4;
+            Projectile.timeLeft = 120 * (Projectile.extraUpdates + 1);
         }
 
         public override void AI()
         {
-            projectile.frameCounter++;
-            Lighting.AddLight(projectile.Center, 0.3f, 0.45f, 0.5f);
-            if (projectile.velocity == Vector2.Zero)
+            Projectile.frameCounter++;
+            Lighting.AddLight(Projectile.Center, 0.3f, 0.45f, 0.5f);
+            if (Projectile.velocity == Vector2.Zero)
             {
-                if (projectile.frameCounter >= projectile.extraUpdates * 2)
+                if (Projectile.frameCounter >= Projectile.extraUpdates * 2)
                 {
-                    projectile.frameCounter = 0;
+                    Projectile.frameCounter = 0;
                     bool flag118 = true;
-                    for (int num551 = 1; num551 < projectile.oldPos.Length; num551++)
+                    for (int num551 = 1; num551 < Projectile.oldPos.Length; num551++)
                     {
-                        if (projectile.oldPos[num551] != projectile.oldPos[0])
+                        if (Projectile.oldPos[num551] != Projectile.oldPos[0])
                         {
                             flag118 = false;
                         }
                     }
                     if (flag118)
                     {
-                        projectile.Kill();
+                        Projectile.Kill();
                         return;
                     }
                 }
-                if (Main.rand.Next(projectile.extraUpdates) == 0)
+                if (Main.rand.Next(Projectile.extraUpdates) == 0)
                 {
                     for (int num550 = 0; num550 < 2; num550++)
                     {
-                        float num546 = projectile.rotation + ((Main.rand.Next(2) == 1) ? (-1f) : 1f) * ((float)Math.PI / 2f);
+                        float num546 = Projectile.rotation + ((Main.rand.Next(2) == 1) ? (-1f) : 1f) * ((float)Math.PI / 2f);
                         float num545 = (float)Main.rand.NextDouble() * 0.8f + 1f;
                         Vector2 vector225 = new Vector2((float)Math.Cos(num546) * num545, (float)Math.Sin(num546) * num545);
-                        int num543 = Dust.NewDust(projectile.Center, 0, 0, DustID.Electric, vector225.X, vector225.Y);
+                        int num543 = Dust.NewDust(Projectile.Center, 0, 0, DustID.Electric, vector225.X, vector225.Y);
                         Main.dust[num543].noGravity = true;
                         Main.dust[num543].scale = 1.2f;
                     }
                     if (Main.rand.Next(5) == 0)
                     {
-                        Vector2 value123 = projectile.velocity.RotatedBy(1.5707963705062866) * ((float)Main.rand.NextDouble() - 0.5f) * projectile.width;
-                        int num547 = Dust.NewDust(projectile.Center + value123 - Vector2.One * 4f, 8, 8, DustID.Smoke, 0f, 0f, 100, default(Color), 1.5f);
+                        Vector2 value123 = Projectile.velocity.RotatedBy(1.5707963705062866) * ((float)Main.rand.NextDouble() - 0.5f) * Projectile.width;
+                        int num547 = Dust.NewDust(Projectile.Center + value123 - Vector2.One * 4f, 8, 8, DustID.Smoke, 0f, 0f, 100, default(Color), 1.5f);
                         Dust dust81 = Main.dust[num547];
                         dust81.velocity *= 0.5f;
                         Main.dust[num547].velocity.Y = 0f - Math.Abs(Main.dust[num547].velocity.Y);
@@ -78,19 +78,19 @@ namespace Trinitarian.Content.Projectiles.Misc
             }
             else
             {
-                if (projectile.frameCounter < projectile.extraUpdates * 2)
+                if (Projectile.frameCounter < Projectile.extraUpdates * 2)
                 {
                     return;
                 }
-                projectile.frameCounter = 0;
-                float num541 = projectile.velocity.Length();
-                UnifiedRandom unifiedRandom3 = new UnifiedRandom((int)projectile.ai[1]);
+                Projectile.frameCounter = 0;
+                float num541 = Projectile.velocity.Length();
+                UnifiedRandom unifiedRandom3 = new UnifiedRandom((int)Projectile.ai[1]);
                 int num540 = 0;
                 Vector2 spinningpoint4 = -Vector2.UnitY;
                 while (true)
                 {
                     int num539 = unifiedRandom3.Next();
-                    projectile.ai[1] = num539;
+                    Projectile.ai[1] = num539;
                     num539 %= 100;
                     float f5 = (float)num539 / 100f * ((float)Math.PI * 2f);
                     Vector2 vector245 = f5.ToRotationVector2();
@@ -103,11 +103,11 @@ namespace Trinitarian.Content.Projectiles.Misc
                     {
                         flag117 = true;
                     }
-                    if (vector245.X * (float)(projectile.extraUpdates + 1) * 2f * num541 + projectile.localAI[0] > 40f)
+                    if (vector245.X * (float)(Projectile.extraUpdates + 1) * 2f * num541 + Projectile.localAI[0] > 40f)
                     {
                         flag117 = true;
                     }
-                    if (vector245.X * (float)(projectile.extraUpdates + 1) * 2f * num541 + projectile.localAI[0] < -40f)
+                    if (vector245.X * (float)(Projectile.extraUpdates + 1) * 2f * num541 + Projectile.localAI[0] < -40f)
                     {
                         flag117 = true;
                     }
@@ -115,8 +115,8 @@ namespace Trinitarian.Content.Projectiles.Misc
                     {
                         if (num540++ >= 100)
                         {
-                            projectile.velocity = Vector2.Zero;
-                            projectile.localAI[1] = 1f;
+                            Projectile.velocity = Vector2.Zero;
+                            Projectile.localAI[1] = 1f;
                             break;
                         }
                         continue;
@@ -124,11 +124,11 @@ namespace Trinitarian.Content.Projectiles.Misc
                     spinningpoint4 = vector245;
                     break;
                 }
-                if (projectile.velocity != Vector2.Zero)
+                if (Projectile.velocity != Vector2.Zero)
                 {
-                    projectile.localAI[0] += spinningpoint4.X * (float)(projectile.extraUpdates + 1) * 2f * num541;
-                    projectile.velocity = spinningpoint4.RotatedBy(projectile.ai[0] + (float)Math.PI / 2f) * num541;
-                    projectile.rotation = projectile.velocity.ToRotation() + (float)Math.PI / 2f;
+                    Projectile.localAI[0] += spinningpoint4.X * (float)(Projectile.extraUpdates + 1) * 2f * num541;
+                    Projectile.velocity = spinningpoint4.RotatedBy(Projectile.ai[0] + (float)Math.PI / 2f) * num541;
+                    Projectile.rotation = Projectile.velocity.ToRotation() + (float)Math.PI / 2f;
                 }
             }
         }

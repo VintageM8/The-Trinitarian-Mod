@@ -13,23 +13,22 @@ namespace Trinitarian.Content.Items.Materials.Parts
 
         public override void SetDefaults()
         {
-            item.width = 20;
-            item.height = 22;
-            item.rare = ItemRarityID.LightRed;
-            item.value = Item.sellPrice(0, 0, 2, 50);
-            item.maxStack = 999;
+            Item.width = 20;
+            Item.height = 22;
+            Item.rare = ItemRarityID.LightRed;
+            Item.value = Item.sellPrice(0, 0, 2, 50);
+            Item.maxStack = 999;
         }
 
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.IceBlock, 45);
-            recipe.AddIngredient(ItemID.FrostCore, 1);
-            recipe.AddIngredient(ItemID.SoulofNight, 3);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.IceBlock, 45)
+                .AddIngredient(ItemID.FrostCore, 1)
+                .AddIngredient(ItemID.SoulofNight, 3)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

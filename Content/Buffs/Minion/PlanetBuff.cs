@@ -5,7 +5,7 @@ namespace Trinitarian.Content.Buffs.Minion
 {
     public class PlanetBuff : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Planet");
             Description.SetDefault("A Planet will fight for you");
@@ -15,7 +15,7 @@ namespace Trinitarian.Content.Buffs.Minion
 
         public override void Update(Player player, ref int buffIndex)
         {
-            if (player.ownedProjectileCounts[mod.ProjectileType("PlanetMinion")] > 0)
+            if (player.ownedProjectileCounts[Mod.Find<ModProjectile>("PlanetMinion").Type] > 0)
             {
                 player.buffTime[buffIndex] = 18000;
             }

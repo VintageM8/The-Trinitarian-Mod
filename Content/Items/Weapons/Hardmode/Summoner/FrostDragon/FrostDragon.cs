@@ -16,45 +16,44 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Summoner.FrostDragon
         {
             DisplayName.SetDefault("Staff of the Frost Dragon");
             Tooltip.SetDefault("Summons a frozen dragon to fight for you");
-            ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true;
-            ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
+            ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
+            ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 65;
-            item.knockBack = 5f;
-            item.mana = 20;
-            item.width = 32;
-            item.height = 42;
-            item.useTime = 36;
-            item.useAnimation = 36;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.value = Item.sellPrice(0, 15, 50, 0);
-            item.rare = ItemRarityID.Red;
-            item.UseSound = SoundID.Item44;
-            item.noMelee = true;
-            item.summon = true;
-            item.buffType = BuffType<IceDragBuff>();
-            item.shoot = ProjectileType<FrostDragonproj>();
+            Item.damage = 65;
+            Item.knockBack = 5f;
+            Item.mana = 20;
+            Item.width = 32;
+            Item.height = 42;
+            Item.useTime = 36;
+            Item.useAnimation = 36;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.value = Item.sellPrice(0, 15, 50, 0);
+            Item.rare = ItemRarityID.Red;
+            Item.UseSound = SoundID.Item44;
+            Item.noMelee = true;
+            Item.DamageType = DamageClass.Summon;
+            Item.buffType = BuffType<IceDragBuff>();
+            Item.shoot = ProjectileType<FrostDragonproj>();
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            player.AddBuff(item.buffType, 2);
+            player.AddBuff(Item.buffType, 2);
             position = Main.MouseWorld;
             return true;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<TrueStarSteel>(), 18);
-            recipe.AddIngredient(ModContent.ItemType<SummonShards>(), 8);
-            recipe.AddIngredient(ModContent.ItemType<EnchantedIceBall>(), 2);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ModContent.ItemType<TrueStarSteel>(), 18)
+                .AddIngredient(ModContent.ItemType<SummonShards>(), 8)
+                .AddIngredient(ModContent.ItemType<EnchantedIceBall>(), 2)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

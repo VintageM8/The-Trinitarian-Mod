@@ -10,44 +10,44 @@ namespace Trinitarian.Content.Projectiles.Weapon.Mage
     {
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
-            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 40;
-            projectile.height = 40;
-            projectile.timeLeft = 300;
-            projectile.magic = true;
-            projectile.friendly = true;
-            projectile.penetrate = 3;
-            projectile.tileCollide = false;
-            projectile.usesIDStaticNPCImmunity = true;
-            projectile.idStaticNPCHitCooldown = 3;
+            Projectile.width = 40;
+            Projectile.height = 40;
+            Projectile.timeLeft = 300;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.friendly = true;
+            Projectile.penetrate = 3;
+            Projectile.tileCollide = false;
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 3;
         }
 
         public override void AI()
         {
-            projectile.rotation += 1.15f;
-            projectile.ai[0]++;
-            if (projectile.ai[0] < 120)
-                projectile.ai[1] += projectile.ai[0] / 480;
-            float turnSpeed = projectile.ai[0] / 3000f;
-            float speed = projectile.ai[1];
-            float rotation = projectile.velocity.ToRotation();
-            projectile.velocity = new Vector2(speed, 0f).RotatedBy(rotation);
-            Lighting.AddLight(projectile.Center, new Vector3(0.5f, 0.3f, 0.05f));
+            Projectile.rotation += 1.15f;
+            Projectile.ai[0]++;
+            if (Projectile.ai[0] < 120)
+                Projectile.ai[1] += Projectile.ai[0] / 480;
+            float turnSpeed = Projectile.ai[0] / 3000f;
+            float speed = Projectile.ai[1];
+            float rotation = Projectile.velocity.ToRotation();
+            Projectile.velocity = new Vector2(speed, 0f).RotatedBy(rotation);
+            Lighting.AddLight(Projectile.Center, new Vector3(0.5f, 0.3f, 0.05f));
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Vector2 origin = Main.projectileTexture[projectile.type].Size() / 2;
-            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
+            Vector2 origin = Main.projectileTexture[Projectile.type].Size() / 2;
+            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i++)
             {
-                Main.spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.oldPos[i] + new Vector2(projectile.width / 2f, projectile.height / 2f) - Main.screenPosition, null, new Color(60, 60, 60, 0), projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(Main.projectileTexture[Projectile.type], Projectile.oldPos[i] + new Vector2(Projectile.width / 2f, Projectile.height / 2f) - Main.screenPosition, null, new Color(60, 60, 60, 0), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0f);
             }
-            Main.spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition, null, new Color(240, 240, 240, 130), projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(Main.projectileTexture[Projectile.type], Projectile.Center - Main.screenPosition, null, new Color(240, 240, 240, 130), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0f);
             return false;
         }
 
@@ -55,7 +55,7 @@ namespace Trinitarian.Content.Projectiles.Weapon.Mage
         {
             for (int i = 0; i < 40; i++)
             {
-                Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Water);
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Water);
             }
         }
     }

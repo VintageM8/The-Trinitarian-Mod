@@ -15,26 +15,26 @@ namespace Trinitarian.Content.Projectiles.Subclass.Paladin
 
 		public override void SetDefaults()
 		{
-			projectile.width = 10;
-			projectile.height = 16;
+			Projectile.width = 10;
+			Projectile.height = 16;
 
-			projectile.aiStyle = 1;
+			Projectile.aiStyle = 1;
 			aiType = ProjectileID.Bullet;
 
-			projectile.melee = true;
-			projectile.friendly = true;
+			Projectile.DamageType = DamageClass.Melee;
+			Projectile.friendly = true;
 
-			projectile.penetrate = 5;
-			projectile.timeLeft = 600;
+			Projectile.penetrate = 5;
+			Projectile.timeLeft = 600;
 		}
 
 		public override void AI()
 		{
 			for (int i = 0; i < 10; i++) {
-				float x = projectile.Center.X - projectile.velocity.X / 10f * (float)i;
-				float y = projectile.Center.Y - projectile.velocity.Y / 10f * (float)i;
+				float x = Projectile.Center.X - Projectile.velocity.X / 10f * (float)i;
+				float y = Projectile.Center.Y - Projectile.velocity.Y / 10f * (float)i;
 				int num = Dust.NewDust(new Vector2(x, y), 26, 26, 61, 0f, 0f, 0, default(Color), 1f);
-				Main.dust[num].alpha = projectile.alpha;
+				Main.dust[num].alpha = Projectile.alpha;
 				Main.dust[num].position.X = x;
 				Main.dust[num].position.Y = y;
 				Main.dust[num].noGravity = true;

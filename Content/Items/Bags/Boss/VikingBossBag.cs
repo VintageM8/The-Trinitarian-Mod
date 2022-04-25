@@ -17,12 +17,12 @@ namespace Trinitarian.Content.Items.Bags.Boss
 
         public override void SetDefaults()
         {
-            item.maxStack = 999;
-            item.consumable = true;
-            item.width = 32;
-            item.height = 32;
-            item.rare = ItemRarityID.Expert;
-            item.expert = true;
+            Item.maxStack = 999;
+            Item.consumable = true;
+            Item.width = 32;
+            Item.height = 32;
+            Item.rare = ItemRarityID.Expert;
+            Item.expert = true;
         }
 
         public override bool CanRightClick()

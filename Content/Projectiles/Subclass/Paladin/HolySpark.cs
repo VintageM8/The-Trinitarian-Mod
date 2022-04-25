@@ -18,23 +18,23 @@ namespace Trinitarian.Content.Projectiles.Subclass.Paladin
 
 		public override void SetDefaults()
 		{
-			projectile.aiStyle = -1;
-			projectile.friendly = true;
-			projectile.width = 2;
-			projectile.height = 2;
-			projectile.alpha = 0;
-			projectile.timeLeft = 3600;
-			projectile.penetrate = 1;
-			projectile.extraUpdates = 127;
-			projectile.tileCollide = true;
-			projectile.ignoreWater = false;
-			projectile.hide = true;
-			projectile.melee = true;
+			Projectile.aiStyle = -1;
+			Projectile.friendly = true;
+			Projectile.width = 2;
+			Projectile.height = 2;
+			Projectile.alpha = 0;
+			Projectile.timeLeft = 3600;
+			Projectile.penetrate = 1;
+			Projectile.extraUpdates = 127;
+			Projectile.tileCollide = true;
+			Projectile.ignoreWater = false;
+			Projectile.hide = true;
+			Projectile.DamageType = DamageClass.Melee;
 		}
 
 		public override void AI()
 		{
-			Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire, Scale: 2.5f);
+			Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Fire, Scale: 2.5f);
 		}
 		public override void OnHitPvp(Player target, int damage, bool crit)
 		{

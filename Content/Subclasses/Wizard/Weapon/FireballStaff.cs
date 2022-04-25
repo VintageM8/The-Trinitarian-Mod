@@ -13,29 +13,29 @@ namespace Trinitarian.Content.Subclasses.Wizard.Weapon
         {
             DisplayName.SetDefault("Fireball Staff");
             Tooltip.SetDefault("Playing with fire, deal with it.");
-            Item.staff[item.type] = true;
+            Item.staff[Item.type] = true;
         }
 
         public override void SetDefaults()
         {
-            item.autoReuse = true;
-            item.rare = ItemRarityID.Blue;
-            item.mana = 5;
-            item.UseSound = SoundID.Item21;
-            item.noMelee = true;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.damage = 15;
-            item.channel = true;
-            item.autoReuse = true;
-            item.useAnimation = 20;
-            item.useTime = 20;
-            item.width = 50;
-            item.height = 56;
-            item.shoot = ModContent.ProjectileType<FireStaffProj>();
-            item.shootSpeed = 8f;
-            item.knockBack = 3f;
-            item.magic = true;
-            item.value = Item.sellPrice(gold: 1, silver: 75);
+            Item.autoReuse = true;
+            Item.rare = ItemRarityID.Blue;
+            Item.mana = 5;
+            Item.UseSound = SoundID.Item21;
+            Item.noMelee = true;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.damage = 15;
+            Item.channel = true;
+            Item.autoReuse = true;
+            Item.useAnimation = 20;
+            Item.useTime = 20;
+            Item.width = 50;
+            Item.height = 56;
+            Item.shoot = ModContent.ProjectileType<FireStaffProj>();
+            Item.shootSpeed = 8f;
+            Item.knockBack = 3f;
+            Item.DamageType = DamageClass.Magic;
+            Item.value = Item.sellPrice(gold: 1, silver: 75);
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

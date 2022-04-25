@@ -22,29 +22,29 @@ namespace Trinitarian.Content.Items.Dedicated
 
         public override void SetDefaults()
         {
-            item.damage = 15;
-            item.ranged = true;
-            item.width = 50;
-            item.height = 28;
-            item.useTime = 15;
-            item.useAnimation = 15;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 2;
-            item.value = Item.sellPrice(0, 1, 0, 0);
-            item.rare = ItemRarityID.Cyan;
-            item.UseSound = SoundID.Item11;
-            item.autoReuse = true;
-            item.shoot = ProjectileID.PurificationPowder;
-            item.shootSpeed = 18f;
-            item.useAmmo = AmmoID.Bullet;
+            Item.damage = 15;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 50;
+            Item.height = 28;
+            Item.useTime = 15;
+            Item.useAnimation = 15;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 2;
+            Item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.rare = ItemRarityID.Cyan;
+            Item.UseSound = SoundID.Item11;
+            Item.autoReuse = true;
+            Item.shoot = ProjectileID.PurificationPowder;
+            Item.shootSpeed = 18f;
+            Item.useAmmo = AmmoID.Bullet;
         }
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
-            Vector2 pos = item.Center - Main.screenPosition;
-            Texture2D texture = Main.itemTexture[item.type];
-            Texture2D spot = ModContent.GetTexture("Trinitarian/Assets/Textures/Spotlight");
+            Vector2 pos = Item.Center - Main.screenPosition;
+            Texture2D texture = Main.itemTexture[Item.type];
+            Texture2D spot = ModContent.Request<Texture2D>("Trinitarian/Assets/Textures/Spotlight");
             float alpha = 0.8f;
             float s = 0.5f * scale;
             for (int i = 0; i < 6; i++)
@@ -68,9 +68,9 @@ namespace Trinitarian.Content.Items.Dedicated
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             Vector2 pos = Utilty.GetInventoryPosition(position, frame, origin, scale);
-            Texture2D texture = Main.itemTexture[item.type];
-            Texture2D flash = ModContent.GetTexture("Trinitarian/Assets/Textures/Flash2");
-            UnifiedRandom rand = new UnifiedRandom(item.whoAmI);
+            Texture2D texture = Main.itemTexture[Item.type];
+            Texture2D flash = ModContent.Request<Texture2D>("Trinitarian/Assets/Textures/Flash2");
+            UnifiedRandom rand = new UnifiedRandom(Item.whoAmI);
             for (int i = 0; i < 5; i++)
             {
                 float alpha = 0.3f + (0.15f * i);

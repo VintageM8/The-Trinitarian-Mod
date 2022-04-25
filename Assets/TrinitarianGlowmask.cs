@@ -16,16 +16,16 @@ namespace Trinitarian.Assets
 
 		public static void AddGlowMask(int itemType, string texturePath)
 		{
-			ItemGlowMask[itemType] = ModContent.GetTexture(texturePath);
+			ItemGlowMask[itemType] = ModContent.Request<Texture2D>(texturePath);
 		}
 
 		public override void ModifyDrawLayers(List<PlayerLayer> layers)
 		{
 			
 			Texture2D textureItem;
-			if (player.HeldItem.type >= ItemID.Count && ItemGlowMask.TryGetValue(player.HeldItem.type, out textureItem))//Held ItemType
+			if (Player.HeldItem.type >= ItemID.Count && ItemGlowMask.TryGetValue(Player.HeldItem.type, out textureItem))//Held ItemType
 			{
-				InsertAfterVanillaLayer(layers, "HeldItem", new PlayerLayer(mod.Name, "GlowMaskHeldItem", delegate (PlayerDrawInfo info) {
+				InsertAfterVanillaLayer(layers, "HeldItem", new PlayerLayer(Mod.Name, "GlowMaskHeldItem", delegate (PlayerDrawInfo info) {
 					GlowmaskUtils.DrawItemGlowMask(textureItem, info);
 				}));
 			}
@@ -35,7 +35,7 @@ namespace Trinitarian.Assets
 		{
 			for (int i = 0; i < layers.Count; i++)
 			{
-				if (layers[i].Name == vanillaLayerName && layers[i].mod == "Terraria")
+				if (layers[i].Name == vanillaLayerName && layers[i].Mod == "Terraria")
 				{
 					layers.Insert(i + 1, newPlayerLayer);
 					return;

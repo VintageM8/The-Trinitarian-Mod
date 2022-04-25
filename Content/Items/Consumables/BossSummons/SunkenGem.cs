@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using Trinitarian.Content.NPCs.Bosses.Ocean;
 using Trinitarian.Content.Items.Materials.Bars;
 using Trinitarian.Common.Players;
+using Terraria.Audio;
 
 namespace Trinitarian.Content.Items.Consumables.BossSummons
 {
@@ -19,16 +20,16 @@ namespace Trinitarian.Content.Items.Consumables.BossSummons
 
         public override void SetDefaults()
         {
-            item.width = 26;
-            item.height = 28;
-            item.rare = ItemRarityID.Green;
-            item.useAnimation = 45;
-            item.useTime = 45;
-            item.useStyle = ItemUseStyleID.HoldingUp;
-            item.maxStack = 20;
-            item.noMelee = true;
-            item.consumable = true;
-            item.autoReuse = false;
+            Item.width = 26;
+            Item.height = 28;
+            Item.rare = ItemRarityID.Green;
+            Item.useAnimation = 45;
+            Item.useTime = 45;
+            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.maxStack = 20;
+            Item.noMelee = true;
+            Item.consumable = true;
+            Item.autoReuse = false;
         }
 
         public override bool CanUseItem(Player player)
@@ -37,7 +38,7 @@ namespace Trinitarian.Content.Items.Consumables.BossSummons
             return !NPC.AnyNPCs(ModContent.NPCType<OceanGhost>()) && Main.dayTime;
         }
 
-        public override bool UseItem(Player player)
+        public override bool? UseItem(Player player)
         {
             player.GetModPlayer<TrinitarianPlayer>().TitleID = 2;
             player.GetModPlayer<TrinitarianPlayer>().ShowText = true;
@@ -62,12 +63,11 @@ namespace Trinitarian.Content.Items.Consumables.BossSummons
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<OceanBar>(), 10);
-            recipe.AddIngredient(ItemID.SoulofNight, 8);
-            recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this, 1);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ModContent.ItemType<OceanBar>(), 10)
+                .AddIngredient(ItemID.SoulofNight, 8)
+                .AddTile(TileID.DemonAltar)
+                .Register();
         }
     }
 }

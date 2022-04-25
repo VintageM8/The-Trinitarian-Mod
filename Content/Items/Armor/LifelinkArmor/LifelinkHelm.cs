@@ -16,11 +16,11 @@ namespace Trinitarian.Content.Items.Armor.LifelinkArmor
 
         public override void SetDefaults()
         {
-            item.width = 20;
-            item.height = 20;
-            item.value = Item.sellPrice(0, 2, 0, 0);
-            item.rare = ItemRarityID.Green;
-            item.defense = 5;
+            Item.width = 20;
+            Item.height = 20;
+            Item.value = Item.sellPrice(0, 2, 0, 0);
+            Item.rare = ItemRarityID.Green;
+            Item.defense = 5;
         }
 
         public override void UpdateEquip(Player player)
@@ -42,12 +42,11 @@ namespace Trinitarian.Content.Items.Armor.LifelinkArmor
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.PlatinumBar, 5);
-            recipe.AddIngredient(ItemID.LifeCrystal, 2);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.PlatinumBar, 5)
+                .AddIngredient(ItemID.LifeCrystal, 2)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

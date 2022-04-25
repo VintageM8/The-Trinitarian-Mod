@@ -16,13 +16,13 @@ namespace Trinitarian.Content.Items.Bags
 
         public override void SetDefaults()
         {
-            item.maxStack = 999;
-            item.consumable = true;
-            item.width = 26;
-            item.height = 34;
-            item.rare = ItemRarityID.White;
-            item.expert = false;
-            item.value = Item.sellPrice(0, 0, 0, 10);
+            Item.maxStack = 999;
+            Item.consumable = true;
+            Item.width = 26;
+            Item.height = 34;
+            Item.rare = ItemRarityID.White;
+            Item.expert = false;
+            Item.value = Item.sellPrice(0, 0, 0, 10);
         }
 
         public override bool CanRightClick()

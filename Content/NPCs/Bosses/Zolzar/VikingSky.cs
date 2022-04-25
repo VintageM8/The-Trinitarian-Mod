@@ -29,7 +29,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 
 		private bool UpdateVikingIndex()
 		{
-			int VikingType = ModLoader.GetMod("Trinitarian").NPCType("VikingBoss");
+			int VikingType = ModLoader.GetMod("Trinitarian").Find<ModNPC>("VikingBoss").Type;
 			if (VikingIndex >= 0 && Main.npc[VikingIndex].active && Main.npc[VikingIndex].type == VikingType)
 			{
 				return true;
@@ -50,7 +50,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 		{
 			if (maxDepth >= float.MaxValue && minDepth < float.MaxValue)
 			{
-				spriteBatch.Draw(ModContent.GetTexture("Trinitarian/Assets/Background/VikingBackground"), new Rectangle(0, Math.Max(0, (int)((Main.worldSurface * 16.0 - (double)Main.screenPosition.Y - 2400.0) * 0.10000000149011612)), Main.screenWidth, Main.screenHeight), Color.White * Math.Min(1f, (Main.screenPosition.Y - 800f) / 1000f) * intensity);
+				spriteBatch.Draw(ModContent.Request<Texture2D>("Trinitarian/Assets/Background/VikingBackground"), new Rectangle(0, Math.Max(0, (int)((Main.worldSurface * 16.0 - (double)Main.screenPosition.Y - 2400.0) * 0.10000000149011612)), Main.screenWidth, Main.screenHeight), Color.White * Math.Min(1f, (Main.screenPosition.Y - 800f) / 1000f) * intensity);
 			}
 		}
 

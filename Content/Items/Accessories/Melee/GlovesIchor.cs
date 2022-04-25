@@ -17,11 +17,11 @@ namespace Trinitarian.Content.Items.Accessories.Melee
 
         public override void SetDefaults()
         {
-            item.width = 48;
-            item.height = 52;
-            item.value = Item.sellPrice(0, 0, 50, 0);
-            item.rare = ItemRarityID.LightRed;
-            item.accessory = true;
+            Item.width = 48;
+            Item.height = 52;
+            Item.value = Item.sellPrice(0, 0, 50, 0);
+            Item.rare = ItemRarityID.LightRed;
+            Item.accessory = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -31,12 +31,11 @@ namespace Trinitarian.Content.Items.Accessories.Melee
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<SteelBar>(), 5);
-            recipe.AddIngredient(ItemID.Ichor, 3);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ModContent.ItemType<SteelBar>(), 5)
+                .AddIngredient(ItemID.Ichor, 3)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

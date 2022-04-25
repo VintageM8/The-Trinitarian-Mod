@@ -12,15 +12,15 @@ namespace Trinitarian.Content.Projectiles.Misc.Orbiting
     {
         public override void SetDefaults()
         {
-            projectile.ignoreWater = false;
-            projectile.width = 30;
-            projectile.penetrate = 1;
-            projectile.height = 30;
-            projectile.friendly = true;
-            projectile.light = 1f;
-            projectile.tileCollide = false;
-            projectile.aiStyle = -1;
-            projectile.timeLeft = 60 * 60 * 3;
+            Projectile.ignoreWater = false;
+            Projectile.width = 30;
+            Projectile.penetrate = 1;
+            Projectile.height = 30;
+            Projectile.friendly = true;
+            Projectile.light = 1f;
+            Projectile.tileCollide = false;
+            Projectile.aiStyle = -1;
+            Projectile.timeLeft = 60 * 60 * 3;
             ProjectileSlot = 1;
             Period = 300;
             PeriodFast = 100;
@@ -30,7 +30,7 @@ namespace Trinitarian.Content.Projectiles.Misc.Orbiting
         }
         public override void AI()
         {
-            player = Main.player[projectile.owner];
+            player = Main.player[Projectile.owner];
             RelativeVelocity = player.velocity;
             OrbitCenter = player.Center;
             base.AI();
@@ -45,13 +45,13 @@ namespace Trinitarian.Content.Projectiles.Misc.Orbiting
         }
         public override void Attack()
         {
-            Vector2 ProjectileVelocity = Main.MouseWorld - projectile.Center;
+            Vector2 ProjectileVelocity = Main.MouseWorld - Projectile.Center;
             if (ProjectileVelocity != Vector2.Zero)
             {
                 ProjectileVelocity.Normalize();
             }
             ProjectileVelocity *= 16;
-            projectile.velocity = ProjectileVelocity;
+            Projectile.velocity = ProjectileVelocity;
             Proj_State = 5;
             //This method is responsible for correctly reordering the projetiles when one of them dies. We call this here to make sure the already fired projectiles do not count towards the current ones.
             GeneratePositionsAfterKill();

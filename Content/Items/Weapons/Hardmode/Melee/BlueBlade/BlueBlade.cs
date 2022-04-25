@@ -16,23 +16,23 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.BlueBlade
 
         public override void SetDefaults()
         {
-            item.damage = 145;
-            item.melee = true;
-            item.width = 40;
-            item.height = 40;
-            item.useTime = 10;
-            item.useAnimation = 20;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 6;
-            item.value = Item.sellPrice(0, 55, 0, 0);
-            item.rare = ItemRarityID.Red;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
-            item.shoot = ProjectileID.FlamingArrow;
-            item.shootSpeed = 60f;
+            Item.damage = 145;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 40;
+            Item.height = 40;
+            Item.useTime = 10;
+            Item.useAnimation = 20;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 6;
+            Item.value = Item.sellPrice(0, 55, 0, 0);
+            Item.rare = ItemRarityID.Red;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
+            Item.shoot = ProjectileID.FlamingArrow;
+            Item.shootSpeed = 60f;
         }
 
-        public override bool UseItem(Player player)
+        public override bool? UseItem(Player player)
         {
             player.direction = (Main.MouseWorld.X - player.Center.X > 0) ? 1 : -1;
             return true;
@@ -45,7 +45,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.BlueBlade
                 for (int i = -4; i < 4; i++)
                 {
                     position = Main.MouseWorld + new Vector2(i * 20, -850);
-                    Vector2 velocity = (Main.MouseWorld - position).SafeNormalize(Vector2.Zero).RotatedByRandom(0.05f) * item.shootSpeed;
+                    Vector2 velocity = (Main.MouseWorld - position).SafeNormalize(Vector2.Zero).RotatedByRandom(0.05f) * Item.shootSpeed;
                     Projectile.NewProjectile(position, velocity, type, damage, knockBack, player.whoAmI);
                 }
                 return false;
@@ -54,11 +54,10 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.BlueBlade
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.FragmentSolar, 25);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.FragmentSolar, 25)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

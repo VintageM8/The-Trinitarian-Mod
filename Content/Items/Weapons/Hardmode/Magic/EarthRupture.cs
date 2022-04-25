@@ -12,27 +12,27 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic
         {
             DisplayName.SetDefault("Earth's Rupture");
             Tooltip.SetDefault("Shoots a boulder");
-            Item.staff[item.type] = true;
+            Item.staff[Item.type] = true;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 48;
-            item.magic = true;
-            item.mana = 18;
-            item.width = 42;
-            item.height = 40;
-            item.useTime = 19;
-            item.useAnimation = 19;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 6;
-            item.value = Item.sellPrice(0, 3, 0, 0);
-            item.rare = ItemRarityID.LightRed;
-            item.UseSound = SoundID.Item43;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<Boulder>();
-            item.shootSpeed = 12f;
+            Item.damage = 48;
+            Item.DamageType = DamageClass.Magic;
+            Item.mana = 18;
+            Item.width = 42;
+            Item.height = 40;
+            Item.useTime = 19;
+            Item.useAnimation = 19;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 6;
+            Item.value = Item.sellPrice(0, 3, 0, 0);
+            Item.rare = ItemRarityID.LightRed;
+            Item.UseSound = SoundID.Item43;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<Boulder>();
+            Item.shootSpeed = 12f;
         }
         public override Vector2? HoldoutOrigin()
         {
@@ -40,13 +40,12 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.DirtBlock, 200);
-            recipe.AddIngredient(ItemID.StoneBlock, 130);
-            recipe.AddIngredient(ItemID.SoulofNight, 15);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.DirtBlock, 200)
+                .AddIngredient(ItemID.StoneBlock, 130)
+                .AddIngredient(ItemID.SoulofNight, 15)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

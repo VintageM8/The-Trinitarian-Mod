@@ -17,23 +17,23 @@ namespace Trinitarian.Content.Subclasses.Wizard.Weapon
 
 		public override void SetDefaults()
 		{
-			item.damage = 28;
-			item.magic = true;
-			item.mana = 9;
-			item.width = 39;
-			item.height = 36;
-			item.useTime = 24;
-			item.useAnimation = 38;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			Item.staff[item.type] = true;
-			item.noMelee = true;
-			item.knockBack = 5;
-			item.value = Terraria.Item.sellPrice(0, 0, 8, 0);
-			item.rare = ItemRarityID.LightRed;
-			item.UseSound = SoundID.Item20;
-			item.autoReuse = false;
-			item.shoot = ModContent.ProjectileType<Runes>();
-			item.shootSpeed = 15f;
+			Item.damage = 28;
+			Item.DamageType = DamageClass.Magic;
+			Item.mana = 9;
+			Item.width = 39;
+			Item.height = 36;
+			Item.useTime = 24;
+			Item.useAnimation = 38;
+			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.staff[Item.type] = true;
+			Item.noMelee = true;
+			Item.knockBack = 5;
+			Item.value = Terraria.Item.sellPrice(0, 0, 8, 0);
+			Item.rare = ItemRarityID.LightRed;
+			Item.UseSound = SoundID.Item20;
+			Item.autoReuse = false;
+			Item.shoot = ModContent.ProjectileType<Runes>();
+			Item.shootSpeed = 15f;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{

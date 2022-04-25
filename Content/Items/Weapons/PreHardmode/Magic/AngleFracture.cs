@@ -14,27 +14,27 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic
         {
             DisplayName.SetDefault("Angel Fracture");
             Tooltip.SetDefault("A prehardmode Sky Fracture");
-            Item.staff[item.type] = true;
+            Item.staff[Item.type] = true;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 17;
-            item.magic = true;
-            item.mana = 10;
-            item.width = 42;
-            item.height = 40;
-            item.useTime = 19;
-            item.useAnimation = 19;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 4;
-            item.value = Item.sellPrice(0, 1, 0, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item43;
-            item.autoReuse = true;
-            item.shoot = ProjectileID.SkyFracture;
-            item.shootSpeed = 18;
+            Item.damage = 17;
+            Item.DamageType = DamageClass.Magic;
+            Item.mana = 10;
+            Item.width = 42;
+            Item.height = 40;
+            Item.useTime = 19;
+            Item.useAnimation = 19;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 4;
+            Item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item43;
+            Item.autoReuse = true;
+            Item.shoot = ProjectileID.SkyFracture;
+            Item.shootSpeed = 18;
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
@@ -52,12 +52,11 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<StarSteel>(), 8);
-            recipe.AddIngredient(ItemID.Feather, 15);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemType<StarSteel>(), 8)
+                .AddIngredient(ItemID.Feather, 15)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

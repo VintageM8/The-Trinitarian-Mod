@@ -13,27 +13,27 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mechtide Staff");
-            Item.staff[item.type] = true;
+            Item.staff[Item.type] = true;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 54;
-            item.magic = true;
-            item.mana = 15;
-            item.width = 70;
-            item.height = 68;
-            item.useTime = 30;
-            item.useAnimation = 30;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 8;
-            item.value = Item.sellPrice(0, 3, 80, 0);
-            item.rare = ItemRarityID.Pink;
-            item.UseSound = SoundID.Item43;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<MechtideStaffProj>();
-            item.shootSpeed = 8f;
+            Item.damage = 54;
+            Item.DamageType = DamageClass.Magic;
+            Item.mana = 15;
+            Item.width = 70;
+            Item.height = 68;
+            Item.useTime = 30;
+            Item.useAnimation = 30;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 8;
+            Item.value = Item.sellPrice(0, 3, 80, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.UseSound = SoundID.Item43;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<MechtideStaffProj>();
+            Item.shootSpeed = 8f;
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
@@ -48,12 +48,11 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Mechtide>(), 18);
-            recipe.AddIngredient(ItemType<TrueStarSteel>(), 15);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemType<Mechtide>(), 18)
+                .AddIngredient(ItemType<TrueStarSteel>(), 15)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

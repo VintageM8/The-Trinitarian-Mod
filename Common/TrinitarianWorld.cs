@@ -14,7 +14,7 @@ using System.Linq;
 using Terraria.ModLoader.IO;
 //using Trinitarian.Races;
 using System.IO;
-using Terraria.World.Generation;
+using Terraria.WorldBuilding;
 using System;
 using Terraria.GameContent.Generation;
 
@@ -243,17 +243,17 @@ namespace Trinitarian.Common
             progress.Message = "Making Ship (Trinitarian)";
            int i = 50;
            int j = (int)Main.worldSurface - 50;
-            mod.Logger.Info(j);
+            Mod.Logger.Info(j);
              Tile WF = Framing.GetTileSafely(i, j);
-            while (WF.active() || WF.liquid > 5)
+            while (WF.HasTile || WF.liquid > 5)
             {
                 if (j < 10)
                 {
-                    mod.Logger.Error("Error Making ship, cannot find a vaild y. \n please report this error to our discord if you see it -- Trinitarian Devs");
+                    Mod.Logger.Error("Error Making ship, cannot find a vaild y. \n please report this error to our discord if you see it -- Trinitarian Devs");
                     break;
                 }
 
-                mod.Logger.Info(j);
+                Mod.Logger.Info(j);
                 j--;
                 WF = Framing.GetTileSafely(i, j);
             }
@@ -383,20 +383,20 @@ namespace Trinitarian.Common
                 {
                     int Ttype;
                     Tile t = Framing.GetTileSafely(i, j);
-                    if (TileToID.TryGetValue(t.type, out Ttype))
+                    if (TileToID.TryGetValue(t.TileType, out Ttype))
                     {
                         s += Ttype;
                     }
                     else
                     {
-                        TileToID.Add(t.type, Tr++);
+                        TileToID.Add(t.TileType, Tr++);
                         s += Tr;
                     }
                     s += ",";
                 }
                 s += "\n}" ;
         }
-        mod.Logger.Info(s);
+        Mod.Logger.Info(s);
     }
 
         private void LogSlopes()
@@ -416,7 +416,7 @@ namespace Trinitarian.Common
                 }
                 s += "}\n{";
             }
-            mod.Logger.Info(s);
+            Mod.Logger.Info(s);
         }
         private void LogArrayWalls()
         {
@@ -430,20 +430,20 @@ namespace Trinitarian.Common
                 for (int j = (int)m.Y; j < m.Y + y; j++)
                 {
                     Tile t = Framing.GetTileSafely(i, j);
-                    if (TileToID.TryGetValue(t.wall, out int Ttype))
+                    if (TileToID.TryGetValue(t.WallType, out int Ttype))
                     {
                         s += Ttype;
                     }
                     else
                     {
-                        TileToID.Add(t.wall, Tr++);
+                        TileToID.Add(t.WallType, Tr++);
                         s += Tr;
                     }
                     s += ",";
                 }
                 s += "}\n{";
             }
-            mod.Logger.Info(s);
+            Mod.Logger.Info(s);
         }
         #endregion
 
@@ -471,12 +471,12 @@ namespace Trinitarian.Common
             tileL = Framing.GetTileSafely(x - 1, y);
             tileR = Framing.GetTileSafely(x + 1, y);
             tileBelow = Framing.GetTileSafely(x, y + 1);
-            if ((tileBelow.type == TileID.Sand || tileBelow.type == ModContent.TileType<AlgaePlant>() || tileR.type == ModContent.TileType<AlgaePlant>() || tileL.type == ModContent.TileType<AlgaePlant>()) && tile.liquid > 0 && !tile.active())
+            if ((tileBelow.TileType == TileID.Sand || tileBelow.TileType == ModContent.TileType<AlgaePlant>() || tileR.TileType == ModContent.TileType<AlgaePlant>() || tileL.TileType == ModContent.TileType<AlgaePlant>()) && tile.liquid > 0 && !tile.HasTile)
             {
                 WorldGen.PlaceTile(x, y, Placer, true);
                 //Player nlayer = Main.player[Main.myPlayer];
                 //nlayer.Center = new Vector2(x*16, y *16);
-                placeSuccessful = tile.active() && tile.type == Placer;
+                placeSuccessful = tile.HasTile && tile.TileType == Placer;
             }
             if (attempts >= 30000)
             {
@@ -495,12 +495,12 @@ namespace Trinitarian.Common
             tileL = Framing.GetTileSafely(x - 1, y);
             tileR = Framing.GetTileSafely(x + 1, y);
             tileBelow = Framing.GetTileSafely(x, y + 1);
-            if ((tileBelow.type == TileID.Sand || tileBelow.type == ModContent.TileType<AlgaePlant>() || tileR.type == ModContent.TileType<AlgaePlant>() || tileL.type == ModContent.TileType<AlgaePlant>()) && tile.liquid > 0 && !tile.active())
+            if ((tileBelow.TileType == TileID.Sand || tileBelow.TileType == ModContent.TileType<AlgaePlant>() || tileR.TileType == ModContent.TileType<AlgaePlant>() || tileL.TileType == ModContent.TileType<AlgaePlant>()) && tile.liquid > 0 && !tile.HasTile)
             {
                 WorldGen.PlaceTile(x, y, Placer, true);
                 //Player nlayer = Main.player[Main.myPlayer];Testing
                 //nlayer.Center = new Vector2(x * 16, y * 16);
-                placeSuccessful = tile.active() && tile.type == Placer;
+                placeSuccessful = tile.HasTile && tile.TileType == Placer;
             }
             if (attempts >= 30000)
             {
@@ -514,7 +514,7 @@ namespace Trinitarian.Common
 
         internal static bool ActiveAndSolid(int x, int y)
         {
-            return Framing.GetTileSafely(x, y).active() && Main.tileSolid[Main.tile[x, y].type] && !Main.tileCut[Main.tile[x, y].type];
+            return Framing.GetTileSafely(x, y).HasTile && Main.tileSolid[Main.tile[x, y].TileType] && !Main.tileCut[Main.tile[x, y].TileType];
         }
 
         internal static bool check2x2(int x, int y)

@@ -11,27 +11,27 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Njor's Staff");
-            Item.staff[item.type] = true;
+            Item.staff[Item.type] = true;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 22;
-            item.magic = true;
-            item.mana = 8;
-            item.width = 34;
-            item.height = 34;
-            item.useTime = 29;
-            item.useAnimation = 29;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 3;
-            item.value = Item.sellPrice(0, 0, 60, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item43;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<NjorsStaffproj>();
-            item.shootSpeed = 10f;
+            Item.damage = 22;
+            Item.DamageType = DamageClass.Magic;
+            Item.mana = 8;
+            Item.width = 34;
+            Item.height = 34;
+            Item.useTime = 29;
+            Item.useAnimation = 29;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 3;
+            Item.value = Item.sellPrice(0, 0, 60, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item43;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<NjorsStaffproj>();
+            Item.shootSpeed = 10f;
         }
     }
 }

@@ -17,27 +17,27 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic
         {
             DisplayName.SetDefault("True tome of the Sea");
             Tooltip.SetDefault("Right click to unleash waves all around you\n Has a cooldown");
-            Item.staff[item.type] = true;
+            Item.staff[Item.type] = true;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 73;
-            item.magic = true;
-            item.mana = 18;
-            item.width = 42;
-            item.height = 40;
-            item.useTime = 30;
-            item.useAnimation = 30;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 8;
-            item.value = Item.sellPrice(0, 50, 60, 70);
-            item.rare = ItemRarityID.Yellow;
-            item.UseSound = SoundID.Item43;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<TidalWave>();
-            item.shootSpeed = 18f;
+            Item.damage = 73;
+            Item.DamageType = DamageClass.Magic;
+            Item.mana = 18;
+            Item.width = 42;
+            Item.height = 40;
+            Item.useTime = 30;
+            Item.useAnimation = 30;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 8;
+            Item.value = Item.sellPrice(0, 50, 60, 70);
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item43;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<TidalWave>();
+            Item.shootSpeed = 18f;
         }
         public override bool AltFunctionUse(Player player)
         {
@@ -87,13 +87,12 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<OceanBar>(), 4);
-            recipe.AddIngredient(ItemID.ShroomiteBar, 2);
-            recipe.AddIngredient(ModContent.ItemType<TrueStarSteel>(), 8);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemType<OceanBar>(), 4)
+                .AddIngredient(ItemID.ShroomiteBar, 2)
+                .AddIngredient(ModContent.ItemType<TrueStarSteel>(), 8)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

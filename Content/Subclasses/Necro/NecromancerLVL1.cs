@@ -15,15 +15,15 @@ namespace Trinitarian.Content.Subclasses.Necro
 
         public override void SetDefaults()
         {
-            item.width = 26;
-            item.height = 24;
-            item.rare = ItemRarityID.Blue;
-            item.value = Item.sellPrice(0, 0, 0, 1);
+            Item.width = 26;
+            Item.height = 24;
+            Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(0, 0, 0, 1);
         }
 
         public override void UpdateInventory(Player player)
 		{
-			if (base.item.favorited)
+			if (base.Item.favorited)
 			{
                player.AddBuff(ModContent.BuffType<NecroHeal>(), 60);
             }

@@ -14,12 +14,12 @@ namespace Trinitarian.Content.Items.Accessories.Magus
 
         public override void SetDefaults()
         {
-            item.width = 20;
-            item.height = 32;
-            item.value = Item.buyPrice(0, 5, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.accessory = true;
-            item.expert = true;
+            Item.width = 20;
+            Item.height = 32;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.accessory = true;
+            Item.expert = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

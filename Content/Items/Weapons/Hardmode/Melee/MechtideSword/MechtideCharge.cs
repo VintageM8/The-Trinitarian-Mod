@@ -14,21 +14,21 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword
 
         public override void SetDefaults()
         {
-            projectile.aiStyle = 1;
+            Projectile.aiStyle = 1;
             aiType = ProjectileID.Bullet;
-            projectile.width = 14;
-            projectile.height = 14;
-            projectile.friendly = true;
-            projectile.penetrate = 1;
-            projectile.melee = true;
-            projectile.knockBack = 10f;
+            Projectile.width = 14;
+            Projectile.height = 14;
+            Projectile.friendly = true;
+            Projectile.penetrate = 1;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.knockBack = 10f;
         }
 
         public override void AI()
         {
             if (Main.rand.Next(2) == 0)
             {
-                Dust d = Main.dust[Dust.NewDust(projectile.position, projectile.width, projectile.height, mod.DustType("MechtideDust"))];
+                Dust d = Main.dust[Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, Mod.Find<ModDust>("MechtideDust").Type)];
                 d.frame.Y = 0;
                 d.noGravity = true;
             }
@@ -38,7 +38,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword
         {
             for (int i = 0; i < 32; i++)
             {
-                Dust d = Dust.NewDustPerfect(projectile.Center, mod.DustType("MechtideDust"));
+                Dust d = Dust.NewDustPerfect(Projectile.Center, Mod.Find<ModDust>("MechtideDust").Type);
                 d.frame.Y = 0;
                 d.velocity *= 2;
                 d.noGravity = true;

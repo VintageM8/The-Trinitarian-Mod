@@ -12,31 +12,31 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.Stormbreaker
     {
         public override void SetDefaults()
         {
-            projectile.tileCollide = true;
-            projectile.ignoreWater = true;
-            projectile.aiStyle = 0;
-            projectile.width = 75;
-            projectile.timeLeft = 600;
-            projectile.penetrate = 5;
-            projectile.height = 75;
-            projectile.friendly = true;
-            projectile.light = 0.75f;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = true;
+            Projectile.aiStyle = 0;
+            Projectile.width = 75;
+            Projectile.timeLeft = 600;
+            Projectile.penetrate = 5;
+            Projectile.height = 75;
+            Projectile.friendly = true;
+            Projectile.light = 0.75f;
         }
 
         public override void AI()
         {
-            if (base.projectile.alpha > 0)
+            if (base.Projectile.alpha > 0)
             {
-                base.projectile.alpha -= 25;
-                if (base.projectile.alpha < 0)
+                base.Projectile.alpha -= 25;
+                if (base.Projectile.alpha < 0)
                 {
-                    base.projectile.alpha = 0;
+                    base.Projectile.alpha = 0;
                 }
             }
-            if (projectile.localAI[0] == 0f)
+            if (Projectile.localAI[0] == 0f)
             {
-                AdjustMagnitude(ref projectile.velocity);
-                projectile.localAI[0] = 1f;
+                AdjustMagnitude(ref Projectile.velocity);
+                Projectile.localAI[0] = 1f;
             }
             Vector2 move = Vector2.Zero;
             float distance = 200f;
@@ -45,7 +45,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.Stormbreaker
             {
                 if (Main.npc[k].active && !Main.npc[k].dontTakeDamage && !Main.npc[k].friendly && Main.npc[k].lifeMax > 5)
                 {
-                    Vector2 newMove = Main.npc[k].Center - projectile.Center;
+                    Vector2 newMove = Main.npc[k].Center - Projectile.Center;
                     float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
                     if (distanceTo < distance)
                     {
@@ -58,13 +58,13 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.Stormbreaker
             if (target)
             {
                 AdjustMagnitude(ref move);
-                projectile.velocity = (10 * projectile.velocity + move) / 11f;
-                AdjustMagnitude(ref projectile.velocity);
+                Projectile.velocity = (10 * Projectile.velocity + move) / 11f;
+                AdjustMagnitude(ref Projectile.velocity);
             }
 
             if (Main.rand.NextBool(3))
             {
-                Main.dust[Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Electric, newColor: Color.LightBlue, Scale: 1f)].noGravity = true;
+                Main.dust[Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Electric, newColor: Color.LightBlue, Scale: 1f)].noGravity = true;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.Stormbreaker
         {
             for (int i = 0; i < 4; i++)
             {
-                Main.dust[Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Electric, newColor: Color.LightBlue, Scale: 1f)].noGravity = true;
+                Main.dust[Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Electric, newColor: Color.LightBlue, Scale: 1f)].noGravity = true;
             }
         }
     }

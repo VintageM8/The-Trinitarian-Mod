@@ -19,31 +19,31 @@ namespace Trinitarian.Content.Projectiles.Abilltys.Paladin
 
         public override void SetDefaults()
         {
-            projectile.width = 24;
-            projectile.height = 24;
-            projectile.friendly = true;
-            projectile.melee = true;
-            projectile.penetrate = 3;
-            projectile.alpha = 255;
-            projectile.timeLeft = 240;
-            projectile.light = 0.5f;
-            projectile.tileCollide = false;
+            Projectile.width = 24;
+            Projectile.height = 24;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.penetrate = 3;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 240;
+            Projectile.light = 0.5f;
+            Projectile.tileCollide = false;
         }
 
         public override void AI()
         {
-            if (base.projectile.alpha > 0)
+            if (base.Projectile.alpha > 0)
             {
-                base.projectile.alpha -= 25;
-                if (base.projectile.alpha < 0)
+                base.Projectile.alpha -= 25;
+                if (base.Projectile.alpha < 0)
                 {
-                    base.projectile.alpha = 0;
+                    base.Projectile.alpha = 0;
                 }
             }
-            if (projectile.localAI[0] == 0f)
+            if (Projectile.localAI[0] == 0f)
             {
-                AdjustMagnitude(ref projectile.velocity);
-                projectile.localAI[0] = 1f;
+                AdjustMagnitude(ref Projectile.velocity);
+                Projectile.localAI[0] = 1f;
             }
             Vector2 move = Vector2.Zero;
             float distance = 200f;
@@ -52,7 +52,7 @@ namespace Trinitarian.Content.Projectiles.Abilltys.Paladin
             {
                 if (Main.npc[k].active && !Main.npc[k].dontTakeDamage && !Main.npc[k].friendly && Main.npc[k].lifeMax > 5)
                 {
-                    Vector2 newMove = Main.npc[k].Center - projectile.Center;
+                    Vector2 newMove = Main.npc[k].Center - Projectile.Center;
                     float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
                     if (distanceTo < distance)
                     {
@@ -65,18 +65,18 @@ namespace Trinitarian.Content.Projectiles.Abilltys.Paladin
             if (target)
             {
                 AdjustMagnitude(ref move);
-                projectile.velocity = (10 * projectile.velocity + move) / 11f;
-                AdjustMagnitude(ref projectile.velocity);
+                Projectile.velocity = (10 * Projectile.velocity + move) / 11f;
+                AdjustMagnitude(ref Projectile.velocity);
             }
 
-            base.projectile.localAI[0] += 1f;
-            if (base.projectile.localAI[0] > 4f)
+            base.Projectile.localAI[0] += 1f;
+            if (base.Projectile.localAI[0] > 4f)
             {
-                int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 175, 0f, 0f, 100);
+                int num = Dust.NewDust(new Vector2(base.Projectile.position.X, base.Projectile.position.Y), base.Projectile.width, base.Projectile.height, 175, 0f, 0f, 100);
                 Main.dust[num].noGravity = true;
-                int num2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 174, 0f, 0f, 100);
+                int num2 = Dust.NewDust(new Vector2(base.Projectile.position.X, base.Projectile.position.Y), base.Projectile.width, base.Projectile.height, 174, 0f, 0f, 100);
                 Main.dust[num2].noGravity = true;
-                int num3 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 92, 0f, 0f, 100);
+                int num3 = Dust.NewDust(new Vector2(base.Projectile.position.X, base.Projectile.position.Y), base.Projectile.width, base.Projectile.height, 92, 0f, 0f, 100);
                 Main.dust[num3].noGravity = true;
             }
         }

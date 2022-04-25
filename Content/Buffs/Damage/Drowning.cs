@@ -6,7 +6,7 @@ namespace Trinitarian.Content.Buffs.Damage
 {
     public class Drowning : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Drowning");
             Description.SetDefault("You cannot breathe");

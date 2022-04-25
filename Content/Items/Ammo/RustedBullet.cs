@@ -16,28 +16,27 @@ namespace Trinitarian.Content.Items.Ammo
 
         public override void SetDefaults()
         {
-            item.ranged = true;
-            item.damage = 10;
-            item.crit = 0;
-            item.ammo = AmmoID.Bullet;
-            item.width = 12;
-            item.height = 16;
-            item.rare = ItemRarityID.Blue;
-            item.value = Item.sellPrice(0, 0, 0, 50);
-            item.maxStack = 999;
-            item.consumable = true;
-            item.shootSpeed = 12f;
-            item.shoot = ModContent.ProjectileType<RustedBulletproj>();
+            Item.DamageType = DamageClass.Ranged;
+            Item.damage = 10;
+            Item.crit = 0;
+            Item.ammo = AmmoID.Bullet;
+            Item.width = 12;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(0, 0, 0, 50);
+            Item.maxStack = 999;
+            Item.consumable = true;
+            Item.shootSpeed = 12f;
+            Item.shoot = ModContent.ProjectileType<RustedBulletproj>();
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.MusketBall, 50);
-            recipe.AddIngredient(ModContent.ItemType<RustyMetal>(), 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this, 50);
-            recipe.AddRecipe();
+            CreateRecipe(50)
+                .AddIngredient(ItemID.MusketBall, 50)
+                .AddIngredient(ModContent.ItemType<RustyMetal>(), 1)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

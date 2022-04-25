@@ -20,15 +20,15 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
         {
             num = 1;
             delay = 0;
-            projectile.width = 160;
-            projectile.height = 21;
-            projectile.timeLeft = 300;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.ignoreWater = true;
-            projectile.tileCollide = false;
-            Main.projFrames[projectile.type] = 6;
-            projectile.penetrate = -1;
+            Projectile.width = 160;
+            Projectile.height = 21;
+            Projectile.timeLeft = 300;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Main.projFrames[Projectile.type] = 6;
+            Projectile.penetrate = -1;
         }
 
         public override void AI()
@@ -40,41 +40,41 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
 
         private void Movement()
         {
-            if (projectile.velocity.X < 0)
+            if (Projectile.velocity.X < 0)
             {
-                if (projectile.velocity.X > -2)
-                    projectile.velocity.X *= .1f;
+                if (Projectile.velocity.X > -2)
+                    Projectile.velocity.X *= .1f;
             }
             else
             {
-                if (projectile.velocity.X < 2)
-                    projectile.velocity.X *= .1f;
+                if (Projectile.velocity.X < 2)
+                    Projectile.velocity.X *= .1f;
             }
-            projectile.velocity.Y *= .2f;
+            Projectile.velocity.Y *= .2f;
         }
 
         private void MovementAnimation()
         {
-            projectile.scale = (projectile.ai[1] / 4f + .5f) / 2;
+            Projectile.scale = (Projectile.ai[1] / 4f + .5f) / 2;
             theta += (float)Math.PI / 60;
-            projectile.position.Y = Main.projectile[(int)projectile.ai[0]].position.Y - projectile.height * (projectile.ai[1] - 1) + 1;
-            projectile.position.X = Main.projectile[(int)projectile.ai[0]].position.X + (float)Math.Cos(theta) * 12 * (projectile.ai[1] - 1);
-            if (!Main.projectile[(int)projectile.ai[0]].active)
-                projectile.Kill();
+            Projectile.position.Y = Main.projectile[(int)Projectile.ai[0]].position.Y - Projectile.height * (Projectile.ai[1] - 1) + 1;
+            Projectile.position.X = Main.projectile[(int)Projectile.ai[0]].position.X + (float)Math.Cos(theta) * 12 * (Projectile.ai[1] - 1);
+            if (!Main.projectile[(int)Projectile.ai[0]].active)
+                Projectile.Kill();
         }
 
         private void FrameAnimation()
         {
-            projectile.frameCounter++;
-            projectile.scale = .5f;
-            if (projectile.frameCounter > 2)
+            Projectile.frameCounter++;
+            Projectile.scale = .5f;
+            if (Projectile.frameCounter > 2)
             {
-                projectile.frame++;
-                projectile.frameCounter = 0;
+                Projectile.frame++;
+                Projectile.frameCounter = 0;
             }
-            if (projectile.frame > 5)
+            if (Projectile.frame > 5)
             {
-                projectile.frame = 0;
+                Projectile.frame = 0;
             }
         }
 
@@ -86,7 +86,7 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
                 if (delay > 5)
                 {
                     delay = 0;
-                    Projectile.NewProjectile(new Vector2(projectile.Center.X, projectile.Center.Y - projectile.height * projectile.scale), new Vector2(0, 0), ModContent.ProjectileType<WaternadoUp>(), projectile.damage, 0, projectile.owner, projectile.whoAmI, num + 1);
+                    Projectile.NewProjectile(new Vector2(Projectile.Center.X, Projectile.Center.Y - Projectile.height * Projectile.scale), new Vector2(0, 0), ModContent.ProjectileType<WaternadoUp>(), Projectile.damage, 0, Projectile.owner, Projectile.whoAmI, num + 1);
                     num++;
                 }
             }

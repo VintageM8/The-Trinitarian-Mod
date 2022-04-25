@@ -16,23 +16,23 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword
         {
             DisplayName.SetDefault("Mechtide Sword");
             Tooltip.SetDefault("Each enemy slain builds your charge. Right click to release.");
-            TrinitarianGlowmask.AddGlowMask(item.type, "Trinitarian/Content/Items/Weapons/Hardmode/Melee/MechtideSword/MechtideSword_Glow");
+            TrinitarianGlowmask.AddGlowMask(Item.type, "Trinitarian/Content/Items/Weapons/Hardmode/Melee/MechtideSword/MechtideSword_Glow");
         }
 
         public override void SetDefaults()
         {
-            item.damage = 70;
-            item.melee = true;
-            item.width = 84;
-            item.height = 90;
-            item.useTime = 20;
-            item.useAnimation = 20;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 8;
-            item.value = Item.buyPrice(gold: 1);
-            item.rare = ItemRarityID.Yellow;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
+            Item.damage = 70;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 84;
+            Item.height = 90;
+            Item.useTime = 20;
+            Item.useAnimation = 20;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 8;
+            Item.value = Item.buyPrice(gold: 1);
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
         }
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
@@ -57,14 +57,14 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword
         public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
         {
             Texture2D texture;
-            texture = Main.itemTexture[item.type];
+            texture = Main.itemTexture[Item.type];
             spriteBatch.Draw
             (
-                ModContent.GetTexture("Trinitarian/Content/Items/Weapons/Hardmode/Melee/MechtideSword/MechtideSword_Glow"),
+                ModContent.Request<Texture2D>("Trinitarian/Content/Items/Weapons/Hardmode/Melee/MechtideSword/MechtideSword_Glow"),
                 new Vector2
                 (
-                    item.position.X - Main.screenPosition.X + item.width * 0.5f,
-                    item.position.Y - Main.screenPosition.Y + item.height - texture.Height * 0.5f + 2f
+                    Item.position.X - Main.screenPosition.X + Item.width * 0.5f,
+                    Item.position.Y - Main.screenPosition.Y + Item.height - texture.Height * 0.5f + 2f
                 ),
                 new Rectangle(0, 0, texture.Width, texture.Height),
                 Color.White,
@@ -78,11 +78,10 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Mechtide>(), 50);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ModContent.ItemType<Mechtide>(), 50)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

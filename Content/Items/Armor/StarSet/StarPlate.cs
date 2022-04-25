@@ -17,26 +17,25 @@ namespace Trinitarian.Content.Items.Armor.StarSet
 
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 20;
-            item.value = Item.sellPrice(0, 2, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.defense = 8;
+            Item.width = 30;
+            Item.height = 20;
+            Item.value = Item.sellPrice(0, 2, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.defense = 8;
         }
 
         public override void UpdateEquip(Player player)
         {
-            player.magicCrit += 8;
+            player.GetCritChance(DamageClass.Magic) += 8;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.MeteoriteBar, 15);
-            recipe.AddIngredient(ItemType<StarSteel>(), 10);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.MeteoriteBar, 15)
+                .AddIngredient(ItemType<StarSteel>(), 10)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

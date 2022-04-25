@@ -13,12 +13,12 @@ namespace Trinitarian.Content.Projectiles.Weapon.Mage
 
         public override void SetDefaults()
         {
-            projectile.arrow = true;
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.aiStyle = 29;
-            projectile.friendly = true;
-            projectile.ranged = true;
+            Projectile.arrow = true;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.aiStyle = 29;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Ranged;
             aiType = ProjectileID.EmeraldBolt;
         }
 

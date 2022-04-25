@@ -15,27 +15,26 @@ namespace Trinitarian.Content.Items.Accessories.Melee
 
         public override void SetDefaults()
         {
-            item.accessory = true;
-            item.width = 24;
-            item.height = 26;
-            item.value = Item.sellPrice(0, 0, 10, 0);
-            item.rare = ItemRarityID.Blue;
+            Item.accessory = true;
+            Item.width = 24;
+            Item.height = 26;
+            Item.value = Item.sellPrice(0, 0, 10, 0);
+            Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.statLifeMax2 += 25;
             player.lifeRegen += 2;
-            player.meleeDamage += 0.08f;
+            player.GetDamage(DamageClass.Melee) += 0.08f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<SteelBar>(), 4);
-            recipe.AddIngredient(ItemID.HellstoneBar, 5);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ModContent.ItemType<SteelBar>(), 4)
+                .AddIngredient(ItemID.HellstoneBar, 5)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

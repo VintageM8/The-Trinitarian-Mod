@@ -15,26 +15,25 @@ namespace Trinitarian.Content.Items.Armor.LifelinkArmor
 
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 20;
-            item.value = Item.sellPrice(0, 2, 50, 0);
-            item.rare = ItemRarityID.Green;
-            item.defense = 6;
+            Item.width = 30;
+            Item.height = 20;
+            Item.value = Item.sellPrice(0, 2, 50, 0);
+            Item.rare = ItemRarityID.Green;
+            Item.defense = 6;
         }
 
         public override void UpdateEquip(Player player)
         {
-            player.meleeCrit += 3;
+            player.GetCritChance(DamageClass.Melee) += 3;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.PlatinumBar, 5);
-            recipe.AddIngredient(ItemID.LifeCrystal, 2);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.PlatinumBar, 5)
+                .AddIngredient(ItemID.LifeCrystal, 2)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

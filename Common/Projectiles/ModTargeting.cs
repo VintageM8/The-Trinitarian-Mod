@@ -64,7 +64,7 @@ namespace Trinitarian.Common.Projectiles
                     Vector2 predPos = target.Center + target.velocity * temp; //movement equation constant velocity
                     Point tileLoc = predPos.ToTileCoordinates();    
                     Tile tile = Framing.GetTileSafely(tileLoc.X, tileLoc.Y);
-                    if (Main.tileSolidTop[tile.type] || (tile.active() && Main.tileSolid[tile.type]))
+                    if (Main.tileSolidTop[tile.TileType] || (tile.HasTile && Main.tileSolid[tile.TileType]))
                     {
                         break;
                     }

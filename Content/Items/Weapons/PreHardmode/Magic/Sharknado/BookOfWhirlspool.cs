@@ -21,22 +21,22 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic.Sharknado
         }
         public override void SetDefaults()
         {
-            item.damage = 28;
-            item.magic = true;
-            item.mana = 18;
-            item.width = 40;
-            item.height = 40;
-            item.useTime = 40;
-            item.useAnimation = 40;
-            item.knockBack = 0;
-            item.value = Item.sellPrice(0, 0, 80, 0);
-            item.rare = ItemRarityID.Green;
-            item.UseSound = SoundID.Item13;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<Waternado>();
-            item.shootSpeed = 10f;
-            item.noMelee = true;
+            Item.damage = 28;
+            Item.DamageType = DamageClass.Magic;
+            Item.mana = 18;
+            Item.width = 40;
+            Item.height = 40;
+            Item.useTime = 40;
+            Item.useAnimation = 40;
+            Item.knockBack = 0;
+            Item.value = Item.sellPrice(0, 0, 80, 0);
+            Item.rare = ItemRarityID.Green;
+            Item.UseSound = SoundID.Item13;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<Waternado>();
+            Item.shootSpeed = 10f;
+            Item.noMelee = true;
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
@@ -46,13 +46,12 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic.Sharknado
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<StarSteel>(), 8);
-            recipe.AddIngredient(ModContent.ItemType<OceanBar>(), 12);
-            recipe.AddIngredient(ItemID.ShadowScale, 12);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ModContent.ItemType<StarSteel>(), 8)
+                .AddIngredient(ModContent.ItemType<OceanBar>(), 12)
+                .AddIngredient(ItemID.ShadowScale, 12)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

@@ -21,6 +21,7 @@ using Trinitarian.Content.NPCs.Bosses.Zolzar;
 using Trinitarian.Content.Buffs;
 using Trinitarian.Common.Projectiles;
 using Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword;
+using Terraria.Audio;
 
 namespace Trinitarian.Common.Players
 {
@@ -116,7 +117,7 @@ namespace Trinitarian.Common.Players
                         break;
                     case AbiltyID.Elf:
                         Main.NewText("Elf");
-                        ModAbilitys.ElfAbility(player);
+                        ModAbilitys.ElfAbility(Player);
                         p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
                           Projectile.NewProjectile(Main.MouseWorld+ new Vector2(0,-50), new Vector2(0, 0), ModContent.ProjectileType<ElfAbilityMirror>(), 10, 0f, p.whoAmI);
                         break;
@@ -184,7 +185,7 @@ namespace Trinitarian.Common.Players
 
             if (PaladinScroll)
 			{
-				base.player.statLifeMax2 += base.player.statLifeMax2 / 5 / 20 * 100;
+				base.Player.statLifeMax2 += base.Player.statLifeMax2 / 5 / 20 * 100;
 			}
         }
         public override void UpdateDead()
@@ -220,9 +221,9 @@ namespace Trinitarian.Common.Players
             {
                 while (MechtideCharge > 0)
                 {
-                    float angle = (Main.MouseWorld - player.Center).ToRotation() + MathHelper.ToRadians(Main.rand.Next(-100, 101) * .05f);
+                    float angle = (Main.MouseWorld - Player.Center).ToRotation() + MathHelper.ToRadians(Main.rand.Next(-100, 101) * .05f);
 
-                    Projectile.NewProjectile(player.Center.X, player.Center.Y, (float)Math.Cos(angle) * 12f, (float)Math.Sin(angle) * 12f, ModContent.ProjectileType<MechtideCharge>(), 20, 2f, player.whoAmI);
+                    Projectile.NewProjectile(Player.Center.X, Player.Center.Y, (float)Math.Cos(angle) * 12f, (float)Math.Sin(angle) * 12f, ModContent.ProjectileType<MechtideCharge>(), 20, 2f, Player.whoAmI);
                     MechtideCharge--;
                 }
             }
@@ -230,7 +231,7 @@ namespace Trinitarian.Common.Players
 
         public override void PostUpdateEquips()
         {
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<LightningFragment>()] >= 1)
+            if (Player.ownedProjectileCounts[ModContent.ProjectileType<LightningFragment>()] >= 1)
 
                 if (++othertimer > 60)
                 {
@@ -248,7 +249,7 @@ namespace Trinitarian.Common.Players
                     if (timer == 5)
                         color = Color.Red;
                     if (timer < 6)
-                        CombatText.NewText(player.getRect(), color, timer * 20 + "%");
+                        CombatText.NewText(Player.getRect(), color, timer * 20 + "%");
                     if (timer == 6)
                     {
                         int count = 0;
@@ -257,11 +258,11 @@ namespace Trinitarian.Common.Players
                             if (Main.npc[i].active)
                                 if (!Main.npc[i].townNPC)
                                     if (!Main.npc[i].friendly)
-                                        if (Main.npc[i].Distance(player.Center) < 1000)
+                                        if (Main.npc[i].Distance(Player.Center) < 1000)
                                             if (Main.npc[i].CanBeChasedBy())
                                                 //     if (Main.npc[i].type != NPCID.EaterofWorldsTail && Main.npc[i].type != NPCID.EaterofWorldsBody && Main.npc[i].type != NPCID.TheDestroyerBody && Main.npc[i].type != NPCID.TheDestroyerTail)
                                                 if (++count < 5)
-                                                    Projectile.NewProjectile(player.Center - Vector2.UnitY * 500, Vector2.Zero, ModContent.ProjectileType<LightningFragment>(), 400, 20, Main.myPlayer, player.whoAmI, i);
+                                                    Projectile.NewProjectile(Player.Center - Vector2.UnitY * 500, Vector2.Zero, ModContent.ProjectileType<LightningFragment>(), 400, 20, Main.myPlayer, Player.whoAmI, i);
                         }
 
                         shakeamount = 0;
@@ -284,12 +285,12 @@ namespace Trinitarian.Common.Players
         {
             if (nosferatu)
             {
-                if (player.lifeRegen > 0)
+                if (Player.lifeRegen > 0)
                 {
-                    player.lifeRegen = 0;
+                    Player.lifeRegen = 0;
                 }
-                player.lifeRegenTime = 0;
-                player.lifeRegen -= 16; //change this number to how fast you want the debuff to damage the players. Every 2 is 1 hp lost per second
+                Player.lifeRegenTime = 0;
+                Player.lifeRegen -= 16; //change this number to how fast you want the debuff to damage the players. Every 2 is 1 hp lost per second
             }
         }
 
@@ -300,19 +301,19 @@ namespace Trinitarian.Common.Players
                 int messageType = Main.rand.Next(4); //the number of different types of death messages you want to have
                 if (messageType == 0 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8) //messagetype == 0
                 {
-                    damageSource = PlayerDeathReason.ByCustomReason(player.name + " will could not overpower the dark.");
+                    damageSource = PlayerDeathReason.ByCustomReason(Player.name + " will could not overpower the dark.");
                 }
                 else if (messageType == 1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8) //messagetype == 1
                 {
-                    damageSource = PlayerDeathReason.ByCustomReason(player.name + " has lost all light in their soul.");
+                    damageSource = PlayerDeathReason.ByCustomReason(Player.name + " has lost all light in their soul.");
                 }
                 else if (messageType == 2 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8) //messagetype == 2 etc
                 {
-                    damageSource = PlayerDeathReason.ByCustomReason(player.name + " life has deteriorated.");
+                    damageSource = PlayerDeathReason.ByCustomReason(Player.name + " life has deteriorated.");
                 }
                 else if (messageType == 3 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
                 {
-                    damageSource = PlayerDeathReason.ByCustomReason(player.name + " is in the hands of death.");
+                    damageSource = PlayerDeathReason.ByCustomReason(Player.name + " is in the hands of death.");
                 }
             }
             return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
@@ -360,7 +361,7 @@ namespace Trinitarian.Common.Players
                 {
                     if (!Main.gamePaused)
                     {
-                        screenPositionStore = new Vector2(MathHelper.Lerp(player.Center.X - Main.screenWidth / 2, focusTo.X - Main.screenWidth / 2, amount), MathHelper.Lerp(player.Center.Y - Main.screenHeight / 2, focusTo.Y - Main.screenHeight / 2, amount));
+                        screenPositionStore = new Vector2(MathHelper.Lerp(Player.Center.X - Main.screenWidth / 2, focusTo.X - Main.screenWidth / 2, amount), MathHelper.Lerp(Player.Center.Y - Main.screenHeight / 2, focusTo.Y - Main.screenHeight / 2, amount));
                     }
 
                     Main.screenPosition = screenPositionStore;
@@ -389,7 +390,7 @@ namespace Trinitarian.Common.Players
                     {
                         if (!Main.gamePaused)
                         {
-                            screenPositionStore = new Vector2(MathHelper.SmoothStep(focusTo.X - Main.screenWidth / 2, player.Center.X - Main.screenWidth / 2, amount), MathHelper.SmoothStep(focusTo.Y - Main.screenHeight / 2, player.Center.Y - Main.screenHeight / 2, amount));
+                            screenPositionStore = new Vector2(MathHelper.SmoothStep(focusTo.X - Main.screenWidth / 2, Player.Center.X - Main.screenWidth / 2, amount), MathHelper.SmoothStep(focusTo.Y - Main.screenHeight / 2, Player.Center.Y - Main.screenHeight / 2, amount));
                         }
                         Main.screenPosition = screenPositionStore;
 
@@ -422,7 +423,7 @@ namespace Trinitarian.Common.Players
             for (int i = 0; i < OrbitingProjectileCount[0]; i++)
             {
                 //Radius 200.
-                OrbitingProjectilePositions[0, i] = player.Center + new Vector2(200 * (float)Math.Cos(period * (RotationTimer + (300 / OrbitingProjectileCount[0] * i))), 200 * (float)Math.Sin(period * (RotationTimer + (300 / OrbitingProjectileCount[0] * i))));
+                OrbitingProjectilePositions[0, i] = Player.Center + new Vector2(200 * (float)Math.Cos(period * (RotationTimer + (300 / OrbitingProjectileCount[0] * i))), 200 * (float)Math.Sin(period * (RotationTimer + (300 / OrbitingProjectileCount[0] * i))));
             }
         }
 
@@ -437,7 +438,7 @@ namespace Trinitarian.Common.Players
 					Vector2 value = (vector2 - Main.MouseWorld).SafeNormalize(Vector2.UnitY).RotatedByRandom(0.10000000149011612);
 					for (int i = 0; i < projectiles; i++)
                     {
-                        Projectile.NewProjectile(player.Center, new Vector2(7).RotatedBy(MathHelper.ToRadians((360 / projectiles) * i + i)), ModContent.ProjectileType<Dart>(), 19, 2, player.whoAmI);
+                        Projectile.NewProjectile(Player.Center, new Vector2(7).RotatedBy(MathHelper.ToRadians((360 / projectiles) * i + i)), ModContent.ProjectileType<Dart>(), 19, 2, Player.whoAmI);
                     }
                 }
 			}
@@ -450,22 +451,22 @@ namespace Trinitarian.Common.Players
             if (StarSet)
             {
                 int projectiles = 1;
-                if (Main.netMode != NetmodeID.MultiplayerClient && Main.myPlayer == player.whoAmI)
+                if (Main.netMode != NetmodeID.MultiplayerClient && Main.myPlayer == Player.whoAmI)
                 {
                     for (int i = 0; i < projectiles; i++)
                     {
-                        Projectile.NewProjectile(player.Center, new Vector2(7).RotatedBy(MathHelper.ToRadians((360 / projectiles) * i + i)), ModContent.ProjectileType<ShatteringStar>(), 19, 2, player.whoAmI);
+                        Projectile.NewProjectile(Player.Center, new Vector2(7).RotatedBy(MathHelper.ToRadians((360 / projectiles) * i + i)), ModContent.ProjectileType<ShatteringStar>(), 19, 2, Player.whoAmI);
                     }
                 }
             }
 
             if (WizardBuff)
             {
-                Main.PlaySound(SoundID.Item74);
+                SoundEngine.PlaySound(SoundID.Item74);
                 int projectiles = 9;
                 for (int i = 0; i < projectiles; i++)
                 {
-                    Projectile.NewProjectile(player.Center, new Vector2(4).RotatedBy(MathHelper.ToRadians((360 / projectiles) * i + i)), ModContent.ProjectileType<Boulder>(), 60, 9, player.whoAmI);
+                    Projectile.NewProjectile(Player.Center, new Vector2(4).RotatedBy(MathHelper.ToRadians((360 / projectiles) * i + i)), ModContent.ProjectileType<Boulder>(), 60, 9, Player.whoAmI);
                 }
             }
         }
@@ -496,7 +497,7 @@ namespace Trinitarian.Common.Players
 
             for (int i = 0; i < 58; i++)
             {
-                if (player.inventory[i].ammo == sItem.useAmmo && player.inventory[i].stack > 0)
+                if (Player.inventory[i].ammo == sItem.useAmmo && Player.inventory[i].stack > 0)
                 {
                     //item = player.inventory[i];
 
@@ -508,20 +509,20 @@ namespace Trinitarian.Common.Players
 
             if (canShoot)
             {
-                item = player.inventory[possibleAmmo[Main.rand.Next(possibleAmmo.Count)]];
+                item = Player.inventory[possibleAmmo[Main.rand.Next(possibleAmmo.Count)]];
                 speed += item.shootSpeed;
                 if (item.ranged)
                 {
                     if (item.damage > 0)
                     {
-                        Damage += (int)((float)item.damage * player.rangedDamage);
+                        Damage += (int)((float)item.damage * Player.GetDamage(DamageClass.Ranged));
                     }
                 }
                 else
                 {
                     Damage += item.damage;
                 }
-                if (sItem.useAmmo == AmmoID.Arrow && player.archery)
+                if (sItem.useAmmo == AmmoID.Arrow && Player.archery)
                 {
                     if (speed < 20f)
                     {
@@ -539,27 +540,27 @@ namespace Trinitarian.Common.Players
                 {
                     item.stack--;
                 }
-                ItemLoader.PickAmmo(sItem, item, player, ref shoot, ref speed, ref Damage, ref KnockBack);
+                ItemLoader.PickAmmo(sItem, item, Player, ref shoot, ref speed, ref Damage, ref KnockBack);
                 bool flag2 = dontConsume;
 
-                if (player.magicQuiver && sItem.useAmmo == AmmoID.Arrow && Main.rand.Next(5) == 0)
+                if (Player.magicQuiver && sItem.useAmmo == AmmoID.Arrow && Main.rand.Next(5) == 0)
                 {
                     flag2 = true;
                 }
-                if (player.ammoBox && Main.rand.Next(5) == 0)
+                if (Player.ammoBox && Main.rand.Next(5) == 0)
                 {
                     flag2 = true;
                 }
-                if (player.ammoPotion && Main.rand.Next(5) == 0)
+                if (Player.ammoPotion && Main.rand.Next(5) == 0)
                 {
                     flag2 = true;
                 }
 
-                if (player.ammoCost80 && Main.rand.Next(5) == 0)
+                if (Player.ammoCost80 && Main.rand.Next(5) == 0)
                 {
                     flag2 = true;
                 }
-                if (player.ammoCost75 && Main.rand.Next(4) == 0)
+                if (Player.ammoCost75 && Main.rand.Next(4) == 0)
                 {
                     flag2 = true;
                 }
@@ -567,16 +568,16 @@ namespace Trinitarian.Common.Players
                 {
                     flag2 = true;
                 }
-                if (shoot == 85 && player.itemAnimation < player.itemAnimationMax - 6)
+                if (shoot == 85 && Player.itemAnimation < Player.itemAnimationMax - 6)
                 {
                     flag2 = true;
                 }
 
-                if (!PlayerHooks.ConsumeAmmo(player, sItem, item))
+                if (!PlayerHooks.ConsumeAmmo(Player, sItem, item))
                 {
                     flag2 = true;
                 }
-                if (!ItemLoader.ConsumeAmmo(sItem, item, player))
+                if (!ItemLoader.ConsumeAmmo(sItem, item, Player))
                 {
                     flag2 = true;
                 }
@@ -588,19 +589,19 @@ namespace Trinitarian.Common.Players
 			if(NecroHeal&& Main.rand.Next(4) == 0)
             { 
 				int newLife = Main.rand.Next(2,6);
-                player.statLife += newLife;
-                player.HealEffect(newLife);
-                NetMessage.SendData(MessageID.SpiritHeal, -1, -1, null, player.whoAmI, newLife);
+                Player.statLife += newLife;
+                Player.HealEffect(newLife);
+                NetMessage.SendData(MessageID.SpiritHeal, -1, -1, null, Player.whoAmI, newLife);
 			}
         }
 
         public override void UpdateBiomeVisuals()
         {           
-            if (NPC.AnyNPCs(mod.NPCType("VikingBoss")))
+            if (NPC.AnyNPCs(Mod.Find<ModNPC>("VikingBoss").Type))
             {
                 useViking = true;
             }
-            player.ManageSpecialBiomeVisuals("Trinitarian:VikingBoss", useViking);
+            Player.ManageSpecialBiomeVisuals("Trinitarian:VikingBoss", useViking);
         }
 
 
@@ -610,15 +611,15 @@ namespace Trinitarian.Common.Players
           
             if (constantDamage > 0 || percentDamage > 0f)
             {
-                int damageFromPercent = (int)(player.statLifeMax2 * percentDamage);
+                int damageFromPercent = (int)(Player.statLifeMax2 * percentDamage);
                 damage = Math.Max(constantDamage, damageFromPercent);
                 if (chaosDefense)
                 {
                     double cap = Main.expertMode ? 75.0 : 50.0;
-                    int reduction = (int)(cap * (1.0 - Math.Exp(-player.statDefense / 150.0)));
+                    int reduction = (int)(cap * (1.0 - Math.Exp(-Player.statDefense / 150.0)));
                     if (reduction < 0)
                     {
-                        reduction = player.statDefense / 2;
+                        reduction = Player.statDefense / 2;
                     }
                     damage -= reduction;
                     if (damage < 0)
@@ -634,7 +635,7 @@ namespace Trinitarian.Common.Players
                 {
                     defenseEffect *= 1.5f;
                 }
-                damage -= (int)(player.statDefense * defenseEffect);
+                damage -= (int)(Player.statDefense * defenseEffect);
                 if (damage < 0)
                 {
                     damage = 1;

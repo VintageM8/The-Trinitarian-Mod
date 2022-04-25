@@ -14,24 +14,24 @@ namespace Trinitarian.Content.Projectiles.Boss.Ice
 
         public override void SetDefaults()
         {
-            projectile.width = 12;
-            projectile.height = 12;
-            projectile.friendly = false;
-            projectile.hostile = true;
-            projectile.penetrate = -1;
-            projectile.timeLeft = 900;
-            projectile.tileCollide = false;
+            Projectile.width = 12;
+            Projectile.height = 12;
+            Projectile.friendly = false;
+            Projectile.hostile = true;
+            Projectile.penetrate = -1;
+            Projectile.timeLeft = 900;
+            Projectile.tileCollide = false;
         }
 
         public override void AI()
         {
-            if (projectile.ai[0] == 0)
+            if (Projectile.ai[0] == 0)
             {
-                projectile.netUpdate = true;
-                projectile.ai[0]++;
+                Projectile.netUpdate = true;
+                Projectile.ai[0]++;
             }
 
-            projectile.localAI[0] += 1f;
+            Projectile.localAI[0] += 1f;
         }
     }
 }

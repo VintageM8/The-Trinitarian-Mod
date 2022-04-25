@@ -15,23 +15,23 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged
 
         public override void SetDefaults()
         {
-            item.damage = 43;
-            item.noMelee = true;
-            item.ranged = true;
-            item.width = 16;
-            item.height = 36;
-            item.useTime = 18;
-            item.useAnimation = 18;
-            item.crit = 0;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.knockBack = 0;
-            item.value = Item.sellPrice(0, 10, 0, 0);
-            item.rare = ItemRarityID.LightRed;
-            item.UseSound = SoundID.Item5;
-            item.autoReuse = false;
-            item.shoot = ProjectileID.WoodenArrowFriendly;
-            item.shootSpeed = 7f;
-            item.useAmmo = AmmoID.Arrow;
+            Item.damage = 43;
+            Item.noMelee = true;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 16;
+            Item.height = 36;
+            Item.useTime = 18;
+            Item.useAnimation = 18;
+            Item.crit = 0;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.knockBack = 0;
+            Item.value = Item.sellPrice(0, 10, 0, 0);
+            Item.rare = ItemRarityID.LightRed;
+            Item.UseSound = SoundID.Item5;
+            Item.autoReuse = false;
+            Item.shoot = ProjectileID.WoodenArrowFriendly;
+            Item.shootSpeed = 7f;
+            Item.useAmmo = AmmoID.Arrow;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

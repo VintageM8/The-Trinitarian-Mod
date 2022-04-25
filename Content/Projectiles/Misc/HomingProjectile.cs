@@ -29,16 +29,16 @@ namespace Trinitarian.Content.Projectiles.Misc
         //This method does basic homing targeting with constant speed. The target must be assigned manually.
         public void Homing()
         {
-            double temp = Math.Atan2(target.Center.Y - projectile.Center.Y, target.Center.X - projectile.Center.X);
+            double temp = Math.Atan2(target.Center.Y - Projectile.Center.Y, target.Center.X - Projectile.Center.X);
             double TurningAngle;
             //float ProjSpeed = projectile.velocity.Length();
 
 
-            if (projectile.velocity != Vector2.Zero && Orient == true)
+            if (Projectile.velocity != Vector2.Zero && Orient == true)
             {
-                projectile.rotation = projectile.velocity.ToRotation();
+                Projectile.rotation = Projectile.velocity.ToRotation();
             }
-            TurningAngle = temp - projectile.velocity.ToRotation();
+            TurningAngle = temp - Projectile.velocity.ToRotation();
             if (TurningAngle > Math.PI)
             {
                 TurningAngle = TurningAngle - 2 * Math.PI;
@@ -49,35 +49,35 @@ namespace Trinitarian.Content.Projectiles.Misc
             }
             if (TurningAngle > MaxTurningAngle)
             {
-                projectile.velocity = projectile.velocity.RotatedBy(MaxTurningAngle);
+                Projectile.velocity = Projectile.velocity.RotatedBy(MaxTurningAngle);
             }
             else if (TurningAngle < -MaxTurningAngle) 
             {
-                projectile.velocity = projectile.velocity.RotatedBy(-MaxTurningAngle);
+                Projectile.velocity = Projectile.velocity.RotatedBy(-MaxTurningAngle);
             }
             else
             {       
-                projectile.velocity = projectile.velocity.RotatedBy(TurningAngle);
+                Projectile.velocity = Projectile.velocity.RotatedBy(TurningAngle);
             }
-            if (projectile.velocity.LengthSquared() > MaxVelocity * MaxVelocity)
+            if (Projectile.velocity.LengthSquared() > MaxVelocity * MaxVelocity)
             {
-                if (projectile.velocity != Vector2.Zero)
+                if (Projectile.velocity != Vector2.Zero)
                 {
-                    projectile.velocity.Normalize();
+                    Projectile.velocity.Normalize();
                 }
-                projectile.velocity *= MaxVelocity;
+                Projectile.velocity *= MaxVelocity;
             }
         }
         //Automatically assigns the target to be the closes non friendly enemy 
         public void HomingClosest()
         {
-            float tempdist = projectile.DistanceSQ(Main.npc[0].Center);
+            float tempdist = Projectile.DistanceSQ(Main.npc[0].Center);
             target = Main.npc[0];
             for (int i = 1; i < Main.npc.Length; i++)
             {
-                if (!Main.npc[i].friendly && Main.npc[i].active && projectile.DistanceSQ(Main.npc[i].Center) < tempdist)
+                if (!Main.npc[i].friendly && Main.npc[i].active && Projectile.DistanceSQ(Main.npc[i].Center) < tempdist)
                 {
-                    tempdist = projectile.DistanceSQ(Main.npc[i].Center);
+                    tempdist = Projectile.DistanceSQ(Main.npc[i].Center);
                     target = Main.npc[i];
                 }
             }
@@ -85,13 +85,13 @@ namespace Trinitarian.Content.Projectiles.Misc
             {
                 Homing();
             }
-            if (projectile.velocity.LengthSquared() > MaxVelocity * MaxVelocity)
+            if (Projectile.velocity.LengthSquared() > MaxVelocity * MaxVelocity)
             {
-                if (projectile.velocity != Vector2.Zero)
+                if (Projectile.velocity != Vector2.Zero)
                 {
-                    projectile.velocity.Normalize();
+                    Projectile.velocity.Normalize();
                 }
-                projectile.velocity *= MaxVelocity;
+                Projectile.velocity *= MaxVelocity;
             }
         }
     }

@@ -16,22 +16,22 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.ScaryBlade
 
         public override void SetDefaults()
         {
-            projectile.width = 24;
-            projectile.height = 18;
-            projectile.timeLeft = 100;
-            projectile.penetrate = -1;
-            projectile.hostile = false;
-            projectile.friendly = true;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
+            Projectile.width = 24;
+            Projectile.height = 18;
+            Projectile.timeLeft = 100;
+            Projectile.penetrate = -1;
+            Projectile.hostile = false;
+            Projectile.friendly = true;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
         }
         public override void AI()
         {
-            projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
             timer++;
             if (timer > 20)
             {
-                projectile.tileCollide = true;
+                Projectile.tileCollide = true;
             }
         }
 

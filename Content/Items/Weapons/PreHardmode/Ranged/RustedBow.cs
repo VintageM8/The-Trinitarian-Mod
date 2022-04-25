@@ -14,32 +14,31 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged
 
         public override void SetDefaults()
         {
-            item.damage = 6;
-            item.noMelee = true;
-            item.ranged = true;
-            item.width = 16;
-            item.height = 36;
-            item.useTime = 26;
-            item.useAnimation = 26;
-            item.crit = 0;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.knockBack = 4;
-            item.value = Item.sellPrice(0, 0, 25, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item5;
-            item.autoReuse = false;
-            item.shoot = ProjectileID.WoodenArrowFriendly;
-            item.shootSpeed = 7f;
-            item.useAmmo = AmmoID.Arrow;
+            Item.damage = 6;
+            Item.noMelee = true;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 16;
+            Item.height = 36;
+            Item.useTime = 26;
+            Item.useAnimation = 26;
+            Item.crit = 0;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.knockBack = 4;
+            Item.value = Item.sellPrice(0, 0, 25, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item5;
+            Item.autoReuse = false;
+            Item.shoot = ProjectileID.WoodenArrowFriendly;
+            Item.shootSpeed = 7f;
+            Item.useAmmo = AmmoID.Arrow;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddTile(TileID.Anvils);
-            recipe.AddIngredient(ModContent.ItemType<RustyMetal>(), 5);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddTile(TileID.Anvils)
+                .AddIngredient(ModContent.ItemType<RustyMetal>(), 5)
+                .Register();
         }
     }
 }

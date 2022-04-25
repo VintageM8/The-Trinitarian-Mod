@@ -29,7 +29,7 @@ namespace Trinitarian.Content.Projectiles.Misc
             for (int i = 0; i < length; i++)
             {
                 Vector2 drawpos = start + unit * i - Main.screenPosition;
-                spriteBatch.Draw(Main.projectileTexture[projectile.type], drawpos, null, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(Main.projectileTexture[Projectile.type], drawpos, null, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
                 CustomDrawPerPixel(drawpos, spriteBatch);
             }
         }
@@ -41,7 +41,7 @@ namespace Trinitarian.Content.Projectiles.Misc
             for (int i = 0; i < length; i++)
             {
                 Vector2 drawpos = start + unit * i - Main.screenPosition;
-                spriteBatch.Draw(Main.projectileTexture[projectile.type], drawpos, null, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(Main.projectileTexture[Projectile.type], drawpos, null, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
                 CustomDrawPerPixel(drawpos, spriteBatch);
             }
         }
@@ -56,7 +56,7 @@ namespace Trinitarian.Content.Projectiles.Misc
         }
         public virtual void SetDrawVariables()
         {
-            start = Main.player[(int)projectile.ai[0]].Center;
+            start = Main.player[(int)Projectile.ai[0]].Center;
             end = Main.MouseWorld;
         }
         public virtual void CustomPositionSet() { }
@@ -70,7 +70,7 @@ namespace Trinitarian.Content.Projectiles.Misc
             while (length < 300f)
                 length++;
             unit.Normalize();
-            if (IsMovingCloser(projectile.Center, unit, Main.player[(int)projectile.ai[0]].Center))
+            if (IsMovingCloser(Projectile.Center, unit, Main.player[(int)Projectile.ai[0]].Center))
                 unit *= -1;
             if (ticks == 0)
             {

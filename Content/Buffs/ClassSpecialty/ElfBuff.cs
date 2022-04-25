@@ -6,7 +6,7 @@ namespace Trinitarian.Content.Buffs.ClassSpecialty
 {
     public class ElfBuff : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Forest's Blessing");
             Description.SetDefault("Your speed is being increased");

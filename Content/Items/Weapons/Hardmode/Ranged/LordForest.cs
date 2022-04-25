@@ -24,23 +24,23 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged
 
         public override void SetDefaults()
         {
-            item.damage = 95;
-            item.ranged = true;
-            item.width = 44;
-            item.height = 86;
-            item.useTime = 1;
-            item.useAnimation = 32;
-            item.useStyle = 5;
-            item.noMelee = true;
-            item.knockBack = 3;
-            item.value = Item.sellPrice(0, 15, 0, 0);
-            item.rare = ItemRarityID.Cyan;
-            item.UseSound = SoundID.Item5;
-            item.autoReuse = true;
-            item.channel = true;
-            item.shoot = AmmoID.Arrow;
-            item.shootSpeed = 15f;
-            item.useAmmo = AmmoID.Arrow;
+            Item.damage = 95;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 44;
+            Item.height = 86;
+            Item.useTime = 1;
+            Item.useAnimation = 32;
+            Item.useStyle = 5;
+            Item.noMelee = true;
+            Item.knockBack = 3;
+            Item.value = Item.sellPrice(0, 15, 0, 0);
+            Item.rare = ItemRarityID.Cyan;
+            Item.UseSound = SoundID.Item5;
+            Item.autoReuse = true;
+            Item.channel = true;
+            Item.shoot = AmmoID.Arrow;
+            Item.shootSpeed = 15f;
+            Item.useAmmo = AmmoID.Arrow;
         }
 
         public override bool ConsumeAmmo(Player player)
@@ -56,14 +56,14 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged
             {
                 reload2 = reloadMax2;
 
-                Projectile.NewProjectile(player.Center.X, player.Center.Y, 14, 0, ModContent.ProjectileType<Elfarrow>(), (int)(item.damage / 1.2f), 3, Main.myPlayer);
-                Projectile.NewProjectile(player.Center.X, player.Center.Y, -14, 0, ModContent.ProjectileType<Elfarrow>(), (int)(item.damage / 1.2f), 3, Main.myPlayer);
-                Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 14, ModContent.ProjectileType<Elfarrow>(), (int)(item.damage / 1.2f), 3, Main.myPlayer);
-                Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, -14, ModContent.ProjectileType<Elfarrow>(), (int)(item.damage / 1.2f), 3, Main.myPlayer);
-                Projectile.NewProjectile(player.Center.X, player.Center.Y, 10, 10, ModContent.ProjectileType<Elfarrow>(), (int)(item.damage / 1.2f), 3, Main.myPlayer);
-                Projectile.NewProjectile(player.Center.X, player.Center.Y, 10, -10, ModContent.ProjectileType<Elfarrow>(), (int)(item.damage / 1.2f), 3, Main.myPlayer);
-                Projectile.NewProjectile(player.Center.X, player.Center.Y, -10, -10, ModContent.ProjectileType<Elfarrow>(), (int)(item.damage / 1.2f), 3, Main.myPlayer);
-                Projectile.NewProjectile(player.Center.X, player.Center.Y, -10, 10, ModContent.ProjectileType<Elfarrow>(), (int)(item.damage / 1.2f), 3, Main.myPlayer);
+                Projectile.NewProjectile(player.Center.X, player.Center.Y, 14, 0, ModContent.ProjectileType<Elfarrow>(), (int)(Item.damage / 1.2f), 3, Main.myPlayer);
+                Projectile.NewProjectile(player.Center.X, player.Center.Y, -14, 0, ModContent.ProjectileType<Elfarrow>(), (int)(Item.damage / 1.2f), 3, Main.myPlayer);
+                Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 14, ModContent.ProjectileType<Elfarrow>(), (int)(Item.damage / 1.2f), 3, Main.myPlayer);
+                Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, -14, ModContent.ProjectileType<Elfarrow>(), (int)(Item.damage / 1.2f), 3, Main.myPlayer);
+                Projectile.NewProjectile(player.Center.X, player.Center.Y, 10, 10, ModContent.ProjectileType<Elfarrow>(), (int)(Item.damage / 1.2f), 3, Main.myPlayer);
+                Projectile.NewProjectile(player.Center.X, player.Center.Y, 10, -10, ModContent.ProjectileType<Elfarrow>(), (int)(Item.damage / 1.2f), 3, Main.myPlayer);
+                Projectile.NewProjectile(player.Center.X, player.Center.Y, -10, -10, ModContent.ProjectileType<Elfarrow>(), (int)(Item.damage / 1.2f), 3, Main.myPlayer);
+                Projectile.NewProjectile(player.Center.X, player.Center.Y, -10, 10, ModContent.ProjectileType<Elfarrow>(), (int)(Item.damage / 1.2f), 3, Main.myPlayer);
             }
             //Normal shot
             if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
@@ -75,7 +75,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged
             theta += rotSp;
             if (theta >= 3.14158265f * 2)
                 theta -= 3.14158265f * 2;
-            Projectile.NewProjectile(player.Center.X, player.Center.Y, (float)Math.Cos(theta) * mag, (float)Math.Sin(theta) * mag, ModContent.ProjectileType<Elfarrow>(), (int)(item.damage) / 2, 3, Main.myPlayer);
+            Projectile.NewProjectile(player.Center.X, player.Center.Y, (float)Math.Cos(theta) * mag, (float)Math.Sin(theta) * mag, ModContent.ProjectileType<Elfarrow>(), (int)(Item.damage) / 2, 3, Main.myPlayer);
 
             //Normal shot
             if (reload <= 0)

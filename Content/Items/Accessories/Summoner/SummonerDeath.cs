@@ -17,11 +17,11 @@ namespace Trinitarian.Content.Items.Accessories.Summoner
 
         public override void SetDefaults()
         {
-            item.accessory = true;
-            item.width = 36;
-            item.height = 36;
-            item.rare = ItemRarityID.Blue;
-            item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.accessory = true;
+            Item.width = 36;
+            Item.height = 36;
+            Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(0, 1, 0, 0);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -33,13 +33,12 @@ namespace Trinitarian.Content.Items.Accessories.Summoner
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<SummonShards>(), 8);
-            recipe.AddIngredient(ModContent.ItemType<StarSteel>(), 15);
-            recipe.AddIngredient(ItemID.FallenStar, 10);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ModContent.ItemType<SummonShards>(), 8)
+                .AddIngredient(ModContent.ItemType<StarSteel>(), 15)
+                .AddIngredient(ItemID.FallenStar, 10)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

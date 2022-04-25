@@ -14,28 +14,27 @@ namespace Trinitarian.Content.Items.Accessories
 
         public override void SetDefaults()
         {
-            item.accessory = true;
-            item.width = 26;
-            item.height = 24;
-            item.rare = ItemRarityID.Blue;
-            item.value = Item.sellPrice(0, 0, 15, 0);
+            Item.accessory = true;
+            Item.width = 26;
+            Item.height = 24;
+            Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(0, 0, 15, 0);
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.02f;
-            player.rangedDamage += 0.02f;
-            player.magicDamage += 0.02f;
-            player.minionDamage += 0.02f;
+            player.GetDamage(DamageClass.Melee) += 0.02f;
+            player.GetDamage(DamageClass.Ranged) += 0.02f;
+            player.GetDamage(DamageClass.Magic) += 0.02f;
+            player.GetDamage(DamageClass.Summon) += 0.02f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.BorealWood, 8);
-            recipe.AddIngredient(ItemID.SnowBlock, 8);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.BorealWood, 8)
+                .AddIngredient(ItemID.SnowBlock, 8)
+                .AddTile(TileID.WorkBenches)
+                .Register();
         }
     }
 }

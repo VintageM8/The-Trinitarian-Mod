@@ -16,35 +16,34 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged.LongBows
         
         public override void SetDefaults()
         {
-            item.damage = 48;
-            item.ranged = true;
-            item.width = 32;
-            item.height = 161;
-            item.useTime = 16;
-            item.useAnimation = 16;
-            item.crit = 8;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.shoot = ProjectileID.WoodenArrowFriendly;
-            item.knockBack = 2;
-            item.value = Item.sellPrice(0, 0, 60, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item5;
-            item.autoReuse = true;
-            item.useAmmo = AmmoID.Arrow;
-            item.shootSpeed = 20f;
-            item.channel = true;
+            Item.damage = 48;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 32;
+            Item.height = 161;
+            Item.useTime = 16;
+            Item.useAnimation = 16;
+            Item.crit = 8;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.shoot = ProjectileID.WoodenArrowFriendly;
+            Item.knockBack = 2;
+            Item.value = Item.sellPrice(0, 0, 60, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item5;
+            Item.autoReuse = true;
+            Item.useAmmo = AmmoID.Arrow;
+            Item.shootSpeed = 20f;
+            Item.channel = true;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.ChlorophyteBar, 25);
-            recipe.AddIngredient(ItemID.DarkShard, 3);
-            recipe.AddIngredient(ItemID.SoulofNight, 14);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.ChlorophyteBar, 25)
+                .AddIngredient(ItemID.DarkShard, 3)
+                .AddIngredient(ItemID.SoulofNight, 14)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
         private readonly int[] BrokenOnes =
         {

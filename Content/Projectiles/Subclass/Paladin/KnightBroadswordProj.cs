@@ -18,11 +18,11 @@ namespace Trinitarian.Content.Projectiles.Subclass.Paladin
             SwingTime = 30;
             holdOffset = 50f;
             base.SetDefaults();
-            projectile.width = projectile.height = 75;
-            projectile.friendly = true;
-            projectile.localNPCHitCooldown = SwingTime;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.melee = true;
+            Projectile.width = Projectile.height = 75;
+            Projectile.friendly = true;
+            Projectile.localNPCHitCooldown = SwingTime;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.DamageType = DamageClass.Melee;
         }
 
         public override float Lerp(float val)
@@ -34,16 +34,16 @@ namespace Trinitarian.Content.Projectiles.Subclass.Paladin
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             // draws the slash
-            Player player = Main.player[projectile.owner];
-            Texture2D slash = ModContent.GetTexture("Trinitarian/Assets/Textures/slash_01");
-            float mult = Lerp(Utils.InverseLerp(0f, SwingTime, projectile.timeLeft));
+            Player player = Main.player[Projectile.owner];
+            Texture2D slash = ModContent.Request<Texture2D>("Trinitarian/Assets/Textures/slash_01");
+            float mult = Lerp(Utils.InverseLerp(0f, SwingTime, Projectile.timeLeft));
             float alpha = (float)Math.Sin(mult * Math.PI);
-            Vector2 pos = player.Center + projectile.velocity * (40f - mult * 30f);
-            spriteBatch.Draw(slash, pos - Main.screenPosition, null, Color.White * alpha, projectile.velocity.ToRotation() - MathHelper.PiOver2, slash.Size() / 2, projectile.scale / 2, SpriteEffects.None, 0f);
+            Vector2 pos = player.Center + Projectile.velocity * (40f - mult * 30f);
+            spriteBatch.Draw(slash, pos - Main.screenPosition, null, Color.White * alpha, Projectile.velocity.ToRotation() - MathHelper.PiOver2, slash.Size() / 2, Projectile.scale / 2, SpriteEffects.None, 0f);
             // draws the main blade
-            Texture2D texture = Main.projectileTexture[projectile.type];
+            Texture2D texture = Main.projectileTexture[Projectile.type];
             Vector2 orig = texture.Size() / 2;
-            spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, Color.White, projectile.rotation, orig, projectile.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, orig, Projectile.scale, SpriteEffects.None, 0f);
             return false;
         }
     }

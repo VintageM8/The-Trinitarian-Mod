@@ -15,11 +15,11 @@ namespace Trinitarian.Content.Items.Armor.Antlion
 
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 20;
-            item.value = Item.sellPrice(0, 1, 0, 0);
-            item.rare = ItemRarityID.Green;
-            item.defense = 4;
+            Item.width = 30;
+            Item.height = 20;
+            Item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.rare = ItemRarityID.Green;
+            Item.defense = 4;
         }
 
         public override void UpdateEquip(Player player)
@@ -29,13 +29,12 @@ namespace Trinitarian.Content.Items.Armor.Antlion
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.AntlionMandible, 15);
-            recipe.AddIngredient(ItemID.FossilOre, 3);
-            recipe.AddIngredient(ItemID.Amber, 4);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.AntlionMandible, 15)
+                .AddIngredient(ItemID.FossilOre, 3)
+                .AddIngredient(ItemID.Amber, 4)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

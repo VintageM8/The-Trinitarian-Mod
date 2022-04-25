@@ -13,26 +13,26 @@ namespace Trinitarian.Content.Projectiles.Boss.Zolzar
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lightning Scythe");
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
-            ProjectileID.Sets.TrailingMode[projectile.type] = 0;      
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;      
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 106;
-            projectile.height = 124;
-            projectile.penetrate = -1;
-            projectile.friendly = false;
-            projectile.hostile = true;
-            projectile.tileCollide = false;
-            projectile.timeLeft = 540;
+            Projectile.width = 106;
+            Projectile.height = 124;
+            Projectile.penetrate = -1;
+            Projectile.friendly = false;
+            Projectile.hostile = true;
+            Projectile.tileCollide = false;
+            Projectile.timeLeft = 540;
         }
 
         public override void AI()
         {
-            if (projectile.ai[1] < 15)
+            if (Projectile.ai[1] < 15)
             {
-                Vector2 origin = projectile.Center;
+                Vector2 origin = Projectile.Center;
                 float radius = 15;
                 int numLocations = 30;
                 for (int i = 0; i < 30; i++)
@@ -42,53 +42,53 @@ namespace Trinitarian.Content.Projectiles.Boss.Zolzar
                     int dust = Dust.NewDust(position, 2, 2, 107, dustvelocity.X, dustvelocity.Y, 0, default, 1);
                     Main.dust[dust].noGravity = true;
                 }
-                projectile.ai[1]++;
+                Projectile.ai[1]++;
             }
 
-            projectile.rotation += .55f;
+            Projectile.rotation += .55f;
 
-            if (projectile.ai[0] == 0)
+            if (Projectile.ai[0] == 0)
             {
-                storeVelocity = projectile.velocity;
-                projectile.velocity = Vector2.Zero;
+                storeVelocity = Projectile.velocity;
+                Projectile.velocity = Vector2.Zero;
             }
 
-            projectile.ai[0]++;
+            Projectile.ai[0]++;
 
             if (!reverseDirection)
             {
-                if (projectile.ai[0] == 60)
+                if (Projectile.ai[0] == 60)
                 {
-                    projectile.velocity = storeVelocity;
+                    Projectile.velocity = storeVelocity;
                 }
 
-                if (projectile.ai[0] > 66)
+                if (Projectile.ai[0] > 66)
                 {
-                    if (projectile.ai[0] % 15 == 0)
+                    if (Projectile.ai[0] % 15 == 0)
                     {
-                        projectile.velocity *= 1.25f;
+                        Projectile.velocity *= 1.25f;
                     }
                 }
 
-                if (projectile.ai[0] == 140)
+                if (Projectile.ai[0] == 140)
                 {
                     reverseDirection = true;
-                    projectile.velocity = Vector2.Zero;
+                    Projectile.velocity = Vector2.Zero;
                 }
             }
             else
             {
-                if (projectile.ai[0] == 161)
+                if (Projectile.ai[0] == 161)
                 {
 
-                    projectile.velocity = storeVelocity * -1;
+                    Projectile.velocity = storeVelocity * -1;
                 }
 
-                if (projectile.ai[0] > 226)
+                if (Projectile.ai[0] > 226)
                 {
-                    if (projectile.ai[0] % 15 == 0)
+                    if (Projectile.ai[0] % 15 == 0)
                     {
-                        projectile.velocity *= 1.25f;
+                        Projectile.velocity *= 1.25f;
                     }
                 }
             }
@@ -96,30 +96,30 @@ namespace Trinitarian.Content.Projectiles.Boss.Zolzar
 
         public override bool PreDraw(SpriteBatch sb, Color lightColor)
         {
-            Vector2 vector = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
-            for (int i = 0; i < projectile.oldPos.Length; i++)
+            Vector2 vector = new Vector2(Main.projectileTexture[Projectile.type].Width * 0.5f, Projectile.height * 0.5f);
+            for (int i = 0; i < Projectile.oldPos.Length; i++)
             {
-                Vector2 position = projectile.oldPos[i] - Main.screenPosition + vector + new Vector2(0f, projectile.gfxOffY);
-                Color color = projectile.GetAlpha(lightColor) * ((float)(projectile.oldPos.Length - i) / projectile.oldPos.Length);
-                sb.Draw(Main.projectileTexture[projectile.type], position, null, color, projectile.rotation, vector, projectile.scale, SpriteEffects.None, 0f);
+                Vector2 position = Projectile.oldPos[i] - Main.screenPosition + vector + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - i) / Projectile.oldPos.Length);
+                sb.Draw(Main.projectileTexture[Projectile.type], position, null, color, Projectile.rotation, vector, Projectile.scale, SpriteEffects.None, 0f);
             }
             return true;
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture = ModContent.GetTexture("Trinitarian/Content/Projectiles/Boss/Zolzar/VikingAxe_Glow");
+            Texture2D texture = ModContent.Request<Texture2D>("Trinitarian/Content/Projectiles/Boss/Zolzar/VikingAxe_Glow");
             spriteBatch.Draw(
                 texture,
                 new Vector2
                 (
-                    projectile.Center.Y - Main.screenPosition.X,
-                    projectile.Center.X - Main.screenPosition.Y
+                    Projectile.Center.Y - Main.screenPosition.X,
+                    Projectile.Center.X - Main.screenPosition.Y
                 ),
                 new Rectangle(0, 0, texture.Width, texture.Height),
                 Color.White,
-                projectile.rotation,
+                Projectile.rotation,
                 texture.Size(),
-                projectile.scale,
+                Projectile.scale,
                 SpriteEffects.None,
                 0f
             );

@@ -5,7 +5,7 @@ namespace Trinitarian.Content.Buffs.Minion
 {
     public class FishBuff : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Giant Fish");
             Description.SetDefault("A unusally large fish will fight for you");
@@ -15,7 +15,7 @@ namespace Trinitarian.Content.Buffs.Minion
 
         public override void Update(Player player, ref int buffIndex)
         {
-            if (player.ownedProjectileCounts[mod.ProjectileType("GiantFish")] > 0)
+            if (player.ownedProjectileCounts[Mod.Find<ModProjectile>("GiantFish").Type] > 0)
             {
                 player.buffTime[buffIndex] = 18000;
             }

@@ -13,27 +13,27 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic
         {
             DisplayName.SetDefault("Jungle Staff");
             Tooltip.SetDefault("Inficts poisoned");
-            Item.staff[item.type] = true;
+            Item.staff[Item.type] = true;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 25;
-            item.magic = true;
-            item.mana = 10;
-            item.width = 42;
-            item.height = 40;
-            item.useTime = 19;
-            item.useAnimation = 19;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 4;
-            item.value = Item.sellPrice(0, 3, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.UseSound = SoundID.Item43;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<PoisonStaffproj>();
-            item.shootSpeed = 8f;
+            Item.damage = 25;
+            Item.DamageType = DamageClass.Magic;
+            Item.mana = 10;
+            Item.width = 42;
+            Item.height = 40;
+            Item.useTime = 19;
+            Item.useAnimation = 19;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 4;
+            Item.value = Item.sellPrice(0, 3, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.UseSound = SoundID.Item43;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<PoisonStaffproj>();
+            Item.shootSpeed = 8f;
         }
     }
 }

@@ -15,12 +15,12 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic.SteelStaff
 
         public override void SetDefaults()
         {
-            projectile.arrow = true;
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.aiStyle = 29;
-            projectile.friendly = true;
-            projectile.magic = true;
+            Projectile.arrow = true;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.aiStyle = 29;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Magic;
             aiType = ProjectileID.AmethystBolt;
         }
 
@@ -28,12 +28,12 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic.SteelStaff
         {
             if (Main.rand.NextBool(6))
             {
-                Dust.NewDust(projectile.Center, projectile.width, projectile.height, DustID.PinkFlame);
+                Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.PinkFlame);
             }
         }
         public override void Kill(int timeLeft)
         {
-            Vector2 origin = projectile.Center;
+            Vector2 origin = Projectile.Center;
             float radius = 10;
             int numLocations = 12;
             for (int i = 0; i < 12; i++)

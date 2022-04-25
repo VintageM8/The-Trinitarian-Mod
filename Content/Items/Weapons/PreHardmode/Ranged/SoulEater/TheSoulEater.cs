@@ -13,32 +13,31 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.SoulEater
 
         public override void SetDefaults()
         {
-            item.damage = 14;
-            item.noMelee = true;
-            item.ranged = true;
-            item.width = 16;
-            item.height = 36;
-            item.useTime = 15;
-            item.useAnimation = 15;
-            item.crit = 0;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.knockBack = 5;
-            item.value = Item.sellPrice(0, 8, 50, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item5;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<SoulEaterProj>();
-            item.shootSpeed = 12f;
+            Item.damage = 14;
+            Item.noMelee = true;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 16;
+            Item.height = 36;
+            Item.useTime = 15;
+            Item.useAnimation = 15;
+            Item.crit = 0;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.knockBack = 5;
+            Item.value = Item.sellPrice(0, 8, 50, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item5;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<SoulEaterProj>();
+            Item.shootSpeed = 12f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddTile(TileID.Anvils);
-            recipe.AddIngredient(ItemID.DemoniteBar, 22);
-            recipe.AddIngredient(ItemID.ShadowScale, 25);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddTile(TileID.Anvils)
+                .AddIngredient(ItemID.DemoniteBar, 22)
+                .AddIngredient(ItemID.ShadowScale, 25)
+                .Register();
         }
     }
 }

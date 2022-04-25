@@ -6,7 +6,7 @@ namespace Trinitarian.Content.Buffs.ClassSpecialty
 {
 	public class HolyWrath : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Holy Wrath");
 			base.Description.SetDefault("Increased endurcance, and all melee attacks inflict smite");

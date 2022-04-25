@@ -12,23 +12,23 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Summoner.HolyElemental
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Holy Elemential");
-            Main.projFrames[projectile.type] = 1;
-            Main.projPet[projectile.type] = true;
-            ProjectileID.Sets.Homing[projectile.type] = true;
-            ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
-            ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
+            Main.projFrames[Projectile.type] = 1;
+            Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.Homing[Projectile.type] = true;
+            ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
+            ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
         }
 
         public sealed override void SetDefaults()
         {
-            projectile.width = 44;
-            projectile.height = 54;
-            projectile.tileCollide = false;
-            projectile.friendly = true;
-            projectile.minion = true;
-            projectile.minionSlots = 1f;
-            projectile.penetrate = -1;
-            projectile.scale = 0.85f;
+            Projectile.width = 44;
+            Projectile.height = 54;
+            Projectile.tileCollide = false;
+            Projectile.friendly = true;
+            Projectile.minion = true;
+            Projectile.minionSlots = 1f;
+            Projectile.penetrate = -1;
+            Projectile.scale = 0.85f;
         }
 
         public override bool? CanCutTiles()
@@ -43,7 +43,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Summoner.HolyElemental
 
         public override void AI()
         {
-             Player player = Main.player[projectile.owner];
+             Player player = Main.player[Projectile.owner];
             #region Active check
             if (player.dead || !player.active)
             {
@@ -51,44 +51,44 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Summoner.HolyElemental
             }
             if (player.HasBuff(ModContent.BuffType<HEMinionBuff>()))
             {
-                projectile.timeLeft = 2;
+                Projectile.timeLeft = 2;
             }
             #endregion
 
             Vector2 idlePosition = player.Center;
             idlePosition.Y -= 48f;
-            float minionPositionOffsetX = (10 + projectile.minionPos * 40) * -player.direction;
+            float minionPositionOffsetX = (10 + Projectile.minionPos * 40) * -player.direction;
             idlePosition.X += minionPositionOffsetX;
-            Vector2 vectorToIdlePosition = idlePosition - projectile.Center;
+            Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
             float distanceToIdlePosition = vectorToIdlePosition.Length();
             if (Main.myPlayer == player.whoAmI && distanceToIdlePosition > 2000f)
             {
-                projectile.position = idlePosition;
-                projectile.velocity *= 0.1f;
-                projectile.netUpdate = true;
+                Projectile.position = idlePosition;
+                Projectile.velocity *= 0.1f;
+                Projectile.netUpdate = true;
             }
 
             float overlapVelocity = 0.04f;
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile other = Main.projectile[i];
-                if (i != projectile.whoAmI && other.active && other.owner == projectile.owner && Math.Abs(projectile.position.X - other.position.X) + Math.Abs(projectile.position.Y - other.position.Y) < projectile.width)
+                if (i != Projectile.whoAmI && other.active && other.owner == Projectile.owner && Math.Abs(Projectile.position.X - other.position.X) + Math.Abs(Projectile.position.Y - other.position.Y) < Projectile.width)
                 {
-                    if (projectile.position.X < other.position.X) projectile.velocity.X -= overlapVelocity;
-                    else projectile.velocity.X += overlapVelocity;
+                    if (Projectile.position.X < other.position.X) Projectile.velocity.X -= overlapVelocity;
+                    else Projectile.velocity.X += overlapVelocity;
 
-                    if (projectile.position.Y < other.position.Y) projectile.velocity.Y -= overlapVelocity;
-                    else projectile.velocity.Y += overlapVelocity;
+                    if (Projectile.position.Y < other.position.Y) Projectile.velocity.Y -= overlapVelocity;
+                    else Projectile.velocity.Y += overlapVelocity;
                 }
             }
 
             float distanceFromTarget = 700f;
-            Vector2 targetCenter = projectile.position;
+            Vector2 targetCenter = Projectile.position;
             bool foundTarget = false;
             if (player.HasMinionAttackTargetNPC)
             {
                 NPC npc = Main.npc[player.MinionAttackTargetNPC];
-                float between = Vector2.Distance(npc.Center, projectile.Center);
+                float between = Vector2.Distance(npc.Center, Projectile.Center);
                 if (between < 700f)
                 {
                     distanceFromTarget = between;
@@ -103,10 +103,10 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Summoner.HolyElemental
                     NPC npc = Main.npc[i];
                     if (npc.CanBeChasedBy())
                     {
-                        float between = Vector2.Distance(npc.Center, projectile.Center);
-                        bool closest = Vector2.Distance(projectile.Center, targetCenter) > between;
+                        float between = Vector2.Distance(npc.Center, Projectile.Center);
+                        bool closest = Vector2.Distance(Projectile.Center, targetCenter) > between;
                         bool inRange = between < distanceFromTarget;
-                        bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
+                        bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
                         bool closeThroughWall = between < 100f;
                         if (((closest && inRange) || !foundTarget) && (lineOfSight || closeThroughWall))
                         {
@@ -117,7 +117,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Summoner.HolyElemental
                     }
                 }
             }
-            projectile.friendly = foundTarget;
+            Projectile.friendly = foundTarget;
 
             float speed = 10f;
             float inertia = 20f;
@@ -125,10 +125,10 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Summoner.HolyElemental
             {
                 if (distanceFromTarget > 40f)
                 {
-                    Vector2 direction = targetCenter - projectile.Center;
+                    Vector2 direction = targetCenter - Projectile.Center;
                     direction.Normalize();
                     direction *= speed;
-                    projectile.velocity = (projectile.velocity * (inertia - 1) + direction) / inertia;
+                    Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
                 }
             }
             else
@@ -147,17 +147,17 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Summoner.HolyElemental
                 {
                     vectorToIdlePosition.Normalize();
                     vectorToIdlePosition *= speed;
-                    projectile.velocity = (projectile.velocity * (inertia - 1) + vectorToIdlePosition) / inertia;
+                    Projectile.velocity = (Projectile.velocity * (inertia - 1) + vectorToIdlePosition) / inertia;
                 }
-                else if (projectile.velocity == Vector2.Zero)
+                else if (Projectile.velocity == Vector2.Zero)
                 {
-                    projectile.velocity.X = -0.15f;
-                    projectile.velocity.Y = -0.05f;
+                    Projectile.velocity.X = -0.15f;
+                    Projectile.velocity.Y = -0.05f;
                 }
             }
 
-            projectile.rotation = projectile.velocity.X * 0.05f;
-            projectile.spriteDirection = projectile.direction;
+            Projectile.rotation = Projectile.velocity.X * 0.05f;
+            Projectile.spriteDirection = Projectile.direction;
         }
     }
 }

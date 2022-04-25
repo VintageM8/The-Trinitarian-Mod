@@ -14,22 +14,22 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.CoralBow
 
         public override void SetDefaults()
         {
-            item.UseSound = SoundID.Item67;
-            item.crit = 4;
-            item.damage = 15;
-            item.ranged = true;
-            item.width = 60;
-            item.height = 32;
-            item.useTime = 65;
-            item.useAnimation = 65;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 6;
-            item.value = Item.sellPrice(0, 1, 50, 0);
-            item.rare = ItemRarityID.Blue;
-            item.autoReuse = true;
-            item.shoot = mod.ProjectileType("CoralBowProj");
-            item.shootSpeed = 11f;
+            Item.UseSound = SoundID.Item67;
+            Item.crit = 4;
+            Item.damage = 15;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 60;
+            Item.height = 32;
+            Item.useTime = 65;
+            Item.useAnimation = 65;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 6;
+            Item.value = Item.sellPrice(0, 1, 50, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.autoReuse = true;
+            Item.shoot = Mod.Find<ModProjectile>("CoralBowProj").Type;
+            Item.shootSpeed = 11f;
         }
     }
 }

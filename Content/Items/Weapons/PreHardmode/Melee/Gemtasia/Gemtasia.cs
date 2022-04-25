@@ -15,18 +15,18 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Melee.Gemtasia
 
         public override void SetDefaults()
         {
-            item.damage = 16;
-            item.melee = true;
-            item.width = 40;
-            item.height = 40;
-            item.useTime = 12;
-            item.useAnimation = 20;
-            item.useStyle = 1;
-            item.knockBack = 3;
-            item.value = Item.sellPrice(0, 0, 90, 0);
-            item.rare = ItemRarityID.Orange;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = false;
+            Item.damage = 16;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 40;
+            Item.height = 40;
+            Item.useTime = 12;
+            Item.useAnimation = 20;
+            Item.useStyle = 1;
+            Item.knockBack = 3;
+            Item.value = Item.sellPrice(0, 0, 90, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = false;
         }
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
@@ -36,14 +36,13 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Melee.Gemtasia
 
         public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.Ruby, 2);
-            recipe.AddIngredient(ItemID.StoneBlock, 10);
-            recipe.AddIngredient(ItemID.Bone, 8);
-            recipe.AddIngredient(ItemID.Topaz, 2);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			CreateRecipe(1)
+				.AddIngredient(ItemID.Ruby, 2)
+                .AddIngredient(ItemID.StoneBlock, 10)
+                .AddIngredient(ItemID.Bone, 8)
+                .AddIngredient(ItemID.Topaz, 2)
+				.AddTile(TileID.Anvils)
+				.Register();
 		}
 	}
 }

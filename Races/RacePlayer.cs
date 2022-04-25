@@ -28,8 +28,8 @@ namespace Trinitarian.Races
         public override void PreUpdateBuffs()
         {
        //     Main.NewText($"{CurrentRace.GetCurrentRace()}");
-            CurrentRace.DoRaceChanges(player);
-            CurrentRace.Passive(player);
+            CurrentRace.DoRaceChanges(Player);
+            CurrentRace.Passive(Player);
         }
         public override TagCompound Save()
         {
@@ -40,7 +40,7 @@ namespace Trinitarian.Races
 
         public override void Load(TagCompound tag)
         {
-           Race.SetFromType(player,tag.GetInt("triRaceCur"));
+           Race.SetFromType(Player,tag.GetInt("triRaceCur"));
            
         }
     }

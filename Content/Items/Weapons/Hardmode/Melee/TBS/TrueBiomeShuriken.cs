@@ -16,24 +16,24 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.TBS
 		}
 		public override void SetDefaults()
 		{
-			item.UseSound = SoundID.Item1;
-			item.shootSpeed = 18;
-			item.crit = 12;
-			item.damage = 68;
-			item.knockBack = 8f;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.useAnimation = 12;
-			item.useTime = 12;
-			item.width = 30;
-			item.height = 30;
-			item.maxStack = 1;
-			item.rare = ItemRarityID.Lime;
-			item.consumable = false;
-			item.noUseGraphic = true;
-			item.melee = true;
-			item.autoReuse = true;
-			item.value = Item.sellPrice(gold: 5);
-			item.shoot = ModContent.ProjectileType<TrueBiomeShurikenProj>();
+			Item.UseSound = SoundID.Item1;
+			Item.shootSpeed = 18;
+			Item.crit = 12;
+			Item.damage = 68;
+			Item.knockBack = 8f;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.useAnimation = 12;
+			Item.useTime = 12;
+			Item.width = 30;
+			Item.height = 30;
+			Item.maxStack = 1;
+			Item.rare = ItemRarityID.Lime;
+			Item.consumable = false;
+			Item.noUseGraphic = true;
+			Item.DamageType = DamageClass.Melee;
+			Item.autoReuse = true;
+			Item.value = Item.sellPrice(gold: 5);
+			Item.shoot = ModContent.ProjectileType<TrueBiomeShurikenProj>();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
@@ -45,13 +45,12 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.TBS
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-            recipe.SetResult(this);
-			recipe.AddIngredient(ItemID.ShroomiteBar, 8);
-            recipe.AddIngredient(ModContent.ItemType<Mechtide>(), 18);
-            recipe.AddIngredient(ItemID.SoulofNight, 10);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.AddRecipe();
+			CreateRecipe(1)
+				.AddIngredient(ItemID.ShroomiteBar, 8)
+                .AddIngredient(ModContent.ItemType<Mechtide>(), 18)
+                .AddIngredient(ItemID.SoulofNight, 10)
+				.AddTile(TileID.DemonAltar)
+				.Register();
 		}
 	}
 }

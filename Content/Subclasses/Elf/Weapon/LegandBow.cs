@@ -15,40 +15,40 @@ namespace Trinitarian.Content.Subclasses.Elf.Weapon
             DisplayName.SetDefault("Legend's Bow");
             Tooltip.SetDefault("Created from a material gifted from the Paladins,\n" +
                 "this bow is only a start to a holy journey\nStuns the unholy, inflicts Holy Smite on all mobs.");
-            TrinitarianGlowmask.AddGlowMask(item.type, "Trinitarian/Content/Subclasses/Elf/Weapon/LegandBow_Glow");
+            TrinitarianGlowmask.AddGlowMask(Item.type, "Trinitarian/Content/Subclasses/Elf/Weapon/LegandBow_Glow");
         }
 
         public override void SetDefaults()
         {
-            item.damage = 44;
-            item.noMelee = true;
-            item.ranged = true;
-            item.width = 20;
-            item.height = 46;
-            item.useTime = 30;
-            item.useAnimation = 30;
-            item.useStyle = 5;
-            item.shoot = 3;
-            item.knockBack = 1f;
-            item.value = Item.sellPrice(0, 1, 80, 0);
-            item.rare = 1;
-            item.autoReuse = false;
-            item.shoot = ModContent.ProjectileType<HolyArrow>();
-            item.shootSpeed = 6.5f;
-            item.crit = 8;
+            Item.damage = 44;
+            Item.noMelee = true;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 20;
+            Item.height = 46;
+            Item.useTime = 30;
+            Item.useAnimation = 30;
+            Item.useStyle = 5;
+            Item.shoot = 3;
+            Item.knockBack = 1f;
+            Item.value = Item.sellPrice(0, 1, 80, 0);
+            Item.rare = 1;
+            Item.autoReuse = false;
+            Item.shoot = ModContent.ProjectileType<HolyArrow>();
+            Item.shootSpeed = 6.5f;
+            Item.crit = 8;
         }
 
         public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
         {
             Texture2D texture;
-            texture = Main.itemTexture[item.type];
+            texture = Main.itemTexture[Item.type];
             spriteBatch.Draw
             (
-                ModContent.GetTexture("Trinitarian/Subclasses/Elf/Weapon/LegandBow_Glow"),
+                ModContent.Request<Texture2D>("Trinitarian/Subclasses/Elf/Weapon/LegandBow_Glow"),
                 new Vector2
                 (
-                    item.position.X - Main.screenPosition.X + item.width * 0.5f,
-                    item.position.Y - Main.screenPosition.Y + item.height - texture.Height * 0.5f + 2f
+                    Item.position.X - Main.screenPosition.X + Item.width * 0.5f,
+                    Item.position.Y - Main.screenPosition.Y + Item.height - texture.Height * 0.5f + 2f
                 ),
                 new Rectangle(0, 0, texture.Width, texture.Height),
                 Color.White,

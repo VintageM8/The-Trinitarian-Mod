@@ -20,21 +20,21 @@ namespace Trinitarian.Common.Projectiles
     {
         public override void SetDefaults()
         {
-            projectile.ignoreWater = false;
-            projectile.width = 30;
-            projectile.penetrate = 1;
-            projectile.height = 30;
-            projectile.friendly = false;
-            projectile.light = 1f;
-            projectile.tileCollide = false;
-            projectile.aiStyle = -1;
-            projectile.timeLeft = 600;
+            Projectile.ignoreWater = false;
+            Projectile.width = 30;
+            Projectile.penetrate = 1;
+            Projectile.height = 30;
+            Projectile.friendly = false;
+            Projectile.light = 1f;
+            Projectile.tileCollide = false;
+            Projectile.aiStyle = -1;
+            Projectile.timeLeft = 600;
         }
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
-            projectile.Center = player.Center + new Vector2(300 * (float)Math.Cos((2 * Math.PI) / 360 * projectile.ai[0]), 300 * (float)Math.Sin((2 * Math.PI) / 360 * projectile.ai[0]));
-            projectile.ai[0]++;
+            Player player = Main.player[Projectile.owner];
+            Projectile.Center = player.Center + new Vector2(300 * (float)Math.Cos((2 * Math.PI) / 360 * Projectile.ai[0]), 300 * (float)Math.Sin((2 * Math.PI) / 360 * Projectile.ai[0]));
+            Projectile.ai[0]++;
         }
     }
 }

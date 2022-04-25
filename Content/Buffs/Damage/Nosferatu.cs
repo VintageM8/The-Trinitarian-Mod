@@ -7,7 +7,7 @@ namespace Trinitarian.Content.Buffs.Damage
 {
     public class Nosferatu : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Nosferatu");
             Description.SetDefault("Health is rapidly deteriarating.");

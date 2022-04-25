@@ -10,7 +10,7 @@ namespace Trinitarian.Content.Subclasses.Paladin
 {
     public class HolyComboItem : GlobalItem
     {
-        public override bool UseItem(Item item, Terraria.Player player)
+        public override bool? UseItem(Item item, Terraria.Player player)
         {
             if (item.type == ModContent.ItemType<HolyBlade>())
             {

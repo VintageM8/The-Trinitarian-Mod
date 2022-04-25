@@ -16,30 +16,29 @@ namespace Trinitarian.Content.Items.Consumables.Potions
 
         public override void SetDefaults()
         {
-            item.width = 20;
-            item.height = 26;
-            item.useStyle = ItemUseStyleID.EatingUsing;
-            item.useAnimation = 17;
-            item.useTime = 17;
-            item.useTurn = true;
-            item.UseSound = SoundID.Item3;
-            item.maxStack = 99;
-            item.consumable = false;
-            item.rare = ItemRarityID.Orange;
-            item.buffType = ModContent.BuffType<OceanEssanceBuff>();
-            item.buffTime = 7200;
-            item.value = Item.sellPrice(0, 0, 80, 0);
+            Item.width = 20;
+            Item.height = 26;
+            Item.useStyle = ItemUseStyleID.EatFood;
+            Item.useAnimation = 17;
+            Item.useTime = 17;
+            Item.useTurn = true;
+            Item.UseSound = SoundID.Item3;
+            Item.maxStack = 99;
+            Item.consumable = false;
+            Item.rare = ItemRarityID.Orange;
+            Item.buffType = ModContent.BuffType<OceanEssanceBuff>();
+            Item.buffTime = 7200;
+            Item.value = Item.sellPrice(0, 0, 80, 0);
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Coal, 1);
-            recipe.AddIngredient(ItemID.SandBlock, 2);
-            recipe.AddIngredient(ModContent.ItemType<Algae>(), 1);
-            recipe.AddTile(TileID.Furnaces);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.Coal, 1)
+                .AddIngredient(ItemID.SandBlock, 2)
+                .AddIngredient(ModContent.ItemType<Algae>(), 1)
+                .AddTile(TileID.Furnaces)
+                .Register();
         }
     }
 }

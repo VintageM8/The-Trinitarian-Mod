@@ -16,20 +16,19 @@ namespace Trinitarian.Content.Items.Armor.SteelArmor
 
         public override void SetDefaults()
         {
-            item.width = 18;
-            item.height = 16;
-            item.value = Item.sellPrice(0, 0, 80, 0);
-            item.rare = ItemRarityID.Green;
-            item.defense = 5;
+            Item.width = 18;
+            Item.height = 16;
+            Item.value = Item.sellPrice(0, 0, 80, 0);
+            Item.rare = ItemRarityID.Green;
+            Item.defense = 5;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<SteelBar>(), 10);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemType<SteelBar>(), 10)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

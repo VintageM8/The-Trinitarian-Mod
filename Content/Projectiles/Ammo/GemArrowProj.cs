@@ -14,20 +14,20 @@ namespace Trinitarian.Content.Projectiles.Ammo
 
 		public override void SetDefaults()
 		{
-			projectile.width = 9;
-			projectile.height = 17;
-			projectile.penetrate = 2;
-			projectile.aiStyle = 1;
+			Projectile.width = 9;
+			Projectile.height = 17;
+			Projectile.penetrate = 2;
+			Projectile.aiStyle = 1;
 			aiType = ProjectileID.WoodenArrowFriendly;
-			projectile.ranged = true;
-			projectile.friendly = true;
+			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.friendly = true;
 		}
 
 		public override void Kill(int timeLeft)
 		{
 			for (int i = 0; i < 2; i++)
 			{
-				Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Moss_Green);
+				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Moss_Green);
 			}
 		}
 

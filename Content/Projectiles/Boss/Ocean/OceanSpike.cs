@@ -9,40 +9,40 @@ namespace Trinitarian.Content.Projectiles.Boss.Ocean
     {
         public override void SetDefaults()
         {
-            projectile.hostile = true;
-            projectile.friendly = false;
-            projectile.timeLeft = 120;
-            projectile.tileCollide = false;
+            Projectile.hostile = true;
+            Projectile.friendly = false;
+            Projectile.timeLeft = 120;
+            Projectile.tileCollide = false;
         }
         Vector2 stored;
         Vector2 storedpos;
         public override void AI()
         {
-            if (projectile.ai[0] == 0)
+            if (Projectile.ai[0] == 0)
             {
-                storedpos = projectile.Center;
-                stored = projectile.velocity;
-                projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+                storedpos = Projectile.Center;
+                stored = Projectile.velocity;
+                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
             }
-            if (projectile.ai[0] < 1)
+            if (Projectile.ai[0] < 1)
             {
-                projectile.ai[0] += 0.1f;
-                projectile.velocity = Decelerate(projectile.ai[0], stored);
+                Projectile.ai[0] += 0.1f;
+                Projectile.velocity = Decelerate(Projectile.ai[0], stored);
             }
-            else if (projectile.ai[0] < 2)
+            else if (Projectile.ai[0] < 2)
             {
-                projectile.ai[0] += 0.1f;
+                Projectile.ai[0] += 0.1f;
             }
             else
             {
-                projectile.velocity = stored;
-                projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+                Projectile.velocity = stored;
+                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
             }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            if (projectile.ai[0] != 0) // probably unnececary
-                DrawLine(storedpos, storedpos + stored * 200, Color.Lerp(Color.White, Color.Red, projectile.ai[0] / 2), spriteBatch);
+            if (Projectile.ai[0] != 0) // probably unnececary
+                DrawLine(storedpos, storedpos + stored * 200, Color.Lerp(Color.White, Color.Red, Projectile.ai[0] / 2), spriteBatch);
             return base.PreDraw(spriteBatch, lightColor);
         }
         private void DrawLine(Vector2 start, Vector2 end, Color color, SpriteBatch spriteBatch, float scale = 1)
@@ -53,7 +53,7 @@ namespace Trinitarian.Content.Projectiles.Boss.Ocean
             for (int i = 0; i < length; i++)
             {
                 Vector2 drawpos = start + unit * i - Main.screenPosition;
-                spriteBatch.Draw(ModContent.GetTexture("Trinitarian/Assets/Pixel"), drawpos, null, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(ModContent.Request<Texture2D>("Trinitarian/Assets/Pixel"), drawpos, null, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
             }
         }
         private Vector2 Decelerate(float progress, Vector2 maxvelocity)

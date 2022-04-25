@@ -16,23 +16,23 @@ namespace Trinitarian.Content.Subclasses.Paladin.Weapon
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Knight's Broadsword");
-            ItemID.Sets.ItemNoGravity[item.type] = true;
+            ItemID.Sets.ItemNoGravity[Item.type] = true;
         }
 
         public override void SetDefaults()
         {
-            item.width = item.height = 60;
-            item.damage = 16;
-            item.melee = true;
-            item.noMelee = true;
-            item.noUseGraphic = true;
-            item.useAnimation = item.useTime = 20;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.shootSpeed = 1f;
-            item.rare = ItemRarityID.Yellow;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<KnightBroadswordProj>();
-            item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/SwordSwoosh");
+            Item.width = Item.height = 60;
+            Item.damage = 16;
+            Item.DamageType = DamageClass.Melee;
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
+            Item.useAnimation = Item.useTime = 20;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.shootSpeed = 1f;
+            Item.rare = ItemRarityID.Yellow;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<KnightBroadswordProj>();
+            Item.UseSound = Mod.GetLegacySoundSlot(SoundType.Item, "Sounds/SwordSwoosh");
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
@@ -42,7 +42,7 @@ namespace Trinitarian.Content.Subclasses.Paladin.Weapon
             return false;
         }
 
-        public override bool UseItem(Player player)
+        public override bool? UseItem(Player player)
         {
             for (int i = 0; i < Math.Min(10, player.GetModPlayer<HolyCombo>().combo / 3); ++i)
             {

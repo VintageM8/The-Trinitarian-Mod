@@ -52,59 +52,59 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 
         public float AI_State
         {
-            get => npc.ai[0];
-            set => npc.ai[0] = value;
+            get => NPC.ai[0];
+            set => NPC.ai[0] = value;
         }
         public float Attack_State
         {
-            get => npc.ai[1];
-            set => npc.ai[1] = value;
+            get => NPC.ai[1];
+            set => NPC.ai[1] = value;
         }
         public float AI_Timer
         {
-            get => npc.ai[2];
-            set => npc.ai[2] = value;
+            get => NPC.ai[2];
+            set => NPC.ai[2] = value;
         }
         public float AddNumber
         {
-            get => npc.ai[3];
-            set => npc.ai[3] = value;
+            get => NPC.ai[3];
+            set => NPC.ai[3] = value;
         }
         public float RotationTimer
         {
-            get => npc.localAI[0];
-            set => npc.localAI[0] = value;
+            get => NPC.localAI[0];
+            set => NPC.localAI[0] = value;
         }
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Zolzar, Berserker Viking");
-            Main.npcFrameCount[npc.type] = 10;
+            Main.npcFrameCount[NPC.type] = 10;
         }
 
         public override void SetDefaults()
         {
-             npc.aiStyle = -1;
-            npc.width = 102;
-            npc.height = 102;
-            npc.damage = 195;
-            npc.defense = 52;
-            npc.lifeMax = 250000;
-            npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.Item25;
-            npc.knockBackResist = 0f;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.boss = true;
-            npc.value = Item.buyPrice(gold: 3);
-            npc.npcSlots = 10f;
-            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/ZozarP2");
+             NPC.aiStyle = -1;
+            NPC.width = 102;
+            NPC.height = 102;
+            NPC.damage = 195;
+            NPC.defense = 52;
+            NPC.lifeMax = 250000;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.Item25;
+            NPC.knockBackResist = 0f;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.boss = true;
+            NPC.value = Item.buyPrice(gold: 3);
+            NPC.npcSlots = 10f;
+            music = Mod.GetSoundSlot(SoundType.Music, "Sounds/Music/ZozarP2");
             bossBag = ModContent.ItemType<VikingBossBag>();
         }
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            npc.lifeMax = (int)(npc.lifeMax * bossLifeScale);
-            npc.defense = 17;
+            NPC.lifeMax = (int)(NPC.lifeMax * bossLifeScale);
+            NPC.defense = 17;
         }
 
         private void BossText(string text) // boss messages
@@ -120,7 +120,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
         }
         public override bool PreAI()
         {
-            Player target = Main.player[npc.target];
+            Player target = Main.player[NPC.target];
             TrinitarianPlayer globaltarget = target.GetModPlayer<TrinitarianPlayer>();
             int Frames = 20;
             for (int i = 1; i < Frames; i++)
@@ -138,8 +138,8 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
         public override void AI()
         {
             //TODO better targeting selection
-            npc.TargetClosest(true);
-            Player player = Main.player[npc.target];
+            NPC.TargetClosest(true);
+            Player player = Main.player[NPC.target];
 
             //This handles the timing for calculating the spinning adds. The period for 1 rotation is exactly 300 ticks. Changing this makes the circle spin slower/faster but changing it is not recommended.
             //There are a a coupple things that rely on the rotation speed that would have to be changed which involves some math. So unless you know what you are doing don't touch this number.
@@ -150,36 +150,36 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
             //Initial spawning. Boss starts with 5 Adds
             if (!TrinitarianWorld.downedViking && AI_State == State_Spawning)
             {
-                npc.dontTakeDamage = true;
-                npc.netUpdate = true;
+                NPC.dontTakeDamage = true;
+                NPC.netUpdate = true;
                
                 if (AI_Timer <= 200)
                 {
                     if (AI_Timer % 50 == 0)
                     {
-                        SpawnAdd(npc.Center);
+                        SpawnAdd(NPC.Center);
                     }
                 }
                 else
                 {
-                    npc.dontTakeDamage = false;
+                    NPC.dontTakeDamage = false;
                     AI_State = State_Moving;
                     AI_Timer = 0;
-                    npc.netUpdate = true;
+                    NPC.netUpdate = true;
                 }
                 AI_Timer++;
                 return;
             }
 
             // Handles Despawning
-            if (npc.target < 0 || npc.target == 255 || player.dead || !player.active)
+            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
             {
-                npc.TargetClosest(false);
-                npc.velocity.Y = npc.velocity.Y - 0.1f;
+                NPC.TargetClosest(false);
+                NPC.velocity.Y = NPC.velocity.Y - 0.1f;
                 Main.NewText("Bye");
-                if (npc.timeLeft > 20)
+                if (NPC.timeLeft > 20)
                 {
-                    npc.timeLeft = 20;
+                    NPC.timeLeft = 20;
                     return;
                 }
             }
@@ -188,9 +188,9 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
             if (AI_State == State_Moving)
             {
                 Moving();
-                float distPlayerSQ = (npc.Center - player.Center).LengthSquared();
+                float distPlayerSQ = (NPC.Center - player.Center).LengthSquared();
                 //Condition for when the boss can attack.
-                if (AI_Timer >= MovementTime && npc.HasValidTarget && distPlayerSQ < AttackTargetingDistanceSQ)
+                if (AI_Timer >= MovementTime && NPC.HasValidTarget && distPlayerSQ < AttackTargetingDistanceSQ)
                 {
                     AI_State = State_Attacking;
                     AI_Timer = 0;
@@ -212,22 +212,22 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
                     Attack_State = nextAttackstate;
                     if (AddNumber == 0) Attack_State = 0;
                     //Attack_State = 1;
-                    npc.netUpdate = true;
+                    NPC.netUpdate = true;
                 }
                 switch (Attack_State)
                 {
                     case 0:
                         if (AI_Timer == 0)
                         {
-                            if (AddNumber == 0) SpawnAdd(npc.Center, 5);
-                            else SpawnAdd(npc.Center, 2);
+                            if (AddNumber == 0) SpawnAdd(NPC.Center, 5);
+                            else SpawnAdd(NPC.Center, 2);
                         }
                         BigDashAttack();
                         break;
                     case 1:
                     case 2:
                     case 3:
-                        if (AI_Timer == 0) SpawnAdd(npc.Center);
+                        if (AI_Timer == 0) SpawnAdd(NPC.Center);
                         for (int i = 0; i < (int)AddNumber / 4f; i++)
                         {
                             SendAdd(2, 60 * i);
@@ -254,7 +254,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
                     case 4:
                     case 5:
                     case 6:
-                        if (AI_Timer == 0) SpawnAdd(npc.Center);
+                        if (AI_Timer == 0) SpawnAdd(NPC.Center);
                         LightningStrike();
                         if (AI_Timer >= ((int)(AddNumber/2f) - 1) * SpawnDelay)
                         {
@@ -264,7 +264,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
                         break;
                     case 7:
                     case 8:
-                        if (AI_Timer == 0) SpawnAdd(npc.Center);
+                        if (AI_Timer == 0) SpawnAdd(NPC.Center);
                         int dashamount = (int)(AddNumber / 4f) == 0 ? (int)(AddNumber / 4f) : 2;
                         SendAdd(dashamount, 0);
                         LightningStrike(20);
@@ -282,9 +282,9 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
         }
         private void Moving()
         {
-            Player player = Main.player[npc.target];
-            float distPlayerSQ = (npc.Center - player.Center).LengthSquared();
-            Vector2 npcAcc = player.Center - npc.Center;
+            Player player = Main.player[NPC.target];
+            float distPlayerSQ = (NPC.Center - player.Center).LengthSquared();
+            Vector2 npcAcc = player.Center - NPC.Center;
             float maxspeed = Max_Speed;
             //Assign weight of the NPC
             if (npcAcc != Vector2.Zero)
@@ -299,28 +299,28 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
                 maxspeed *= distPlayerSQ / SoftMovementDistanceSQ;
             }
             //apply acceleration
-            if ((npc.velocity + npcAcc).LengthSquared() <= maxspeed * maxspeed)
+            if ((NPC.velocity + npcAcc).LengthSquared() <= maxspeed * maxspeed)
             {
-                npc.velocity += npcAcc;
+                NPC.velocity += npcAcc;
             }
             //Enforce the maxspeed by setting the magnitude of the vector.
             else
             {
-                npc.velocity += npcAcc;
-                if (npc.velocity != Vector2.Zero)
+                NPC.velocity += npcAcc;
+                if (NPC.velocity != Vector2.Zero)
                 {
-                    npc.velocity.Normalize();
+                    NPC.velocity.Normalize();
                 }
-                npc.velocity *= maxspeed;
+                NPC.velocity *= maxspeed;
             }
         }
         //This spawns the Adds.
         private void SpawnAdd(Vector2 pos, int count = 1)
         {
-            TrinitarianGlobalNPC globalnpc = npc.GetGlobalNPC<TrinitarianGlobalNPC>();
+            TrinitarianGlobalNPC globalnpc = NPC.GetGlobalNPC<TrinitarianGlobalNPC>();
             for (int i = 0; i < count; i++)
             {   
-                globalnpc.Add[(int)AddNumber] = NPC.NewNPC((int)pos.X, (int)pos.Y, ModContent.NPCType<VikingBossAdd>(), 0, 1, npc.whoAmI, 0, AddNumber, npc.target);
+                globalnpc.Add[(int)AddNumber] = NPC.NewNPC((int)pos.X, (int)pos.Y, ModContent.NPCType<VikingBossAdd>(), 0, 1, NPC.whoAmI, 0, AddNumber, NPC.target);
                 AddNumber++;
             }           
             GenerateAddPositions();
@@ -328,7 +328,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
         //This is here to use in the BigDash.
         private void SendAdd(int SendCount, int delay = 0)
         {
-            TrinitarianGlobalNPC globalnpc = npc.GetGlobalNPC<TrinitarianGlobalNPC>();
+            TrinitarianGlobalNPC globalnpc = NPC.GetGlobalNPC<TrinitarianGlobalNPC>();
             Moving();
             if (AI_Timer == delay)
             {
@@ -350,7 +350,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 
         private void LightningStrike(int delay = 0)
         {
-            TrinitarianGlobalNPC globalnpc = npc.GetGlobalNPC<TrinitarianGlobalNPC>();
+            TrinitarianGlobalNPC globalnpc = NPC.GetGlobalNPC<TrinitarianGlobalNPC>();
             Moving();
             //this selects the adds that are currently available.
             if (AI_Timer >= delay)
@@ -370,12 +370,12 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
         }
         private void Dash(int delay = 0)
         {
-            Player target = Main.player[npc.target];
+            Player target = Main.player[NPC.target];
             if (AI_Timer == delay)
             {
                 float time = 0;
-                Vector2 npcVel = ModTargeting.LinearAdvancedTargeting(npc.Center, target.Center, IntSpeed, DashSpeed, ref time);
-                ModTargeting.FallingTargeting(npc, target, new Vector2(0, -28), (int)DashSpeed, ref time, ref npcVel);
+                Vector2 npcVel = ModTargeting.LinearAdvancedTargeting(NPC.Center, target.Center, IntSpeed, DashSpeed, ref time);
+                ModTargeting.FallingTargeting(NPC, target, new Vector2(0, -28), (int)DashSpeed, ref time, ref npcVel);
                 if (time > 15) DashTime = time * (1.4f + 0.3f*TimesDashed);
                 else DashTime = 15 * (1.4f + 0.3f * TimesDashed);
                 //if (npcVel != Vector2.Zero)
@@ -383,13 +383,13 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
                 //    npcVel.Normalize();
                 //}
                 //npcVel *= DashSpeed;
-                npc.velocity = npcVel;                
+                NPC.velocity = npcVel;                
             }
         }
         private void BigDashAttack()
         {
-            Player target = Main.player[npc.target];
-            TrinitarianGlobalNPC globalnpc = npc.GetGlobalNPC<TrinitarianGlobalNPC>();
+            Player target = Main.player[NPC.target];
+            TrinitarianGlobalNPC globalnpc = NPC.GetGlobalNPC<TrinitarianGlobalNPC>();
             int DashStartTime = (int)AddNumber * 45 + 120;
             if (AI_Timer == 0)
             {
@@ -402,7 +402,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
             }
             if (AI_Timer < DashStartTime && TimesDashed == 0)
             {
-                float factor = target.Center.X - npc.Center.X;
+                float factor = target.Center.X - NPC.Center.X;
                 factor /= Math.Abs(factor); 
                 MoveTo(target.Center - new Vector2 (factor * Main.screenWidth/3f, Main.screenHeight / 3f), 12, true);
             }  
@@ -415,7 +415,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
             if (AI_Timer >= DashTime + DashStartTime && TimesDashed < MaxDashes)
             {
                 AI_Timer = DashStartTime - DashDelay;
-                npc.velocity *= 0.04f;
+                NPC.velocity *= 0.04f;
                 npcDashing = false;
                 TimesDashed++;
             }
@@ -429,45 +429,45 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
         }
         private void GenerateAddPositions()
         {
-            TrinitarianGlobalNPC globalnpc = npc.GetGlobalNPC<TrinitarianGlobalNPC>();
+            TrinitarianGlobalNPC globalnpc = NPC.GetGlobalNPC<TrinitarianGlobalNPC>();
             double period = 2f * Math.PI / 300f;
             for (int i = 0; i < AddNumber; i++)
             {
-                globalnpc.AddPositions[i] = npc.Center + new Vector2(300 * (float)Math.Cos(period * (RotationTimer + (300 / AddNumber * i))), 300 * (float)Math.Sin(period * (RotationTimer + (300 / AddNumber * i))));
+                globalnpc.AddPositions[i] = NPC.Center + new Vector2(300 * (float)Math.Cos(period * (RotationTimer + (300 / AddNumber * i))), 300 * (float)Math.Sin(period * (RotationTimer + (300 / AddNumber * i))));
             }
         }
         private bool MoveTo(Vector2 WantedPosition, float TravelSpeed, bool follow)
         {
-            Player player = Main.player[npc.target];
+            Player player = Main.player[NPC.target];
             if (AI_Timer == 0 || follow)
             {
-                npc.velocity = player.velocity;
+                NPC.velocity = player.velocity;
                 tempPos = WantedPosition;
-                Vector2 npcVel = tempPos - npc.Center;
+                Vector2 npcVel = tempPos - NPC.Center;
                 if (npcVel != Vector2.Zero)
                 {
                     npcVel.Normalize();
                 }
                 npcVel *= TravelSpeed;
-                npc.velocity = npcVel;
+                NPC.velocity = npcVel;
             }
-            if (npc.DistanceSQ(tempPos) <= 14 * 14)
+            if (NPC.DistanceSQ(tempPos) <= 14 * 14)
             {
-                npc.Center = tempPos;
-                npc.velocity = Vector2.Zero;
+                NPC.Center = tempPos;
+                NPC.velocity = Vector2.Zero;
                 return true;
             }
             return false;
         }
         private void SpawnThorns()
         {
-            Player player = Main.player[npc.target];
+            Player player = Main.player[NPC.target];
             if (AI_Timer % 60 == 0 && AI_Timer < 240)
             {
                 // Get the ground beneath the player
                 Vector2 playerPos = new Vector2(player.position.X / 16, player.position.Y / 16);
                 Tile tile = Framing.GetTileSafely((int)playerPos.X, (int)playerPos.Y);
-                while (!tile.active() || tile.type == TileID.Trees)
+                while (!tile.HasTile || tile.TileType == TileID.Trees)
                 {
                     playerPos.Y += 1;
                     tile = Framing.GetTileSafely((int)playerPos.X, (int)playerPos.Y);
@@ -486,14 +486,14 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
                     Vector2 playerPos = new Vector2((player.position.X - 30 * i) / 16, (player.position.Y) / 16);
                     Vector2 playerPos2 = new Vector2((player.position.X + 30 * i) / 16, (player.position.Y) / 16);
                     Tile tile = Framing.GetTileSafely((int)playerPos.X, (int)playerPos.Y);
-                    while (!tile.active() || tile.type == TileID.Trees)
+                    while (!tile.HasTile || tile.TileType == TileID.Trees)
                     {
                         playerPos.Y += 1;
                         tile = Framing.GetTileSafely((int)playerPos.X, (int)playerPos.Y);
                     }
 
                     Tile tile2 = Framing.GetTileSafely((int)playerPos2.X, (int)playerPos2.Y);
-                    while (!tile2.active() || tile2.type == TileID.Trees)
+                    while (!tile2.HasTile || tile2.TileType == TileID.Trees)
                     {
                         playerPos2.Y += 1;
                         tile2 = Framing.GetTileSafely((int)playerPos2.X, (int)playerPos2.Y);
@@ -523,9 +523,9 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
         {
             if (AI_Timer % 75 == 0)
             {
-                int numSeeds = npc.life <= npc.lifeMax * 0.25f ? 16 : 13;
+                int numSeeds = NPC.life <= NPC.lifeMax * 0.25f ? 16 : 13;
                 float numberProjectiles = Main.rand.Next(7, numSeeds);
-                Vector2 position = npc.Center;
+                Vector2 position = NPC.Center;
                 int speedX = 1;
                 int speedY = Main.rand.Next(-25, -15);
                 float rotation = MathHelper.ToRadians(45);
@@ -535,7 +535,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
                     for (int i = 0; i < numberProjectiles; i++)
                     {
                         Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * .4f; // This defines the projectile roatation and speed. .4f == projectile speed
-                        Projectile.NewProjectile(npc.Center.X, npc.Center.Y - 85, perturbedSpeed.X, perturbedSpeed.Y, ProjectileID.PhantasmalBolt, 17, 1f, Main.myPlayer);
+                        Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y - 85, perturbedSpeed.X, perturbedSpeed.Y, ProjectileID.PhantasmalBolt, 17, 1f, Main.myPlayer);
                     }
                 }
             }
@@ -556,11 +556,11 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
         }
         private void MultipleThorns()
         {
-            Player player = Main.player[npc.target];
+            Player player = Main.player[NPC.target];
             if (AI_Timer % 120 == 0)
             {
                 int randChoice = Main.rand.Next(2);
-                npc.netUpdate = true;
+                NPC.netUpdate = true;
                 if (randChoice == 0)
                 {
                     for (int i = 0; i < 3; i++)
@@ -569,14 +569,14 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
                         Vector2 playerPos = new Vector2((player.position.X - 30 * i) / 16, (player.position.Y) / 16);
                         Vector2 playerPos2 = new Vector2((player.position.X + 30 * i) / 16, (player.position.Y) / 16);
                         Tile tile = Framing.GetTileSafely((int)playerPos.X, (int)playerPos.Y);
-                        while (!tile.active() || tile.type == TileID.Trees)
+                        while (!tile.HasTile || tile.TileType == TileID.Trees)
                         {
                             playerPos.Y += 1;
                             tile = Framing.GetTileSafely((int)playerPos.X, (int)playerPos.Y);
                         }
 
                         Tile tile2 = Framing.GetTileSafely((int)playerPos2.X, (int)playerPos2.Y);
-                        while (!tile2.active() || tile2.type == TileID.Trees)
+                        while (!tile2.HasTile || tile2.TileType == TileID.Trees)
                         {
                             playerPos2.Y += 1;
                             tile2 = Framing.GetTileSafely((int)playerPos2.X, (int)playerPos2.Y);
@@ -603,14 +603,14 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
                         Vector2 playerPos = new Vector2((player.position.X - 90 * i) / 16, (player.position.Y) / 16);
                         Vector2 playerPos2 = new Vector2((player.position.X + 90 * i) / 16, (player.position.Y) / 16);
                         Tile tile = Framing.GetTileSafely((int)playerPos.X, (int)playerPos.Y);
-                        while (!tile.active() || tile.type == TileID.Trees)
+                        while (!tile.HasTile || tile.TileType == TileID.Trees)
                         {
                             playerPos.Y += 1;
                             tile = Framing.GetTileSafely((int)playerPos.X, (int)playerPos.Y);
                         }
 
                         Tile tile2 = Framing.GetTileSafely((int)playerPos2.X, (int)playerPos2.Y);
-                        while (!tile2.active() || tile2.type == TileID.Trees)
+                        while (!tile2.HasTile || tile2.TileType == TileID.Trees)
                         {
                             playerPos2.Y += 1;
                             tile2 = Framing.GetTileSafely((int)playerPos2.X, (int)playerPos2.Y);
@@ -642,18 +642,18 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
             if (AI_Timer % 15 == 0)
             {
                 // Get the ground beneath the player
-                Vector2 npcPos = new Vector2((npc.position.X - 60 * bufferCount) / 16, npc.position.Y / 16);
+                Vector2 npcPos = new Vector2((NPC.position.X - 60 * bufferCount) / 16, NPC.position.Y / 16);
                 Tile tile = Framing.GetTileSafely((int)npcPos.X, (int)npcPos.Y);
-                while (!tile.active() || tile.type == TileID.Trees)
+                while (!tile.HasTile || tile.TileType == TileID.Trees)
                 {
                     npcPos.Y += 1;
                     tile = Framing.GetTileSafely((int)npcPos.X, (int)npcPos.Y);
                 }
 
                 // Same thing going right, I'm lazy
-                Vector2 npcPos2 = new Vector2((npc.position.X + npc.width + (60 * bufferCount)) / 16, npc.position.Y / 16);
+                Vector2 npcPos2 = new Vector2((NPC.position.X + NPC.width + (60 * bufferCount)) / 16, NPC.position.Y / 16);
                 Tile tile2 = Framing.GetTileSafely((int)npcPos2.X, (int)npcPos2.Y);
-                while (!tile2.active() || tile2.type == TileID.Trees)
+                while (!tile2.HasTile || tile2.TileType == TileID.Trees)
                 {
                     npcPos2.Y += 1;
                     tile2 = Framing.GetTileSafely((int)npcPos2.X, (int)npcPos2.Y);
@@ -677,21 +677,21 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
-            TrinitarianGlobalNPC globalnpc = npc.GetGlobalNPC<TrinitarianGlobalNPC>();
+            TrinitarianGlobalNPC globalnpc = NPC.GetGlobalNPC<TrinitarianGlobalNPC>();
             for (int i = 0; i < AddNumber; i++)
             {
-                spriteBatch.Draw(mod.GetTexture("NPCs/Bosses/Zolzar/DebugSqure"), globalnpc.AddPositions[i] - Main.screenPosition, new Color(0, 0, 254));
+                spriteBatch.Draw(Mod.Assets.Request<Texture2D>("NPCs/Bosses/Zolzar/DebugSqure").Value, globalnpc.AddPositions[i] - Main.screenPosition, new Color(0, 0, 254));
             }
 
-            Texture2D texture = ModContent.GetTexture("Trinitarian/Content/NPCs/Bosses/Zolzar/VikingBoss_Glow");
-            spriteBatch.Draw(texture, new Vector2(npc.Center.X - Main.screenPosition.X, npc.Center.Y - Main.screenPosition.Y + 4), npc.frame, Color.White, npc.rotation, npc.frame.Size() / 2f, npc.scale, npc.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+            Texture2D texture = ModContent.Request<Texture2D>("Trinitarian/Content/NPCs/Bosses/Zolzar/VikingBoss_Glow");
+            spriteBatch.Draw(texture, new Vector2(NPC.Center.X - Main.screenPosition.X, NPC.Center.Y - Main.screenPosition.Y + 4), NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2f, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
             
 
             int xOffset;
             int yOffset;
 
             int frameOffset = 0;
-            if (npc.frame.Y == 300 || npc.frame.Y == 600)
+            if (NPC.frame.Y == 300 || NPC.frame.Y == 600)
             {
                 frameOffset = -2;
             }
@@ -699,37 +699,37 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 
         public override void FindFrame(int frameHeight)
         {
-            int factor = (int)((Main.player[npc.target].Center.X - npc.Center.X)/ Math.Abs(Main.player[npc.target].Center.X - npc.Center.X));
-            npc.frameCounter++;
+            int factor = (int)((Main.player[NPC.target].Center.X - NPC.Center.X)/ Math.Abs(Main.player[NPC.target].Center.X - NPC.Center.X));
+            NPC.frameCounter++;
 
-            if (npc.frameCounter % 6f == 5f)
+            if (NPC.frameCounter % 6f == 5f)
             {
-                npc.frame.Y += frameHeight;
+                NPC.frame.Y += frameHeight;
             }
-            if (npc.frame.Y >= frameHeight * 10) // 10 is max # of frames
+            if (NPC.frame.Y >= frameHeight * 10) // 10 is max # of frames
             {
-                npc.frame.Y = 0; // Reset back to default
+                NPC.frame.Y = 0; // Reset back to default
             }
             if (!npcDashing)
             {
-                npc.spriteDirection = factor;
+                NPC.spriteDirection = factor;
             }
-            while (npcDashing == true && npc.spriteDirection != spriteDirectionStore)
+            while (npcDashing == true && NPC.spriteDirection != spriteDirectionStore)
             {
-                npc.spriteDirection = spriteDirectionStore;
+                NPC.spriteDirection = spriteDirectionStore;
             }
         }
 
         public override bool CheckDead()
         {
-            if (npc.ai[3] == 0f)
+            if (NPC.ai[3] == 0f)
             {
-                npc.ai[2] = 0;
-                npc.ai[3] = 1f;
-                npc.damage = 0;
-                npc.life = npc.lifeMax;
-                npc.dontTakeDamage = true;
-                npc.netUpdate = true;
+                NPC.ai[2] = 0;
+                NPC.ai[3] = 1f;
+                NPC.damage = 0;
+                NPC.life = NPC.lifeMax;
+                NPC.dontTakeDamage = true;
+                NPC.netUpdate = true;
                 return false;
             }
             return true;
@@ -740,7 +740,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
                 // Always drops one of:
                 if (choice == 1) 
                 {
-                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<UlvkilSoul>());
+                    Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<UlvkilSoul>());
                 }
         }
         public override void BossLoot(ref string name, ref int potionType)

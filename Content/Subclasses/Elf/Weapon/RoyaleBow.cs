@@ -17,23 +17,23 @@ namespace Trinitarian.Content.Subclasses.Elf.Weapon
 
         public override void SetDefaults()
         {
-            item.damage = 62;
-            item.noMelee = true;
-            item.ranged = true;
-            item.width = 16;
-            item.height = 36;
-            item.useTime = 26;
-            item.useAnimation = 26;
-            item.crit = 0;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.knockBack = 4;
-            item.value = Item.sellPrice(0, 0, 25, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item5;
-            item.autoReuse = false;
-            item.shoot = ModContent.ProjectileType<HolyAngel>();
-            item.shootSpeed = 7f;
-			item.useAmmo = AmmoID.Arrow;
+            Item.damage = 62;
+            Item.noMelee = true;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 16;
+            Item.height = 36;
+            Item.useTime = 26;
+            Item.useAnimation = 26;
+            Item.crit = 0;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.knockBack = 4;
+            Item.value = Item.sellPrice(0, 0, 25, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item5;
+            Item.autoReuse = false;
+            Item.shoot = ModContent.ProjectileType<HolyAngel>();
+            Item.shootSpeed = 7f;
+			Item.useAmmo = AmmoID.Arrow;
         }
 
 		public override Vector2? HoldoutOffset()
@@ -75,7 +75,7 @@ namespace Trinitarian.Content.Subclasses.Elf.Weapon
 				}
 				return false;
 			}
-			float shootSpeed = base.item.shootSpeed;
+			float shootSpeed = base.Item.shootSpeed;
 			Vector2 vector = player.RotatedRelativePoint(player.MountedCenter);
 			float num2 = (float)Main.mouseX + Main.screenPosition.X - vector.X;
 			float num3 = (float)Main.mouseY + Main.screenPosition.Y - vector.Y;

@@ -14,54 +14,54 @@ namespace Trinitarian.Content.NPCs.Enemies.Cubeboi
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cube boi");
-            Main.npcFrameCount[npc.type] = 24;
+            Main.npcFrameCount[NPC.type] = 24;
         }
 
         public override void SetDefaults()
         {
-            npc.lifeMax = 80;
-            npc.damage = 8;
-            npc.defense = 1;
-            npc.knockBackResist = 0.1f;
-            npc.width = 32;
-            npc.height = 54;
-            npc.aiStyle = -1;
-            npc.npcSlots = 0.5f;
-            npc.HitSound = SoundID.NPCHit52;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.DeathSound = SoundID.NPCDeath6;
-            npc.value = Item.buyPrice(0, 0, 5, 0);
+            NPC.lifeMax = 80;
+            NPC.damage = 8;
+            NPC.defense = 1;
+            NPC.knockBackResist = 0.1f;
+            NPC.width = 32;
+            NPC.height = 54;
+            NPC.aiStyle = -1;
+            NPC.npcSlots = 0.5f;
+            NPC.HitSound = SoundID.NPCHit52;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.DeathSound = SoundID.NPCDeath6;
+            NPC.value = Item.buyPrice(0, 0, 5, 0);
         }
 
 
         public override void AI()
         {
-            npc.TargetClosest(true);
-            Player player = Main.player[npc.target];
-            if (npc.target < 0 || npc.target == 255 || player.dead || !player.active)
+            NPC.TargetClosest(true);
+            Player player = Main.player[NPC.target];
+            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
             {
-                npc.TargetClosest(false);
-                if (npc.velocity.X > 0.0f)
-                    npc.velocity.X = npc.velocity.X + 0.75f;
+                NPC.TargetClosest(false);
+                if (NPC.velocity.X > 0.0f)
+                    NPC.velocity.X = NPC.velocity.X + 0.75f;
                 else
-                    npc.velocity.X = npc.velocity.X - 0.75f;
-                npc.velocity.Y = npc.velocity.Y + 0.1f;
-                if (npc.timeLeft > 10)
+                    NPC.velocity.X = NPC.velocity.X - 0.75f;
+                NPC.velocity.Y = NPC.velocity.Y + 0.1f;
+                if (NPC.timeLeft > 10)
                 {
-                    npc.timeLeft = 10;
+                    NPC.timeLeft = 10;
                     return;
                 }
             }
-            Vector2 vector2 = new Vector2(npc.Center.X, npc.Center.Y);
+            Vector2 vector2 = new Vector2(NPC.Center.X, NPC.Center.Y);
             float x = player.Center.X - vector2.X;
             float y = player.Center.Y - vector2.Y;
             float distance = 6f / (float)Math.Sqrt((double)x * (double)x + (double)y * (double)y);
             float velocityX = x * distance;
             float velocityY = y * distance;
-            npc.velocity.X = (float)(((double)npc.velocity.X * 100.0 + (double)velocityX) / 101.0);
-            npc.velocity.Y = (float)(((double)npc.velocity.Y * 100.0 + (double)velocityY) / 101.0);
-            npc.rotation = (float)Math.Atan2((double)velocityY, (double)velocityX) - 1.57f;
+            NPC.velocity.X = (float)(((double)NPC.velocity.X * 100.0 + (double)velocityX) / 101.0);
+            NPC.velocity.Y = (float)(((double)NPC.velocity.Y * 100.0 + (double)velocityY) / 101.0);
+            NPC.rotation = (float)Math.Atan2((double)velocityY, (double)velocityX) - 1.57f;
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -71,21 +71,21 @@ namespace Trinitarian.Content.NPCs.Enemies.Cubeboi
         
         public override void NPCLoot()
         {
-            Item.NewItem(npc.getRect(), ModContent.ItemType<RustyScraps>(), 3);
+            Item.NewItem(NPC.getRect(), ModContent.ItemType<RustyScraps>(), 3);
         }
 
         public override void FindFrame(int frameHeight)
         {
-            npc.spriteDirection = -npc.direction;
-            npc.frameCounter++;
+            NPC.spriteDirection = -NPC.direction;
+            NPC.frameCounter++;
 
-            if (npc.frameCounter % 6f == 5f)
+            if (NPC.frameCounter % 6f == 5f)
             {
-                npc.frame.Y += frameHeight;
+                NPC.frame.Y += frameHeight;
             }
-            if (npc.frame.Y >= frameHeight * 24) // 10 is max # of frames
+            if (NPC.frame.Y >= frameHeight * 24) // 10 is max # of frames
             {
-                npc.frame.Y = 0; // Reset back to default
+                NPC.frame.Y = 0; // Reset back to default
             }
         }
     }

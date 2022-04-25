@@ -16,31 +16,30 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Melee.SeaBlade
 
         public override void SetDefaults()
         {
-            item.damage = 37;
-            item.melee = true;
-            item.width = 20;
-            item.height = 25;
-            item.useTime = 10;
-            item.useAnimation = 20;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.noUseGraphic = true;
-            item.knockBack = 3;
-            item.value = Item.sellPrice(0, 0, 35, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
-            item.shoot = mod.ProjectileType("PrismSlash");
-            item.shootSpeed = 25f;
-            item.channel = true;
+            Item.damage = 37;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 20;
+            Item.height = 25;
+            Item.useTime = 10;
+            Item.useAnimation = 20;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.noUseGraphic = true;
+            Item.knockBack = 3;
+            Item.value = Item.sellPrice(0, 0, 35, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
+            Item.shoot = Mod.Find<ModProjectile>("PrismSlash").Type;
+            Item.shootSpeed = 25f;
+            Item.channel = true;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<OceanBar>(), 8);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemType<OceanBar>(), 8)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

@@ -16,22 +16,22 @@ namespace Trinitarian.Content.Subclasses.Elf.Weapon
 
         public override void SetDefaults()
         {
-            item.damage = 13;
-            item.ranged = true;
-            item.useTime = 45;
-            item.useAnimation = 45;
-            item.useStyle = 5;
-            item.knockBack = 5;
-            item.value = 231426;
-            item.rare = 7;
-            item.UseSound = SoundID.Item5;
-            item.width = 32;
-            item.height = 74;
-            item.shoot = 40;
-            item.useAmmo = 40;
-            item.shootSpeed = 4;
-            item.noMelee = true;
-            item.autoReuse = true;
+            Item.damage = 13;
+            Item.DamageType = DamageClass.Ranged;
+            Item.useTime = 45;
+            Item.useAnimation = 45;
+            Item.useStyle = 5;
+            Item.knockBack = 5;
+            Item.value = 231426;
+            Item.rare = 7;
+            Item.UseSound = SoundID.Item5;
+            Item.width = 32;
+            Item.height = 74;
+            Item.shoot = 40;
+            Item.useAmmo = 40;
+            Item.shootSpeed = 4;
+            Item.noMelee = true;
+            Item.autoReuse = true;
         }
 
         public override bool ConsumeAmmo(Player player)
@@ -50,9 +50,9 @@ namespace Trinitarian.Content.Subclasses.Elf.Weapon
                 trueSpeed = trueSpeed * scale;
                 bool yes = true;
                 float anotherSpeedVariable = trueSpeed.Length();
-                int currentDmg = (int)(item.damage * player.rangedDamage);
-                float currentKnockBack = item.knockBack * knockBack;
-                modPlayer.PickRandomAmmo(item, ref type, ref anotherSpeedVariable, ref yes, ref currentDmg, ref currentKnockBack, Main.rand.Next(2) == 0);
+                int currentDmg = (int)(Item.damage * player.GetDamage(DamageClass.Ranged));
+                float currentKnockBack = Item.knockBack * knockBack;
+                modPlayer.PickRandomAmmo(Item, ref type, ref anotherSpeedVariable, ref yes, ref currentDmg, ref currentKnockBack, Main.rand.Next(2) == 0);
                 Projectile.NewProjectile(position.X + Main.rand.Next(-12, 12), position.Y + Main.rand.Next(-12, 12), trueSpeed.X, trueSpeed.Y, type, currentDmg, currentKnockBack, player.whoAmI);
             }
             return false;
