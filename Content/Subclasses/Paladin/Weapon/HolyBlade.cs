@@ -2,7 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using Trinitarian.Content.Projectiles.Subclass.Paladin;
+using Trinitarian.Content.Projectiles.Subclass.Paladin.Combo;
 using Trinitarian.Common;
 using static Terraria.ModLoader.ModContent;
 using System;
@@ -14,7 +14,7 @@ namespace Trinitarian.Content.Subclasses.Paladin.Weapon
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Holy Blade");
-            Tooltip.SetDefault("Does 30% more damage to unholy enemies.");
+            Tooltip.SetDefault("After 5 consecutive hits, holy energy will encapsulate near foes\n After 7 hits you will recive Shadow Dodge buff\nDoes 30% more damage to unholy enemies.");
         }
 
         public override void SetDefaults()
@@ -35,9 +35,9 @@ namespace Trinitarian.Content.Subclasses.Paladin.Weapon
         
         public override bool UseItem(Player player)
         {
-            for (int i = 0; i < Math.Min(10, player.GetModPlayer<HolyCombo>().combo / 2); ++i)
+            for (int i = 0; i < Math.Min(10, player.GetModPlayer<HolyCombo>().combo / 5); ++i)
             {
-                Projectile.NewProjectile(player.Center, new Vector2(Main.rand.NextFloat(4, 7) * player.direction, Main.rand.NextFloat(-8, -5)), ModContent.ProjectileType<LightningShard>(), item.damage, item.knockBack, player.whoAmI);
+                Projectile.NewProjectile(player.Center, new Vector2(Main.rand.NextFloat(4, 7) * player.direction, Main.rand.NextFloat(-8, -5)), ModContent.ProjectileType<HolyEnergy>(), item.damage, item.knockBack, player.whoAmI);
             }
             return true;
         }
