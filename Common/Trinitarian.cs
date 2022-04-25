@@ -29,7 +29,7 @@ namespace Trinitarian.Common
     public class Trinitarian : Mod
     {
 	    public static Trinitarian Mod { get; set; }
-	     public static ModHotKey UseAbilty;
+	     public static ModKeybind UseAbilty;
 
 	    public Trinitarian()
 	    {
