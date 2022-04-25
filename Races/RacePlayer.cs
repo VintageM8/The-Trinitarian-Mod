@@ -4,13 +4,14 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
-namespace Trinitarian.Races {
+namespace Trinitarian.Races 
+{
 	public class RacePlayer : ModPlayer
 	{
         public static List<Race> Races= new List<Race>();
         public override void Initialize()
         {
-            var types = typeof(Trinitarian).Assembly.GetTypes();
+            var types = typeof(Trinitarian.Common.Trinitarian).Assembly.GetTypes();
 
             foreach (var type in types)
             {
@@ -22,6 +23,7 @@ namespace Trinitarian.Races {
             }
 
         }
+
         public Race CurrentRace = new Norace();      
         public override void PreUpdateBuffs()
         {
@@ -32,8 +34,7 @@ namespace Trinitarian.Races {
         public override TagCompound Save()
         {
             return new TagCompound {
-        {"triRaceCur",CurrentRace.GetCurrentRace()},
-      
+            {"triRaceCur",CurrentRace.GetCurrentRace()},
     };
         }
 

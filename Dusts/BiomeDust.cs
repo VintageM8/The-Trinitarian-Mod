@@ -26,7 +26,7 @@ namespace Trinitarian.Dusts
             }
             if (Main.player[Main.myPlayer].ZoneBeach)
             {
-                dust.color = new Color(0,86, 214);
+                dust.color = new Color(0, 86, 214);
             }
             if (Main.player[Main.myPlayer].ZoneDesert)
             {
