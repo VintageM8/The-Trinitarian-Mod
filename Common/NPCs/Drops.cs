@@ -8,6 +8,7 @@ using Trinitarian.Content.Items.Weapons.Hardmode.Melee;
 using Trinitarian.Content.Items.Weapons.Hardmode.Ranged.LongBows;
 using Trinitarian.Content.Items.Weapons.Hardmode.Ranged;
 using Trinitarian.Content.Items.Consumables.Potions;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Trinitarian.Common.NPCs
 {
@@ -19,7 +20,7 @@ namespace Trinitarian.Common.NPCs
             {
                 if (Main.rand.NextFloat() < .05f)
                 {
-                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<EarlyLootBag>(), 1);
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EarlyLootBag>(), 1));
                 }
             }
 
@@ -27,7 +28,7 @@ namespace Trinitarian.Common.NPCs
             {
                 if (Main.rand.NextFloat() < .45f)
                 {
-                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<IceShards>(), 3);
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<IceShards>(), 3));
                 }
             }
 
@@ -35,7 +36,7 @@ namespace Trinitarian.Common.NPCs
             {
                 if (Main.rand.NextFloat() < .45f)
                 {
-                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<IceShards>(), 3);
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<IceShards>(), 3));
                 }
             }
 
@@ -44,7 +45,7 @@ namespace Trinitarian.Common.NPCs
                 if (Main.hardMode)
                     if (Main.rand.NextFloat() < .45f)
                     {
-                        Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<VikingMetal>(), 2);
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<VikingMetal>(), 2));
                     }
             }
 
@@ -53,7 +54,7 @@ namespace Trinitarian.Common.NPCs
                 if (Main.hardMode)
                     if (Main.rand.NextFloat() < .05f)
                     {
-                        Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<AngleBow>(), 1);
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AngleBow>(), 1));
                     }
             }
 
@@ -62,7 +63,7 @@ namespace Trinitarian.Common.NPCs
                 if (Main.hardMode)
                     if (Main.rand.NextFloat() < .15f)
                     {
-                        Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<StormEnergy>(), 3);
+                       npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<StormEnergy>(), 3));
                     }
             }
 
@@ -71,7 +72,7 @@ namespace Trinitarian.Common.NPCs
                 if (Main.hardMode)
                     if (Main.rand.NextFloat() < .25f)
                     {
-                        Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<StabbyKnife>(), 1);
+                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<StabbyKnife>(), 1));
                     }
             }
 
@@ -80,7 +81,7 @@ namespace Trinitarian.Common.NPCs
             {
                 if (Main.rand.NextFloat() < .01f)
                 {
-                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<TempleStormer>(), 1);
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<TempleStormer>(), 1));;
                 }
             }
 
@@ -88,7 +89,7 @@ namespace Trinitarian.Common.NPCs
             {
                 if (Main.rand.NextFloat() < .30f)
                 {
-                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PoisonStaff>(), 1);
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PoisonStaff>(), 1));
                 }
             }
 
@@ -96,7 +97,7 @@ namespace Trinitarian.Common.NPCs
             {
                 if (Main.rand.NextFloat() < .25f)
                 {
-                    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<DragonBlood>(), 1);
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DragonBlood>(), 1));
                 }
             }
         }
