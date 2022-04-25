@@ -16,7 +16,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword
         {
             DisplayName.SetDefault("Mechtide Sword");
             Tooltip.SetDefault("Each enemy slain builds your charge. Right click to release.");
-            TrinitarianGlowmask.AddGlowMask(Item.type, "Trinitarian/Content/Items/Weapons/Hardmode/Melee/MechtideSword/MechtideSword_Glow");
+            //TrinitarianGlowmask.AddGlowMask(Item.type, "Trinitarian/Content/Items/Weapons/Hardmode/Melee/MechtideSword/MechtideSword_Glow");
         }
 
         public override void SetDefaults()
