@@ -1,7 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace Trinitarian.Common
 {
@@ -211,7 +213,7 @@ namespace Trinitarian.Common
                 && !player.ZoneDungeon
                 && !player.ZoneCorrupt
                 && !player.ZoneCrimson
-                && !player.ZoneHoly
+                && !player.ZoneHallow
                 && !player.ZoneSnow
                 && !player.ZoneUndergroundDesert
                 && !player.ZoneGlowshroom
@@ -219,9 +221,9 @@ namespace Trinitarian.Common
                 && !player.ZoneBeach
                 && player.ZoneOverworldHeight;
         }
-        public static void MakeFriendlyProjectile(Vector2 position, Vector2 velocity, int type, int damage, float knockback, int owner = 255, float ai0 = 0, float ai1 = 0)
+        /*public static void MakeFriendlyProjectile(Vector2 position, Vector2 velocity, int type, int damage, float knockback, int owner = 255, float ai0 = 0, float ai1 = 0)
         {
-            Projectile projectile = Main.projectile[Projectile.NewProjectile(position, velocity, type, damage, knockback, owner, ai0, ai1)];
+            Projectile projectile = Main.projectile[Projectile.NewProjectile(Player.GetSource_Misc, position, velocity, type, damage, knockback, owner, ai0, ai1)];
             projectile.friendly = true;
             projectile.hostile = false;
         }
@@ -230,7 +232,7 @@ namespace Trinitarian.Common
             Projectile projectile = Main.projectile[Projectile.NewProjectile(position, velocity, type, damage, knockback, owner, ai0, ai1)];
             projectile.friendly = false;
             projectile.hostile = true;
-        }
+        }*/
         public static int SecondsToTicks(int seconds)
         {
             return seconds * 60;
