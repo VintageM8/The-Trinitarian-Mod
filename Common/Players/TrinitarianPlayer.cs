@@ -93,7 +93,7 @@ namespace Trinitarian.Common.Players
             Necromancer,//3
             Wizard//4
         }
-        public override TagCompound Save()
+        /*public override void TagCompound SaveData()
         {
             return new TagCompound 
             {
@@ -103,8 +103,9 @@ namespace Trinitarian.Common.Players
         public override void Load(TagCompound tag)
         {
             CurrentA = (AbiltyID)tag.GetInt("CurrentA");        
-        }
-        public override void ProcessTriggers(TriggersSet triggersSet)
+        }*/
+
+        /*public override void ProcessTriggers(TriggersSet triggersSet)
         {
             Player p = Main.player[Main.myPlayer];
             if (Trinitarian.UseAbilty.JustPressed && !p.HasBuff(ModContent.BuffType<Cooldown>()))
@@ -140,7 +141,7 @@ namespace Trinitarian.Common.Players
                         break;
                 }
             }
-        }
+        }*/
 
 
         public override void OnEnterWorld(Player player)
@@ -217,7 +218,7 @@ namespace Trinitarian.Common.Players
 
         public override void PreUpdate()
         {   
-            if (Main.mouseRight)
+            /*if (Main.mouseRight Dont Port, Mechtide sword will be re-worked
             {
                 while (MechtideCharge > 0)
                 {
@@ -226,59 +227,7 @@ namespace Trinitarian.Common.Players
                     Projectile.NewProjectile(Player.Center.X, Player.Center.Y, (float)Math.Cos(angle) * 12f, (float)Math.Sin(angle) * 12f, ModContent.ProjectileType<MechtideCharge>(), 20, 2f, Player.whoAmI);
                     MechtideCharge--;
                 }
-            }
-        }
-
-        public override void PostUpdateEquips()
-        {
-            if (Player.ownedProjectileCounts[ModContent.ProjectileType<LightningFragment>()] >= 1)
-
-                if (++othertimer > 60)
-                {
-                    othertimer = 0;
-                    timer++;
-                    Color color = Color.Lerp(Color.Blue, Color.Aqua, timer);
-                    if (timer == 1)
-                        color = Color.White;
-                    if (timer == 2)
-                        color = Color.Azure;
-                    if (timer == 3)
-                        color = Color.Yellow;
-                    if (timer == 4)
-                        color = Color.Aqua;
-                    if (timer == 5)
-                        color = Color.Red;
-                    if (timer < 6)
-                        CombatText.NewText(Player.getRect(), color, timer * 20 + "%");
-                    if (timer == 6)
-                    {
-                        int count = 0;
-                        for (int i = 0; i < Main.maxNPCs - 1; i++)
-                        {
-                            if (Main.npc[i].active)
-                                if (!Main.npc[i].townNPC)
-                                    if (!Main.npc[i].friendly)
-                                        if (Main.npc[i].Distance(Player.Center) < 1000)
-                                            if (Main.npc[i].CanBeChasedBy())
-                                                //     if (Main.npc[i].type != NPCID.EaterofWorldsTail && Main.npc[i].type != NPCID.EaterofWorldsBody && Main.npc[i].type != NPCID.TheDestroyerBody && Main.npc[i].type != NPCID.TheDestroyerTail)
-                                                if (++count < 5)
-                                                    Projectile.NewProjectile(Player.Center - Vector2.UnitY * 500, Vector2.Zero, ModContent.ProjectileType<LightningFragment>(), 400, 20, Main.myPlayer, Player.whoAmI, i);
-                        }
-
-                        shakeamount = 0;
-                        shaking = false;
-                        timer = 0;
-                        othertimer = 0;
-                        Main.projectile[ownedthunder].Kill();
-                    }
-                }
-            if (timer > 2)
-            {
-                shakeamount += 1;
-                shakeamount = (int)MathHelper.Clamp(shakeamount, 0, 10);
-                shaking = true;
-            }
-            
+            }*/
         }
 
         public override void UpdateLifeRegen()
@@ -427,24 +376,6 @@ namespace Trinitarian.Common.Players
             }
         }
 
-        public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-            if (Dartboard && item.ranged && Main.rand.NextBool(5))
-			{
-                 int projectiles = 1;
-				for (int j = 0; j < 3; j++)
-				{
-					Vector2 vector2 = Main.MouseWorld - Vector2.UnitY.RotatedByRandom(0.40000000596046448) * 1250f;
-					Vector2 value = (vector2 - Main.MouseWorld).SafeNormalize(Vector2.UnitY).RotatedByRandom(0.10000000149011612);
-					for (int i = 0; i < projectiles; i++)
-                    {
-                        Projectile.NewProjectile(Player.Center, new Vector2(7).RotatedBy(MathHelper.ToRadians((360 / projectiles) * i + i)), ModContent.ProjectileType<Dart>(), 19, 2, Player.whoAmI);
-                    }
-                }
-			}
-			return true;
-        }
-
         public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
         {
 
@@ -455,7 +386,7 @@ namespace Trinitarian.Common.Players
                 {
                     for (int i = 0; i < projectiles; i++)
                     {
-                        Projectile.NewProjectile(Player.Center, new Vector2(7).RotatedBy(MathHelper.ToRadians((360 / projectiles) * i + i)), ModContent.ProjectileType<ShatteringStar>(), 19, 2, Player.whoAmI);
+                         Projectile.NewProjectile(Player.GetSource_OnHurt(null), Player.Center, new Vector2(7).RotatedBy(MathHelper.ToRadians((360 / projectiles) * i + i)), ModContent.ProjectileType<ShatteringStar>(), 19, 2, Player.whoAmI);
                     }
                 }
             }
@@ -466,14 +397,14 @@ namespace Trinitarian.Common.Players
                 int projectiles = 9;
                 for (int i = 0; i < projectiles; i++)
                 {
-                    Projectile.NewProjectile(Player.Center, new Vector2(4).RotatedBy(MathHelper.ToRadians((360 / projectiles) * i + i)), ModContent.ProjectileType<Boulder>(), 60, 9, Player.whoAmI);
+                    Projectile.NewProjectile(Player.GetSource_OnHurt(null), Player.Center, new Vector2(7).RotatedBy(MathHelper.ToRadians((360 / projectiles) * i + i)), ModContent.ProjectileType<Boulder>(), 19, 2, Player.whoAmI);
                 }
             }
         }
 
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
 		{
-            if (item.melee)
+            if (item.DamageType == DamageClass.Melee)
 			{
                 if (holyWrath)
                 { 
@@ -481,7 +412,7 @@ namespace Trinitarian.Common.Players
                 }
             }
 
-            if (item.summon)
+            if (proj.DamageType == DamageClass.Summon)
 			{
                 if (SummonerDeath)
                 { 
@@ -595,14 +526,14 @@ namespace Trinitarian.Common.Players
 			}
         }
 
-        public override void UpdateBiomeVisuals()
+        /*public override void UpdateBiomeVisuals() Not being used ignore for now
         {           
             if (NPC.AnyNPCs(Mod.Find<ModNPC>("VikingBoss").Type))
             {
                 useViking = true;
             }
             Player.ManageSpecialBiomeVisuals("Trinitarian:VikingBoss", useViking);
-        }
+        }*/
 
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit,
@@ -650,4 +581,5 @@ namespace Trinitarian.Common.Players
         }
     }
 }
+
                 
