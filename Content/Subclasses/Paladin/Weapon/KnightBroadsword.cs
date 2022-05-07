@@ -1,6 +1,7 @@
-﻿using Terraria;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Utilities;
@@ -32,23 +33,15 @@ namespace Trinitarian.Content.Subclasses.Paladin.Weapon
             Item.rare = ItemRarityID.Yellow;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<KnightBroadswordProj>();
-            Item.UseSound = Mod.GetLegacySoundSlot(SoundType.Item, "Sounds/SwordSwoosh");
+            //Item.UseSound = Mod.GetLegacySoundSlot(SoundType.Item, "Sounds/SwordSwoosh");
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             int dir = currentAttack;
             currentAttack = -currentAttack;
-            Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, 0, dir);
+            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 0, dir);
             return false;
-        }
-
-        public override bool? UseItem(Player player)
-        {
-            for (int i = 0; i < Math.Min(10, player.GetModPlayer<HolyCombo>().combo / 3); ++i)
-            {
-                Projectile.NewProjectile(player.Center, new Vector2(Main.rand.NextFloat(4, 7) * player.direction, Main.rand.NextFloat(-8, -5)), ModContent.ProjectileType<HolyBomb>(), item.damage, item.knockBack, player.whoAmI);
-            }
-            return true;
         }
     }
 }
