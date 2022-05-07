@@ -46,9 +46,9 @@ namespace Trinitarian.Common
         {
             Prims.Load();
             TrinitarianLists.LoadLists();
-	       UseAbilty = RegisterHotKey("Use Abilty", "R");
+	        //UseAbilty = RegisterKeybind("Use Abilty", "R");
 
-			 ModTranslation text = CreateTranslation("TrinitarianStuff");
+			 /*ModTranslation text = CreateTranslation("TrinitarianStuff");
             text = CreateTranslation("BossSpawnInfo.IceBoss");
             text.SetDefault(string.Format("A frozen rune [i:{0}] being used in the Frosted Tundra of the overworld will awaken the ancient guardian.", ModContent.ItemType<FrozenRune>()));
             AddTranslation(text);
@@ -59,7 +59,7 @@ namespace Trinitarian.Common
 
             text = CreateTranslation("BossSpawnInfo.Viking");
             text.SetDefault(string.Format("Time has come[i:{0}] Ragnorok is upon us.", ModContent.ItemType<AsgardsCalling>()));
-            AddTranslation(text);
+            AddTranslation(text);*/
 
             Filters.Scene["Trinitarian:VikingBoss"] = new Filter(new VikingScreenShaderData("FilterCrystalDestructionColor").UseColor(3f, 0.35f, 0.15f).UseOpacity(0.70f));
             SkyManager.Instance["Trinitarian:VikingBoss"] = new VikingSky();
@@ -105,73 +105,6 @@ namespace Trinitarian.Common
                 "$Mods.Trinitarian.BossSpawnInfo.Viking"
             );
 		}
-
-
-		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) 
-		{			
-
-            int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
-            if (mouseTextIndex != -1)
-            {
-                TrinitarianPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<TrinitarianPlayer>();
-                if (modPlayer.ShowText)
-                {
-                    layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer(
-                    "Trinitarian: Title",
-                    delegate
-                    {
-                        BossTitle(modPlayer.TitleID);
-                        return true;
-                    },
-                    InterfaceScaleType.UI));
-                }
-            }
-        }
-
-        internal void BossTitle(int BossID)
-        {
-            string BossName = "";
-            string BossTitle = "";
-            Color titleColor = Color.White;
-            Color nameColor = Color.White;
-            switch (BossID)
-            {
-                case 1:
-                    BossName = "Njor";
-                    BossTitle = "The Frozen Elmental";
-                    nameColor = Color.FloralWhite;
-                    titleColor = Color.Snow;
-                    break;
-                case 2:
-                    BossName = "The Fallen Captain";
-                    BossTitle = "Ruler of the Sea";
-                    nameColor = Color.LightCyan;
-                    titleColor = Color.Cyan;
-                    break;
-                case 3:
-                    BossName = "Zolzar";
-                    BossTitle = "The Berserker Viking";
-                    nameColor = Color.Cyan;
-                    titleColor = Color.DarkCyan;
-                    break;
-                      default:
-                    BossName = "snoop dogg";
-                    BossTitle = "high king";
-                    nameColor = Color.LimeGreen;
-                    titleColor = Color.Green;
-                    break;
-            }
-            Vector2 textSize = Main.fontDeathText.MeasureString(BossName);
-            Vector2 textSize2 = Main.fontDeathText.MeasureString(BossTitle) * 0.5f;
-            float textPositionLeft = (Main.screenWidth / 2) - textSize.X / 2f;
-            float text2PositionLeft = (Main.screenWidth / 2) - textSize2.X / 2f;
-            /*float alpha = 255;
-			float alpha2 = 255;*/
-
-            DynamicSpriteFontExtensionMethods.DrawString(Main.spriteBatch, Main.fontDeathText, BossTitle, new Vector2(text2PositionLeft, (Main.screenHeight / 2 - 250)), titleColor, 0f, Vector2.Zero, 0.6f, 0, 0f);
-            DynamicSpriteFontExtensionMethods.DrawString(Main.spriteBatch, Main.fontDeathText, BossName, new Vector2(textPositionLeft, (Main.screenHeight / 2 - 300)), nameColor, 0f, Vector2.Zero, 1f, 0, 0f);
-         }
-
 
 		public override void AddRecipes()
         {
