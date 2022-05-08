@@ -1,4 +1,7 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,12 +27,12 @@ namespace Trinitarian.Content.Projectiles.Weapon.Melee
         {
             if (Main.rand.NextBool(6))
             {
-                Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.Blood);
+                Main.dust[Dust.NewDust(Projectile.position,Projectile.width,Projectile.height,DustID.Blood,newColor:Color.Red,Scale:1f)].noGravity = true;
                 Suffocationtime++;
 
                 if (Suffocationtime == 8)
                 {                   
-                    Projectile.NewProjectile(Projectile.position.X, Projectile.position.Y, 0, 2, ProjectileID.CursedFlameFriendly, 45, Projectile.knockBack, Main.myPlayer);
+                    Main.projectile[Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center,new Vector2(4,0).RotatedByRandom(2*Math.PI),ProjectileID.CursedFlameFriendly,Projectile.damage,Projectile.knockBack,Projectile.owner)].netUpdate = true;
                     Suffocationtime = 0;
                 }
             }
