@@ -38,7 +38,7 @@ namespace Trinitarian.Content.Subclasses.Elf.Weapon
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<ElfBolt>(), damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, ModContent.ProjectileType<ElfBolt>(), damage, knockback, player.whoAmI);
 			return false;
 		}
 

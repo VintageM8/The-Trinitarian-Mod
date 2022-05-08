@@ -27,7 +27,7 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
             Projectile.friendly = true;
         }
 
-        public override bool CanDamage() => Projectile.ai[0] == 1;
+        public override bool? CanDamage() => Projectile.ai[0] == 1;
 
         public override void AI()
         {
@@ -63,18 +63,18 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
 
         public override void Kill(int timeLeft)
         {
-            Projectile.NewProjectile(Projectile.Center, Vector2.Zero, ProjectileType<FeuerBallExplosion>(), Projectile.ai[0] == 0 ? 120 : 20, 2, Projectile.owner);
+            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ProjectileType<FeuerBallExplosion>(), Projectile.ai[0] == 0 ? 120 : 20, 2, Projectile.owner);
             SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode);
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             int time = 600 - Projectile.timeLeft;
 
-            Texture2D tex = GetTexture(Texture);
+            Texture2D tex = ModContent.Request<Texture2D>(Texture).Value;
             float colorOff = time < 20 ? time / 20f : 1;
             Color color = new Color(255, colorOff, 1 - colorOff);
-            spriteBatch.Draw(tex, Projectile.Center - Main.screenPosition, new Rectangle(0, Projectile.frame * 32, 32, 32), color, 0, Vector2.One * 16, colorOff / 2, 0, 0);
+            Main.EntitySpriteDraw(tex, Projectile.Center - Main.screenPosition, new Rectangle(0, Projectile.frame * 32, 32, 32), color, 0, Vector2.One * 16, colorOff / 2, 0, 0);
 
             return false;
         }

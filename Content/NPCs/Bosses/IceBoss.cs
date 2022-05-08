@@ -9,6 +9,7 @@ using Trinitarian.Content.Projectiles.Boss.Ice;
 using Trinitarian.Content.Items.Weapons.PreHardmode.Magic;
 using Trinitarian.Content.Items.Weapons.PreHardmode.Melee;
 using Trinitarian.Content.Items.Weapons.PreHardmode.Ranged;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Trinitarian.Content.NPCs.Bosses
 {
@@ -47,8 +48,11 @@ namespace Trinitarian.Content.NPCs.Bosses
             NPC.boss = true;
             NPC.npcSlots = 10f;
             //music = MusicID.Boss5;
-            music = Mod.GetSoundSlot(SoundType.Music, "Sounds/Music/NjorsTheme");
-            bossBag = ModContent.ItemType<IceBossBag>();
+            if (!Main.dedServ)
+            {
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/NjorsTheme");
+            }
+           // bossBag = ModContent.ItemType<IceBossBag>();
         }
 
         public override void AI()
@@ -189,7 +193,7 @@ namespace Trinitarian.Content.NPCs.Bosses
                                 for (int i = 0; i < Main.rand.Next(3, 6); i++)
                                 {
                                     NPC.netUpdate = true;
-                                    Projectile.NewProjectile(new Vector2(player.Center.X + Main.rand.Next(1200, 1500), NPC.Center.Y + Main.rand.Next(-360, 360)), new Vector2(Main.rand.Next(-11, -6), 0), ModContent.ProjectileType<FrozenCluster>(), NPC.damage / (Main.expertMode ? 4 : 2), 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(NPC.GetBossSpawnSource(NPC.target),new Vector2(player.Center.X + Main.rand.Next(1200, 1500), NPC.Center.Y + Main.rand.Next(-360, 360)), new Vector2(Main.rand.Next(-11, -6), 0), ModContent.ProjectileType<FrozenCluster>(), NPC.damage / (Main.expertMode ? 4 : 2), 0f, Main.myPlayer);
                                 }
 
                                 if (NPC.life <= NPC.lifeMax * 0.5f)
@@ -197,7 +201,7 @@ namespace Trinitarian.Content.NPCs.Bosses
                                     for (int i = 0; i < Main.rand.Next(3, 6); i++)
                                     {
                                         NPC.netUpdate = true;
-                                        Projectile.NewProjectile(new Vector2(player.Center.X - Main.rand.Next(1200, 1500), NPC.Center.Y + Main.rand.Next(-360, 360)), new Vector2(Main.rand.Next(6, 11), 0), ModContent.ProjectileType<FrozenCluster>(), NPC.damage / (Main.expertMode ? 4 : 2), 0f, Main.myPlayer);
+                                        Projectile.NewProjectile(NPC.GetBossSpawnSource(NPC.target), new Vector2(player.Center.X - Main.rand.Next(1200, 1500), NPC.Center.Y + Main.rand.Next(-360, 360)), new Vector2(Main.rand.Next(6, 11), 0), ModContent.ProjectileType<FrozenCluster>(), NPC.damage / (Main.expertMode ? 4 : 2), 0f, Main.myPlayer);
                                     }
                                 }
                             }
@@ -224,7 +228,7 @@ namespace Trinitarian.Content.NPCs.Bosses
 
                         if (NPC.ai[1] % /*30*/15 == 0)
                         {
-                            Projectile.NewProjectileDirect(NPC.Center, NPC.DirectionTo(/*playercentersnapshot*/player.Center) * 7.5f, ModContent.ProjectileType<FrozenCluster>(), NPC.damage / (Main.expertMode ? 4 : 2), 0, Main.myPlayer, 0, NPC.ai[3]);
+                            Projectile.NewProjectileDirect(NPC.GetBossSpawnSource(NPC.target), NPC.Center, NPC.DirectionTo(/*playercentersnapshot*/player.Center) * 7.5f, ModContent.ProjectileType<FrozenCluster>(), NPC.damage / (Main.expertMode ? 4 : 2), 0, Main.myPlayer, 0, NPC.ai[3]);
                         }
                     }
 
@@ -408,7 +412,7 @@ namespace Trinitarian.Content.NPCs.Bosses
                         {
                             for (int i = 0; i < 2; i++)
                             {
-                                Projectile.NewProjectile(NPC.Center, Vector2.One.RotatedByRandom(Math.PI) * 6, ModContent.ProjectileType<FrozenCluster>(), NPC.damage / 4, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetBossSpawnSource(NPC.target), NPC.Center, Vector2.One.RotatedByRandom(Math.PI) * 6, ModContent.ProjectileType<FrozenCluster>(), NPC.damage / 4, 0f, Main.myPlayer);
                             }
                         }
                     }
@@ -515,15 +519,11 @@ namespace Trinitarian.Content.NPCs.Bosses
             }
         }
 
-        public override void NPCLoot()
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
 
-            if (Main.expertMode)
-            {
-                NPC.DropBossBags();
-            }
-            else
-            {
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<IceBossBag>()));
+            
                 int choice = Main.rand.Next(5);
                 // Always drops one of:
                 if (choice == 0) // Warrior
@@ -543,7 +543,7 @@ namespace Trinitarian.Content.NPCs.Bosses
                     Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<RustedBow>());
                 }
             
-            }
+            
         }
 
         public override void BossLoot(ref string name, ref int potionType)

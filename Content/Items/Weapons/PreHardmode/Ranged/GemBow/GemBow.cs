@@ -37,18 +37,17 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.GemBow
             Item.useAmmo = AmmoID.Arrow;
         }
 
-        public override bool ConsumeAmmo(Player player)
+        public override bool CanConsumeAmmo(Player player)
         {
             return !(player.itemAnimation < Item.useAnimation - 2);
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             if (type == ProjectileID.WoodenArrowFriendly)
             {
                 type = ModContent.ProjectileType<GemArrowProj>();
             }
-            return true;
         }
 
         public override void AddRecipes()

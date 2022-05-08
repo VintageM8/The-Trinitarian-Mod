@@ -14,7 +14,7 @@ namespace Trinitarian.Common.NPCs
 {
     class Drops : GlobalNPC
     {
-        public override void NPCLoot(NPC npc)
+        public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
             if (npc.type == NPCID.BlueSlime)
             {
