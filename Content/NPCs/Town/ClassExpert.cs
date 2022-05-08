@@ -61,10 +61,12 @@ namespace Trinitarian.Content.NPCs.Town
             return NPC.downedBoss2 && Main.player.Any(x => x.active);
         }
 
-        public override string TownNPCName()
+        public override List<string> SetNPCNameList()
         {
-            string[] names = { "Ella", "Jolly", "Jamie", "Aayla", "Talza" };
-            return Main.rand.Next(names);
+            return new List<string>
+            {
+                "Ella", "Polina", "Tessa", "Jamie", "Vera", "Mary", "Milunka", "Tanya", "Yekaterina"
+            };
         }
 
         public override string GetChat()
