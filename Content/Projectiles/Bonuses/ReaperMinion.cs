@@ -131,12 +131,12 @@ namespace Trinitarian.Content.Projectiles.Bonuses
 
                 bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, targetNPC.position, targetNPC.width, targetNPC.height);
 
-                if (Projectile.ai[0] % randDelay == 0 && lineOfSight) // prevent from instantly shooting when spawned
+               if (Projectile.ai[0] % randDelay == 0 && lineOfSight) // prevent from instantly shooting when spawned
                 {
                     SoundEngine.PlaySound(SoundID.NPCHit19, (int)Projectile.position.X, (int)Projectile.position.Y);
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        Projectile.NewProjectile(Projectile.Center, delta * 2, ModContent.ProjectileType<ReaperProjectile>(), Projectile.damage, 0f, Projectile.owner);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, delta * 2, ModContent.ProjectileType<ReaperProjectile>(), Projectile.damage, 0f, Projectile.owner);
                         Projectile.netUpdate = true;
                     }
                 }
