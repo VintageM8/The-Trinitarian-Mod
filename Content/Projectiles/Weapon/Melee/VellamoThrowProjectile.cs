@@ -35,7 +35,7 @@ namespace Trinitarian.Content.Projectiles.Weapon.Melee
         int counter = 0;
         public override void AI()
         {
-            for (int k = 0; k < 4; k++)
+            for(int k = 0; k < 4; k++)
             {
                 counter++;
                 Projectile.velocity = Collision.TileCollision(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height, true, true);
@@ -52,6 +52,18 @@ namespace Trinitarian.Content.Projectiles.Weapon.Melee
                 }
             }
             timer++;
+            int spawnRate = 100;
+            if (timer >= spawnRate)
+            {
+                for(int i = 0; i < (timer > 300 ? 2 : 1); i++)
+                {
+                    if(Main.myPlayer == Projectile.owner)
+                    {
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ProjectileID.WetGrenade, (int)(Projectile.damage * 0.75f), Projectile.knockBack, Main.myPlayer, Projectile.identity);
+                    }
+                }
+                timer = Main.rand.Next(30);
+            }
         }
     }
 }
