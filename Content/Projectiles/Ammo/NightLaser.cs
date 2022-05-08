@@ -27,7 +27,7 @@ namespace Trinitarian.Content.Projectiles.Ammo
             Projectile.tileCollide = true;
             Projectile.extraUpdates = 1;
             Projectile.scale = 1.75f;
-            aiType = ProjectileID.GreenLaser;
+            AIType = ProjectileID.GreenLaser;
         }
 
         public override void Kill(int timeLeft)
