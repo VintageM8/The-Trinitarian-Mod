@@ -19,7 +19,7 @@ namespace Trinitarian.Content.Projectiles.Weapon.Mage
             Projectile.aiStyle = 29;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Ranged;
-            aiType = ProjectileID.EmeraldBolt;
+            AIType = ProjectileID.EmeraldBolt;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
