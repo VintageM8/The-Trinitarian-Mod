@@ -18,7 +18,7 @@ namespace Trinitarian.Content.Projectiles.Ammo
 			Projectile.height = 17;
 			Projectile.penetrate = 2;
 			Projectile.aiStyle = 1;
-			aiType = ProjectileID.WoodenArrowFriendly;
+			AIType = ProjectileID.WoodenArrowFriendly;
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.friendly = true;
 		}
