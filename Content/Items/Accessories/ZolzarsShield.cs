@@ -24,7 +24,7 @@ namespace Trinitarian.Content.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.allDamage += 0.50f;
+            //player.allDamage += 0.50f; Just do it manully
             player.endurance += 0.25f;
         }
     }
