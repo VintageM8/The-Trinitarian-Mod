@@ -34,7 +34,7 @@ namespace Trinitarian.Content.Projectiles
             }
 
             int direction = (int)Projectile.ai[1];
-            float swingProgress = Lerp(Utils.InverseLerp(0f, SwingTime, Projectile.timeLeft));
+            float swingProgress = Lerp(Utils.GetLerpValue(0f, SwingTime, Projectile.timeLeft));
             // the actual rotation it should have
             float defRot = Projectile.velocity.ToRotation();
             // starting rotation
