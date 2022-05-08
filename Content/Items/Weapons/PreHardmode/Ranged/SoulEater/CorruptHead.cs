@@ -87,7 +87,7 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.SoulEater
             Projectile.ai[0]++;
             if (Projectile.ai[0] == 3)
             {
-                Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X / 7, Projectile.velocity.Y / 7, ModContent.ProjectileType<CorruptBody>(), Projectile.damage / 2, 1f, Projectile.owner, 0f);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X / 7, Projectile.velocity.Y / 7, ModContent.ProjectileType<CorruptBody>(), Projectile.damage / 2, 1f, Projectile.owner, 0f);
                 Projectile.ai[0] = 0;
             }
         }
