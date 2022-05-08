@@ -42,7 +42,7 @@ namespace Trinitarian.Common
             // Complex math copied from source code. It's weirdly specific, but whatever, it works.
             int Shouldplant = (int)MathHelper.Lerp(151, (float)151 * 2.8f, MathHelper.Clamp((float)Main.maxTilesX / 4200f - 1f, 0f, 1f));
             // Value from 151.2 to 604.8 also representing world size.
-            float numTilesToUpdate = (float)(Main.maxTilesX * Main.maxTilesY) * 3E-05f * (float)Main.worldRate; // worldRate defaults to 1.
+            float numTilesToUpdate = (float)(Main.maxTilesX * Main.maxTilesY) * 3E-05f * (float)Main.desiredWorldTilesUpdateRate; // desiredWorldTilesUpdateRate defaults to 1.
             for (int i = 0; (float)i < numTilesToUpdate; i += 2)
             {
                 // Very low chance
