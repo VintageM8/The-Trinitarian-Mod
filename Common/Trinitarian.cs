@@ -46,9 +46,9 @@ namespace Trinitarian.Common
         {
             Prims.Load();
             TrinitarianLists.LoadLists();
-	        //UseAbilty = RegisterKeybind("Use Abilty", "R");
+	        UseAbilty = RegisterKeybind("Use Abilty", "R");
 
-			 /*ModTranslation text = CreateTranslation("TrinitarianStuff");
+			 /*ModTranslation text = CreateTranslation("TrinitarianStuff"); Boss Checklist stuff, DOnt know if its needed or not, we shall see once the mod can build
             text = CreateTranslation("BossSpawnInfo.IceBoss");
             text.SetDefault(string.Format("A frozen rune [i:{0}] being used in the Frosted Tundra of the overworld will awaken the ancient guardian.", ModContent.ItemType<FrozenRune>()));
             AddTranslation(text);
