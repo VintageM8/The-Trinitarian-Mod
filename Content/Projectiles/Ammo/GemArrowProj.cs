@@ -27,7 +27,7 @@ namespace Trinitarian.Content.Projectiles.Ammo
 		{
 			for (int i = 0; i < 2; i++)
 			{
-				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Moss_Green);
+				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GemDiamond);
 			}
 		}
 
