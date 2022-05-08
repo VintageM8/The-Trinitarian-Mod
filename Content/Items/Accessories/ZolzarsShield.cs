@@ -24,7 +24,10 @@ namespace Trinitarian.Content.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            //player.allDamage += 0.50f; Just do it manully
+            player.GetDamage(DamageClass.Melee) += 0.50f;
+            player.GetDamage(DamageClass.Ranged) += 0.50f;
+            player.GetDamage(DamageClass.Magic) += 0.50f;
+            player.GetDamage(DamageClass.Summon) += 0.50f;
             player.endurance += 0.25f;
         }
     }
