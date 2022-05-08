@@ -83,11 +83,10 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
             for (int i = 0; i < Main.rand.Next(1, 2); i++)
             {
                 Vector2 perturbedSpeed = Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(360));
-                Projectile.NewProjectile(Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<WaternadoBottom>(), 30, 5f, Projectile.owner);
+               Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<WaternadoBottom>(), 30, 5f, Projectile.owner);
             }
 
         }
-
         private void AdjustMagnitude(ref Vector2 vector)
         {
             float magnitude = (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
