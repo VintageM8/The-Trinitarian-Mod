@@ -37,11 +37,10 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Summoner.PlanetSummon
             Item.shoot = ProjectileType<PlanetMinion>();
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             player.AddBuff(Item.buffType, 2);
             position = Main.MouseWorld;
-            return true;
         }
 
         public override void AddRecipes()

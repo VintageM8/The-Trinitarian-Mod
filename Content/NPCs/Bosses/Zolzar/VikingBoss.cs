@@ -16,6 +16,7 @@ using Trinitarian.Common.Players;
 using Trinitarian.Common.NPCs;
 using Trinitarian.Common.Projectiles;
 using Trinitarian.Common;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 {
@@ -97,8 +98,11 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
             NPC.boss = true;
             NPC.value = Item.buyPrice(gold: 3);
             NPC.npcSlots = 10f;
-            music = Mod.GetSoundSlot(SoundType.Music, "Sounds/Music/ZozarP2");
-            bossBag = ModContent.ItemType<VikingBossBag>();
+            if (!Main.dedServ)
+            {
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ZozarP2");
+            }
+            
         }
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -115,7 +119,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
             }
             else if (Main.netMode == NetmodeID.Server)
             {
-                NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(text), Color.Green);
+                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), Color.Green);
             }
         }
         public override bool PreAI()
@@ -320,7 +324,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
             TrinitarianGlobalNPC globalnpc = NPC.GetGlobalNPC<TrinitarianGlobalNPC>();
             for (int i = 0; i < count; i++)
             {   
-                globalnpc.Add[(int)AddNumber] = NPC.NewNPC((int)pos.X, (int)pos.Y, ModContent.NPCType<VikingBossAdd>(), 0, 1, NPC.whoAmI, 0, AddNumber, NPC.target);
+                globalnpc.Add[(int)AddNumber] = NPC.NewNPC(NPC.GetSource_FromAI(), (int)pos.X, (int)pos.Y, ModContent.NPCType<VikingBossAdd>(), 0, 1, NPC.whoAmI, 0, AddNumber, NPC.target);
                 AddNumber++;
             }           
             GenerateAddPositions();
@@ -474,7 +478,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
                 }
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Projectile.NewProjectile(playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<LightningScythe>(), 26, 2.5f, Main.myPlayer, 0f, 0f);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<LightningScythe>(), 26, 2.5f, Main.myPlayer, 0f, 0f);
                 }
             }
 
@@ -502,12 +506,12 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
                     {
                         if (i == 0)
                         {
-                            Projectile.NewProjectile(playerPos * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 28, 2.5f, Main.myPlayer, 0f, 0f);
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 28, 2.5f, Main.myPlayer, 0f, 0f);
                         }
                         else
                         {
-                            Projectile.NewProjectile(playerPos * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 28, 2.5f, Main.myPlayer, 0f, 0f);
-                            Projectile.NewProjectile(playerPos2 * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 28, 2.5f, Main.myPlayer, 0f, 0f);
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 28, 2.5f, Main.myPlayer, 0f, 0f);
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos2 * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 28, 2.5f, Main.myPlayer, 0f, 0f);
                         }
                     }
                 }
@@ -535,7 +539,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
                     for (int i = 0; i < numberProjectiles; i++)
                     {
                         Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * .4f; // This defines the projectile roatation and speed. .4f == projectile speed
-                        Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y - 85, perturbedSpeed.X, perturbedSpeed.Y, ProjectileID.PhantasmalBolt, 17, 1f, Main.myPlayer);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(),  NPC.Center.X, NPC.Center.Y - 85, perturbedSpeed.X, perturbedSpeed.Y, ProjectileID.PhantasmalBolt, 17, 1f, Main.myPlayer);
                     }
                 }
             }
@@ -585,12 +589,12 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
                         {
                             if (i == 0)
                             {
-                                Projectile.NewProjectile(playerPos * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 28, 2.5f, Main.myPlayer, 0f, 0f);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 28, 2.5f, Main.myPlayer, 0f, 0f);
                             }
                             else
                             {
-                                Projectile.NewProjectile(playerPos * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 28, 2.5f, Main.myPlayer, 0f, 0f);
-                                Projectile.NewProjectile(playerPos2 * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 28, 2.5f, Main.myPlayer, 0f, 0f);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 28, 2.5f, Main.myPlayer, 0f, 0f);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos2 * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 28, 2.5f, Main.myPlayer, 0f, 0f);
                             }
                         }
                     }
@@ -619,12 +623,12 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
                         {
                             if (i == 0)
                             {
-                                Projectile.NewProjectile(playerPos * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 28, 2.5f, Main.myPlayer, 0f, 0f);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(),  playerPos * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 28, 2.5f, Main.myPlayer, 0f, 0f);
                             }
                             else
                             {
-                                Projectile.NewProjectile(playerPos * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 28, 2.5f, Main.myPlayer, 0f, 0f);
-                                Projectile.NewProjectile(playerPos2 * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 28, 2.5f, Main.myPlayer, 0f, 0f);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(),playerPos * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 28, 2.5f, Main.myPlayer, 0f, 0f);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos2 * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 28, 2.5f, Main.myPlayer, 0f, 0f);
                             }
                         }
                     }
@@ -661,9 +665,9 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Projectile.NewProjectile(npcPos2 * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 31, 2.5f, Main.myPlayer, 0f, 0f);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(),npcPos2 * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 31, 2.5f, Main.myPlayer, 0f, 0f);
 
-                    Projectile.NewProjectile(npcPos * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 31, 2.5f, Main.myPlayer, 0f, 0f);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(),  npcPos * 16, new Vector2(0, -10), ProjectileID.CultistBossLightningOrb, 31, 2.5f, Main.myPlayer, 0f, 0f);
                     bufferCount++;
                 }
             }
@@ -675,7 +679,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
                 bufferCount = 0;
             }
         }
-        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             TrinitarianGlobalNPC globalnpc = NPC.GetGlobalNPC<TrinitarianGlobalNPC>();
             for (int i = 0; i < AddNumber; i++)
@@ -683,7 +687,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
                 spriteBatch.Draw(Mod.Assets.Request<Texture2D>("NPCs/Bosses/Zolzar/DebugSqure").Value, globalnpc.AddPositions[i] - Main.screenPosition, new Color(0, 0, 254));
             }
 
-            Texture2D texture = ModContent.Request<Texture2D>("Trinitarian/Content/NPCs/Bosses/Zolzar/VikingBoss_Glow");
+            Texture2D texture = ModContent.Request<Texture2D>("Trinitarian/Content/NPCs/Bosses/Zolzar/VikingBoss_Glow").Value;
             spriteBatch.Draw(texture, new Vector2(NPC.Center.X - Main.screenPosition.X, NPC.Center.Y - Main.screenPosition.Y + 4), NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2f, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
             
 
@@ -734,14 +738,10 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
             }
             return true;
         }
-        public override void NPCLoot()
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-             int choice = Main.rand.Next(1);
-                // Always drops one of:
-                if (choice == 1) 
-                {
-                    Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<UlvkilSoul>());
-                }
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<UlvkilSoul>()));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<VikingBossBag>()));
         }
         public override void BossLoot(ref string name, ref int potionType)
         {

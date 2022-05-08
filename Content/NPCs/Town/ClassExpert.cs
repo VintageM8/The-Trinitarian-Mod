@@ -20,11 +20,11 @@ namespace Trinitarian.Content.NPCs.Town
     {
         public override string Texture => "Trinitarian/Content/NPCs/Town/ClassExpert";
 
-        public override bool Autoload(ref string name)
-        {
-            name = "Class Expert";
-            return Mod.Properties.Autoload;
-        }
+        //public override bool Autoload(ref string name)
+        //{
+        //    name = "Class Expert";
+        //    return Mod.Properties.Autoload;
+        //}
 
         public override void SetStaticDefaults()
         {
@@ -53,7 +53,7 @@ namespace Trinitarian.Content.NPCs.Town
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.knockBackResist = 0.4f;
-            animationType = NPCID.Angler;
+            AnimationType = NPCID.Angler;
         }
 
         public override bool CanTownNPCSpawn(int numTownNPCs, int money)

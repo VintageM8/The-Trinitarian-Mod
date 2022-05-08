@@ -94,21 +94,21 @@ namespace Trinitarian.Content.Projectiles.Boss.Zolzar
             }
         }
 
-        public override bool PreDraw(SpriteBatch sb, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            Vector2 vector = new Vector2(Main.projectileTexture[Projectile.type].Width * 0.5f, Projectile.height * 0.5f);
+            Vector2 vector = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
             for (int i = 0; i < Projectile.oldPos.Length; i++)
             {
                 Vector2 position = Projectile.oldPos[i] - Main.screenPosition + vector + new Vector2(0f, Projectile.gfxOffY);
                 Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - i) / Projectile.oldPos.Length);
-                sb.Draw(Main.projectileTexture[Projectile.type], position, null, color, Projectile.rotation, vector, Projectile.scale, SpriteEffects.None, 0f);
+                Main.EntitySpriteDraw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, position, null, color, Projectile.rotation, vector, Projectile.scale, SpriteEffects.None, 0);
             }
             return true;
         }
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override void PostDraw(Color lightColor)
         {
-            Texture2D texture = ModContent.Request<Texture2D>("Trinitarian/Content/Projectiles/Boss/Zolzar/VikingAxe_Glow");
-            spriteBatch.Draw(
+            Texture2D texture = ModContent.Request<Texture2D>("Trinitarian/Content/Projectiles/Boss/Zolzar/VikingAxe_Glow").Value;
+            Main.EntitySpriteDraw(
                 texture,
                 new Vector2
                 (
@@ -121,7 +121,7 @@ namespace Trinitarian.Content.Projectiles.Boss.Zolzar
                 texture.Size(),
                 Projectile.scale,
                 SpriteEffects.None,
-                0f
+                0
             );
         }
 

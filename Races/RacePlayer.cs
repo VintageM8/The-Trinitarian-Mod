@@ -31,14 +31,13 @@ namespace Trinitarian.Races
             CurrentRace.DoRaceChanges(Player);
             CurrentRace.Passive(Player);
         }
-        public override TagCompound Save()
+        public override void SaveData(TagCompound tag)
         {
-            return new TagCompound {
-            {"triRaceCur",CurrentRace.GetCurrentRace()},
-    };
+            tag.Add("triRaceCur", Player.GetModPlayer<RacePlayer>().CurrentRace.GetCurrentRace());
         }
 
-        public override void Load(TagCompound tag)
+
+        public override void LoadData(TagCompound tag)
         {
            Race.SetFromType(Player,tag.GetInt("triRaceCur"));
            

@@ -189,25 +189,25 @@ namespace Trinitarian.Content.NPCs.Enemies.Ocean
                     }
                     int num358 = (int)(NPC.position.X + (float)(NPC.width / 2)) / 16;
                     int num359 = (int)(NPC.position.Y + (float)(NPC.height / 2)) / 16;
-                    if (Main.tile[num358, num359 - 1] == null)
+                    //if (Main.tile[num358, num359 - 1] == null)
+                    //{
+                    //    Main.tile[num358, num359 - 1] = new Tile();
+                    //}
+                    //if (Main.tile[num358, num359 + 1] == null)
+                    //{
+                    //    Main.tile[num358, num359 + 1] = new Tile();
+                    //}
+                    //if (Main.tile[num358, num359 + 2] == null)
+                    //{
+                    //    Main.tile[num358, num359 + 2] = new Tile();
+                    //}
+                    if (Framing.GetTileSafely(num358, num359 - 1).LiquidAmount > 128)
                     {
-                        Main.tile[num358, num359 - 1] = new Tile();
-                    }
-                    if (Main.tile[num358, num359 + 1] == null)
-                    {
-                        Main.tile[num358, num359 + 1] = new Tile();
-                    }
-                    if (Main.tile[num358, num359 + 2] == null)
-                    {
-                        Main.tile[num358, num359 + 2] = new Tile();
-                    }
-                    if (Main.tile[num358, num359 - 1].liquid > 128)
-                    {
-                        if (Main.tile[num358, num359 + 1].HasTile)
+                        if (Framing.GetTileSafely(num358, num359 + 1).HasTile)
                         {
                             NPC.ai[0] = -1f;
                         }
-                        else if (Main.tile[num358, num359 + 2].HasTile)
+                        else if (Framing.GetTileSafely(num358, num359 + 2).HasTile)
                         {
                             NPC.ai[0] = -1f;
                         }

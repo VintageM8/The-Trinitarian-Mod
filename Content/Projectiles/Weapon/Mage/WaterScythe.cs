@@ -40,14 +40,14 @@ namespace Trinitarian.Content.Projectiles.Weapon.Mage
             Lighting.AddLight(Projectile.Center, new Vector3(0.5f, 0.3f, 0.05f));
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            Vector2 origin = Main.projectileTexture[Projectile.type].Size() / 2;
+            Vector2 origin = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Size() / 2;
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i++)
             {
-                Main.spriteBatch.Draw(Main.projectileTexture[Projectile.type], Projectile.oldPos[i] + new Vector2(Projectile.width / 2f, Projectile.height / 2f) - Main.screenPosition, null, new Color(60, 60, 60, 0), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.oldPos[i] + new Vector2(Projectile.width / 2f, Projectile.height / 2f) - Main.screenPosition, null, new Color(60, 60, 60, 0), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0f);
             }
-            Main.spriteBatch.Draw(Main.projectileTexture[Projectile.type], Projectile.Center - Main.screenPosition, null, new Color(240, 240, 240, 130), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, null, new Color(240, 240, 240, 130), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0f);
             return false;
         }
 

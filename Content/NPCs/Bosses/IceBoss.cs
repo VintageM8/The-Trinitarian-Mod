@@ -523,26 +523,8 @@ namespace Trinitarian.Content.NPCs.Bosses
         {
 
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<IceBossBag>()));
-            
-                int choice = Main.rand.Next(5);
-                // Always drops one of:
-                if (choice == 0) // Warrior
-                {
-                    Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<IceSword>());
-                }
-                else if (choice == 1) // Mage
-                {
-                    Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<NjorsStaff>());
-                }
-                else if (choice == 2) // Range
-                {
-                    Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<IcyTundra>());
-                }
-                else if (choice == 3) // Summoner
-                {
-                    Item.NewItem((int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<RustedBow>());
-                }
-            
+
+            npcLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<IceSword>(), ModContent.ItemType<NjorsStaff>(), ModContent.ItemType<IcyTundra>(), ModContent.ItemType<RustedBow>()));
             
         }
 

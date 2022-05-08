@@ -39,13 +39,13 @@ namespace Trinitarian.Content.Projectiles.Boss.Ocean
                 Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
             }
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             if (Projectile.ai[0] != 0) // probably unnececary
-                DrawLine(storedpos, storedpos + stored * 200, Color.Lerp(Color.White, Color.Red, Projectile.ai[0] / 2), spriteBatch);
-            return base.PreDraw(spriteBatch, lightColor);
+                DrawLine(storedpos, storedpos + stored * 200, Color.Lerp(Color.White, Color.Red, Projectile.ai[0] / 2));
+            return base.PreDraw(ref lightColor);
         }
-        private void DrawLine(Vector2 start, Vector2 end, Color color, SpriteBatch spriteBatch, float scale = 1)
+        private void DrawLine(Vector2 start, Vector2 end, Color color,  float scale = 1)
         {
             Vector2 unit = end - start;
             float length = unit.Length();
@@ -53,7 +53,7 @@ namespace Trinitarian.Content.Projectiles.Boss.Ocean
             for (int i = 0; i < length; i++)
             {
                 Vector2 drawpos = start + unit * i - Main.screenPosition;
-                spriteBatch.Draw(ModContent.Request<Texture2D>("Trinitarian/Assets/Pixel"), drawpos, null, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                Main.EntitySpriteDraw(ModContent.Request<Texture2D>("Trinitarian/Assets/Pixel").Value, drawpos, null, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
             }
         }
         private Vector2 Decelerate(float progress, Vector2 maxvelocity)

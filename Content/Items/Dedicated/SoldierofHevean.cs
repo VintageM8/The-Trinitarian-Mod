@@ -43,8 +43,8 @@ namespace Trinitarian.Content.Items.Dedicated
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             Vector2 pos = Item.Center - Main.screenPosition;
-            Texture2D texture = Main.itemTexture[Item.type];
-            Texture2D spot = ModContent.Request<Texture2D>("Trinitarian/Assets/Textures/Spotlight");
+            Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
+            Texture2D spot = ModContent.Request<Texture2D>("Trinitarian/Assets/Textures/Spotlight").Value;
             float alpha = 0.8f;
             float s = 0.5f * scale;
             for (int i = 0; i < 6; i++)
@@ -56,7 +56,7 @@ namespace Trinitarian.Content.Items.Dedicated
                     Color.Lerp(Color.White, Color.LightYellow, (float)i / 3) * alpha,
                     0f,
                     new Vector2(spot.Width, spot.Height) / 2,
-                    s * (1f + ((float)Math.Sin((Main.GlobalTime * 2) + (MathHelper.PiOver4 * i)) * 0.15f)),
+                    s * (1f + ((float)Math.Sin((Main.GlobalTimeWrappedHourly * 2) + (MathHelper.PiOver4 * i)) * 0.15f)),
                     SpriteEffects.None,
                     0f);
                 s *= 2;
@@ -68,8 +68,8 @@ namespace Trinitarian.Content.Items.Dedicated
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             Vector2 pos = Utilty.GetInventoryPosition(position, frame, origin, scale);
-            Texture2D texture = Main.itemTexture[Item.type];
-            Texture2D flash = ModContent.Request<Texture2D>("Trinitarian/Assets/Textures/Flash2");
+            Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
+            Texture2D flash = ModContent.Request<Texture2D>("Trinitarian/Assets/Textures/Flash2").Value;
             UnifiedRandom rand = new UnifiedRandom(Item.whoAmI);
             for (int i = 0; i < 5; i++)
             {
@@ -81,7 +81,7 @@ namespace Trinitarian.Content.Items.Dedicated
                     pos,
                     null,
                     Color.LightYellow * alpha,
-                    Main.GlobalTime * r,
+                    Main.GlobalTimeWrappedHourly * r,
                     new Vector2(flash.Width / 2, flash.Height),
                     new Vector2(0.2f, s),
                     SpriteEffects.None,

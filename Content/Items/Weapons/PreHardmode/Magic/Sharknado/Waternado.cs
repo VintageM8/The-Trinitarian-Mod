@@ -92,7 +92,7 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic.Sharknado
 						}
 						TornadoCount = 0;
 						SpawnPos *= 1 / 5f;
-						Projectile.NewProjectile(SpawnPos + new Vector2(0, -25), Vector2.Zero, ModContent.ProjectileType<WaternadoBig>(), 30, 0, Projectile.owner);
+						Projectile.NewProjectile(Projectile.GetSource_FromAI(), SpawnPos + new Vector2(0, -25), Vector2.Zero, ModContent.ProjectileType<WaternadoBig>(), 30, 0, Projectile.owner);
 						SpawnPos = Vector2.Zero;
 					}
 				}
@@ -100,35 +100,35 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic.Sharknado
 		}
 		//custom drawing of the projectile
 		//TODO probably will get a new sprite and missing particles
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = ModContent.Request<Texture2D>("Trinitarian/Content/Items/Weapons/PreHardmode/Magic/Sharknado/WaternadoTemp");
+			Texture2D texture = ModContent.Request<Texture2D>("Trinitarian/Content/Items/Weapons/PreHardmode/Magic/Sharknado/WaternadoTemp").Value;
 			Color drawColor = Projectile.GetAlpha(lightColor);
 
 			switch (Projectile.frame)
 			{
 				case 1:
-					spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition,
+					Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition,
 					new Rectangle(9, 5, 156, 125), drawColor, 0, new Vector2(156 * .5f, 125 * .5f), 0.5f, 0, 0);
 					break;
 				case 2:
-					spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition,
+					Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition,
 					new Rectangle(175, 5, 156, 125), drawColor, 0, new Vector2(156 * .5f, 125 * .5f), 0.5f, 0, 0);
 					break;
 				case 3:
-					spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition,
+					Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition,
 					new Rectangle(347, 5, 156, 125), drawColor, 0, new Vector2(156 * .5f, 125 * .5f), 0.5f, 0, 0);
 					break;
 				case 4:
-					spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition,
+					Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition,
 					new Rectangle(5, 141, 156, 125), drawColor, 0, new Vector2(156 * .5f, 125 * .5f), 0.5f, 0, 0);
 					break;
 				case 5:
-					spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition,
+					Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition,
 					new Rectangle(175, 141, 156, 125), drawColor, 0, new Vector2(156 * .5f, 125 * .5f), 0.5f, 0, 0);
 					break;
 				case 6:
-					spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition,
+					Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition,
 					new Rectangle(350, 141, 156, 125), drawColor, 0, new Vector2(156 * .5f, 125 * .5f), 0.5f, 0, 0);
 					break;
 			}

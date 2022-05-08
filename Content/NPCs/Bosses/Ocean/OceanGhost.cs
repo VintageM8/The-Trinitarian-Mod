@@ -113,7 +113,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
                             {
                                 int dmg = expertMode ? 32 : 48;
                                 Vector2 place = NPC.Center + MethodHelper.GetRandomVector(250, 250, 350, 350, -350, -350);
-                                Projectile.NewProjectile(place, MethodHelper.DirectionTo(player.Center, place).RotatedByRandom(0.3f) * 10, ModContent.ProjectileType<Bubble>(), NPC.damage, 0.5f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetBossSpawnSource(player.whoAmI), place, MethodHelper.DirectionTo(player.Center, place).RotatedByRandom(0.3f) * 10, ModContent.ProjectileType<Bubble>(), NPC.damage, 0.5f, Main.myPlayer);
                             }
                         }
                         if (NPC.ai[1] > 60)
@@ -146,7 +146,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
                         if (NPC.ai[2] >= (difficulty > 3 ? 0.1 : 1))
                         {
                            int dmg = expertMode ? 32 : 48;
-						   Projectile.NewProjectile(NPC.Center, NPC.DirectionTo(player.Center) * 9, ModContent.ProjectileType<OceanSpike>(), NPC.damage, 0.5f, Main.myPlayer);
+						   Projectile.NewProjectile(NPC.GetBossSpawnSource(player.whoAmI), NPC.Center, NPC.DirectionTo(player.Center) * 9, ModContent.ProjectileType<OceanSpike>(), NPC.damage, 0.5f, Main.myPlayer);
                             NPC.ai[2] = 0;
                         }
                         if (progress >= pointmax)
@@ -195,8 +195,8 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
                         {
                             dashproj = 0;
                             int dmg = expertMode ? 32 : 48;
-                            Projectile.NewProjectile(NPC.Center, -MethodHelper.Normalized(NPC.velocity).RotatedBy(-0.15) * 5, ModContent.ProjectileType<Bubble>(), NPC.damage, 0.5f, Main.myPlayer);
-                            Projectile.NewProjectile(NPC.Center, -MethodHelper.Normalized(NPC.velocity).RotatedBy(0.15) * 5, ModContent.ProjectileType<OceanSpike2>(), NPC.damage, 0.5f, Main.myPlayer);
+                            Projectile.NewProjectile(NPC.GetBossSpawnSource(player.whoAmI), NPC.Center, -MethodHelper.Normalized(NPC.velocity).RotatedBy(-0.15) * 5, ModContent.ProjectileType<Bubble>(), NPC.damage, 0.5f, Main.myPlayer);
+                            Projectile.NewProjectile(NPC.GetBossSpawnSource(player.whoAmI), NPC.Center, -MethodHelper.Normalized(NPC.velocity).RotatedBy(0.15) * 5, ModContent.ProjectileType<OceanSpike2>(), NPC.damage, 0.5f, Main.myPlayer);
                         }
                         if (++NPC.ai[1] == 30)
                         {
@@ -236,7 +236,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
                             {
                                 SoundEngine.PlaySound(SoundID.Item5);
                                 for (int i = 0; i < projamount; i++)
-                                    Projectile.NewProjectile(NPC.Center, MethodHelper.DirectionTo(player.Center, NPC.Center).RotatedBy(i == 0 ? 0 : IsEven(i) ? 0.05 * i : -0.05 * i) * (difficulty > 4 ? 12 : 7), ModContent.ProjectileType<OceanSpike3>(), NPC.damage, 0.5f, Main.myPlayer);
+                                    Projectile.NewProjectile(NPC.GetBossSpawnSource(player.whoAmI), NPC.Center, MethodHelper.DirectionTo(player.Center, NPC.Center).RotatedBy(i == 0 ? 0 : IsEven(i) ? 0.05 * i : -0.05 * i) * (difficulty > 4 ? 12 : 7), ModContent.ProjectileType<OceanSpike3>(), NPC.damage, 0.5f, Main.myPlayer);
                             }
                             if (NPC.ai[1] > 15)
                             {
@@ -269,7 +269,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
                         {
                             int dmg = expertMode ? 32 : 48;
                             for (float i = -0.3f; i < 0.3f; i += 0.1f)
-                                Projectile.NewProjectile(NPC.Center + Vector2.UnitX * (i < 0 ? 40 : -40), NPC.DirectionFrom(NPC.Center).RotatedBy(i) * 5, ModContent.ProjectileType<OceanSpike>(), NPC.damage, 0.5f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetBossSpawnSource(player.whoAmI), NPC.Center + Vector2.UnitX * (i < 0 ? 40 : -40), NPC.DirectionFrom(NPC.Center).RotatedBy(i) * 5, ModContent.ProjectileType<OceanSpike>(), NPC.damage, 0.5f, Main.myPlayer);
                             DrawLinearDash = true;
                             playeroldcenter = player.Center;
                             npcoldcenter = NPC.Center;
@@ -300,11 +300,11 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
                     break;
             }
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             if (DrawLinearDash)
                 DrawDashLinear(spriteBatch, npcoldcenter, playeroldcenter, Color.Lerp(Color.White, Color.Red, NPC.ai[2]));
-            return base.PreDraw(spriteBatch, drawColor);
+            return base.PreDraw(spriteBatch, screenPos, drawColor);
         }
         private bool AnyProjectiles(int type)
         {
@@ -555,7 +555,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
             for (int i = 0; i < length; i++)
             {
                 Vector2 drawpos = start + unit * i - Main.screenPosition;
-                spriteBatch.Draw(ModContent.Request<Texture2D>("Trinitarian/Assets/Textures/Pixel"), drawpos, null, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(ModContent.Request<Texture2D>("Trinitarian/Assets/Textures/Pixel").Value, drawpos, null, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
             }
         }
         

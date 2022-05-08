@@ -65,11 +65,11 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
             if (Main.rand.NextBool(10) && Main.myPlayer == Projectile.owner) 
             {
                 //release projectile in random direction
-                Main.projectile[Projectile.NewProjectile(Projectile.Center,new Vector2(4,0).RotatedByRandom(2*Math.PI),ProjectileType<BallLightningProjectile>(),Projectile.damage,Projectile.knockBack,Projectile.owner)].netUpdate = true;
+                Main.projectile[Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center,new Vector2(4,0).RotatedByRandom(2*Math.PI),ProjectileType<BallLightningProjectile>(),Projectile.damage,Projectile.knockBack,Projectile.owner)].netUpdate = true;
             }
         }
 
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) 
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             width = 2;
             height = 2;
@@ -85,7 +85,7 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
                 for (int i=0; i<10; i++) 
                 {
                     //release projectile in random direction
-                    Main.projectile[Projectile.NewProjectile(Projectile.Center,new Vector2(4,0).RotatedByRandom(2*Math.PI),ProjectileType<BallLightningProjectile>(),Projectile.damage,Projectile.knockBack,Projectile.owner)].netUpdate = true;
+                    Main.projectile[Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center,new Vector2(4,0).RotatedByRandom(2*Math.PI),ProjectileType<BallLightningProjectile>(),Projectile.damage,Projectile.knockBack,Projectile.owner)].netUpdate = true;
                 }
             }
         }

@@ -412,7 +412,7 @@ namespace Trinitarian.Common.Players
                 }
             }
 
-            if (proj.DamageType == DamageClass.Summon)
+            if (item.DamageType == DamageClass.Summon)
 			{
                 if (SummonerDeath)
                 { 
@@ -442,11 +442,11 @@ namespace Trinitarian.Common.Players
             {
                 item = Player.inventory[possibleAmmo[Main.rand.Next(possibleAmmo.Count)]];
                 speed += item.shootSpeed;
-                if (item.ranged)
+                if (item.DamageType == DamageClass.Ranged)
                 {
                     if (item.damage > 0)
                     {
-                        Damage += (int)((float)item.damage * Player.GetDamage(DamageClass.Ranged));
+                        Damage += (int)((float)item.damage * Player.GetDamage(DamageClass.Ranged).Multiplicative);
                     }
                 }
                 else

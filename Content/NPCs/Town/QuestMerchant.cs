@@ -8,20 +8,34 @@ using Trinitarian.Content.Subclasses.Necro;
 using Trinitarian.Content.Subclasses.Paladin;
 using Trinitarian.Content.Subclasses.Wizard;
 using Trinitarian.Content.Subclasses.Elf;
+using Terraria.GameContent;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 
 namespace Trinitarian.Content.NPCs.Town
 {
+    public class QuestMerchantProfile : ITownNPCProfile
+    {
+        public int RollVariation() => 0;
+        public string GetNameForVariant(NPC npc) => npc.getNewNPCName();
+        public Asset<Texture2D> GetTextureNPCShouldUse(NPC npc)
+        {
+            if (npc.IsABestiaryIconDummy && !npc.ForcePartyHatOn)
+                return ModContent.Request<Texture2D>("Trinitarian/Content/NPCs/Town/QuestMerchant");
+
+            if (npc.altTexture == 1)
+                return ModContent.Request<Texture2D>("Trinitarian/Content/NPCs/Town/QuestMerchant_Party");
+
+            return ModContent.Request<Texture2D>("Trinitarian/Content/NPCs/Town/QuestMerchant");
+        }
+        public int GetHeadTextureIndex(NPC npc) => ModContent.GetModHeadSlot("Trinitarian/Content/NPCs/Town/QuestMerchant_Head");
+    }
     [AutoloadHead]
     public class QuestMerchant : ModNPC
     {
         public override string Texture => "Trinitarian/Content/NPCs/Town/QuestMerchant";
 
-        public override bool Autoload(ref string name)
-        {
-            name = "Quest Master";
-            return Mod.Properties.Autoload;
-        }
-
+        
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Quest Master");
@@ -49,7 +63,7 @@ namespace Trinitarian.Content.NPCs.Town
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.knockBackResist = 0.4f;
-            animationType = NPCID.Angler;
+            AnimationType = NPCID.Angler;
         }
 
         public override bool CanTownNPCSpawn(int numTownNPCs, int money)
@@ -58,10 +72,9 @@ namespace Trinitarian.Content.NPCs.Town
             return NPC.downedBoss2 && Main.player.Any(x => x.active);
         }
 
-        public override string TownNPCName()
+        public override ITownNPCProfile TownNPCProfile()
         {
-            string[] names = { "Mary", "Padme", "Leia", "[Redacted]", "Lucy" };
-            return Main.rand.Next(names);
+            return new QuestMerchantProfile();
         }
 
         public override string GetChat()

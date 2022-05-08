@@ -65,11 +65,11 @@ namespace Trinitarian.Content.Projectiles.Weapon.Mage
                 Main.dust[dust].noGravity = false;
             }
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = ModContent.Request<Texture2D>(Texture);
+            Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
             Color drawColor = Projectile.GetAlpha(lightColor);
-            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 44, 60), drawColor, Projectile.rotation, new Vector2(44 * 0.5f, 60 * 0.5f), 1 + Projectile.ai[1], SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 44, 60), drawColor, Projectile.rotation, new Vector2(44 * 0.5f, 60 * 0.5f), 1 + Projectile.ai[1], SpriteEffects.None, 0);
             return false;
         }
     }

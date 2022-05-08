@@ -5,6 +5,7 @@ using Trinitarian.Content.Items.Materials.Parts;
 using static Terraria.ModLoader.ModContent;
 using Microsoft.Xna.Framework;
 using Trinitarian.Content.Items.Weapons.Hardmode.Ranged.VikingBow;
+using Terraria.DataStructures;
 
 namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged.VikingBow
 {
@@ -35,9 +36,9 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged.VikingBow
             Item.useAmmo = AmmoID.Arrow;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<BowAxe>(), damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y, position.X, position.Y, ModContent.ProjectileType<BowAxe>(), damage, knockback, player.whoAmI);
 			return true;
 		}
 

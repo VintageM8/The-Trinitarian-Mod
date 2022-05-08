@@ -66,7 +66,7 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Melee.BloodyChakrum
             {
                 Vector2 position = Projectile.oldPos[i] - Main.screenPosition + vector + new Vector2(0f, Projectile.gfxOffY);
                 Color color = Projectile.GetAlpha(lightColor) * ((float)(Projectile.oldPos.Length - i) / Projectile.oldPos.Length);
-                Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, position, null, color, Projectile.rotation, vector, Projectile.scale, SpriteEffects.None, 0f);
+                Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, position, null, color, Projectile.rotation, vector, Projectile.scale, SpriteEffects.None, 0);
             }
             return true;
         }

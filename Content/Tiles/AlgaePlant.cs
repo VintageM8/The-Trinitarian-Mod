@@ -25,7 +25,7 @@ namespace Trinitarian.Content.Tiles
 			Main.tileLighted[Type] = true;
 			Main.tileCut[Type] = true;
 			Main.tileSolid[Type] = false;
-			drop = ModContent.ItemType<Items.Materials.Parts.Algae>	();
+			ItemDrop = ModContent.ItemType<Items.Materials.Parts.Algae>	();
 
 			AddMapEntry(new Color(200, 200, 200));
 			
