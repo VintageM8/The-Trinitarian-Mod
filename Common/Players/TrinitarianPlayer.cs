@@ -105,7 +105,7 @@ namespace Trinitarian.Common.Players
             CurrentA = (AbiltyID)tag.GetInt("CurrentA");        
         }*/
 
-        /*public override void ProcessTriggers(TriggersSet triggersSet)
+        public override void ProcessTriggers(TriggersSet triggersSet)
         {
             Player p = Main.player[Main.myPlayer];
             if (Trinitarian.UseAbilty.JustPressed && !p.HasBuff(ModContent.BuffType<Cooldown>()))
@@ -141,7 +141,7 @@ namespace Trinitarian.Common.Players
                         break;
                 }
             }
-        }*/
+        }
 
 
         public override void OnEnterWorld(Player player)
