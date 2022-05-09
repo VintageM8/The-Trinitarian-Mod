@@ -185,9 +185,9 @@ namespace Trinitarian.Common.Players
 
 
             if (PaladinScroll)
-			{
-				base.Player.statLifeMax2 += base.Player.statLifeMax2 / 5 / 20 * 100;
-			}
+	    {
+	         Player.statLifeMax2 += base.Player.statLifeMax2 / 5 / 20 * 100;
+	    }
         }
         public override void UpdateDead()
         {
@@ -214,20 +214,6 @@ namespace Trinitarian.Common.Players
                 RotationTimer++;
             }
             else RotationTimer = 0;
-        }
-
-        public override void PreUpdate()
-        {   
-            /*if (Main.mouseRight Dont Port, Mechtide sword will be re-worked
-            {
-                while (MechtideCharge > 0)
-                {
-                    float angle = (Main.MouseWorld - Player.Center).ToRotation() + MathHelper.ToRadians(Main.rand.Next(-100, 101) * .05f);
-
-                    Projectile.NewProjectile(Player.Center.X, Player.Center.Y, (float)Math.Cos(angle) * 12f, (float)Math.Sin(angle) * 12f, ModContent.ProjectileType<MechtideCharge>(), 20, 2f, Player.whoAmI);
-                    MechtideCharge--;
-                }
-            }*/
         }
 
         public override void UpdateLifeRegen()
@@ -504,14 +490,14 @@ namespace Trinitarian.Common.Players
                     flag2 = true;
                 }
 
-               /* if (!PlayerHooks.ConsumeAmmo(Player, sItem, item))
+               if (!PlayerLoader.CanConsumeAmmo(Player, sItem, item))
                 {
                     flag2 = true;
                 }
-                if (!ItemLoader.ConsumeAmmo(sItem, item, Player))
+                if (!ItemLoader.CanConsumeAmmo(sItem, item, Player))
                 {
                     flag2 = true;
-                }*/
+                }
             }
         }
 
@@ -525,15 +511,6 @@ namespace Trinitarian.Common.Players
                 NetMessage.SendData(MessageID.SpiritHeal, -1, -1, null, Player.whoAmI, newLife);
 			}
         }
-
-        /*public override void UpdateBiomeVisuals() Not being used ignore for now
-        {           
-            if (NPC.AnyNPCs(Mod.Find<ModNPC>("VikingBoss").Type))
-            {
-                useViking = true;
-            }
-            Player.ManageSpecialBiomeVisuals("Trinitarian:VikingBoss", useViking);
-        }*/
 
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit,
