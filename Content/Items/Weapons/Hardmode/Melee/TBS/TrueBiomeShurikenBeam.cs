@@ -14,10 +14,10 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.TBS
 		public override void SetDefaults()
 		{
             Projectile.DamageType = DamageClass.Melee;
-            aiType = ProjectileID.TerraBeam;
+            AIType = ProjectileID.TerraBeam;
 			Projectile.ignoreWater = true;
 			Projectile.aiStyle = 0;
-			aiType = ProjectileID.Shuriken;
+            AIType = ProjectileID.Shuriken;
 			Projectile.timeLeft = 600;
 			Projectile.width = 30;
 			Projectile.penetrate = 3;
@@ -60,7 +60,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.TBS
                 target.AddBuff(BuffID.OnFire, 300);
                 Main.player[Projectile.owner].AddBuff(BuffID.Swiftness, 300);
             }
-            if (Main.player[Main.myPlayer].ZoneHoly)
+            if (Main.player[Main.myPlayer].ZoneHallow)
             {
                 Main.player[Projectile.owner].AddBuff(BuffID.Endurance, 300);
             }
@@ -73,11 +73,11 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.TBS
             {
                 Main.player[Projectile.owner].AddBuff(BuffID.Wrath, 300);
             }
-            if (Main.player[Main.myPlayer].ZoneDirtLayerHeight && !Main.player[Main.myPlayer].ZoneHoly && !Main.player[Main.myPlayer].ZoneJungle && !Main.player[Main.myPlayer].ZoneDesert && !Main.player[Main.myPlayer].ZoneBeach && !Main.player[Main.myPlayer].ZoneSnow && !Main.player[Main.myPlayer].ZoneCrimson && !Main.player[Main.myPlayer].ZoneCorrupt)
+            if (Main.player[Main.myPlayer].ZoneDirtLayerHeight && !Main.player[Main.myPlayer].ZoneHallow && !Main.player[Main.myPlayer].ZoneJungle && !Main.player[Main.myPlayer].ZoneDesert && !Main.player[Main.myPlayer].ZoneBeach && !Main.player[Main.myPlayer].ZoneSnow && !Main.player[Main.myPlayer].ZoneCrimson && !Main.player[Main.myPlayer].ZoneCorrupt)
             {
                 Main.player[Projectile.owner].AddBuff(BuffID.Regeneration, 300);
             }
-            if (Main.player[Main.myPlayer].ZoneRockLayerHeight && !Main.player[Main.myPlayer].ZoneHoly && !Main.player[Main.myPlayer].ZoneJungle && !Main.player[Main.myPlayer].ZoneDesert  && !Main.player[Main.myPlayer].ZoneBeach && !Main.player[Main.myPlayer].ZoneSnow && !Main.player[Main.myPlayer].ZoneCrimson && !Main.player[Main.myPlayer].ZoneCorrupt)
+            if (Main.player[Main.myPlayer].ZoneRockLayerHeight && !Main.player[Main.myPlayer].ZoneHallow && !Main.player[Main.myPlayer].ZoneJungle && !Main.player[Main.myPlayer].ZoneDesert  && !Main.player[Main.myPlayer].ZoneBeach && !Main.player[Main.myPlayer].ZoneSnow && !Main.player[Main.myPlayer].ZoneCrimson && !Main.player[Main.myPlayer].ZoneCorrupt)
             {
                 target.AddBuff(BuffID.Bleeding, 300);
             }
@@ -86,7 +86,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.TBS
                 target.AddBuff(BuffID.OnFire, 300);
                 target.AddBuff(BuffID.ObsidianSkin, 600);
             }
-            if (Main.player[Main.myPlayer].ZoneOverworldHeight && !Main.player[Main.myPlayer].ZoneHoly && !Main.player[Main.myPlayer].ZoneJungle && !Main.player[Main.myPlayer].ZoneDesert && !Main.player[Main.myPlayer].ZoneBeach && !Main.player[Main.myPlayer].ZoneSnow && !Main.player[Main.myPlayer].ZoneCrimson && !Main.player[Main.myPlayer].ZoneCorrupt)
+            if (Main.player[Main.myPlayer].ZoneOverworldHeight && !Main.player[Main.myPlayer].ZoneHallow && !Main.player[Main.myPlayer].ZoneJungle && !Main.player[Main.myPlayer].ZoneDesert && !Main.player[Main.myPlayer].ZoneBeach && !Main.player[Main.myPlayer].ZoneSnow && !Main.player[Main.myPlayer].ZoneCrimson && !Main.player[Main.myPlayer].ZoneCorrupt)
             {
                 Main.player[Projectile.owner].AddBuff(BuffID.RapidHealing, 300);
                 Main.player[Projectile.owner].AddBuff(BuffID.Regeneration, 300);

@@ -67,7 +67,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.ScaryBlade
                 TrinitarianPlayer modplayer = player.GetModPlayer<TrinitarianPlayer>();
                 if (timer % 30 == 10 && modplayer.OrbitingProjectileCount[2] <= 5)                 
                 {
-                    Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<NightsisterMagic>(), 30, 1, player.whoAmI, 0, 0);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.Zero, ModContent.ProjectileType<NightsisterMagic>(), 30, 1, player.whoAmI, 0, 0);
                 }
                 timer++;
             }

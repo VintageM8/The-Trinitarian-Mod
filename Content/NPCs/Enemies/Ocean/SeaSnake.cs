@@ -89,25 +89,13 @@ namespace Trinitarian.Content.NPCs.Enemies.Ocean
                 }
                 int num2 = (int)(base.NPC.position.X + (float)(base.NPC.width / 2)) / 16;
                 int num3 = (int)(base.NPC.position.Y + (float)(base.NPC.height / 2)) / 16;
-                if (Main.tile[num2, num3 - 1] == null)
+                if (Framing.GetTileSafely(num2, num3 - 1).LiquidAmount> 128)
                 {
-                    Main.tile[num2, num3 - 1] = new Tile();
-                }
-                if (Main.tile[num2, num3 + 1] == null)
-                {
-                    Main.tile[num2, num3 + 1] = new Tile();
-                }
-                if (Main.tile[num2, num3 + 2] == null)
-                {
-                    Main.tile[num2, num3 + 2] = new Tile();
-                }
-                if (Main.tile[num2, num3 - 1].liquid > 128)
-                {
-                    if (Main.tile[num2, num3 + 1].HasTile)
+                    if (Framing.GetTileSafely(num2, num3 + 1).HasTile)
                     {
                         base.NPC.ai[0] = -1f;
                     }
-                    else if (Main.tile[num2, num3 + 2].HasTile)
+                    else if (Framing.GetTileSafely(num2, num3 + 2).HasTile)
                     {
                         base.NPC.ai[0] = -1f;
                     }
@@ -268,25 +256,14 @@ namespace Trinitarian.Content.NPCs.Enemies.Ocean
                     }
                     int num4 = (int)(base.NPC.position.X + (float)(base.NPC.width / 2)) / 16;
                     int num5 = (int)(base.NPC.position.Y + (float)(base.NPC.height / 2)) / 16;
-                    if (Main.tile[num4, num5 - 1] == null)
+                    
+                    if (Framing.GetTileSafely(num4, num5 - 1).LiquidAmount> 128)
                     {
-                        Main.tile[num4, num5 - 1] = new Tile();
-                    }
-                    if (Main.tile[num4, num5 + 1] == null)
-                    {
-                        Main.tile[num4, num5 + 1] = new Tile();
-                    }
-                    if (Main.tile[num4, num5 + 2] == null)
-                    {
-                        Main.tile[num4, num5 + 2] = new Tile();
-                    }
-                    if (Main.tile[num4, num5 - 1].liquid > 128)
-                    {
-                        if (Main.tile[num4, num5 + 1].HasTile)
+                        if (Framing.GetTileSafely(num4, num5 + 1).HasTile)
                         {
                             base.NPC.ai[0] = -1f;
                         }
-                        else if (Main.tile[num4, num5 + 2].HasTile)
+                        else if (Framing.GetTileSafely(num4, num5 + 2).HasTile)
                         {
                             base.NPC.ai[0] = -1f;
                         }

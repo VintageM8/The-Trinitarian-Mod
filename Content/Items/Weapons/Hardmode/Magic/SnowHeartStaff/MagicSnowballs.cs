@@ -83,7 +83,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic.SnowHeartStaff
                     float speed = 11;
                     SoundEngine.PlaySound(SoundID.Item, Projectile.position, 8);
                     charge = true;
-                    Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, direction.X * speed, direction.Y * speed, ModContent.ProjectileType<ShotBall>(), Projectile.damage, 0f, Projectile.owner, 0f);
+                    Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center.X, Projectile.Center.Y, direction.X * speed, direction.Y * speed, ModContent.ProjectileType<ShotBall>(), Projectile.damage, 0f, Projectile.owner, 0f);
                 }
                 Projectile.Kill();
             }

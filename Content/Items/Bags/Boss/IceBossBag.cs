@@ -38,19 +38,19 @@ namespace Trinitarian.Content.Items.Bags.Boss
             // Always drops one of:
             if (choice == 0) // 
             {
-                player.QuickSpawnItem(ModContent.ItemType<IceSword>(), 1);
+                player.QuickSpawnItem(player.GetSource_GiftOrReward(), ModContent.ItemType<IceSword>(), 1);
             }
             else if (choice == 1)
             {
-                player.QuickSpawnItem(ModContent.ItemType<NjorsStaff>(), 1);
+                player.QuickSpawnItem(player.GetSource_GiftOrReward(), ModContent.ItemType<NjorsStaff>(), 1);
             }
             else if (choice == 2)
             {
-                player.QuickSpawnItem(ModContent.ItemType<IcyTundra>(), 1);
+                player.QuickSpawnItem(player.GetSource_GiftOrReward(), ModContent.ItemType<IcyTundra>(), 1);
             }
             else if (choice == 3)
             {
-                player.QuickSpawnItem(ModContent.ItemType<RustedBow>(), 1);
+                player.QuickSpawnItem(player.GetSource_GiftOrReward(), ModContent.ItemType<RustedBow>(), 1);
             }
         }
 

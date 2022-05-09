@@ -36,7 +36,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.SubzeroSlicer
             newDust.velocity *= 0f;
             if (i % 50 == 0)
             {
-                Projectile.NewProjectile(Projectile.Center, Projectile.velocity / 2, ModContent.ProjectileType<SubzeroProj2>(), Projectile.damage, Projectile.knockBack);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity / 2, ModContent.ProjectileType<SubzeroProj2>(), Projectile.damage, Projectile.knockBack);
             }
             Vector2 newDustPosition2 = new Vector2(0, (float)Math.Sin((Projectile.localAI[0] % oneHelixRevolutionInUpdateTicks) * ReversepiFraction)) * Projectile.height;
             Dust newDust2 = Dust.NewDustPerfect(Projectile.Center + newDustPosition2.RotatedBy(Projectile.velocity.ToRotation()), 68);

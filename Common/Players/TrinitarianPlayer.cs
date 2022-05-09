@@ -113,31 +113,31 @@ namespace Trinitarian.Common.Players
                 switch (CurrentA)
                 {//Add stuff for the abiltys here, if you want to make more, add more IDs
                     case (int)AbiltyID.None:
-                        Main.NewText("No Abilty");
-                        p.AddBuff(ModContent.BuffType<Cooldown>(), 120);
+                       // Main.NewText("No Abilty");
+                       // p.AddBuff(ModContent.BuffType<Cooldown>(), 120);
                         break;
                     case AbiltyID.Elf:
-                        Main.NewText("Elf");
+                       // Main.NewText("Elf");
                         ModAbilitys.ElfAbility(Player);
                         p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
-                          Projectile.NewProjectile(Main.MouseWorld+ new Vector2(0,-50), new Vector2(0, 0), ModContent.ProjectileType<ElfAbilityMirror>(), 10, 0f, p.whoAmI);
+                          Projectile.NewProjectile(p.GetSource_Misc("Elf"), Main.MouseWorld+ new Vector2(0,-50), new Vector2(0, 0), ModContent.ProjectileType<ElfAbilityMirror>(), 10, 0f, p.whoAmI);
                         break;
                     case AbiltyID.Paladin:
-                        Main.NewText("Paladin");
+                        //Main.NewText("Paladin");
                         p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
-                        Projectile.NewProjectile(Main.MouseWorld+ new Vector2(0,-50), new Vector2(0, 0), ModContent.ProjectileType<LightSpawner>(), 10, 0f, p.whoAmI);
+                        Projectile.NewProjectile(p.GetSource_Misc("Paladin"), Main.MouseWorld+ new Vector2(0,-50), new Vector2(0, 0), ModContent.ProjectileType<LightSpawner>(), 10, 0f, p.whoAmI);
                         break;
                     case AbiltyID.Necromancer:
-                        Main.NewText("Necromancer");
+                        //Main.NewText("Necromancer");
                         p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
                         break;
                     case AbiltyID.Wizard:
-                        Main.NewText("Wizard");
+                        //Main.NewText("Wizard");
                         p.AddBuff(ModContent.BuffType<Cooldown>(), 3600);
-                        Projectile.NewProjectile(Main.MouseWorld+ new Vector2(0,-50), new Vector2(0, 0), ModContent.ProjectileType<ElementalStormBottom>(), 10, 0f, p.whoAmI);
+                        Projectile.NewProjectile(p.GetSource_Misc("Wizard"), Main.MouseWorld+ new Vector2(0,-50), new Vector2(0, 0), ModContent.ProjectileType<ElementalStormBottom>(), 10, 0f, p.whoAmI);
                         break;
                     default:
-                        Main.NewText("That wasnt supposed to happen \n Your abilty isnt set to anything, or no abilty!", new Color(255, 0, 0));
+                        Mod.Logger.InfoFormat("Unknown Ability ID: {0}", CurrentA);
                         break;
                 }
             }

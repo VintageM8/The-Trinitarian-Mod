@@ -49,7 +49,7 @@ namespace Trinitarian.Content.Items.Armor.ReaperArmor
 				}
 				if (player.ownedProjectileCounts[ModContent.ProjectileType<ReaperMinion>()] < 1)
 				{	
-                    Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<ReaperMinion>(), 20, 1.25f, player.whoAmI, 0f, 0f);
+                    Projectile.NewProjectile(Item.GetSource_Accessory(Item), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<ReaperMinion>(), 20, 1.25f, player.whoAmI, 0f, 0f);
 				}
 			}
         }

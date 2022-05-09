@@ -12,7 +12,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.TBS
 		{
 			Projectile.ignoreWater = true;
 			Projectile.aiStyle = 2;
-			aiType = ProjectileID.Shuriken;
+			AIType = ProjectileID.Shuriken;
 			Projectile.width = 30;
 			Projectile.penetrate = 1;
 			Projectile.height = 30;
@@ -26,7 +26,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.TBS
 			for (int i = 0; i < Main.rand.Next(3, 5); i++)
 			{
 				Vector2 perturbedSpeed = Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(360));
-				Projectile.NewProjectile(Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<TrueBiomeShurikenBeam>(), 40, 5f, Projectile.owner);
+				Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<TrueBiomeShurikenBeam>(), 40, 5f, Projectile.owner);
 			}
 
 		}

@@ -33,9 +33,9 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe
 			for (int i = 0; i < 50; i++)
 				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke);
 			Vector2 perturbedSpeed = Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(360));
-			Projectile.NewProjectile(Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ProjectileType<FragmentalFragment>(), 273, 5f, Projectile.owner);
+			Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ProjectileType<FragmentalFragment>(), 273, 5f, Projectile.owner);
 			perturbedSpeed = Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(360));
-			Projectile.NewProjectile(Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ProjectileType<FragmentalFragment>(), 159, 5f, Projectile.owner);
+			Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ProjectileType<FragmentalFragment>(), 159, 5f, Projectile.owner);
 			perturbedSpeed = Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(360));
 
 		}

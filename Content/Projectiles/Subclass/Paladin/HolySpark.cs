@@ -34,7 +34,7 @@ namespace Trinitarian.Content.Projectiles.Subclass.Paladin
 
 		public override void AI()
 		{
-			Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Fire, Scale: 2.5f);
+			Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.FlameBurst, Scale: 2.5f);
 		}
 		public override void OnHitPvp(Player target, int damage, bool crit)
 		{

@@ -33,10 +33,10 @@ namespace Trinitarian.Content.Items.Bags
         public override void RightClick(Player player)
         {
             if (Main.rand.Next(4) == 0)
-                player.QuickSpawnItem(ItemID.HallowedSeeds, 2);
-            player.QuickSpawnItem(ItemID.CobaltBar, 2);
+                player.QuickSpawnItem(player.GetSource_OpenItem(this.Type), ItemID.HallowedSeeds, 2);
+            player.QuickSpawnItem(player.GetSource_OpenItem(this.Type), ItemID.CobaltBar, 2);
             if (Main.rand.Next(7) == 0)
-                player.QuickSpawnItem(ItemID.MythrilAnvil, 1);
+                player.QuickSpawnItem(player.GetSource_OpenItem(this.Type), ItemID.MythrilAnvil, 1);
         }
     }
 }

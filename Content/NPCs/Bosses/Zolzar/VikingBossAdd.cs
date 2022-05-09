@@ -218,7 +218,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 						projVel.Normalize();
 					}
 					projVel *= 7;
-					Projectile.NewProjectile(NPC.Center, projVel, ProjectileID.CultistBossLightningOrbArc, LightningDMG, LightningKB, Main.myPlayer, projVel.ToRotation(), AI_Timer);
+					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, projVel, ProjectileID.CultistBossLightningOrbArc, LightningDMG, LightningKB, Main.myPlayer, projVel.ToRotation(), AI_Timer);
 				}
 			}
 			else
@@ -248,7 +248,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 					float time = 0;
 					Vector2 projVel = ModTargeting.LinearAdvancedTargeting(NPC.Center, target.Center, IntSpeed, 7 * 4, ref time);
 					ModTargeting.FallingTargeting(NPC, target, new Vector2(0, -28), 7 * 4, ref time, ref projVel);
-					Projectile.NewProjectile(NPC.Center, projVel / 4, ProjectileID.CultistBossLightningOrbArc, LightningDMG, LightningKB, Main.myPlayer, projVel.ToRotation(), AI_Timer);
+					Projectile.NewProjectile(NPC.GetSource_FromAI(),NPC.Center, projVel / 4, ProjectileID.CultistBossLightningOrbArc, LightningDMG, LightningKB, Main.myPlayer, projVel.ToRotation(), AI_Timer);
 				}
 
 			}
@@ -270,7 +270,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 			{
 				for (int i = 0; i < 4; i++)
 				{
-					Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y, 8 * (float)Math.Cos(2 * Math.PI * i / 4), 8 * (float)Math.Sin(2 * Math.PI * i / 4), ProjectileID.CultistBossIceMist, 40, 1, target.whoAmI);
+					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, 8 * (float)Math.Cos(2 * Math.PI * i / 4), 8 * (float)Math.Sin(2 * Math.PI * i / 4), ProjectileID.CultistBossIceMist, 40, 1, target.whoAmI);
 				}
 			}
 			if (AI_Timer >= AddNumber * FollowTime + 240 + 1 + 75 + ExplosionDelay)

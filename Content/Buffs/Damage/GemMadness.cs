@@ -22,7 +22,7 @@ namespace Trinitarian.Content.Buffs.Damage
                 npc.velocity.X *= 0f;
                 npc.velocity.Y *= 0f;
 
-                int dust = Dust.NewDust(npc.position, npc.width, npc.height, DustID.PinkFlame);
+                int dust = Dust.NewDust(npc.position, npc.width, npc.height, DustID.PinkTorch);
                 Main.dust[dust].scale = 1.9f;
                 Main.dust[dust].velocity *= 3f;
                 Main.dust[dust].noGravity = true;

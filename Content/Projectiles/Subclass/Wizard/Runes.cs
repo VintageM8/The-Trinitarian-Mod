@@ -69,7 +69,7 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
 					vector.Normalize();
 					vector.X *= 4.5f;
 					vector.Y *= 4.5f;
-					int p = Projectile.NewProjectile(base.Projectile.Center.X, base.Projectile.Center.Y, vector.X, vector.Y, num24, Projectile.damage / 5 * 4, 0f, 0);
+					int p = Projectile.NewProjectile(Projectile.GetSource_OnHit(target), base.Projectile.Center.X, base.Projectile.Center.Y, vector.X, vector.Y, num24, Projectile.damage / 5 * 4, 0f, 0);
 					Main.projectile[p].hostile = false;
 					Main.projectile[p].friendly = true;
 					Main.projectile[p].DamageType = DamageClass.Magic;

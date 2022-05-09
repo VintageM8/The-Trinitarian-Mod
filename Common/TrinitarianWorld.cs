@@ -245,7 +245,7 @@ namespace Trinitarian.Common
            int j = (int)Main.worldSurface - 50;
             Mod.Logger.Info(j);
              Tile WF = Framing.GetTileSafely(i, j);
-            while (WF.HasTile || WF.liquid > 5)
+            while (WF.HasTile || WF.LiquidAmount > 5)
             {
                 if (j < 10)
                 {
@@ -289,13 +289,13 @@ namespace Trinitarian.Common
                         {
                             case 1:
                                 Tile t = Framing.GetTileSafely(i + x, j + y);
-                                t.liquid = 0;
+                                t.LiquidAmount = 0;
                                 WorldGen.PlaceWall(i + x, j + y, WallID.Wood, false);
                                 break;
 
 
                         }
-                        Framing.GetTileSafely(i + x, j + y).slope((byte)ShipSlope[x, y]);
+                        Framing.GetTileSafely(i + x, j + y).Slope = ((SlopeType)(byte)ShipSlope[x, y]);
                     }
                 }
             }
@@ -411,7 +411,7 @@ namespace Trinitarian.Common
                 for (int j = (int)m.Y; j < m.Y + y; j++)
                 {
                     Tile t = Framing.GetTileSafely(i, j);
-                    s += t.slope();
+                    s += t.Slope;
                     s += ",";
                 }
                 s += "}\n{";
@@ -471,7 +471,7 @@ namespace Trinitarian.Common
             tileL = Framing.GetTileSafely(x - 1, y);
             tileR = Framing.GetTileSafely(x + 1, y);
             tileBelow = Framing.GetTileSafely(x, y + 1);
-            if ((tileBelow.TileType == TileID.Sand || tileBelow.TileType == ModContent.TileType<AlgaePlant>() || tileR.TileType == ModContent.TileType<AlgaePlant>() || tileL.TileType == ModContent.TileType<AlgaePlant>()) && tile.liquid > 0 && !tile.HasTile)
+            if ((tileBelow.TileType == TileID.Sand || tileBelow.TileType == ModContent.TileType<AlgaePlant>() || tileR.TileType == ModContent.TileType<AlgaePlant>() || tileL.TileType == ModContent.TileType<AlgaePlant>()) && tileLiquidAmount > 0 && !tile.HasTile)
             {
                 WorldGen.PlaceTile(x, y, Placer, true);
                 //Player nlayer = Main.player[Main.myPlayer];
@@ -495,7 +495,7 @@ namespace Trinitarian.Common
             tileL = Framing.GetTileSafely(x - 1, y);
             tileR = Framing.GetTileSafely(x + 1, y);
             tileBelow = Framing.GetTileSafely(x, y + 1);
-            if ((tileBelow.TileType == TileID.Sand || tileBelow.TileType == ModContent.TileType<AlgaePlant>() || tileR.TileType == ModContent.TileType<AlgaePlant>() || tileL.TileType == ModContent.TileType<AlgaePlant>()) && tile.liquid > 0 && !tile.HasTile)
+            if ((tileBelow.TileType == TileID.Sand || tileBelow.TileType == ModContent.TileType<AlgaePlant>() || tileR.TileType == ModContent.TileType<AlgaePlant>() || tileL.TileType == ModContent.TileType<AlgaePlant>()) && tileLiquidAmount > 0 && !tile.HasTile)
             {
                 WorldGen.PlaceTile(x, y, Placer, true);
                 //Player nlayer = Main.player[Main.myPlayer];Testing

@@ -11,7 +11,7 @@ namespace Trinitarian.Common.Projectiles
     {
         public static void ElfAbility(Player player)
         {
-            Projectile temp = Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ModContent.ProjectileType<ElfAbilityMirror>(), 1, 1, player.whoAmI);
+            Projectile temp = Projectile.NewProjectileDirect(player.GetSource_Misc("ElfAbility"), player.Center, Vector2.Zero, ModContent.ProjectileType<ElfAbilityMirror>(), 1, 1, player.whoAmI);
             TrinitarianGlobalProjectile globalprojectileClone = temp.GetGlobalProjectile<TrinitarianGlobalProjectile>();
             globalprojectileClone.Cloned = true;
         }

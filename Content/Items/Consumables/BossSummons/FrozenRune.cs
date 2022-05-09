@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using Trinitarian.Content.NPCs.Bosses;
 using Trinitarian.Common.Players;
 using Terraria.Audio;
+using Terraria.Chat;
 
 namespace Trinitarian.Content.Items.Consumables.BossSummons
 {
@@ -50,11 +51,11 @@ namespace Trinitarian.Content.Items.Consumables.BossSummons
                 }
                 else if (Main.netMode == NetmodeID.Server)
                 {
-                    NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Njor, the Frozen Elemental has awoken!"), new Color(175, 75, 255));
+                    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Njor, the Frozen Elemental has awoken!"), new Color(175, 75, 255));
                 }
 
-                NPC.NewNPC((int)player.position.X, (int)(player.position.Y - 50f), ModContent.NPCType<IceBoss>(), 0, 0f, 0f, 0f, 0f, 255);
-                Main.PlaySound(SoundID.Roar, player.position, 0);
+                NPC.NewNPC(Item.GetSource_ItemUse(Item), (int)player.position.X, (int)(player.position.Y - 50f), ModContent.NPCType<IceBoss>(), 0, 0f, 0f, 0f, 0f, 255);
+                SoundEngine.PlaySound(SoundID.Roar, player.position, 0);
                 return true;
             }
             return false;

@@ -46,7 +46,7 @@ namespace Trinitarian.Common
         {
             Prims.Load();
             TrinitarianLists.LoadLists();
-	        UseAbilty = RegisterKeybind("Use Abilty", "R");
+	        UseAbilty = KeybindLoader.RegisterKeybind(Mod, "Use Abilty", "R");
 
 			 /*ModTranslation text = CreateTranslation("TrinitarianStuff"); Boss Checklist stuff, DOnt know if its needed or not, we shall see once the mod can build
             text = CreateTranslation("BossSpawnInfo.IceBoss");

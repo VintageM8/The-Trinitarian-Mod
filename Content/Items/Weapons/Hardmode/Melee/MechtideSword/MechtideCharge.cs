@@ -15,7 +15,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword
         public override void SetDefaults()
         {
             Projectile.aiStyle = 1;
-            aiType = ProjectileID.Bullet;
+            AIType = ProjectileID.Bullet;
             Projectile.width = 14;
             Projectile.height = 14;
             Projectile.friendly = true;

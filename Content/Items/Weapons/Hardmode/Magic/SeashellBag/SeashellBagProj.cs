@@ -14,7 +14,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic.SeashellBag
         {
             Projectile.ignoreWater = true;
             Projectile.aiStyle = 2;
-            aiType = ProjectileID.Shuriken;
+            AIType = ProjectileID.Shuriken;
             Projectile.width = 40;
             Projectile.penetrate = 3;
             Projectile.height = 36;
@@ -30,7 +30,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic.SeashellBag
 			for (int i = 0; i < Main.rand.Next(3, 5); i++)
 			{
 				Vector2 perturbedSpeed = Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(360));
-				Projectile.NewProjectile(Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<OceanRune>(), 40, 5f, Projectile.owner);
+				Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<OceanRune>(), 40, 5f, Projectile.owner);
 			}
 
 		}
