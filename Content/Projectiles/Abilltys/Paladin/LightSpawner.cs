@@ -53,7 +53,7 @@ namespace Trinitarian.Content.Projectiles.Abilltys.Paladin
                     float distance = Vector2.Distance(Projectile.Center, Main.npc[i].Center);
                     if (distance <= 900 && Projectile.ai[0] % 300 == 0)
                     {
-                        int proj = Projectile.NewProjectile(Projectile.Center, Vector2.One.RotatedByRandom(Math.PI) * 2, ModContent.ProjectileType<PaladinSmite>(), 30, 2f, Main.myPlayer);
+                        int proj = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.One.RotatedByRandom(Math.PI) * 2, ModContent.ProjectileType<PaladinSmite>(), 30, 2f, Main.myPlayer);
 
                         return;
                     }

@@ -25,7 +25,7 @@ namespace Trinitarian.Content.NPCs.Enemies.IceMan
             NPC.value = 60f;
             NPC.knockBackResist = 0.8f;
             NPC.aiStyle = 3;
-            aiType = NPCID.GoblinScout;
+            AIType = NPCID.GoblinScout;
         }
 
         public override void AI()

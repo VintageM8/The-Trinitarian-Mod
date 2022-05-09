@@ -55,6 +55,8 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            float speedX = position.X;
+            float speedY = position.Y;
             int[] proj = new int[8];
             Vector2 Speed = new Vector2(speedX, speedY);
             Speed.Normalize();
@@ -63,7 +65,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic
             {
                 for (int i = 0; i < 8; i++)
                 {
-                    proj[i] = Projectile.NewProjectile(player.Center, new Vector2(14 * (float)Math.Cos(2 * Math.PI * i / 8), 14 * (float)Math.Sin(2 * Math.PI * i / 8)), ModContent.ProjectileType<TidalWave>(), damage, knockBack, player.whoAmI);
+                    proj[i] = Projectile.NewProjectile(source, player.Center, new Vector2(14 * (float)Math.Cos(2 * Math.PI * i / 8), 14 * (float)Math.Sin(2 * Math.PI * i / 8)), ModContent.ProjectileType<TidalWave>(), damage, knockback, player.whoAmI);
                     Main.projectile[proj[i]].timeLeft = 16;
                     Cooldown = true;
                     //TODO Add a debuff for the cooldown.
@@ -73,7 +75,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    proj[i] = Projectile.NewProjectile(player.Center, new Vector2(speedX, speedY), ModContent.ProjectileType<TidalWave>(), damage, knockBack, player.whoAmI, 0, 0.3f * (i - 1));
+                    proj[i] = Projectile.NewProjectile(source, player.Center, new Vector2(speedX, speedY), ModContent.ProjectileType<TidalWave>(), damage, knockback, player.whoAmI, 0, 0.3f * (i - 1));
                     Main.projectile[proj[i]].timeLeft = 75;
                     Main.projectile[proj[i]].width = (int)(Main.projectile[proj[i]].width * (1 + 0.3f * (i - 1)));
                     Main.projectile[proj[i]].height = (int)(Main.projectile[proj[i]].height * (1 + 0.3f * (i - 1)));

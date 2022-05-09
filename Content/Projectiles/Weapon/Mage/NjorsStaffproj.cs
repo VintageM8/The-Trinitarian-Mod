@@ -20,7 +20,7 @@ namespace Trinitarian.Content.Projectiles.Weapon.Mage
             Projectile.aiStyle = 29;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Magic;
-            aiType = ProjectileID.IceBolt;
+            AIType = ProjectileID.IceBolt;
         }
 
         public override void Kill(int timeLeft)

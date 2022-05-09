@@ -83,7 +83,7 @@ namespace Trinitarian.Content.Projectiles.Subclass.Elf
 			}
 			for (int k = 0; k < 2; k++)
 			{
-				int num2 = Gore.NewGore(base.Projectile.position + new Vector2((float)(base.Projectile.width * Main.rand.Next(100)) / 100f, (float)(base.Projectile.height * Main.rand.Next(100)) / 100f) - Vector2.One * 10f, default(Vector2), Main.rand.Next(61, 64));
+				int num2 = Gore.NewGore(Projectile.GetSource_Death(), base.Projectile.position + new Vector2((float)(base.Projectile.width * Main.rand.Next(100)) / 100f, (float)(base.Projectile.height * Main.rand.Next(100)) / 100f) - Vector2.One * 10f, default(Vector2), Main.rand.Next(61, 64));
 				Gore obj = Main.gore[num2];
 				obj.velocity *= 0.3f;
 				obj.velocity.X += (float)Main.rand.Next(-10, 11) * 0.05f;

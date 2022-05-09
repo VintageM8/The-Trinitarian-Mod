@@ -23,7 +23,7 @@ namespace Trinitarian.Content.Projectiles.Subclass.Paladin
 			Projectile.timeLeft = 300;
 			Projectile.height = 6;
 			Projectile.width = 6;
-			aiType = ProjectileID.Bullet;
+			AIType = ProjectileID.Bullet;
 			Projectile.extraUpdates = 1;
 		}
 

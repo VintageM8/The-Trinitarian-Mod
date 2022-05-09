@@ -137,8 +137,8 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe
 
                 if (Suffocationtime == 5)
                 {
-                    Projectile.NewProjectile(Projectile.position.X, Projectile.position.Y, 0, -3, ProjectileType<FragmentalShurikenProj>(), 45, Projectile.knockBack, Main.myPlayer);
-                    Projectile.NewProjectile(Projectile.position.X, Projectile.position.Y, 0, 3, ProjectileType<FragmentalShurikenProj>(), 45, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.position.X, Projectile.position.Y, 0, -3, ProjectileType<FragmentalShurikenProj>(), 45, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(),Projectile.position.X, Projectile.position.Y, 0, 3, ProjectileType<FragmentalShurikenProj>(), 45, Projectile.knockBack, Main.myPlayer);
                     Suffocationtime = 0;
                 }
             }

@@ -504,14 +504,14 @@ namespace Trinitarian.Common.Players
                     flag2 = true;
                 }
 
-                if (!PlayerHooks.ConsumeAmmo(Player, sItem, item))
+               /* if (!PlayerHooks.ConsumeAmmo(Player, sItem, item))
                 {
                     flag2 = true;
                 }
                 if (!ItemLoader.ConsumeAmmo(sItem, item, Player))
                 {
                     flag2 = true;
-                }
+                }*/
             }
         }
 

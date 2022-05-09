@@ -69,10 +69,10 @@ namespace Trinitarian.Content.Subclasses.Elf.Weapon
 				int num = Main.rand.Next(4, 6);
 				for (int i = 0; i < num; i++)
 				{
-					float speedX2 = speedX + (float)Main.rand.Next(-30, 31) * 0.05f;
-					float speedY2 = speedY + (float)Main.rand.Next(-30, 31) * 0.05f;
+					float speedX2 = position.X + (float)Main.rand.Next(-30, 31) * 0.05f;
+					float speedY2 = position.Y + (float)Main.rand.Next(-30, 31) * 0.05f;
 					float ai = Main.rand.Next(6);
-					Projectile.NewProjectile(position.X, position.Y, speedX2, speedY2, type, damage, knockBack, player.whoAmI, ai, 0.5f + (float)Main.rand.NextDouble() * 0.9f);
+					Projectile.NewProjectile(source,position.X, position.Y, speedX2, speedY2, type, damage, knockback, player.whoAmI, ai, 0.5f + (float)Main.rand.NextDouble() * 0.9f);
 				}
 				return false;
 			}
@@ -117,7 +117,7 @@ namespace Trinitarian.Content.Subclasses.Elf.Weapon
 				float num5 = num2;
 				float num6 = num3 + (float)Main.rand.Next(-40, 41) * 0.02f;
 				float ai2 = Main.rand.Next(6);
-				Projectile.NewProjectile(vector.X, vector.Y, num5 * 0.75f, num6 * 0.75f, type, damage, knockBack, player.whoAmI, ai2, 0.5f + (float)Main.rand.NextDouble() * 0.9f);
+				Projectile.NewProjectile(source, vector.X, vector.Y, num5 * 0.75f, num6 * 0.75f, type, damage, knockback, player.whoAmI, ai2, 0.5f + (float)Main.rand.NextDouble() * 0.9f);
 			}
 			return false;
 		}

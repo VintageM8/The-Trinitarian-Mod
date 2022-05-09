@@ -43,7 +43,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic
                 Vector2 SpawnPos = Main.MouseWorld + new Vector2(90).RotatedBy(MathHelper.ToRadians(i));
                 Vector2 Velociry = Main.MouseWorld - SpawnPos;
                 Velociry.Normalize();
-                Projectile.NewProjectile(SpawnPos, Velociry * 5, type, damage, knockBack, player.whoAmI);
+                Projectile.NewProjectile(source, SpawnPos, Velociry * 5, type, damage, knockback, player.whoAmI);
             }
             return false;
         }

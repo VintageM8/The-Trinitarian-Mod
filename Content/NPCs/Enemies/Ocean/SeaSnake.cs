@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Utilities;
 
 namespace Trinitarian.Content.NPCs.Enemies.Ocean
 {
@@ -23,7 +24,7 @@ namespace Trinitarian.Content.NPCs.Enemies.Ocean
             base.NPC.defense = 12;
             base.NPC.lifeMax = 110;
             base.NPC.aiStyle = -1;
-            aiType = -1; ;
+            AIType = -1; ;
             base.NPC.HitSound = SoundID.NPCHit33;
             base.NPC.DeathSound = SoundID.NPCDeath28;
             base.NPC.knockBackResist = 0.3f;

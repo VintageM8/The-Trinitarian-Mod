@@ -54,7 +54,7 @@ namespace Trinitarian.Content.Projectiles.Subclass.Paladin
         public override void Kill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode);
-            Projectile.NewProjectile(Projectile.Center, Vector2.Zero, ProjectileType<BombExplosion>(), Projectile.ai[0] == 0 ? 120 : 20, 2, Projectile.owner);
+            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ProjectileType<BombExplosion>(), Projectile.ai[0] == 0 ? 120 : 20, 2, Projectile.owner);
 
             for (int i = 0; i < 10; i++)
             {

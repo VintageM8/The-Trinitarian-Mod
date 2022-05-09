@@ -50,7 +50,7 @@ namespace Trinitarian.Common.Projectiles
                 }
                 if (isClose && globalprojectile.Cloned == false)
                 {
-                    Projectile temp = Projectile.NewProjectileDirect(projectile.position, projectile.velocity.RotatedBy(Math.PI / 12), projectile.type, 1, 1, player.whoAmI, 0, 0);
+                    Projectile temp = Projectile.NewProjectileDirect(projectile.GetSource_FromAI("global"), projectile.position, projectile.velocity.RotatedBy(Math.PI / 12), projectile.type, 1, 1, player.whoAmI, 0, 0);
                     projectile.velocity.RotatedBy(-Math.PI / 12);
                     TrinitarianGlobalProjectile globalprojectileClone = temp.GetGlobalProjectile<TrinitarianGlobalProjectile>();
                     globalprojectileClone.Cloned = true;

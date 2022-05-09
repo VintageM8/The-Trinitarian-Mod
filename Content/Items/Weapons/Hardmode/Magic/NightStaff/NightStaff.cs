@@ -37,7 +37,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic.NightStaff
             if (player.ownedProjectileCounts[ModContent.ProjectileType<FocusProjectile>()] < 1)
             {
                 position = Main.MouseWorld;
-                return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
+                return base.Shoot(player, source, position, velocity, type, damage, knockback);
             }
             else
             {

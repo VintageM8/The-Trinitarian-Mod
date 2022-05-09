@@ -38,10 +38,12 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.TBS
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
+			float speedX = position.X;
+			float speedY = position.Y;
 			Vector2 perturbedSpeed = new Vector2(speedX, speedY);
-			Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<TrueBiomeShurikenProj>(), damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<TrueBiomeShurikenProj>(), damage, knockback, player.whoAmI);
 			perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(15));
-			Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<TrueBiomeShurikenBeam>(), damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<TrueBiomeShurikenBeam>(), damage, knockback, player.whoAmI);
 			return false;
 		}
 		public override void AddRecipes()

@@ -37,7 +37,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic.SeashellBag
        
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(BuffType<Drowning>(), 240);
+                target.AddBuff(BuffType<Drowning>(), 240);
         }
     }
 }

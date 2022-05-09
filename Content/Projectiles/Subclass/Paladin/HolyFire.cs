@@ -19,7 +19,7 @@ namespace Trinitarian.Content.Projectiles.Subclass.Paladin
 			Projectile.height = 16;
 
 			Projectile.aiStyle = 1;
-			aiType = ProjectileID.Bullet;
+			AIType = ProjectileID.Bullet;
 
 			Projectile.DamageType = DamageClass.Melee;
 			Projectile.friendly = true;

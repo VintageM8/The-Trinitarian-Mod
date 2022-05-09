@@ -27,7 +27,7 @@ namespace Trinitarian.Content.Projectiles.Weapon.Mage
             Projectile.tileCollide = true;
             Projectile.extraUpdates = 1;
             Projectile.scale = 1.75f;
-            aiType = ProjectileID.Spark;
+            AIType = ProjectileID.Spark;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

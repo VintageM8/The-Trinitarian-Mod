@@ -14,7 +14,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Summoner.HolyElemental
             DisplayName.SetDefault("Holy Elemential");
             Main.projFrames[Projectile.type] = 1;
             Main.projPet[Projectile.type] = true;
-            ProjectileID.Sets.Homing[Projectile.type] = true;
+            ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
         }

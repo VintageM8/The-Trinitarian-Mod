@@ -15,11 +15,11 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.BlueBlade
         {
             Projectile.width = 2;
             Projectile.height = 2;
-            drawOffsetX = -45;
+            DrawOffsetX = -45;
             Projectile.alpha = 255;
-            drawOriginOffsetY = 0;
+            DrawOriginOffsetX = 0;
             Projectile.damage = 65;
-            drawOriginOffsetX = 23;
+            DrawOriginOffsetY = 23;
             Projectile.aiStyle = -1;
             Projectile.friendly = true;
             Projectile.penetrate = 5;

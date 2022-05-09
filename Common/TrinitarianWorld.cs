@@ -17,6 +17,7 @@ using System.IO;
 using Terraria.WorldBuilding;
 using System;
 using Terraria.GameContent.Generation;
+using Terraria.IO;
 
 namespace Trinitarian.Common
 {
@@ -238,7 +239,8 @@ namespace Trinitarian.Common
 { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         };
         #endregion
-        private void MakeShipWreck(GenerationProgress progress)
+        
+        private void MakeShipWreck(GenerationProgress progress, GameConfiguration g)
         {
             progress.Message = "Making Ship (Trinitarian)";
            int i = 50;
@@ -471,7 +473,7 @@ namespace Trinitarian.Common
             tileL = Framing.GetTileSafely(x - 1, y);
             tileR = Framing.GetTileSafely(x + 1, y);
             tileBelow = Framing.GetTileSafely(x, y + 1);
-            if ((tileBelow.TileType == TileID.Sand || tileBelow.TileType == ModContent.TileType<AlgaePlant>() || tileR.TileType == ModContent.TileType<AlgaePlant>() || tileL.TileType == ModContent.TileType<AlgaePlant>()) && tileLiquidAmount > 0 && !tile.HasTile)
+            if ((tileBelow.TileType == TileID.Sand || tileBelow.TileType == ModContent.TileType<AlgaePlant>() || tileR.TileType == ModContent.TileType<AlgaePlant>() || tileL.TileType == ModContent.TileType<AlgaePlant>()) && tile.LiquidAmount > 0 && !tile.HasTile)
             {
                 WorldGen.PlaceTile(x, y, Placer, true);
                 //Player nlayer = Main.player[Main.myPlayer];
@@ -495,7 +497,7 @@ namespace Trinitarian.Common
             tileL = Framing.GetTileSafely(x - 1, y);
             tileR = Framing.GetTileSafely(x + 1, y);
             tileBelow = Framing.GetTileSafely(x, y + 1);
-            if ((tileBelow.TileType == TileID.Sand || tileBelow.TileType == ModContent.TileType<AlgaePlant>() || tileR.TileType == ModContent.TileType<AlgaePlant>() || tileL.TileType == ModContent.TileType<AlgaePlant>()) && tileLiquidAmount > 0 && !tile.HasTile)
+            if ((tileBelow.TileType == TileID.Sand || tileBelow.TileType == ModContent.TileType<AlgaePlant>() || tileR.TileType == ModContent.TileType<AlgaePlant>() || tileL.TileType == ModContent.TileType<AlgaePlant>()) && tile.LiquidAmount > 0 && !tile.HasTile)
             {
                 WorldGen.PlaceTile(x, y, Placer, true);
                 //Player nlayer = Main.player[Main.myPlayer];Testing

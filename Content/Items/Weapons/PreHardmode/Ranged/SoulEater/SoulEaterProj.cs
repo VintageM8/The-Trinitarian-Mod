@@ -40,7 +40,7 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.SoulEater
 			for (int i = 0; i < Main.rand.Next(1, 2); i++)
 			{
 				Vector2 perturbedSpeed = Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(360));
-				Projectile.NewProjectile(Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<CorruptHead>(), 40, 5f, Projectile.owner);
+				Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<CorruptHead>(), 40, 5f, Projectile.owner);
 			}
 
 		}

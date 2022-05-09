@@ -16,7 +16,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe
 		{
 			Projectile.ignoreWater = true;
 			Projectile.aiStyle = 2;
-			aiType = ProjectileID.Shuriken;
+			AIType = ProjectileID.Shuriken;
 			Projectile.width = 24;
 			Projectile.penetrate = 1;
 			Projectile.height = 24;

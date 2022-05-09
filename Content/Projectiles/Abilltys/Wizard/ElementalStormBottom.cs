@@ -86,7 +86,7 @@ namespace Trinitarian.Content.Projectiles.Abilltys.Wizard
                 if (delay > 5)
                 {
                     delay = 0;
-                    Projectile.NewProjectile(new Vector2(Projectile.Center.X, Projectile.Center.Y - Projectile.height * Projectile.scale), new Vector2(0, 0), ModContent.ProjectileType<ElementalStormUp>(), Projectile.damage, 0, Projectile.owner, Projectile.whoAmI, num + 1);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X, Projectile.Center.Y - Projectile.height * Projectile.scale), new Vector2(0, 0), ModContent.ProjectileType<ElementalStormUp>(), Projectile.damage, 0, Projectile.owner, Projectile.whoAmI, num + 1);
                     num++;
                 }
             }

@@ -37,6 +37,8 @@ namespace Trinitarian.Content.Subclasses.Elf.Weapon
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) 
         {
+            float speedX = position.X;
+            float speedY = position.Y;
             Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 40f;
             if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
             {
@@ -55,7 +57,7 @@ namespace Trinitarian.Content.Subclasses.Elf.Weapon
             perturbedSpeed = perturbedSpeed.RotatedByRandom(MathHelper.ToRadians(spread));
             float scale = 1f - (Main.rand.NextFloat() * .3f);
             perturbedSpeed = perturbedSpeed * scale;
-            Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+            Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockback, player.whoAmI);
             return false;
         }
 

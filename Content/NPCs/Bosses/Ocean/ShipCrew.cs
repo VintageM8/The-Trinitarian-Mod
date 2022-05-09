@@ -89,7 +89,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(NPC.Center, NPC.DirectionTo(player.Center) * 7.5f, ProjectileType<Bubble>(), NPC.damage, 10f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.DirectionTo(player.Center) * 7.5f, ProjectileType<Bubble>(), NPC.damage, 10f, Main.myPlayer);
                             }
                             NPC.ai[2]++;
                         }

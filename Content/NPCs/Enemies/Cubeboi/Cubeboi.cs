@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ModLoader.Utilities;
 
 namespace Trinitarian.Content.NPCs.Enemies.Cubeboi
 {

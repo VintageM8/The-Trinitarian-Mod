@@ -14,7 +14,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Summoner.GiantFish
             DisplayName.SetDefault("Giant Fish");
             Main.projFrames[Projectile.type] = 1;
             Main.projPet[Projectile.type] = true;
-            ProjectileID.Sets.Homing[Projectile.type] = true;
+            ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
         }
@@ -161,7 +161,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Summoner.GiantFish
 
             if (Main.rand.NextBool(3))
             {
-                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Fire, Projectile.velocity.X * 0.1f, Projectile.velocity.Y * 0.1f);
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Firefly, Projectile.velocity.X * 0.1f, Projectile.velocity.Y * 0.1f);
             }
             Lighting.AddLight(Projectile.Center, Color.Aqua.ToVector3() * 0.78f);
         }

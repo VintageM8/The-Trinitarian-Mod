@@ -37,8 +37,8 @@ namespace Trinitarian.Content.Items.Bags.Boss
             // Always drops one of:
             if (choice == 0)
             {
-                player.QuickSpawnItem(ModContent.ItemType<UlvkilSoul>(), 2);
-                player.QuickSpawnItem(ModContent.ItemType<ZolzarsShield>(), 1);
+                player.QuickSpawnItem(player.GetSource_Loot(), ModContent.ItemType<UlvkilSoul>(), 2);
+                player.QuickSpawnItem(player.GetSource_Loot(),ModContent.ItemType<ZolzarsShield>(), 1);
             }
         }
 

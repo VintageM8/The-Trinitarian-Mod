@@ -28,7 +28,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged.AntiMagicBow
             Projectile.tileCollide = true;
             Projectile.extraUpdates = 1;
             Projectile.scale = 1.75f;
-            aiType = ProjectileID.GreenLaser;
+            AIType = ProjectileID.GreenLaser;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

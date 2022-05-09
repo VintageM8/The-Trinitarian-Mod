@@ -71,7 +71,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic.SeashellBag
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            Projectile.NewProjectile(Projectile.Center, Vector2.One.RotatedByRandom(Math.PI) * 4, ProjectileType<Seashell>(), Projectile.damage, 3f, Main.myPlayer);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.One.RotatedByRandom(Math.PI) * 4, ProjectileType<Seashell>(), Projectile.damage, 3f, Main.myPlayer);
 
                             Projectile.Kill();
                         }

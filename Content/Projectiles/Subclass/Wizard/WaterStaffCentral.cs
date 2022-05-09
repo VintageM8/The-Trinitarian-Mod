@@ -17,7 +17,7 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
             Projectile.width = 20;
             Projectile.height = 16;
             Projectile.aiStyle = 43;
-            aiType = 227;
+            AIType = 227;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.friendly = true;
             Projectile.ignoreWater = true;
@@ -41,10 +41,10 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
         public override void Kill(int timeLeft)
         {
             var player = Main.player[Projectile.owner];
-            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center.X, Projectile.Center.Y - 75f, 0.0f, 0.2f, ModContent.ProjectileType<WaterMagic>(), (int)(15 * player.GetDamage(DamageClass.Magic)), 3.0f, Projectile.owner, 0.0f, 0.0f);
-            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center.X - 75f, Projectile.Center.Y, 0.2f, 0.0f, ModContent.ProjectileType<WaterMagic>(), (int)(15 * player.GetDamage(DamageClass.Magic)), 3.0f, Projectile.owner, 0.0f, 0.0f);
-            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center.X, Projectile.Center.Y + 75f, 0.0f, -0.2f, ModContent.ProjectileType<WaterMagic>(), (int)(15 * player.GetDamage(DamageClass.Magic)), 3.0f, Projectile.owner, 0.0f, 0.0f);
-            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center.X + 75f, Projectile.Center.Y, -0.2f, 0.0f, ModContent.ProjectileType<WaterMagic>(), (int)(15 * player.GetDamage(DamageClass.Magic)), 3.0f, Projectile.owner, 0.0f, 0.0f);
+            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center.X, Projectile.Center.Y - 75f, 0.0f, 0.2f, ModContent.ProjectileType<WaterMagic>(), (int)(15 * player.GetDamage(DamageClass.Magic).Multiplicative), 3.0f, Projectile.owner, 0.0f, 0.0f);
+            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center.X - 75f, Projectile.Center.Y, 0.2f, 0.0f, ModContent.ProjectileType<WaterMagic>(), (int)(15 * player.GetDamage(DamageClass.Magic).Multiplicative), 3.0f, Projectile.owner, 0.0f, 0.0f);
+            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center.X, Projectile.Center.Y + 75f, 0.0f, -0.2f, ModContent.ProjectileType<WaterMagic>(), (int)(15 * player.GetDamage(DamageClass.Magic).Multiplicative), 3.0f, Projectile.owner, 0.0f, 0.0f);
+            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center.X + 75f, Projectile.Center.Y, -0.2f, 0.0f, ModContent.ProjectileType<WaterMagic>(), (int)(15 * player.GetDamage(DamageClass.Magic).Multiplicative), 3.0f, Projectile.owner, 0.0f, 0.0f);
         }
     }
 }

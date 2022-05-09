@@ -71,12 +71,12 @@ namespace Trinitarian.Content.Projectiles.Misc.Orbiting
                     ProjID = 0;
                     modplayer.OrbitingProjectile[ProjectileSlot, 0].localAI[0] = 1;
                     modplayer.OrbitingProjectile[ProjectileSlot, 1] = modplayer.OrbitingProjectile[ProjectileSlot, 0];
-                    modplayer.OrbitingProjectile[ProjectileSlot, 0] = projectile;
+                    modplayer.OrbitingProjectile[ProjectileSlot, 0] = Projectile;
                 }
                 else
                 {
                     ProjID = modplayer.OrbitingProjectileCount[ProjectileSlot];
-                    modplayer.OrbitingProjectile[ProjectileSlot, modplayer.OrbitingProjectileCount[ProjectileSlot]] = projectile;
+                    modplayer.OrbitingProjectile[ProjectileSlot, modplayer.OrbitingProjectileCount[ProjectileSlot]] = Projectile;
                 }
                 modplayer.OrbitingProjectileCount[ProjectileSlot]++;
                 //Make sure to update the array whenever the ProjectileSlot of projectiles changes.

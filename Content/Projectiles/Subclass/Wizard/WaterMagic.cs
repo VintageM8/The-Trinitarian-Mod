@@ -17,7 +17,7 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
             Projectile.width = 20;
             Projectile.height = 16;
             Projectile.aiStyle = 43;
-            aiType = 227;
+            AIType = 227;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.friendly = true;
             Projectile.ignoreWater = true;

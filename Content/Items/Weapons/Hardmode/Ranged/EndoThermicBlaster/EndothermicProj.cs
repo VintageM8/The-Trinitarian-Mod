@@ -14,10 +14,10 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged.EndoThermicBlaster
         public override void SetDefaults()
         {
             Projectile.DamageType = DamageClass.Ranged;
-            aiType = ProjectileID.SnowBallFriendly;
+            AIType = ProjectileID.SnowBallFriendly;
             Projectile.ignoreWater = true;
             Projectile.aiStyle = 0;
-            aiType = ProjectileID.SnowBallFriendly;
+            AIType = ProjectileID.SnowBallFriendly;
             Projectile.timeLeft = 600;
             Projectile.width = 30;
             Projectile.penetrate = 3;
