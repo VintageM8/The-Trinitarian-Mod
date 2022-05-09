@@ -32,15 +32,7 @@ namespace Trinitarian.Content.Subclasses.Paladin.Weapon
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
         }
-        
-        public override bool? UseItem(Player player)
-        {
-            for (int i = 0; i < Math.Min(10, player.GetModPlayer<HolyCombo>().combo / 5); ++i)
-            {
-                Projectile.NewProjectile(player.Center, new Vector2(Main.rand.NextFloat(4, 7) * player.direction, Main.rand.NextFloat(-8, -5)), ModContent.ProjectileType<HolyEnergy>(), item.damage, item.knockBack, player.whoAmI);
-            }
-            return true;
-        }
+       
 
         public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
         {
