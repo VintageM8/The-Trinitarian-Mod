@@ -36,24 +36,28 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.TBS
 			Item.value = Item.sellPrice(gold: 5);
 			Item.shoot = ModContent.ProjectileType<TrueBiomeShurikenProj>();
 		}
+
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-		{
-			float speedX = position.X;
-			float speedY = position.Y;
-			Vector2 perturbedSpeed = new Vector2(speedX, speedY);
-			Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<TrueBiomeShurikenProj>(), damage, knockback, player.whoAmI);
-			perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(15));
-			Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<TrueBiomeShurikenBeam>(), damage, knockback, player.whoAmI);
+                {
+                        float numberProjectiles = 2 + Main.rand.Next(2);
+			float rotation = MathHelper.ToRadians(20);
+			position += Vector2.Normalize(new Vector2(velocity.X, velocity.Y)) * 45f;
+			for (int i = 0; i < numberProjectiles; i++)
+			{
+				Vector2 perturbedSpeed = new Vector2(velocity.X, velocity.Y).RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * .2f;
+				Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, 2f, player.whoAmI);
+			}
 			return false;
 		}
+
 		public override void AddRecipes()
 		{
-			CreateRecipe(1)
-				.AddIngredient(ItemID.ShroomiteBar, 8)
-                .AddIngredient(ModContent.ItemType<Mechtide>(), 18)
-                .AddIngredient(ItemID.SoulofNight, 10)
-				.AddTile(TileID.DemonAltar)
-				.Register();
+		    CreateRecipe(1)
+	            .AddIngredient(ItemID.ShroomiteBar, 8)
+                    .AddIngredient(ModContent.ItemType<Mechtide>(), 18)
+                    .AddIngredient(ItemID.SoulofNight, 10)
+         	    .AddTile(TileID.DemonAltar)
+		    .Register();
 		}
 	}
 }
