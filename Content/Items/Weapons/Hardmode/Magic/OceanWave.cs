@@ -37,17 +37,15 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            float speedX = position.X;
-            float speedY = position.Y;
-            float rot = position.ToRotation();
-            float rotOffset = MathHelper.PiOver2 / 5f;
-            float speed = (float)Math.Sqrt(speedX * speedX + speedY * speedY);
-            for (int i = 0; i < 5; i++)
-            {
-                Vector2 velo = new Vector2(1f, 0f).RotatedBy(rot + (i - 2) * rotOffset);
-                Projectile.NewProjectile(source, position + velo * 10f, velo, type, damage, knockback, player.whoAmI, 0f, speed * 0.01f);
-            }
-            return false;
-        }
+           float numberProjectiles = 6 + Main.rand.Next(6);
+			float rotation = MathHelper.ToRadians(20);
+			position += Vector2.Normalize(new Vector2(velocity.X, velocity.Y)) * 45f;
+			for (int i = 0; i < numberProjectiles; i++)
+			{
+				Vector2 perturbedSpeed = new Vector2(velocity.X, velocity.Y).RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * .2f;
+				Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, 2f, player.whoAmI);
+			}
+			return false;
+		}
     }
 }
