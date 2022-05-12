@@ -15,9 +15,9 @@ namespace Trinitarian.Content.Items.Accessories
 
         public override void SetDefaults()
         {
-            base.item.width = 26;
-            base.item.height = 26;
-            item.consumable = true;
+            base.Item.width = 26;
+            base.Item.height = 26;
+            Item.consumable = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -27,11 +27,10 @@ namespace Trinitarian.Content.Items.Accessories
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.LunarOre, 60);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.LunarOre, 60)
+                .AddTile(TileID.WorkBenches)
+                .Register();
         }
     }
 }

@@ -14,30 +14,29 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Melee
 
         public override void SetDefaults()
         {
-            item.damage = 9;
-            item.melee = true;
-            item.width = 20;
-            item.height = 20;
-            item.useTime = 25;
-            item.useAnimation = 25;
-            item.knockBack = 1f;
-            item.value = Item.sellPrice(0, 0, 35, 22);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = false;
-            item.crit = 2;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.scale = 1.2f;
-            item.useTurn = true;
+            Item.damage = 9;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 20;
+            Item.height = 20;
+            Item.useTime = 25;
+            Item.useAnimation = 25;
+            Item.knockBack = 1f;
+            Item.value = Item.sellPrice(0, 0, 35, 22);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = false;
+            Item.crit = 2;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.scale = 1.2f;
+            Item.useTurn = true;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddTile(TileID.Anvils);
-            recipe.AddIngredient(ModContent.ItemType<RustyMetal>(), 8);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddTile(TileID.Anvils)
+                .AddIngredient(ModContent.ItemType<RustyMetal>(), 8)
+                .Register();
         }
     }
 }

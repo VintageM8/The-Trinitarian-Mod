@@ -18,11 +18,11 @@ namespace Trinitarian.Content.Items.Armor.StarSet
 
         public override void SetDefaults()
         {
-            item.width = 20;
-            item.height = 20;
-            item.value = Item.sellPrice(0, 1, 0, 0);
-            item.rare = ItemRarityID.Orange;
-            item.defense = 6;
+            Item.width = 20;
+            Item.height = 20;
+            Item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.rare = ItemRarityID.Orange;
+            Item.defense = 6;
         }
 
         public override void UpdateEquip(Player player)
@@ -46,12 +46,11 @@ namespace Trinitarian.Content.Items.Armor.StarSet
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.MeteoriteBar, 12);
-            recipe.AddIngredient(ItemType<StarSteel>(), 8);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.MeteoriteBar, 12)
+                .AddIngredient(ItemType<StarSteel>(), 8)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

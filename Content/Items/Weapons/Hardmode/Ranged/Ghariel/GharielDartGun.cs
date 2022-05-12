@@ -15,48 +15,44 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged.Ghariel
 
         public override void SetDefaults()
         {
-            item.damage = 68;
-            item.ranged = true;
-            item.width = 50;
-            item.height = 28;
-            item.useTime = 23;
-            item.useAnimation = 23;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 4;
-            item.value = Item.sellPrice(0, 5, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.UseSound = SoundID.Item11;
-            item.autoReuse = true;
-            item.shoot = 10;
-            item.shootSpeed = 18f;
-            item.useAmmo = AmmoID.Dart;
+            Item.damage = 68;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 50;
+            Item.height = 28;
+            Item.useTime = 23;
+            Item.useAnimation = 23;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 4;
+            Item.value = Item.sellPrice(0, 5, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.UseSound = SoundID.Item11;
+            Item.autoReuse = true;
+            Item.shoot = 10;
+            Item.shootSpeed = 18f;
+            Item.useAmmo = AmmoID.Dart;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
-			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(30));//change to reduce spread
-			speedX = perturbedSpeed.X;
-			speedY = perturbedSpeed.Y;
-		
-			return true;
+			Vector2 perturbedSpeed = new Vector2(position.X, position.Y).RotatedByRandom(MathHelper.ToRadians(30));//change to reduce spread
+            position.X = perturbedSpeed.X;
+            position.Y = perturbedSpeed.Y;
+
 		}
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.AddIngredient(ItemID.HallowedBar, 4);
-            recipe.AddIngredient(ItemID.DartRifle, 1);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
-
-            ModRecipe recipe2 = new ModRecipe(mod);
-            recipe2.AddTile(TileID.Furnaces);
-            recipe2.AddIngredient(ItemID.HallowedBar, 4);
-            recipe2.AddIngredient(ItemID.DartPistol, 1);
-            recipe2.SetResult(this);
-            recipe2.AddRecipe();
+            CreateRecipe(1)
+                .AddTile(TileID.MythrilAnvil)
+                .AddIngredient(ItemID.HallowedBar, 4)
+                .AddIngredient(ItemID.DartRifle, 1)
+                .Register();
+            CreateRecipe(1)
+                .AddTile(TileID.Furnaces)
+                .AddIngredient(ItemID.HallowedBar, 4)
+                .AddIngredient(ItemID.DartPistol, 1)
+                .Register();
         }
     }
 }

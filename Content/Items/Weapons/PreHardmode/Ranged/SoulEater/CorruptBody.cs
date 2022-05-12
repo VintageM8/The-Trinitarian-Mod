@@ -8,34 +8,34 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.SoulEater
     {
         public override void SetDefaults()
         {
-            projectile.width = 22;
-            projectile.height = 24;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.ranged = true;
-            projectile.penetrate = -1;
-            projectile.timeLeft = 85;
-            projectile.ignoreWater = true;
-            projectile.tileCollide = false;
-            projectile.extraUpdates = 1;
+            Projectile.width = 22;
+            Projectile.height = 24;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.penetrate = -1;
+            Projectile.timeLeft = 85;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.extraUpdates = 1;
         }
         public override void AI()
         {
-            projectile.ai[0]++;
-            projectile.alpha = projectile.alpha + 3;
-            if (projectile.ai[0] == 1)
+            Projectile.ai[0]++;
+            Projectile.alpha = Projectile.alpha + 3;
+            if (Projectile.ai[0] == 1)
             {
-                projectile.alpha = 255;
-                projectile.rotation = projectile.velocity.ToRotation() + MathHelper.PiOver2;
+                Projectile.alpha = 255;
+                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             }
             else
             {
-                projectile.velocity.Y = 0;
-                projectile.velocity.X = 0;
+                Projectile.velocity.Y = 0;
+                Projectile.velocity.X = 0;
             }
-            if (projectile.ai[0] == 2)
+            if (Projectile.ai[0] == 2)
             {
-                projectile.alpha = 0;
+                Projectile.alpha = 0;
             }
         }
     }

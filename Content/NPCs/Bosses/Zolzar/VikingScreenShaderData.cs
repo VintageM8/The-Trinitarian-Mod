@@ -16,7 +16,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 
         private void UpdateVikingIndex()
         {
-            int VikingType = ModLoader.GetMod("Trinitarian").NPCType("VikingBoss");
+            int VikingType = ModLoader.GetMod("Trinitarian").Find<ModNPC>("VikingBoss").Type;
             if (VikingIndex >= 0 && Main.npc[VikingIndex].active && Main.npc[VikingIndex].type == VikingType)
             {
                 return;

@@ -1,6 +1,7 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using Trinitarian.Content.Items.Weapons.Hardmode.Melee.TBS;
 using static Terraria.ModLoader.ModContent;
@@ -16,42 +17,47 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.TBS
 		}
 		public override void SetDefaults()
 		{
-			item.UseSound = SoundID.Item1;
-			item.shootSpeed = 18;
-			item.crit = 12;
-			item.damage = 68;
-			item.knockBack = 8f;
-			item.useStyle = ItemUseStyleID.SwingThrow;
-			item.useAnimation = 12;
-			item.useTime = 12;
-			item.width = 30;
-			item.height = 30;
-			item.maxStack = 1;
-			item.rare = ItemRarityID.Lime;
-			item.consumable = false;
-			item.noUseGraphic = true;
-			item.melee = true;
-			item.autoReuse = true;
-			item.value = Item.sellPrice(gold: 5);
-			item.shoot = ModContent.ProjectileType<TrueBiomeShurikenProj>();
+			Item.UseSound = SoundID.Item1;
+			Item.shootSpeed = 18;
+			Item.crit = 12;
+			Item.damage = 68;
+			Item.knockBack = 8f;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.useAnimation = 12;
+			Item.useTime = 12;
+			Item.width = 30;
+			Item.height = 30;
+			Item.maxStack = 1;
+			Item.rare = ItemRarityID.Lime;
+			Item.consumable = false;
+			Item.noUseGraphic = true;
+			Item.DamageType = DamageClass.Melee;
+			Item.autoReuse = true;
+			Item.value = Item.sellPrice(gold: 5);
+			Item.shoot = ModContent.ProjectileType<TrueBiomeShurikenProj>();
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			Vector2 perturbedSpeed = new Vector2(speedX, speedY);
-			Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<TrueBiomeShurikenProj>(), damage, knockBack, player.whoAmI);
-			perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(15));
-			Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<TrueBiomeShurikenBeam>(), damage, knockBack, player.whoAmI);
+
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+                {
+                        float numberProjectiles = 2 + Main.rand.Next(2);
+			float rotation = MathHelper.ToRadians(20);
+			position += Vector2.Normalize(new Vector2(velocity.X, velocity.Y)) * 45f;
+			for (int i = 0; i < numberProjectiles; i++)
+			{
+				Vector2 perturbedSpeed = new Vector2(velocity.X, velocity.Y).RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * .2f;
+				Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, 2f, player.whoAmI);
+			}
 			return false;
 		}
+
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-            recipe.SetResult(this);
-			recipe.AddIngredient(ItemID.ShroomiteBar, 8);
-            recipe.AddIngredient(ModContent.ItemType<Mechtide>(), 18);
-            recipe.AddIngredient(ItemID.SoulofNight, 10);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.AddRecipe();
+		    CreateRecipe(1)
+	            .AddIngredient(ItemID.ShroomiteBar, 8)
+                    .AddIngredient(ModContent.ItemType<Mechtide>(), 18)
+                    .AddIngredient(ItemID.SoulofNight, 10)
+         	    .AddTile(TileID.DemonAltar)
+		    .Register();
 		}
 	}
 }

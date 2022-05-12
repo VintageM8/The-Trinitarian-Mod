@@ -17,36 +17,35 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe
 
         public override void SetDefaults()
         {
-            item.damage = 278;
-            item.melee = true;
-            item.width = 64;
-            item.height = 64;
-            item.useTime = 21;
-            item.useAnimation = 21;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.noUseGraphic = true;
-            item.knockBack = 6;
-            item.value = Item.sellPrice(0, 25, 0, 0);
-            item.rare = ItemRarityID.Red;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<TheInfuser>();
-            item.shootSpeed = 15f;
+            Item.damage = 278;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 64;
+            Item.height = 64;
+            Item.useTime = 21;
+            Item.useAnimation = 21;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.noUseGraphic = true;
+            Item.knockBack = 6;
+            Item.value = Item.sellPrice(0, 25, 0, 0);
+            Item.rare = ItemRarityID.Red;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<TheInfuser>();
+            Item.shootSpeed = 15f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<UlvkilSoul>(), 3);
-            recipe.AddIngredient(ModContent.ItemType<StormEnergy>(), 18);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ModContent.ItemType<UlvkilSoul>(), 3)
+                .AddIngredient(ModContent.ItemType<StormEnergy>(), 18)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
 
         public override bool CanUseItem(Player player)
         {
-            return player.ownedProjectileCounts[item.shoot] < 1;
+            return player.ownedProjectileCounts[Item.shoot] < 1;
         }
     }
 }

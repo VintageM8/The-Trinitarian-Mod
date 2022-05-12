@@ -3,6 +3,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 
 namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic.SnowHeartStaff
 {
@@ -24,32 +25,32 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic.SnowHeartStaff
 
         public override void SetDefaults()
         {
-            projectile.width = 14;
-            projectile.height = 14;
-            projectile.friendly = true;
-            projectile.ignoreWater = true;
-            projectile.tileCollide = false;
-            projectile.netImportant = true;
-            projectile.penetrate = -1;
-            projectile.timeLeft = 2;
+            Projectile.width = 14;
+            Projectile.height = 14;
+            Projectile.friendly = true;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.netImportant = true;
+            Projectile.penetrate = -1;
+            Projectile.timeLeft = 2;
         }
 
 
         public override void AI()
         {
-            projectile.timeLeft = projectile.timeLeft + 1;
-            projectile.rotation = (Main.MouseWorld - projectile.Center).ToRotation();
-            projectile.tileCollide = false;
+            Projectile.timeLeft = Projectile.timeLeft + 1;
+            Projectile.rotation = (Main.MouseWorld - Projectile.Center).ToRotation();
+            Projectile.tileCollide = false;
 
-            if (Main.player[projectile.owner].channel && !charge)
+            if (Main.player[Projectile.owner].channel && !charge)
             {
 
-                NumProj = Main.player[projectile.owner].ownedProjectileCounts[ModContent.ProjectileType<MagicSnowballs>()];
+                NumProj = Main.player[Projectile.owner].ownedProjectileCounts[ModContent.ProjectileType<MagicSnowballs>()];
                 PosCheck++;
                 if (PosCheck == 1)
                 {
                     PosPlay = NumProj;
-                    OrignalDamage = projectile.damage;
+                    OrignalDamage = Projectile.damage;
                 }
 
 
@@ -60,12 +61,12 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic.SnowHeartStaff
 
                 if (PosCheck > 2)
                 {
-                    projectile.damage = OrignalDamage * NumProj;
+                    Projectile.damage = OrignalDamage * NumProj;
                     double deg = (double)CircleArr; //The degrees, you can multiply projectile.ai[1] to make it orbit faster, may be choppy depending on the value
                     double rad = deg * (Math.PI / 180); //Convert degrees to radian
 
-                    projectile.position.X = 50 * (float)Math.Cos(rad) + Main.player[projectile.owner].Center.X - projectile.width / 2;
-                    projectile.position.Y = 50 * (float)Math.Sin(rad) + Main.player[projectile.owner].Center.Y - projectile.height / 2;
+                    Projectile.position.X = 50 * (float)Math.Cos(rad) + Main.player[Projectile.owner].Center.X - Projectile.width / 2;
+                    Projectile.position.Y = 50 * (float)Math.Sin(rad) + Main.player[Projectile.owner].Center.Y - Projectile.height / 2;
 
 
                     CircleArr += 1.7f;
@@ -75,21 +76,21 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic.SnowHeartStaff
             {
                 if (PosCheck > 2)
                 {
-                    Vector2 position = projectile.Center;
-                    Vector2 targetPosition = Main.MouseWorld + projectile.position - Main.player[projectile.owner].Center;
+                    Vector2 position = Projectile.Center;
+                    Vector2 targetPosition = Main.MouseWorld + Projectile.position - Main.player[Projectile.owner].Center;
                     Vector2 direction = targetPosition - position;
                     direction.Normalize();
                     float speed = 11;
-                    Main.PlaySound(SoundID.Item, projectile.position, 8);
+                    SoundEngine.PlaySound(SoundID.Item, Projectile.position, 8);
                     charge = true;
-                    Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, direction.X * speed, direction.Y * speed, ModContent.ProjectileType<ShotBall>(), projectile.damage, 0f, projectile.owner, 0f);
+                    Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center.X, Projectile.Center.Y, direction.X * speed, direction.Y * speed, ModContent.ProjectileType<ShotBall>(), Projectile.damage, 0f, Projectile.owner, 0f);
                 }
-                projectile.Kill();
+                Projectile.Kill();
             }
 
             if (PosPlay > 9 && PosCheck < 30)
             {
-                projectile.Kill();
+                Projectile.Kill();
             }
         }
     }

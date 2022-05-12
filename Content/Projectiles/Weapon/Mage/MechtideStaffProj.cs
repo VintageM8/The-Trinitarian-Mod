@@ -18,12 +18,12 @@ namespace Trinitarian.Content.Projectiles.Weapon.Mage
 
         public override void SetDefaults()
         {
-            projectile.arrow = true;
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.aiStyle = 29;
-            projectile.friendly = true;
-            projectile.magic = true;
+            Projectile.arrow = true;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.aiStyle = 29;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Magic;
           
         }
 
@@ -33,26 +33,26 @@ namespace Trinitarian.Content.Projectiles.Weapon.Mage
         {
             for (int i = 0; i < 360; i += 90)
             {
-                Vector2 pos = projectile.Center + new Vector2(50).RotatedBy(MathHelper.ToRadians(i + Timer * 4));
+                Vector2 pos = Projectile.Center + new Vector2(50).RotatedBy(MathHelper.ToRadians(i + Timer * 4));
                 int D = Dust.NewDust(pos, 1, 1, DustID.Clentaminator_Red);
                 Main.dust[D].noGravity = true;
                 // Main.dust[D].
             }
             if (Timer == 0)
             {
-                SpawnVel = projectile.velocity;
-                projectile.velocity = new Vector2(0);
+                SpawnVel = Projectile.velocity;
+                Projectile.velocity = new Vector2(0);
             }
             Timer++;
             if (Timer > 30)
             {
-                projectile.velocity = SpawnVel * (Timer - 80) / 20;
+                Projectile.velocity = SpawnVel * (Timer - 80) / 20;
             }
         }
 
         public override void Kill(int timeLeft)
         {
-            Vector2 origin = projectile.Center;
+            Vector2 origin = Projectile.Center;
             float radius = 10;
             int numLocations = 12;
             for (int i = 0; i < 12; i++)

@@ -15,18 +15,18 @@ namespace Trinitarian.Content.Items.Accessories.Ranged
 
         public override void SetDefaults()
         {
-            item.accessory = true;
-            item.width = 26;
-            item.height = 24;
-            item.rare = ItemRarityID.Blue;
-            item.value = Item.sellPrice(0, 8, 0, 0);
-            item.value = Item.buyPrice(0, 25, 0, 0);
+            Item.accessory = true;
+            Item.width = 26;
+            Item.height = 24;
+            Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(0, 8, 0, 0);
+            Item.value = Item.buyPrice(0, 25, 0, 0);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<TrinitarianPlayer>().Dartboard = true;
-            player.rangedDamage += 0.08f;
+            player.GetDamage(DamageClass.Ranged) += 0.08f;
         }
     }
 }

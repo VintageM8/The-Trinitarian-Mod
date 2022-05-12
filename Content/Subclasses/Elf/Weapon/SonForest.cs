@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 using Trinitarian.Content.Projectiles.Subclass.Elf;
 using System;
@@ -17,30 +18,27 @@ namespace Trinitarian.Content.Subclasses.Elf.Weapon
 
         public override void SetDefaults()
         {
-            item.damage = 28;
-            item.ranged = true;
-            item.width = 50;
-            item.height = 28;
-            item.useTime = 7;
-            item.useAnimation = 7;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 4;
-            item.value = 35;
-            item.rare = ItemRarityID.White;
-            item.UseSound = SoundID.Item11;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<ElfBlast>();
-            item.shootSpeed = 10f;
+            Item.damage = 28;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 50;
+            Item.height = 28;
+            Item.useTime = 7;
+            Item.useAnimation = 7;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 4;
+            Item.value = 35;
+            Item.rare = ItemRarityID.White;
+            Item.UseSound = SoundID.Item11;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<ElfBlast>();
+            Item.shootSpeed = 10f;
         }
 
-        public override bool ConsumeAmmo(Player player)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) 
         {
-            return Main.rand.NextFloat() >= .11f;
-        }
-
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
+            float speedX = position.X;
+            float speedY = position.Y;
             Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 40f;
             if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
             {
@@ -59,7 +57,7 @@ namespace Trinitarian.Content.Subclasses.Elf.Weapon
             perturbedSpeed = perturbedSpeed.RotatedByRandom(MathHelper.ToRadians(spread));
             float scale = 1f - (Main.rand.NextFloat() * .3f);
             perturbedSpeed = perturbedSpeed * scale;
-            Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+            Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockback, player.whoAmI);
             return false;
         }
 

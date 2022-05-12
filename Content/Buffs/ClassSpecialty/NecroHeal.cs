@@ -6,14 +6,13 @@ namespace Trinitarian.Content.Buffs.ClassSpecialty
 {
 	public class NecroHeal : ModBuff
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Necromatic Heal");
 			base.Description.SetDefault("Your summons steal life to heal you.");
 			Main.debuff[base.Type] = false;
 			Main.pvpBuff[base.Type] = true;
-			Main.buffNoSave[base.Type] = false;
-			longerExpertDebuff = false;
+			Main.buffNoTimeDisplay[Type] = true;
 		}
 
 		public override void Update(Player player, ref int buffIndex)

@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Trinitarian.Dusts;
+using Terraria.Audio;
 
 namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe
 {
@@ -13,14 +14,14 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe
 	{
 		public override void SetDefaults()
 		{
-			projectile.ignoreWater = true;
-			projectile.aiStyle = 2;
-			aiType = ProjectileID.Shuriken;
-			projectile.width = 24;
-			projectile.penetrate = 1;
-			projectile.height = 24;
-			projectile.friendly = true;
-			projectile.light = 0.75f;
+			Projectile.ignoreWater = true;
+			Projectile.aiStyle = 2;
+			AIType = ProjectileID.Shuriken;
+			Projectile.width = 24;
+			Projectile.penetrate = 1;
+			Projectile.height = 24;
+			Projectile.friendly = true;
+			Projectile.light = 0.75f;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
@@ -30,8 +31,8 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe
 		public override void Kill(int TimeLeft)
 		{
 			for (int i = 0; i < 10; i++)
-				Dust.NewDust(projectile.position, projectile.width, projectile.height, DustType<SolarDust>());
-			Main.PlaySound(SoundID.Dig, projectile.position);
+				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustType<SolarDust>());
+			SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
 
 		}
 	}

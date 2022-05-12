@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Trinitarian.Common.Projectiles;
+using Terraria.DataStructures;
 
 namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged.LongBows
 {
@@ -16,48 +17,50 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged.LongBows
         
         public override void SetDefaults()
         {
-            item.damage = 48;
-            item.ranged = true;
-            item.width = 32;
-            item.height = 161;
-            item.useTime = 16;
-            item.useAnimation = 16;
-            item.crit = 8;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.shoot = ProjectileID.WoodenArrowFriendly;
-            item.knockBack = 2;
-            item.value = Item.sellPrice(0, 0, 60, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item5;
-            item.autoReuse = true;
-            item.useAmmo = AmmoID.Arrow;
-            item.shootSpeed = 20f;
-            item.channel = true;
+            Item.damage = 48;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 32;
+            Item.height = 161;
+            Item.useTime = 16;
+            Item.useAnimation = 16;
+            Item.crit = 8;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.shoot = ProjectileID.WoodenArrowFriendly;
+            Item.knockBack = 2;
+            Item.value = Item.sellPrice(0, 0, 60, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item5;
+            Item.autoReuse = true;
+            Item.useAmmo = AmmoID.Arrow;
+            Item.shootSpeed = 20f;
+            Item.channel = true;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.ChlorophyteBar, 25);
-            recipe.AddIngredient(ItemID.DarkShard, 3);
-            recipe.AddIngredient(ItemID.SoulofNight, 14);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.ChlorophyteBar, 25)
+                .AddIngredient(ItemID.DarkShard, 3)
+                .AddIngredient(ItemID.SoulofNight, 14)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
         private readonly int[] BrokenOnes =
         {
             ProjectileID.JestersArrow,
             ProjectileID.PhantasmArrow
         };
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             foreach(int j in BrokenOnes)
             {
                 type = (type == j ? ProjectileID.WoodenArrowFriendly : type);
             }
-           int i = Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
+        }
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            int i = Projectile.NewProjectile(source, position, position, type, damage, knockback, player.whoAmI);
             TrinitarianGlobalProjectile.NightBowArrows.Add(i);
             return false;
         }

@@ -20,40 +20,40 @@ namespace Trinitarian.Content.NPCs.Town
     {
         public override string Texture => "Trinitarian/Content/NPCs/Town/ClassExpert";
 
-        public override bool Autoload(ref string name)
-        {
-            name = "Class Expert";
-            return mod.Properties.Autoload;
-        }
+        //public override bool Autoload(ref string name)
+        //{
+        //    name = "Class Expert";
+        //    return Mod.Properties.Autoload;
+        //}
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Class Expert");
-            Main.npcFrameCount[npc.type] = 23;
-            NPCID.Sets.ExtraFramesCount[npc.type] = 9;
-            NPCID.Sets.AttackFrameCount[npc.type] = 4;
-            NPCID.Sets.DangerDetectRange[npc.type] = 700;
-            NPCID.Sets.AttackType[npc.type] = 0;
-            NPCID.Sets.AttackTime[npc.type] = 90;
-            NPCID.Sets.AttackAverageChance[npc.type] = 30;
-            NPCID.Sets.HatOffsetY[npc.type] = 4;
+            Main.npcFrameCount[NPC.type] = 23;
+            NPCID.Sets.ExtraFramesCount[NPC.type] = 9;
+            NPCID.Sets.AttackFrameCount[NPC.type] = 4;
+            NPCID.Sets.DangerDetectRange[NPC.type] = 700;
+            NPCID.Sets.AttackType[NPC.type] = 0;
+            NPCID.Sets.AttackTime[NPC.type] = 90;
+            NPCID.Sets.AttackAverageChance[NPC.type] = 30;
+            NPCID.Sets.HatOffsetY[NPC.type] = 4;
 
         }
 
         public override void SetDefaults()
         {
-            npc.townNPC = true;
-            npc.friendly = true;
-            npc.aiStyle = 7;
-            npc.width = 18;
-            npc.height = 40;
-            npc.damage = 30;
-            npc.defense = 30;
-            npc.lifeMax = 500;
-            npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.NPCDeath1;
-            npc.knockBackResist = 0.4f;
-            animationType = NPCID.Angler;
+            NPC.townNPC = true;
+            NPC.friendly = true;
+            NPC.aiStyle = 7;
+            NPC.width = 18;
+            NPC.height = 40;
+            NPC.damage = 30;
+            NPC.defense = 30;
+            NPC.lifeMax = 500;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath1;
+            NPC.knockBackResist = 0.4f;
+            AnimationType = NPCID.Angler;
         }
 
         public override bool CanTownNPCSpawn(int numTownNPCs, int money)
@@ -61,10 +61,12 @@ namespace Trinitarian.Content.NPCs.Town
             return NPC.downedBoss2 && Main.player.Any(x => x.active);
         }
 
-        public override string TownNPCName()
+        public override List<string> SetNPCNameList()
         {
-            string[] names = { "Ella", "Jolly", "Jamie", "Aayla", "Talza" };
-            return Main.rand.Next(names);
+            return new List<string>
+            {
+                "Ella", "Polina", "Tessa", "Jamie", "Vera", "Mary", "Milunka", "Tanya", "Yekaterina"
+            };
         }
 
         public override string GetChat()

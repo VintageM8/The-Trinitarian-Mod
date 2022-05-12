@@ -16,13 +16,13 @@ namespace Trinitarian.Content.Projectiles.Subclass.Elf
 
 		public override void SetDefaults()
 		{
-			projectile.width = 10;
-			projectile.height = 10;
-			projectile.friendly = true;
-			projectile.ranged = true;
-			projectile.arrow = true;
-			projectile.penetrate = 1;
-			projectile.timeLeft = 180;
+			Projectile.width = 10;
+			Projectile.height = 10;
+			Projectile.friendly = true;
+			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.arrow = true;
+			Projectile.penetrate = 1;
+			Projectile.timeLeft = 180;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

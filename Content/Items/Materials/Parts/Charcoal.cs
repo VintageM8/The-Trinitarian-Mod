@@ -13,20 +13,19 @@ namespace Trinitarian.Content.Items.Materials.Parts
 
         public override void SetDefaults()
         {
-            item.width = 18;
-            item.height = 20;
-            item.rare = ItemRarityID.White;
-            item.value = Item.sellPrice(0, 0, 0, 10);
-            item.maxStack = 999;
+            Item.width = 18;
+            Item.height = 20;
+            Item.rare = ItemRarityID.White;
+            Item.value = Item.sellPrice(0, 0, 0, 10);
+            Item.maxStack = 999;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Wood, 1);
-            recipe.AddTile(TileID.Furnaces);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.Wood, 1)
+                .AddTile(TileID.Furnaces)
+                .Register();
         }
     }
 }

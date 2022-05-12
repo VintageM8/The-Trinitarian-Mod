@@ -1,7 +1,11 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 
 namespace Trinitarian.Content.Projectiles.Weapon.Melee
 {
@@ -9,26 +13,26 @@ namespace Trinitarian.Content.Projectiles.Weapon.Melee
     {
         public override void SetDefaults()
         {
-            projectile.ignoreWater = false;
-            projectile.width = 24;
-            projectile.penetrate = -1;
-            projectile.height = 24;
-            projectile.friendly = true;
-            projectile.light = 1f;
-            projectile.tileCollide = true;
-            projectile.aiStyle = 3;
+            Projectile.ignoreWater = false;
+            Projectile.width = 24;
+            Projectile.penetrate = -1;
+            Projectile.height = 24;
+            Projectile.friendly = true;
+            Projectile.light = 1f;
+            Projectile.tileCollide = true;
+            Projectile.aiStyle = 3;
         }
         int Suffocationtime = 0;
         public override void AI()
         {
             if (Main.rand.NextBool(6))
             {
-                Dust.NewDust(projectile.Center, projectile.width, projectile.height, DustID.Blood);
+                Main.dust[Dust.NewDust(Projectile.position,Projectile.width,Projectile.height,DustID.Blood,newColor:Color.Red,Scale:1f)].noGravity = true;
                 Suffocationtime++;
 
                 if (Suffocationtime == 8)
                 {                   
-                    Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 0, 2, ProjectileID.CursedFlameFriendly, 45, projectile.knockBack, Main.myPlayer);
+                    Main.projectile[Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center,new Vector2(4,0).RotatedByRandom(2*Math.PI),ProjectileID.CursedFlameFriendly,Projectile.damage,Projectile.knockBack,Projectile.owner)].netUpdate = true;
                     Suffocationtime = 0;
                 }
             }
@@ -36,7 +40,7 @@ namespace Trinitarian.Content.Projectiles.Weapon.Melee
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(SoundID.Dig, projectile.position);
+            SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
             return false;
         }
 

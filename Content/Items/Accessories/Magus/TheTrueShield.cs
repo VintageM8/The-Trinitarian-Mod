@@ -15,12 +15,12 @@ namespace Trinitarian.Content.Items.Accessories.Magus
 
         public override void SetDefaults()
         {
-            item.width = 24;
-            item.height = 28;
-            item.value = Item.sellPrice(0, 3, 0, 0);
-            item.rare = ItemRarityID.Yellow;
-            item.accessory = true;
-            item.defense = 15;
+            Item.width = 24;
+            Item.height = 28;
+            Item.value = Item.sellPrice(0, 3, 0, 0);
+            Item.rare = ItemRarityID.Yellow;
+            Item.accessory = true;
+            Item.defense = 15;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -33,11 +33,10 @@ namespace Trinitarian.Content.Items.Accessories.Magus
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<MagusShards>(), 12);
-            recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ModContent.ItemType<MagusShards>(), 12)
+                .AddTile(TileID.TinkerersWorkbench)
+                .Register();
         }
     }
 }

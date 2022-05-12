@@ -28,19 +28,18 @@ namespace Trinitarian.Races
         public override void PreUpdateBuffs()
         {
        //     Main.NewText($"{CurrentRace.GetCurrentRace()}");
-            CurrentRace.DoRaceChanges(player);
-            CurrentRace.Passive(player);
+            CurrentRace.DoRaceChanges(Player);
+            CurrentRace.Passive(Player);
         }
-        public override TagCompound Save()
+        public override void SaveData(TagCompound tag)
         {
-            return new TagCompound {
-            {"triRaceCur",CurrentRace.GetCurrentRace()},
-    };
+            tag.Add("triRaceCur", Player.GetModPlayer<RacePlayer>().CurrentRace.GetCurrentRace());
         }
 
-        public override void Load(TagCompound tag)
+
+        public override void LoadData(TagCompound tag)
         {
-           Race.SetFromType(player,tag.GetInt("triRaceCur"));
+           Race.SetFromType(Player,tag.GetInt("triRaceCur"));
            
         }
     }

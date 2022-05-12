@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Content.Items.Materials.Bars;
@@ -16,41 +17,40 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic.MushroomStaff
 
         public override void SetDefaults()
         {
-            item.autoReuse = true;
-            item.rare = ItemRarityID.Blue;
-            item.mana = 8;
-            item.UseSound = SoundID.Item20;
-            item.noMelee = true;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.damage = 15;
-            item.useTurn = false;
-            item.useAnimation = 14;
-            item.useTime = 14;
-            item.width = 48;
-            item.height = 46;
-            item.shoot = ProjectileID.MoonlordTurretLaser;
-            item.shootSpeed = 8f;
-            item.knockBack = 3f;
-            item.magic = true;
+            Item.autoReuse = true;
+            Item.rare = ItemRarityID.Blue;
+            Item.mana = 8;
+            Item.UseSound = SoundID.Item20;
+            Item.noMelee = true;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.damage = 15;
+            Item.useTurn = false;
+            Item.useAnimation = 14;
+            Item.useTime = 14;
+            Item.width = 48;
+            Item.height = 46;
+            Item.shoot = ProjectileID.MoonlordTurretLaser;
+            Item.shootSpeed = 8f;
+            Item.knockBack = 3f;
+            Item.DamageType = DamageClass.Magic;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.GlowingMushroom, 22);
-            recipe.AddIngredient(ModContent.ItemType<SteelBar>(), 10);
-            recipe.AddIngredient(ItemID.Wood, 10);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.GlowingMushroom, 22)
+                .AddIngredient(ModContent.ItemType<SteelBar>(), 10)
+                .AddIngredient(ItemID.Wood, 10)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             int numberProjectiles = 2;
             for (int i = 0; i < numberProjectiles; i++)
             {
-                Projectile.NewProjectile(player.Center.X + Main.rand.Next(-75, 76), player.Center.Y + Main.rand.Next(-75, 76), 0, 0, ProjectileID.TruffleSpore, item.damage, 3, player.whoAmI);
+                Projectile.NewProjectile(source, player.Center.X + Main.rand.Next(-75, 76), player.Center.Y + Main.rand.Next(-75, 76), 0, 0, ProjectileID.TruffleSpore, Item.damage, 3, player.whoAmI);
             }
             return true;
         }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
 using Trinitarian.Content.Projectiles.Subclass.Elf;
 
 namespace Trinitarian.Content.Subclasses.Elf.Weapon
@@ -17,23 +18,23 @@ namespace Trinitarian.Content.Subclasses.Elf.Weapon
 
         public override void SetDefaults()
         {
-            item.damage = 62;
-            item.noMelee = true;
-            item.ranged = true;
-            item.width = 16;
-            item.height = 36;
-            item.useTime = 26;
-            item.useAnimation = 26;
-            item.crit = 0;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.knockBack = 4;
-            item.value = Item.sellPrice(0, 0, 25, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item5;
-            item.autoReuse = false;
-            item.shoot = ModContent.ProjectileType<HolyAngel>();
-            item.shootSpeed = 7f;
-			item.useAmmo = AmmoID.Arrow;
+            Item.damage = 62;
+            Item.noMelee = true;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 16;
+            Item.height = 36;
+            Item.useTime = 26;
+            Item.useAnimation = 26;
+            Item.crit = 0;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.knockBack = 4;
+            Item.value = Item.sellPrice(0, 0, 25, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item5;
+            Item.autoReuse = false;
+            Item.shoot = ModContent.ProjectileType<HolyAngel>();
+            Item.shootSpeed = 7f;
+			Item.useAmmo = AmmoID.Arrow;
         }
 
 		public override Vector2? HoldoutOffset()
@@ -61,21 +62,21 @@ namespace Trinitarian.Content.Subclasses.Elf.Weapon
 			return 0.75f;
 		}
 
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
 			if (player.altFunctionUse == 2)
 			{
 				int num = Main.rand.Next(4, 6);
 				for (int i = 0; i < num; i++)
 				{
-					float speedX2 = speedX + (float)Main.rand.Next(-30, 31) * 0.05f;
-					float speedY2 = speedY + (float)Main.rand.Next(-30, 31) * 0.05f;
+					float speedX2 = position.X + (float)Main.rand.Next(-30, 31) * 0.05f;
+					float speedY2 = position.Y + (float)Main.rand.Next(-30, 31) * 0.05f;
 					float ai = Main.rand.Next(6);
-					Projectile.NewProjectile(position.X, position.Y, speedX2, speedY2, type, damage, knockBack, player.whoAmI, ai, 0.5f + (float)Main.rand.NextDouble() * 0.9f);
+					Projectile.NewProjectile(source,position.X, position.Y, speedX2, speedY2, type, damage, knockback, player.whoAmI, ai, 0.5f + (float)Main.rand.NextDouble() * 0.9f);
 				}
 				return false;
 			}
-			float shootSpeed = base.item.shootSpeed;
+			float shootSpeed = base.Item.shootSpeed;
 			Vector2 vector = player.RotatedRelativePoint(player.MountedCenter);
 			float num2 = (float)Main.mouseX + Main.screenPosition.X - vector.X;
 			float num3 = (float)Main.mouseY + Main.screenPosition.Y - vector.Y;
@@ -116,7 +117,7 @@ namespace Trinitarian.Content.Subclasses.Elf.Weapon
 				float num5 = num2;
 				float num6 = num3 + (float)Main.rand.Next(-40, 41) * 0.02f;
 				float ai2 = Main.rand.Next(6);
-				Projectile.NewProjectile(vector.X, vector.Y, num5 * 0.75f, num6 * 0.75f, type, damage, knockBack, player.whoAmI, ai2, 0.5f + (float)Main.rand.NextDouble() * 0.9f);
+				Projectile.NewProjectile(source, vector.X, vector.Y, num5 * 0.75f, num6 * 0.75f, type, damage, knockback, player.whoAmI, ai2, 0.5f + (float)Main.rand.NextDouble() * 0.9f);
 			}
 			return false;
 		}

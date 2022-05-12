@@ -16,13 +16,13 @@ namespace Trinitarian.Content.Items.Bags
 
         public override void SetDefaults()
         {
-            item.maxStack = 999;
-            item.consumable = true;
-            item.width = 26;
-            item.height = 34;
-            item.rare = ItemRarityID.White;
-            item.expert = false;
-            item.value = Item.sellPrice(0, 0, 0, 10);
+            Item.maxStack = 999;
+            Item.consumable = true;
+            Item.width = 26;
+            Item.height = 34;
+            Item.rare = ItemRarityID.White;
+            Item.expert = false;
+            Item.value = Item.sellPrice(0, 0, 0, 10);
         }
 
         public override bool CanRightClick()
@@ -33,15 +33,15 @@ namespace Trinitarian.Content.Items.Bags
         public override void RightClick(Player player)
         {
             if (Main.rand.Next(4) == 0)
-                player.QuickSpawnItem(ItemID.ManaCrystal, 2);
-            player.QuickSpawnItem(ModContent.ItemType<RustyMetal>(), 2);
-            player.QuickSpawnItem(ItemID.IronBar, 3);
+                player.QuickSpawnItem(player.GetSource_GiftOrReward(), ItemID.ManaCrystal, 2);
+            player.QuickSpawnItem(player.GetSource_GiftOrReward(), ModContent.ItemType<RustyMetal>(), 2);
+            player.QuickSpawnItem(player.GetSource_GiftOrReward(), ItemID.IronBar, 3);
             if (Main.rand.Next(5) == 0)
-                player.QuickSpawnItem(ModContent.ItemType<IceShards>(), 2);
-            player.QuickSpawnItem(ModContent.ItemType<FirePart>(), 1);
+                player.QuickSpawnItem(player.GetSource_GiftOrReward(),ModContent.ItemType<IceShards>(), 2);
+            player.QuickSpawnItem(player.GetSource_GiftOrReward(), ModContent.ItemType<FirePart>(), 1);
             if (Main.rand.Next(7) == 0)
-                player.QuickSpawnItem(ItemID.IronAnvil, 1);
-                player.QuickSpawnItem(ItemID.LifeCrystal, 1);
+                player.QuickSpawnItem(player.GetSource_GiftOrReward(),ItemID.IronAnvil, 1);
+                player.QuickSpawnItem(player.GetSource_GiftOrReward(), ItemID.LifeCrystal, 1);
         }
     }
 }

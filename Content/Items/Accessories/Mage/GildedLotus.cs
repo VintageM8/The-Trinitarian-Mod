@@ -15,11 +15,11 @@ namespace Trinitarian.Content.Items.Accessories.Mage
 
         public override void SetDefaults()
         {
-            item.accessory = true;
-            item.width = 26;
-            item.height = 24;
-            item.rare = ItemRarityID.Blue;
-            item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.accessory = true;
+            Item.width = 26;
+            Item.height = 24;
+            Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(0, 1, 0, 0);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -30,13 +30,12 @@ namespace Trinitarian.Content.Items.Accessories.Mage
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<StarSteel>(), 3);
-            recipe.AddIngredient(ItemID.FallenStar, 2);
-            recipe.AddIngredient(ItemID.Daybloom, 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ModContent.ItemType<StarSteel>(), 3)
+                .AddIngredient(ItemID.FallenStar, 2)
+                .AddIngredient(ItemID.Daybloom, 1)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

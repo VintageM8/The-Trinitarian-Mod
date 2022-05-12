@@ -15,14 +15,14 @@ namespace Trinitarian.Content.Projectiles.Weapon.Mage
 
         public override void SetDefaults()
         {
-            projectile.width = 35;
-            projectile.height = 35;
-            projectile.penetrate = 2;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.tileCollide = true;
-            projectile.timeLeft = 60;
-            projectile.melee = true;
+            Projectile.width = 35;
+            Projectile.height = 35;
+            Projectile.penetrate = 2;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = true;
+            Projectile.timeLeft = 60;
+            Projectile.DamageType = DamageClass.Melee;
 
             //drawOriginOffsetX = -5;
             //drawOriginOffsetY = -20;
@@ -30,18 +30,18 @@ namespace Trinitarian.Content.Projectiles.Weapon.Mage
 
         public override void AI()
         {
-            projectile.rotation = projectile.velocity.ToRotation();
+            Projectile.rotation = Projectile.velocity.ToRotation();
 
             // Make projectiles gradually disappear
-            if (projectile.timeLeft <= 16)
+            if (Projectile.timeLeft <= 16)
             {
-                projectile.alpha += 10;
+                Projectile.alpha += 10;
             }
         }
 
         public override void Kill(int timeLeft)
         {
-            Vector2 origin = projectile.Center;
+            Vector2 origin = Projectile.Center;
             float radius = 15;
             int numLocations = 30;
             for (int i = 0; i < 30; i++)
@@ -54,7 +54,7 @@ namespace Trinitarian.Content.Projectiles.Weapon.Mage
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            Vector2 origin = projectile.Center;
+            Vector2 origin = Projectile.Center;
             float radius = 15;
             int numLocations = 30;
             for (int i = 0; i < 30; i++)
@@ -65,11 +65,11 @@ namespace Trinitarian.Content.Projectiles.Weapon.Mage
                 Main.dust[dust].noGravity = false;
             }
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = ModContent.GetTexture(Texture);
-            Color drawColor = projectile.GetAlpha(lightColor);
-            spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, new Rectangle(0, 0, 44, 60), drawColor, projectile.rotation, new Vector2(44 * 0.5f, 60 * 0.5f), 1 + projectile.ai[1], SpriteEffects.None, 0);
+            Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
+            Color drawColor = Projectile.GetAlpha(lightColor);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 44, 60), drawColor, Projectile.rotation, new Vector2(44 * 0.5f, 60 * 0.5f), 1 + Projectile.ai[1], SpriteEffects.None, 0);
             return false;
         }
     }

@@ -14,24 +14,23 @@ namespace Trinitarian.Content.Items.Materials.Bars
 
         public override void SetDefaults()
         {
-            item.width = 20;
-            item.height = 20;
-            item.maxStack = 99;
-            item.rare = ItemRarityID.Green;
-            item.value = Item.sellPrice(0, 1, 0, 0);
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.autoReuse = true;
-            item.consumable = true;
+            Item.width = 20;
+            Item.height = 20;
+            Item.maxStack = 99;
+            Item.rare = ItemRarityID.Green;
+            Item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.autoReuse = true;
+            Item.consumable = true;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.IronBar, 1);
-            recipe.AddIngredient(ModContent.ItemType<Uranium>(), 5);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.IronBar, 1)
+                .AddIngredient(ModContent.ItemType<Uranium>(), 5)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

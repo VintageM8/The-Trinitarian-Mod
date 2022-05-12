@@ -13,18 +13,18 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Melee
 
         public override void SetDefaults()
         {
-            item.damage = 28;
-            item.melee = true;
-            item.width = 40;
-            item.height = 40;
-            item.useTime = 23;
-            item.useAnimation = 23;
-            item.knockBack = 3f;
-            item.value = Item.buyPrice(gold: 4);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
-            item.useStyle = ItemUseStyleID.SwingThrow;
+            Item.damage = 28;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 40;
+            Item.height = 40;
+            Item.useTime = 23;
+            Item.useAnimation = 23;
+            Item.knockBack = 3f;
+            Item.value = Item.buyPrice(gold: 4);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
+            Item.useStyle = ItemUseStyleID.Swing;
         }
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)

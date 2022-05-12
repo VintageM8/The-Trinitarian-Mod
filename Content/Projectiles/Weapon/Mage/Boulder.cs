@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 
 namespace Trinitarian.Content.Projectiles.Weapon.Mage
 {
@@ -10,51 +11,51 @@ namespace Trinitarian.Content.Projectiles.Weapon.Mage
     {
         public override void SetDefaults()
         {
-            projectile.ignoreWater = false;
-            projectile.width = 31;
-            projectile.penetrate = 5;
-            projectile.height = 31;
-            projectile.friendly = true;
-            projectile.light = 1f;
-            projectile.tileCollide = true;
-            projectile.aiStyle = 25;
-            projectile.alpha = 261;
-            aiType = ProjectileID.Boulder;
+            Projectile.ignoreWater = false;
+            Projectile.width = 31;
+            Projectile.penetrate = 5;
+            Projectile.height = 31;
+            Projectile.friendly = true;
+            Projectile.light = 1f;
+            Projectile.tileCollide = true;
+            Projectile.aiStyle = 25;
+            Projectile.alpha = 261;
+            AIType = ProjectileID.Boulder;
         }
         public override void AI()
         {
-            if (projectile.alpha <= 255)
+            if (Projectile.alpha <= 255)
             {
-                projectile.alpha = 0;
+                Projectile.alpha = 0;
             }
-            else projectile.alpha--;
+            else Projectile.alpha--;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref  Color lightColor)
         {
-            Texture2D texture = ModContent.GetTexture(Texture);
-            Color drawColor = projectile.GetAlpha(lightColor);
-            spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, new Rectangle(0, 0, 44, 40), drawColor, projectile.rotation, new Vector2(9 + 31 * 0.5f, 7 + 31 * 0.5f), 1, SpriteEffects.None, 0);
+            Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
+            Color drawColor = Projectile.GetAlpha(lightColor);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 44, 40), drawColor, Projectile.rotation, new Vector2(9 + 31 * 0.5f, 7 + 31 * 0.5f), 1, SpriteEffects.None, 0);
             return false;
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             
-            Collision.HitTiles(projectile.position + projectile.velocity, projectile.velocity, projectile.width, projectile.height);
-            if (projectile.velocity.X != oldVelocity.X)
+            Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
+            if (Projectile.velocity.X != oldVelocity.X)
             {
-                Main.PlaySound(SoundID.Dig, projectile.position);
+                SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
                 return true;
             }
-            if (projectile.velocity.Y != oldVelocity.Y)
+            if (Projectile.velocity.Y != oldVelocity.Y)
             {
-                projectile.velocity.Y = -oldVelocity.Y * 0.5f;
+                Projectile.velocity.Y = -oldVelocity.Y * 0.5f;
                 return false;
             }
             return false;
         }
         public override void Kill(int timeLeft)
         {
-            Vector2 origin = projectile.Center;
+            Vector2 origin = Projectile.Center;
             float radius = 10;
             int numLocations = 15;
             for (int i = 0; i < 15; i++)

@@ -17,43 +17,42 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic.SeashellBag
         }
         public override void SetDefaults()
         {
-            item.UseSound = SoundID.Item1;
-            item.shootSpeed = 15;
-            item.magic = true;
-            item.mana = 30;
-            item.crit = 4;
-            item.damage = 30;
-            item.knockBack = 4f;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.useAnimation = 22;
-            item.useTime = 22;
-            item.width = 40;
-            item.height = 36;
-            item.rare = ItemRarityID.Orange;
-            item.noUseGraphic = true;
-            item.noMelee = true;
-            item.maxStack = 1;
-            item.autoReuse = false;
-            item.value = Item.sellPrice(0, 59, 80, 0);
-            item.shoot = ModContent.ProjectileType<SeashellBagProj>();
+            Item.UseSound = SoundID.Item1;
+            Item.shootSpeed = 15;
+            Item.DamageType = DamageClass.Magic;
+            Item.mana = 30;
+            Item.crit = 4;
+            Item.damage = 30;
+            Item.knockBack = 4f;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.useAnimation = 22;
+            Item.useTime = 22;
+            Item.width = 40;
+            Item.height = 36;
+            Item.rare = ItemRarityID.Orange;
+            Item.noUseGraphic = true;
+            Item.noMelee = true;
+            Item.maxStack = 1;
+            Item.autoReuse = false;
+            Item.value = Item.sellPrice(0, 59, 80, 0);
+            Item.shoot = ModContent.ProjectileType<SeashellBagProj>();
         }
 
         public override bool CanUseItem(Player player)
         {
-            return player.ownedProjectileCounts[item.shoot] < 5;
+            return player.ownedProjectileCounts[Item.shoot] < 5;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<OceanBar>(), 8);
-            recipe.AddIngredient(ItemID.Bone, 35);
-            recipe.AddIngredient(ItemID.Coral, 10);
-            recipe.AddIngredient(ItemID.SpellTome, 1);
-            recipe.AddIngredient(ItemType<AdvancedLootBag>(), 1);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemType<OceanBar>(), 8)
+                .AddIngredient(ItemID.Bone, 35)
+                .AddIngredient(ItemID.Coral, 10)
+                .AddIngredient(ItemID.SpellTome, 1)
+                .AddIngredient(ItemType<AdvancedLootBag>(), 1)
+                .AddTile(TileID.WorkBenches)
+                .Register();
         }
     }
 }

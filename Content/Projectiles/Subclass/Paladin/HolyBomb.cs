@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Terraria.Graphics.Effects;
 using Trinitarian.Common;
 using Trinitarian.Content.Projectiles.Subclass.Paladin;
+using Terraria.Audio;
 
 namespace Trinitarian.Content.Projectiles.Subclass.Paladin
 {
@@ -21,7 +22,7 @@ namespace Trinitarian.Content.Projectiles.Subclass.Paladin
 
         private bool shot = false;
 
-        private Player owner => Main.player[projectile.owner];
+        private Player owner => Main.player[Projectile.owner];
 
         public override void SetStaticDefaults()
         {
@@ -29,22 +30,22 @@ namespace Trinitarian.Content.Projectiles.Subclass.Paladin
         }
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(ProjectileID.Shuriken);
-            projectile.width = 18;
-            projectile.damage = 0;
-            projectile.height = 18;
-            projectile.ranged = false;
-            projectile.timeLeft = 150;
-            projectile.aiStyle = 14;
-            projectile.friendly = false;
+            Projectile.CloneDefaults(ProjectileID.Shuriken);
+            Projectile.width = 18;
+            Projectile.damage = 0;
+            Projectile.height = 18;
+            // projectile.ranged = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
+            Projectile.timeLeft = 150;
+            Projectile.aiStyle = 14;
+            Projectile.friendly = false;
         }
 
         public override void AI()
         {
-            float progress = 1 - (projectile.timeLeft / 150f);
+            float progress = 1 - (Projectile.timeLeft / 150f);
             for (int i = 0; i < 3; i++)
             {
-                Dust sparks = Dust.NewDustPerfect(projectile.Center + (projectile.rotation.ToRotationVector2()) * 17, ModContent.DustType<SolarDust>(), (projectile.rotation + Main.rand.NextFloat(-0.6f, 0.6f)).ToRotationVector2() * Main.rand.NextFloat(0.4f, 1.2f));
+                Dust sparks = Dust.NewDustPerfect(Projectile.Center + (Projectile.rotation.ToRotationVector2()) * 17, ModContent.DustType<SolarDust>(), (Projectile.rotation + Main.rand.NextFloat(-0.6f, 0.6f)).ToRotationVector2() * Main.rand.NextFloat(0.4f, 1.2f));
                 sparks.fadeIn = progress * 45;
             }
         }
@@ -52,12 +53,12 @@ namespace Trinitarian.Content.Projectiles.Subclass.Paladin
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode);
-            Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileType<BombExplosion>(), projectile.ai[0] == 0 ? 120 : 20, 2, projectile.owner);
+            SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode);
+            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ProjectileType<BombExplosion>(), Projectile.ai[0] == 0 ? 120 : 20, 2, Projectile.owner);
 
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(16, 16), 0, 0, ModContent.DustType<SolarDust>());
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(16, 16), 0, 0, ModContent.DustType<SolarDust>());
                 dust.velocity = Main.rand.NextVector2Circular(10, 10);
                 dust.scale = Main.rand.NextFloat(1.5f, 1.9f);
                 dust.alpha = 70 + Main.rand.Next(60);
@@ -65,13 +66,13 @@ namespace Trinitarian.Content.Projectiles.Subclass.Paladin
             }
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Dust.NewDustDirect(projectile.Center - new Vector2(16, 16), 0, 0, ModContent.DustType<SolarDust>());
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(16, 16), 0, 0, ModContent.DustType<SolarDust>());
                 dust.velocity = Main.rand.NextVector2Circular(10, 10);
                 dust.scale = Main.rand.NextFloat(1.5f, 1.9f);
                 dust.alpha = Main.rand.Next(80) + 40;
                 dust.rotation = Main.rand.NextFloat(6.28f);
 
-                Dust.NewDustPerfect(projectile.Center + Main.rand.NextVector2Circular(25, 25), ModContent.DustType<SolarDust>()).scale = 0.9f;
+                Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(25, 25), ModContent.DustType<SolarDust>()).scale = 0.9f;
             }
         }
 
@@ -82,11 +83,11 @@ namespace Trinitarian.Content.Projectiles.Subclass.Paladin
                 cache = new List<Vector2>();
                 for (int i = 0; i < 10; i++)
                 {
-                    cache.Add(projectile.Center);
+                    cache.Add(Projectile.Center);
                 }
             }
 
-            cache.Add(projectile.Center);
+            cache.Add(Projectile.Center);
 
             while (cache.Count > 10)
             {

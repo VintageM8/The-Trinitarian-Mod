@@ -5,6 +5,7 @@ using Trinitarian.Content.Items.Materials.Parts;
 using static Terraria.ModLoader.ModContent;
 using Microsoft.Xna.Framework;
 using Trinitarian.Content.Items.Weapons.Hardmode.Ranged.VikingBow;
+using Terraria.DataStructures;
 
 namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged.VikingBow
 {
@@ -17,38 +18,37 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged.VikingBow
 
         public override void SetDefaults()
         {
-            item.autoReuse = true;
-            item.rare = ItemRarityID.Red;
-            item.UseSound = SoundID.Item5;
-            item.noMelee = true;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.damage = 250;
-            item.useAnimation = 25;
-            item.useTime = 25;
-            item.width = 30;
-            item.height = 60;
-            item.shoot = AmmoID.Arrow;
-            item.shootSpeed = 8f;
-            item.knockBack = 10f;
-            item.ranged = true;
-            item.value = Item.sellPrice(gold: 48);
-            item.useAmmo = AmmoID.Arrow;
+            Item.autoReuse = true;
+            Item.rare = ItemRarityID.Red;
+            Item.UseSound = SoundID.Item5;
+            Item.noMelee = true;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.damage = 250;
+            Item.useAnimation = 25;
+            Item.useTime = 25;
+            Item.width = 30;
+            Item.height = 60;
+            Item.shoot = AmmoID.Arrow;
+            Item.shootSpeed = 8f;
+            Item.knockBack = 10f;
+            Item.DamageType = DamageClass.Ranged;
+            Item.value = Item.sellPrice(gold: 48);
+            Item.useAmmo = AmmoID.Arrow;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<BowAxe>(), damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y, position.X, position.Y, ModContent.ProjectileType<BowAxe>(), damage, knockback, player.whoAmI);
 			return true;
 		}
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<UlvkilSoul>(), 4);
-            recipe.AddIngredient(ItemType<StormEnergy>(), 13);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemType<UlvkilSoul>(), 4)
+                .AddIngredient(ItemType<StormEnergy>(), 13)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

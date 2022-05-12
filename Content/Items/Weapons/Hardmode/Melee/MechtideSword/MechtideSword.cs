@@ -1,7 +1,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Trinitarian.Assets;
+using Terraria.DataStructures;
 using Trinitarian.Content.Items.Materials.Bars;
 using Microsoft.Xna.Framework;
 using Trinitarian.Dusts;
@@ -15,74 +15,67 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mechtide Sword");
-            Tooltip.SetDefault("Each enemy slain builds your charge. Right click to release.");
-            TrinitarianGlowmask.AddGlowMask(item.type, "Trinitarian/Content/Items/Weapons/Hardmode/Melee/MechtideSword/MechtideSword_Glow");
+            Tooltip.SetDefault("Every 3 strikes, a moon powered blast will annihilate your foes \nHarnesses the power of the moon.");
         }
 
         public override void SetDefaults()
         {
-            item.damage = 70;
-            item.melee = true;
-            item.width = 84;
-            item.height = 90;
-            item.useTime = 20;
-            item.useAnimation = 20;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 8;
-            item.value = Item.buyPrice(gold: 1);
-            item.rare = ItemRarityID.Yellow;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
+            Item.damage = 70;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 84;
+            Item.height = 90;
+            Item.useTime = 20;
+            Item.useAnimation = 20;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 8;
+            Item.value = Item.buyPrice(gold: 1);
+            Item.rare = ItemRarityID.Yellow;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<MechtideCharge>();
+			Item.shootSpeed = 25f;
         }
 
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+           float numberProjectiles = 3 + Main.rand.Next(3);
+			float rotation = MathHelper.ToRadians(20);
+			position += Vector2.Normalize(new Vector2(velocity.X, velocity.Y)) * 45f;
+			for (int i = 0; i < numberProjectiles; i++)
+			{
+				Vector2 perturbedSpeed = new Vector2(velocity.X, velocity.Y).RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * .2f;
+				Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, 2f, player.whoAmI);
+			}
+			return false;
+		}
+
+        int charger;
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
         {
-            var modPlayer = player.GetModPlayer<TrinitarianPlayer>();
-
-            if (target.life <= 0 && !target.SpawnedFromStatue)
+             charger++;
+            if (charger >= 6)
             {
-                modPlayer.MechtideCharge++;
-                CombatText.NewText(target.getRect(), new Color(38, 126, 126), modPlayer.MechtideCharge, true, false);
+                SoundEngine.PlaySound(SoundID.Item, (int)target.position.X, (int)target.position.Y, 14);
+                Terraria.Projectile.NewProjectile(Item.GetSource_OnHit(target), target.Center.X, target.Center.Y, 0f, 0f, ModContent.ProjectileType<YourMom>(), damage, knockBack, player.whoAmI);
+                charger = 0;
             }
         }
-
+	
         public override void MeleeEffects(Player player, Rectangle hitbox)
         {
-			if (Main.rand.NextBool(3)) {
+			if (Main.rand.NextBool(3)) 
+            {
 				//Emit dusts when the sword is swung
 				Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, ModContent.DustType<MechtideDust>());
 			}
 		}
 
-        public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
-        {
-            Texture2D texture;
-            texture = Main.itemTexture[item.type];
-            spriteBatch.Draw
-            (
-                ModContent.GetTexture("Trinitarian/Content/Items/Weapons/Hardmode/Melee/MechtideSword/MechtideSword_Glow"),
-                new Vector2
-                (
-                    item.position.X - Main.screenPosition.X + item.width * 0.5f,
-                    item.position.Y - Main.screenPosition.Y + item.height - texture.Height * 0.5f + 2f
-                ),
-                new Rectangle(0, 0, texture.Width, texture.Height),
-                Color.White,
-                rotation,
-                texture.Size() * 0.5f,
-                scale,
-                SpriteEffects.None,
-                0f
-            );
-        }
-
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Mechtide>(), 50);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ModContent.ItemType<Mechtide>(), 50)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

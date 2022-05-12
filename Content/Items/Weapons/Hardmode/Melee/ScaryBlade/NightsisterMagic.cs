@@ -23,8 +23,8 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.ScaryBlade
         //private bool charge = false;
         public float timer
         {
-            get => projectile.ai[0];
-            set => projectile.ai[0] = value;
+            get => Projectile.ai[0];
+            set => Projectile.ai[0] = value;
         }
         public override void SetStaticDefaults()
         {
@@ -33,53 +33,53 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.ScaryBlade
 
         public override void SetDefaults()
         {
-            projectile.melee = true;
-            projectile.width = 15;
-            projectile.height = 15;
-            projectile.friendly = false;
-            projectile.ignoreWater = true;
-            projectile.tileCollide = false;
-            projectile.netImportant = true;
-            projectile.penetrate = -1;
-            projectile.timeLeft = 2;
-            projectile.hide = true;
-            projectile.alpha = 255;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.width = 15;
+            Projectile.height = 15;
+            Projectile.friendly = false;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.netImportant = true;
+            Projectile.penetrate = -1;
+            Projectile.timeLeft = 2;
+            Projectile.hide = true;
+            Projectile.alpha = 255;
         }
         public override string Texture => "Trinitarian/Content/Items/Weapons/Hardmode/Melee/ScaryBlade/NightsisterBlade";
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             Vector2 distanceVector = Main.MouseWorld - player.Center;
             if (distanceVector != Vector2.Zero)
             {
                 distanceVector.Normalize();
             }
-            projectile.Center = player.Center + distanceVector * 60;
+            Projectile.Center = player.Center + distanceVector * 60;
             float dir = distanceVector.X / Math.Abs(distanceVector.X);
             player.ChangeDir((int)dir); // Set player direction to where we are shooting
-            player.heldProj = projectile.whoAmI; // Update player's held projectile
+            player.heldProj = Projectile.whoAmI; // Update player's held projectile
             player.itemTime = 2; // Set item time to 2 frames while we are used
             player.itemAnimation = 2; // Set item animation time to 2 frames while we are used
             player.itemRotation = (float)Math.Atan2(distanceVector.Y * dir, distanceVector.X * dir); // Set the item rotation to where we are shooting
             if (player.channel)
             {
-                projectile.timeLeft++;
+                Projectile.timeLeft++;
                 TrinitarianPlayer modplayer = player.GetModPlayer<TrinitarianPlayer>();
                 if (timer % 30 == 10 && modplayer.OrbitingProjectileCount[2] <= 5)                 
                 {
-                    Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<NightsisterMagic>(), 30, 1, player.whoAmI, 0, 0);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.Zero, ModContent.ProjectileType<NightsisterMagic>(), 30, 1, player.whoAmI, 0, 0);
                 }
                 timer++;
             }
             else
             {
-                projectile.Kill();
+                Projectile.Kill();
             }
 
         }
         public override void Kill(int timeLeft)
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             TrinitarianPlayer modplayer = player.GetModPlayer<TrinitarianPlayer>();
             
             timer = 0;               
@@ -108,14 +108,14 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.ScaryBlade
 
         public override void SetDefaults()
         {
-            projectile.width = 30;
-            projectile.height = 30;
-            projectile.friendly = true;
-            projectile.ignoreWater = true;
-            projectile.tileCollide = false;
-            projectile.netImportant = true;
-            projectile.penetrate = -1;
-            projectile.timeLeft = 300;
+            Projectile.width = 30;
+            Projectile.height = 30;
+            Projectile.friendly = true;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.netImportant = true;
+            Projectile.penetrate = -1;
+            Projectile.timeLeft = 300;
             ProjectileSlot = 2;
             OrbitingRadius = 150;
             Period = 180;
@@ -127,48 +127,48 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.ScaryBlade
         public override void Attack()
         {
             TrinitarianPlayer modplayer = player.GetModPlayer<TrinitarianPlayer>();
-            Vector2 ProjectileVelocity = (projectile.Center - player.Center) / 3 + Main.MouseWorld - projectile.Center;
-            projectile.penetrate = 3;
+            Vector2 ProjectileVelocity = (Projectile.Center - player.Center) / 3 + Main.MouseWorld - Projectile.Center;
+            Projectile.penetrate = 3;
             if (ProjectileVelocity != Vector2.Zero)
             {
                 ProjectileVelocity.Normalize();
             }
             ProjectileVelocity *= 22;
-            projectile.velocity = ProjectileVelocity;
+            Projectile.velocity = ProjectileVelocity;
             Proj_State = 5;
             GeneratePositionsAfterKill();
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        /*public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture = ModContent.GetTexture("Trinitarian/Content/Items/Weapons/Hardmode/Melee/NightsisterBlade");
+            Texture2D texture = ModContent.Request<Texture2D>("Trinitarian/Content/Items/Weapons/Hardmode/Melee/NightsisterBlade");
             if (Proj_State == State_Moving || Proj_State == State_Spawning)
             {
-                spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, new Rectangle(0, 0, 91, 18), lightColor, projectile.rotation, new Vector2(91 * 0.5f, 9), 1, 0, 0);
+                spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 91, 18), lightColor, Projectile.rotation, new Vector2(91 * 0.5f, 9), 1, 0, 0);
             } 
             else
             {
-                spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, new Rectangle(0, 0, 91, 18), lightColor, projectile.rotation, new Vector2((91 - projectile.width * 0.5f), 9), 1, 0, 0);
+                spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 91, 18), lightColor, Projectile.rotation, new Vector2((91 - Projectile.width * 0.5f), 9), 1, 0, 0);
             }
             return false;
-        }
+        }*/
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             TrinitarianPlayer modplayer = player.GetModPlayer<TrinitarianPlayer>();
         }
         public override void AI()
         {
-            player = Main.player[projectile.owner];
+            player = Main.player[Projectile.owner];
             OrbitCenter = player.Center;
             RelativeVelocity = player.velocity;
             TrinitarianPlayer modplayer = player.GetModPlayer<TrinitarianPlayer>();
-            Vector2 pointingDirection = (projectile.Center - player.Center) / 3 + Main.MouseWorld - projectile.Center;          
+            Vector2 pointingDirection = (Projectile.Center - player.Center) / 3 + Main.MouseWorld - Projectile.Center;          
 
             if (Proj_State == State_Moving || Proj_State == State_Spawning || Proj_State == State_Initializing)
             {
-                projectile.tileCollide = false;
-                projectile.timeLeft += 1;
-                projectile.rotation = pointingDirection.ToRotation();
-                projectile.damage = 30 * modplayer.OrbitingProjectileCount[ProjectileSlot];
+                Projectile.tileCollide = false;
+                Projectile.timeLeft += 1;
+                Projectile.rotation = pointingDirection.ToRotation();
+                Projectile.damage = 30 * modplayer.OrbitingProjectileCount[ProjectileSlot];
             }
             base.AI();
 

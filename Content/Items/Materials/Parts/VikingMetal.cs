@@ -13,11 +13,11 @@ namespace Trinitarian.Content.Items.Materials.Parts
 
         public override void SetDefaults()
         {
-            item.width = 22;
-            item.height = 30;
-            item.rare = ItemRarityID.LightRed;
-            item.value = Item.sellPrice(0, 0, 50, 0);
-            item.maxStack = 999;
+            Item.width = 22;
+            Item.height = 30;
+            Item.rare = ItemRarityID.LightRed;
+            Item.value = Item.sellPrice(0, 0, 50, 0);
+            Item.maxStack = 999;
         }
     }
 }

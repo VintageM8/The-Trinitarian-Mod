@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Content.Projectiles.Subclass.Paladin;
+using Terraria.Audio;
 
 namespace Trinitarian.Content.Subclasses.Paladin.Weapon
 {
@@ -17,20 +18,20 @@ namespace Trinitarian.Content.Subclasses.Paladin.Weapon
 
         public override void SetDefaults()
         {
-            item.damage = 200;
-            item.melee = true;
-            item.width = 70;
-            item.height = 76;
-            item.useTime = 16;
-            item.useAnimation = 16;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 6;
-            item.value = Terraria.Item.sellPrice(1, 0, 0, 0);
-            item.rare = 12;
-            item.UseSound = SoundID.Item1;
+            Item.damage = 200;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 70;
+            Item.height = 76;
+            Item.useTime = 16;
+            Item.useAnimation = 16;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 6;
+            Item.value = Terraria.Item.sellPrice(1, 0, 0, 0);
+            Item.rare = 12;
+            Item.UseSound = SoundID.Item1;
             //item.shoot = ModContent.ProjectileType<HolyFire>();
-            item.shootSpeed = 4f;
-            item.autoReuse = true;
+            Item.shootSpeed = 4f;
+            Item.autoReuse = true;
         }
 
         int charger;
@@ -39,9 +40,9 @@ namespace Trinitarian.Content.Subclasses.Paladin.Weapon
              charger++;
             if (charger >= 6)
             {
-                Main.PlaySound(SoundID.Item, (int)target.position.X, (int)target.position.Y, 14);
-                Terraria.Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, ModContent.ProjectileType<HolyBomb>(), damage, knockBack, player.whoAmI);
-                Terraria.Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, ModContent.ProjectileType<LightningSpike>(), damage, knockBack, player.whoAmI);
+                SoundEngine.PlaySound(SoundID.Item, (int)target.position.X, (int)target.position.Y, 14);
+                Terraria.Projectile.NewProjectile(Item.GetSource_OnHit(target), target.Center.X, target.Center.Y, 0f, 0f, ModContent.ProjectileType<HolyBomb>(), damage, knockBack, player.whoAmI);
+                Terraria.Projectile.NewProjectile(Item.GetSource_OnHit(target), target.Center.X, target.Center.Y, 0f, 0f, ModContent.ProjectileType<LightningSpike>(), damage, knockBack, player.whoAmI);
                 charger = 0;
             }
         }

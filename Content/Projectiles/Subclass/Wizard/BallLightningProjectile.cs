@@ -19,24 +19,24 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
 
         public override void SetDefaults()
         {
-            projectile.width = 12;
-            projectile.height = 12;
-            projectile.aiStyle = -1;
-            projectile.friendly = true;
-            projectile.penetrate = 1;
-            projectile.magic = true;
-            projectile.timeLeft = 600;
-            projectile.tileCollide = true;
+            Projectile.width = 12;
+            Projectile.height = 12;
+            Projectile.aiStyle = -1;
+            Projectile.friendly = true;
+            Projectile.penetrate = 1;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.timeLeft = 600;
+            Projectile.tileCollide = true;
         }
 
         public override void AI()
         {
             if (Main.rand.NextBool(3))
             {
-                Main.dust[Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Electric, newColor: Color.LightBlue, Scale: 1f)].noGravity = true;
+                Main.dust[Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Electric, newColor: Color.LightBlue, Scale: 1f)].noGravity = true;
             }
 
-            if (target == null || !target.active || !target.chaseable || target.dontTakeDamage || (target.Center - projectile.Center).Length() > 2000)
+            if (target == null || !target.active || !target.chaseable || target.dontTakeDamage || (target.Center - Projectile.Center).Length() > 2000)
             {
                 float distance = 2000f;
                 bool isTarget = false;
@@ -45,7 +45,7 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
                 {
                     if (Main.npc[k].active && !Main.npc[k].dontTakeDamage && !Main.npc[k].friendly && Main.npc[k].lifeMax > 5 && !Main.npc[k].immortal && Main.npc[k].chaseable)
                     {
-                        Vector2 newMove = Main.npc[k].Center - projectile.Center;
+                        Vector2 newMove = Main.npc[k].Center - Projectile.Center;
                         float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
                         if (distanceTo < distance)
                         {
@@ -66,24 +66,24 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
                 }
             }
 
-            projectile.rotation = projectile.velocity.ToRotation() + (float)Math.PI / 4;
+            Projectile.rotation = Projectile.velocity.ToRotation() + (float)Math.PI / 4;
 
             if (target != null)
             {
-                Vector2 a = target.Center - projectile.Center + target.velocity / 0.2f;
+                Vector2 a = target.Center - Projectile.Center + target.velocity / 0.2f;
                 if (a.Length() > 1) { a.Normalize(); }
                 a *= 0.2f;
-                projectile.velocity += a;
+                Projectile.velocity += a;
             }
 
-            projectile.velocity *= 1.01f;
+            Projectile.velocity *= 1.01f;
         }
 
         public override void Kill(int timeLeft)
         {
             for (int i = 0; i < 4; i++)
             {
-                Main.dust[Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Electric, newColor: Color.LightBlue, Scale: 1f)].noGravity = true;
+                Main.dust[Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Electric, newColor: Color.LightBlue, Scale: 1f)].noGravity = true;
             }
         }
     }

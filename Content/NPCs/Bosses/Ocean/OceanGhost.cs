@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Trinitarian.Common.Players;
 using Trinitarian.Common;
+using Terraria.Audio;
 
 namespace Trinitarian.Content.NPCs.Bosses.Ocean
 {
@@ -23,26 +24,26 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
         }
         public override void SetDefaults()
         {
-            npc.width = 120;
-            npc.height = 120;
-            npc.damage = 60;
-            npc.defense = 24;
-            npc.lifeMax = 40500;
-            npc.HitSound = SoundID.NPCHit57;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.npcSlots = 3f;
-            npc.knockBackResist = 0f;
-            npc.boss = true;
-            npc.lavaImmune = true;
-            npc.aiStyle = -1;
-            npc.netAlways = true;
+            NPC.width = 120;
+            NPC.height = 120;
+            NPC.damage = 60;
+            NPC.defense = 24;
+            NPC.lifeMax = 40500;
+            NPC.HitSound = SoundID.NPCHit57;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.npcSlots = 3f;
+            NPC.knockBackResist = 0f;
+            NPC.boss = true;
+            NPC.lavaImmune = true;
+            NPC.aiStyle = -1;
+            NPC.netAlways = true;
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            npc.damage = (int)(npc.damage * 0.5f);
-            npc.lifeMax = (int)(npc.lifeMax * 0.5f * bossLifeScale);
-            npc.defense += 3 * numPlayers;
+            NPC.damage = (int)(NPC.damage * 0.5f);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.5f * bossLifeScale);
+            NPC.defense += 3 * numPlayers;
         }
         int amountoftimes = 0;
         bool DrawLinearDash = false;
@@ -59,42 +60,42 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
         float dashproj = 0f;
         public override void AI()
         {
-            Player player = Main.player[npc.target];
+            Player player = Main.player[NPC.target];
 
             //Despawning stuff
-            if (npc.target < 0 || npc.target == 255 || player.dead || !player.active)
+            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
             {
-                npc.TargetClosest(false);
-                npc.velocity.Y = npc.velocity.Y - 0.1f;
+                NPC.TargetClosest(false);
+                NPC.velocity.Y = NPC.velocity.Y - 0.1f;
                 Main.NewText("Bye");
-                if (npc.timeLeft > 20)
+                if (NPC.timeLeft > 20)
                 {
-                    npc.timeLeft = 20;
+                    NPC.timeLeft = 20;
                     return;
                 }
             }
 
 
-            if (npc.active)
+            if (NPC.active)
                 
-            if (npc.ai[0] != 0)
+            if (NPC.ai[0] != 0)
             {
                 difficulty = CalculateDifficulty(phasepercentages, 5);
             }
-            switch (npc.ai[0])
+            switch (NPC.ai[0])
             {
                 //first tick
                 case 0:
                     {
-                        Main.PlaySound(SoundID.Roar, npc.Center, 0);
+                        SoundEngine.PlaySound(SoundID.Roar, NPC.Center, 0);
                         AttackArray = InitialAttackArray();
                         phasepercentages = InitalPercentageArray();
                         DashArray = InitialDashArray();
-                        if (++npc.ai[1] > 60)
+                        if (++NPC.ai[1] > 60)
                         {
-                            npc.ai[1] = 0;
-                            npc.ai[0] = GetAttack();
-                            CombatText.NewText(npc.getRect(), Color.Gray, GetDialoug((int)npc.ai[0]));
+                            NPC.ai[1] = 0;
+                            NPC.ai[0] = GetAttack();
+                            CombatText.NewText(NPC.getRect(), Color.Gray, GetDialoug((int)NPC.ai[0]));
                         }
                     }
                     break;
@@ -102,27 +103,27 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
                 case 1:
                     {
                         bool expertMode = Main.expertMode;
-                        if (npc.ai[1] == 0)
-                            npc.velocity = Vector2.Zero;
+                        if (NPC.ai[1] == 0)
+                            NPC.velocity = Vector2.Zero;
 
-                        if (++npc.ai[1] == 10)
+                        if (++NPC.ai[1] == 10)
                         {
-                            Main.PlaySound(SoundID.Item5);
+                            SoundEngine.PlaySound(SoundID.Item5);
                             for (int i = 0; i < (difficulty > 4 ? 10 : 7); i++)
                             {
                                 int dmg = expertMode ? 32 : 48;
-                                Vector2 place = npc.Center + MethodHelper.GetRandomVector(250, 250, 350, 350, -350, -350);
-                                Projectile.NewProjectile(place, MethodHelper.DirectionTo(player.Center, place).RotatedByRandom(0.3f) * 10, ModContent.ProjectileType<Bubble>(), npc.damage, 0.5f, Main.myPlayer);
+                                Vector2 place = NPC.Center + MethodHelper.GetRandomVector(250, 250, 350, 350, -350, -350);
+                                Projectile.NewProjectile(NPC.GetBossSpawnSource(player.whoAmI), place, MethodHelper.DirectionTo(player.Center, place).RotatedByRandom(0.3f) * 10, ModContent.ProjectileType<Bubble>(), NPC.damage, 0.5f, Main.myPlayer);
                             }
                         }
-                        if (npc.ai[1] > 60)
+                        if (NPC.ai[1] > 60)
                         {
-                            npc.ai[1] = 0;
+                            NPC.ai[1] = 0;
                             if (++amountoftimes >= 1)
                             {
                                 amountoftimes = 0;
-                                npc.ai[0] = GetAttack();
-                                CombatText.NewText(npc.getRect(), Color.Gray, GetDialoug((int)npc.ai[0]));
+                                NPC.ai[0] = GetAttack();
+                                CombatText.NewText(NPC.getRect(), Color.Gray, GetDialoug((int)NPC.ai[0]));
                             }
                         }
                     }
@@ -133,27 +134,27 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
                         bool expertMode = Main.expertMode;
                         int pointmax = 36;
                         PositionsList = CalculatePointsInAcircle(player.Center, 300, pointmax);
-                        if (npc.ai[1] == 0)
+                        if (NPC.ai[1] == 0)
                             progress = FindClosesPoint(PositionsList);
-                        maxvelocity = npc.velocity = FollowPoints(PositionsList, out var newprogress, progress, npc.Center, 10);
+                        maxvelocity = NPC.velocity = FollowPoints(PositionsList, out var newprogress, progress, NPC.Center, 10);
                         progress = newprogress;
-                        if (++npc.ai[1] > 8)
+                        if (++NPC.ai[1] > 8)
                         {
-                            npc.ai[1] = 1;
-                            npc.ai[2] += (difficulty > 3 ? 0.1f : 0.2f);
+                            NPC.ai[1] = 1;
+                            NPC.ai[2] += (difficulty > 3 ? 0.1f : 0.2f);
                         }
-                        if (npc.ai[2] >= (difficulty > 3 ? 0.1 : 1))
+                        if (NPC.ai[2] >= (difficulty > 3 ? 0.1 : 1))
                         {
                            int dmg = expertMode ? 32 : 48;
-						   Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center) * 9, ModContent.ProjectileType<OceanSpike>(), npc.damage, 0.5f, Main.myPlayer);
-                            npc.ai[2] = 0;
+						   Projectile.NewProjectile(NPC.GetBossSpawnSource(player.whoAmI), NPC.Center, NPC.DirectionTo(player.Center) * 9, ModContent.ProjectileType<OceanSpike>(), NPC.damage, 0.5f, Main.myPlayer);
+                            NPC.ai[2] = 0;
                         }
                         if (progress >= pointmax)
                         {
                             progress = 0;
                             if (amountoftimes++ >= 1)
                             {
-                                npc.ai[0]++;
+                                NPC.ai[0]++;
                             }
                         }
 
@@ -162,17 +163,17 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
                 //decelarate after spin
                 case 3:
                     {
-                        npc.velocity = Decelerate(npc.ai[2], maxvelocity);
-                        npc.ai[2] += 0.06f;
-                        if (npc.ai[2] >= 1)
+                        NPC.velocity = Decelerate(NPC.ai[2], maxvelocity);
+                        NPC.ai[2] += 0.06f;
+                        if (NPC.ai[2] >= 1)
                         {
                             PositionsList = null;
                             maxvelocity = Vector2.Zero;
-                            npc.velocity = Vector2.Zero;
+                            NPC.velocity = Vector2.Zero;
                             amountoftimes = 0;
                             ResetAllAis();
-                            npc.ai[0] = GetAttack();
-                            CombatText.NewText(npc.getRect(), Color.Gray, GetDialoug((int)npc.ai[0]));
+                            NPC.ai[0] = GetAttack();
+                            CombatText.NewText(NPC.getRect(), Color.Gray, GetDialoug((int)NPC.ai[0]));
                         }
                     }
                     break;
@@ -180,47 +181,47 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
                 case 4:
                     {
                         bool expertMode = Main.expertMode;
-                        if (npc.ai[1] == 0)
+                        if (NPC.ai[1] == 0)
                         {
                             DrawLinearDash = true;
                             playeroldcenter = player.Center;
-                            npcoldcenter = npc.Center;
-                            Main.PlaySound(SoundID.Roar, npc.Center, 0);   
+                            npcoldcenter = NPC.Center;
+                            SoundEngine.PlaySound(SoundID.Roar, NPC.Center, 0);   
                             player.GetModPlayer<TrinitarianPlayer>().ScreenShake = 10;
                         }
-                        npc.ai[2] += 0.03f;
+                        NPC.ai[2] += 0.03f;
                         dashproj += 0.01f;
                         if (difficulty > 2 && dashproj > 0.06f)
                         {
                             dashproj = 0;
                             int dmg = expertMode ? 32 : 48;
-                            Projectile.NewProjectile(npc.Center, -MethodHelper.Normalized(npc.velocity).RotatedBy(-0.15) * 5, ModContent.ProjectileType<Bubble>(), npc.damage, 0.5f, Main.myPlayer);
-                            Projectile.NewProjectile(npc.Center, -MethodHelper.Normalized(npc.velocity).RotatedBy(0.15) * 5, ModContent.ProjectileType<OceanSpike2>(), npc.damage, 0.5f, Main.myPlayer);
+                            Projectile.NewProjectile(NPC.GetBossSpawnSource(player.whoAmI), NPC.Center, -MethodHelper.Normalized(NPC.velocity).RotatedBy(-0.15) * 5, ModContent.ProjectileType<Bubble>(), NPC.damage, 0.5f, Main.myPlayer);
+                            Projectile.NewProjectile(NPC.GetBossSpawnSource(player.whoAmI), NPC.Center, -MethodHelper.Normalized(NPC.velocity).RotatedBy(0.15) * 5, ModContent.ProjectileType<OceanSpike2>(), NPC.damage, 0.5f, Main.myPlayer);
                         }
-                        if (++npc.ai[1] == 30)
+                        if (++NPC.ai[1] == 30)
                         {
-                            maxvelocity = npc.velocity = LinearDashVelocity(40f, npc.Center, playeroldcenter);
+                            maxvelocity = NPC.velocity = LinearDashVelocity(40f, NPC.Center, playeroldcenter);
                         }
-                        if (npc.ai[1] > 30f)
+                        if (NPC.ai[1] > 30f)
                         {
-                            npc.ai[3] += 0.4f / MathHelper.Clamp(npc.Distance(playeroldcenter), 0, 10);
-                            npc.velocity = Decelerate(npc.ai[3], maxvelocity);
+                            NPC.ai[3] += 0.4f / MathHelper.Clamp(NPC.Distance(playeroldcenter), 0, 10);
+                            NPC.velocity = Decelerate(NPC.ai[3], maxvelocity);
                         }
-                        if (npc.ai[3] >= 1f)
+                        if (NPC.ai[3] >= 1f)
                         {
                             ResetAllAis();
                             playeroldcenter = Vector2.Zero;
                             npcoldcenter = Vector2.Zero;
                             maxvelocity = Vector2.Zero;
-                            npc.velocity = Vector2.Zero;
+                            NPC.velocity = Vector2.Zero;
                             DrawLinearDash = false;
                             progress = 3;
                             if (++amountoftimes > 3)
                             {
                                 amountoftimes = 0;
-                                npc.ai[0] = GetAttack();
-                                npc.ai[1] = 0;
-                                CombatText.NewText(npc.getRect(), Color.Gray, GetDialoug((int)npc.ai[0]));
+                                NPC.ai[0] = GetAttack();
+                                NPC.ai[1] = 0;
+                                CombatText.NewText(NPC.getRect(), Color.Gray, GetDialoug((int)NPC.ai[0]));
                             }
                         }
                     }
@@ -228,34 +229,34 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
                 //shotgun blast
                 case 5:
                     {
-                        if (npc.ai[2] > 0)
+                        if (NPC.ai[2] > 0)
                         {
                             int projamount = 4;
-                            if (++npc.ai[1] == 15)
+                            if (++NPC.ai[1] == 15)
                             {
-                                Main.PlaySound(SoundID.Item5);
+                                SoundEngine.PlaySound(SoundID.Item5);
                                 for (int i = 0; i < projamount; i++)
-                                    Projectile.NewProjectile(npc.Center, MethodHelper.DirectionTo(player.Center, npc.Center).RotatedBy(i == 0 ? 0 : IsEven(i) ? 0.05 * i : -0.05 * i) * (difficulty > 4 ? 12 : 7), ModContent.ProjectileType<OceanSpike3>(), npc.damage, 0.5f, Main.myPlayer);
+                                    Projectile.NewProjectile(NPC.GetBossSpawnSource(player.whoAmI), NPC.Center, MethodHelper.DirectionTo(player.Center, NPC.Center).RotatedBy(i == 0 ? 0 : IsEven(i) ? 0.05 * i : -0.05 * i) * (difficulty > 4 ? 12 : 7), ModContent.ProjectileType<OceanSpike3>(), NPC.damage, 0.5f, Main.myPlayer);
                             }
-                            if (npc.ai[1] > 15)
+                            if (NPC.ai[1] > 15)
                             {
-                                npc.ai[1] = 0;
+                                NPC.ai[1] = 0;
                                 if (++amountoftimes >= 3)
                                 {
                                     ResetAllAis();
                                     amountoftimes = 0;
-                                    npc.ai[0] = GetAttack();
-                                    CombatText.NewText(npc.getRect(), Color.Gray, GetDialoug((int)npc.ai[0]));
+                                    NPC.ai[0] = GetAttack();
+                                    CombatText.NewText(NPC.getRect(), Color.Gray, GetDialoug((int)NPC.ai[0]));
                                 }
                             }
                         }
                         else
                         {
-                            npc.velocity = npc.DirectionTo(player.Center) * 10;
-                            if (npc.Distance(player.Center) < 100)
+                            NPC.velocity = NPC.DirectionTo(player.Center) * 10;
+                            if (NPC.Distance(player.Center) < 100)
                             {
-                                npc.velocity = Vector2.Zero;
-                                npc.ai[2]++;
+                                NPC.velocity = Vector2.Zero;
+                                NPC.ai[2]++;
                             }
                         }
                     }
@@ -264,46 +265,46 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
                 case 6:
                     {
                         bool expertMode = Main.expertMode;
-                        if (npc.ai[1] == 0)
+                        if (NPC.ai[1] == 0)
                         {
                             int dmg = expertMode ? 32 : 48;
                             for (float i = -0.3f; i < 0.3f; i += 0.1f)
-                                Projectile.NewProjectile(npc.Center + Vector2.UnitX * (i < 0 ? 40 : -40), npc.DirectionFrom(npc.Center).RotatedBy(i) * 5, ModContent.ProjectileType<OceanSpike>(), npc.damage, 0.5f, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetBossSpawnSource(player.whoAmI), NPC.Center + Vector2.UnitX * (i < 0 ? 40 : -40), NPC.DirectionFrom(NPC.Center).RotatedBy(i) * 5, ModContent.ProjectileType<OceanSpike>(), NPC.damage, 0.5f, Main.myPlayer);
                             DrawLinearDash = true;
                             playeroldcenter = player.Center;
-                            npcoldcenter = npc.Center;
-                            Main.PlaySound(SoundID.Roar, npc.Center, 0);
+                            npcoldcenter = NPC.Center;
+                            SoundEngine.PlaySound(SoundID.Roar, NPC.Center, 0);
                         }
-                        npc.ai[2] += 0.01f;
-                        if (++npc.ai[1] == 17)
+                        NPC.ai[2] += 0.01f;
+                        if (++NPC.ai[1] == 17)
                         {
-                            maxvelocity = npc.velocity = LinearDashVelocity(60f, npc.Center, playeroldcenter);
+                            maxvelocity = NPC.velocity = LinearDashVelocity(60f, NPC.Center, playeroldcenter);
                         }
-                        if (npc.ai[1] > 17f)
+                        if (NPC.ai[1] > 17f)
                         {
-                            npc.ai[3] += 0.4f / MathHelper.Clamp(npc.Distance(playeroldcenter), 0, 10);
-                            npc.velocity = Decelerate(npc.ai[3], maxvelocity);
+                            NPC.ai[3] += 0.4f / MathHelper.Clamp(NPC.Distance(playeroldcenter), 0, 10);
+                            NPC.velocity = Decelerate(NPC.ai[3], maxvelocity);
                         }
-                        if (npc.ai[3] >= 1f)
+                        if (NPC.ai[3] >= 1f)
                         {
                             ResetAllAis();
                             playeroldcenter = Vector2.Zero;
                             npcoldcenter = Vector2.Zero;
                             maxvelocity = Vector2.Zero;
-                            npc.velocity = Vector2.Zero;
+                            NPC.velocity = Vector2.Zero;
                             DrawLinearDash = false;
-                            npc.ai[0] = GetAttack();
-                            CombatText.NewText(npc.getRect(), Color.Gray, GetDialoug((int)npc.ai[0]));
+                            NPC.ai[0] = GetAttack();
+                            CombatText.NewText(NPC.getRect(), Color.Gray, GetDialoug((int)NPC.ai[0]));
                         }
                     }
                     break;
             }
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             if (DrawLinearDash)
-                DrawDashLinear(spriteBatch, npcoldcenter, playeroldcenter, Color.Lerp(Color.White, Color.Red, npc.ai[2]));
-            return base.PreDraw(spriteBatch, drawColor);
+                DrawDashLinear(spriteBatch, npcoldcenter, playeroldcenter, Color.Lerp(Color.White, Color.Red, NPC.ai[2]));
+            return base.PreDraw(spriteBatch, screenPos, drawColor);
         }
         private bool AnyProjectiles(int type)
         {
@@ -444,11 +445,11 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
         private int CalculateDifficulty(float[] percentages, int MaxDifficulty)
         {
             int difficulty = 1;
-            if (npc.life < npc.lifeMax * 0.75f)
+            if (NPC.life < NPC.lifeMax * 0.75f)
                 difficulty += 1;
-            if (npc.life < npc.lifeMax * 0.5f)
+            if (NPC.life < NPC.lifeMax * 0.5f)
                 difficulty += 1;
-            if (npc.life < npc.lifeMax * 0.25f)
+            if (NPC.life < NPC.lifeMax * 0.25f)
                 difficulty += 1;
             return (int)MathHelper.Clamp(difficulty, 1, MaxDifficulty);
         }
@@ -516,14 +517,14 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
         {
             int closest = 0;
             for (int i = 0; i < points.Length - 1; i++)
-                if (npc.Distance(points[i]) < npc.Distance(points[closest]))
+                if (NPC.Distance(points[i]) < NPC.Distance(points[closest]))
                     closest = i;
             return closest;
         }
         private void ResetAllAis(bool excludezero = true)
         {
-            for (int i = excludezero ? 1 : 0; i < npc.ai.Length; i++)
-                npc.ai[i] = 0;
+            for (int i = excludezero ? 1 : 0; i < NPC.ai.Length; i++)
+                NPC.ai[i] = 0;
         }
         private bool IsEven(int num)
         {
@@ -554,7 +555,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
             for (int i = 0; i < length; i++)
             {
                 Vector2 drawpos = start + unit * i - Main.screenPosition;
-                spriteBatch.Draw(ModContent.GetTexture("Trinitarian/Assets/Textures/Pixel"), drawpos, null, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(ModContent.Request<Texture2D>("Trinitarian/Assets/Textures/Pixel").Value, drawpos, null, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
             }
         }
         

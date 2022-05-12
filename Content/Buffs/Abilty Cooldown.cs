@@ -5,7 +5,7 @@ namespace Trinitarian.Content.Buffs
 {
     public class Cooldown : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cooldown");
             Description.SetDefault("wait to use your abilty!");

@@ -9,39 +9,39 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Water Magic");
-            Main.projFrames[projectile.type] = 5;
+            Main.projFrames[Projectile.type] = 5;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 20;
-            projectile.height = 16;
-            projectile.aiStyle = 43;
-            aiType = 227;
-            projectile.magic = true;
-            projectile.friendly = true;
-            projectile.ignoreWater = true;
-            projectile.penetrate = 1;
-            projectile.timeLeft = 54;
-            projectile.tileCollide = false;
+            Projectile.width = 20;
+            Projectile.height = 16;
+            Projectile.aiStyle = 43;
+            AIType = 227;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.friendly = true;
+            Projectile.ignoreWater = true;
+            Projectile.penetrate = 1;
+            Projectile.timeLeft = 54;
+            Projectile.tileCollide = false;
         }
 
         public override void AI()
         {
-            projectile.frameCounter++;
-            if (projectile.frameCounter > 8)
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter > 8)
             {
-                projectile.frame++;
-                projectile.frameCounter = 0;
+                Projectile.frame++;
+                Projectile.frameCounter = 0;
             }
-            if (projectile.frame > 4)
+            if (Projectile.frame > 4)
             {
-                projectile.frame = 0;
+                Projectile.frame = 0;
             }
-            Lighting.AddLight(projectile.Center, ((255 - projectile.alpha) * 0.025f) / 255f, ((255 - projectile.alpha) * 0.25f) / 255f, ((255 - projectile.alpha) * 0.05f) / 255f);
-            projectile.velocity.Y += projectile.ai[0];
-            var vector = projectile.velocity * 1.08f;
-            projectile.velocity = vector;
+            Lighting.AddLight(Projectile.Center, ((255 - Projectile.alpha) * 0.025f) / 255f, ((255 - Projectile.alpha) * 0.25f) / 255f, ((255 - Projectile.alpha) * 0.05f) / 255f);
+            Projectile.velocity.Y += Projectile.ai[0];
+            var vector = Projectile.velocity * 1.08f;
+            Projectile.velocity = vector;
         }
     }
 }

@@ -15,40 +15,39 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic.SnowHeartStaff
         {
             DisplayName.SetDefault("Heart of the Blizzard");
             Tooltip.SetDefault("Shoots out snowballs");
-            Item.staff[item.type] = true;
+            Item.staff[Item.type] = true;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 60;
-            item.magic = true;
-            item.mana = 20;
-            item.crit = 0;
-            item.width = 42;
-            item.height = 40;
-            item.useTime = 33;
-            item.useAnimation = 33;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 2;
-            item.value = Item.sellPrice(0, 23, 0, 0);
-            item.rare = ItemRarityID.Cyan;
-            item.UseSound = SoundID.Item43;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<MagicSnowballs>();
-            item.shootSpeed = 0f;
-            item.channel = true;
+            Item.damage = 60;
+            Item.DamageType = DamageClass.Magic;
+            Item.mana = 20;
+            Item.crit = 0;
+            Item.width = 42;
+            Item.height = 40;
+            Item.useTime = 33;
+            Item.useAnimation = 33;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 2;
+            Item.value = Item.sellPrice(0, 23, 0, 0);
+            Item.rare = ItemRarityID.Cyan;
+            Item.UseSound = SoundID.Item43;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<MagicSnowballs>();
+            Item.shootSpeed = 0f;
+            Item.channel = true;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<TrueStarSteel>(), 10);
-            recipe.AddIngredient(ItemType<EnchantedIceBall>(), 2);
-            recipe.AddIngredient(ItemID.BlizzardStaff, 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemType<TrueStarSteel>(), 10)
+                .AddIngredient(ItemType<EnchantedIceBall>(), 2)
+                .AddIngredient(ItemID.BlizzardStaff, 1)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
 
         public override Vector2? HoldoutOffset()

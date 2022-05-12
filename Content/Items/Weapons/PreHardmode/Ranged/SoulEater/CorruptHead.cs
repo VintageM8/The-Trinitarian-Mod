@@ -3,6 +3,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 
 namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.SoulEater
 {
@@ -15,28 +16,28 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.SoulEater
 
         public override void SetDefaults()
         {
-            projectile.width = 30;
-            projectile.height = 42;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.ranged = true;
-            projectile.penetrate = -1;
-            projectile.timeLeft = 900;
-            projectile.ignoreWater = true;
-            projectile.tileCollide = false;
-            projectile.extraUpdates = 1;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 20;
+            Projectile.width = 30;
+            Projectile.height = 42;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.penetrate = -1;
+            Projectile.timeLeft = 900;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = false;
+            Projectile.extraUpdates = 1;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 20;
 
         }
         public override void AI()
         {
-            Player player = Main.player[projectile.owner];
-            projectile.rotation = (float)Math.Atan2(projectile.velocity.Y, projectile.velocity.X) + 1.57f;
-            if (projectile.localAI[0] == 0f)
+            Player player = Main.player[Projectile.owner];
+            Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + 1.57f;
+            if (Projectile.localAI[0] == 0f)
             {
-                AdjustMagnitude(ref projectile.velocity);
-                projectile.localAI[0] = 1f;
+                AdjustMagnitude(ref Projectile.velocity);
+                Projectile.localAI[0] = 1f;
             }
             Vector2 move = Vector2.Zero;
             float distance = 600f;
@@ -45,7 +46,7 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.SoulEater
             {
                 if (Main.npc[k].CanBeChasedBy(this))
                 {
-                    Vector2 newMove = Main.npc[k].Center - projectile.Center;
+                    Vector2 newMove = Main.npc[k].Center - Projectile.Center;
                     float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
                     if (distanceTo < distance)
                     {
@@ -59,35 +60,35 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.SoulEater
             if (target)
             {
                 AdjustMagnitude(ref move);
-                projectile.velocity += (5 * projectile.velocity + move) / 11f;
-                AdjustMagnitude(ref projectile.velocity);
+                Projectile.velocity += (5 * Projectile.velocity + move) / 11f;
+                AdjustMagnitude(ref Projectile.velocity);
             }
 
-            if (projectile.velocity.X > 6)
+            if (Projectile.velocity.X > 6)
             {
-                projectile.velocity.X = 6;
+                Projectile.velocity.X = 6;
             }
-            if (projectile.velocity.X < -6)
+            if (Projectile.velocity.X < -6)
             {
-                projectile.velocity.X = -6;
-            }
-
-            if (projectile.velocity.Y > 6)
-            {
-                projectile.velocity.Y = 6;
-            }
-            if (projectile.velocity.Y < -6)
-            {
-                projectile.velocity.Y = -6;
+                Projectile.velocity.X = -6;
             }
 
-            projectile.velocity.Y = projectile.velocity.Y + 0.06f;
-            projectile.rotation = projectile.velocity.ToRotation() + MathHelper.PiOver2;
-            projectile.ai[0]++;
-            if (projectile.ai[0] == 3)
+            if (Projectile.velocity.Y > 6)
             {
-                Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X / 7, projectile.velocity.Y / 7, ModContent.ProjectileType<CorruptBody>(), projectile.damage / 2, 1f, projectile.owner, 0f);
-                projectile.ai[0] = 0;
+                Projectile.velocity.Y = 6;
+            }
+            if (Projectile.velocity.Y < -6)
+            {
+                Projectile.velocity.Y = -6;
+            }
+
+            Projectile.velocity.Y = Projectile.velocity.Y + 0.06f;
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+            Projectile.ai[0]++;
+            if (Projectile.ai[0] == 3)
+            {
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X / 7, Projectile.velocity.Y / 7, ModContent.ProjectileType<CorruptBody>(), Projectile.damage / 2, 1f, Projectile.owner, 0f);
+                Projectile.ai[0] = 0;
             }
         }
 
@@ -103,7 +104,7 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.SoulEater
 
         public override void Kill(int timeLeft)
         {
-            Vector2 origin = projectile.Center;
+            Vector2 origin = Projectile.Center;
             float radius = 10;
             int numLocations = 30;
             for (int i = 0; i < 30; i++)
@@ -114,7 +115,7 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.SoulEater
                 Main.dust[dust].noGravity = true;
             }
 
-            Main.PlaySound(SoundID.DD2_GhastlyGlaiveImpactGhost);
+            SoundEngine.PlaySound(SoundID.DD2_GhastlyGlaiveImpactGhost);
         }
     }
 }

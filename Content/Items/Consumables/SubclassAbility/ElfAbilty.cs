@@ -12,19 +12,19 @@ namespace Trinitarian.Content.Items.Consumables.SubclassAbility
     {
         public override void SetDefaults()
         {
-            item.width = 26;
-            item.height = 28;
-            item.rare = ItemRarityID.Red;
-            item.useAnimation = 45;
-            item.useTime = 45;
-            item.useStyle = ItemUseStyleID.HoldingUp;
-            item.maxStack = 1;
-            item.noMelee = true;
-            item.consumable = true;
-            item.autoReuse = false;
+            Item.width = 26;
+            Item.height = 28;
+            Item.rare = ItemRarityID.Red;
+            Item.useAnimation = 45;
+            Item.useTime = 45;
+            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.maxStack = 1;
+            Item.noMelee = true;
+            Item.consumable = true;
+            Item.autoReuse = false;
         }
         
-        public override bool UseItem(Player player)
+        public override bool? UseItem(Player player)
         {
 
             TrinitarianPlayer p = player.GetModPlayer<TrinitarianPlayer>();

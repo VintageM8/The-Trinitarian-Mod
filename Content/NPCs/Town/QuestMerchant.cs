@@ -8,48 +8,62 @@ using Trinitarian.Content.Subclasses.Necro;
 using Trinitarian.Content.Subclasses.Paladin;
 using Trinitarian.Content.Subclasses.Wizard;
 using Trinitarian.Content.Subclasses.Elf;
+using Terraria.GameContent;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 
 namespace Trinitarian.Content.NPCs.Town
 {
+    public class QuestMerchantProfile : ITownNPCProfile
+    {
+        public int RollVariation() => 0;
+        public string GetNameForVariant(NPC npc) => npc.getNewNPCName();
+        public Asset<Texture2D> GetTextureNPCShouldUse(NPC npc)
+        {
+            if (npc.IsABestiaryIconDummy && !npc.ForcePartyHatOn)
+                return ModContent.Request<Texture2D>("Trinitarian/Content/NPCs/Town/QuestMerchant");
+
+            if (npc.altTexture == 1)
+                return ModContent.Request<Texture2D>("Trinitarian/Content/NPCs/Town/QuestMerchant_Party");
+
+            return ModContent.Request<Texture2D>("Trinitarian/Content/NPCs/Town/QuestMerchant");
+        }
+        public int GetHeadTextureIndex(NPC npc) => ModContent.GetModHeadSlot("Trinitarian/Content/NPCs/Town/QuestMerchant_Head");
+    }
     [AutoloadHead]
     public class QuestMerchant : ModNPC
     {
         public override string Texture => "Trinitarian/Content/NPCs/Town/QuestMerchant";
 
-        public override bool Autoload(ref string name)
-        {
-            name = "Quest Master";
-            return mod.Properties.Autoload;
-        }
-
+        
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Quest Master");
-            Main.npcFrameCount[npc.type] = 23;
-            NPCID.Sets.ExtraFramesCount[npc.type] = 9;
-            NPCID.Sets.AttackFrameCount[npc.type] = 4;
-            NPCID.Sets.DangerDetectRange[npc.type] = 700;
-            NPCID.Sets.AttackType[npc.type] = 0;
-            NPCID.Sets.AttackTime[npc.type] = 90;
-            NPCID.Sets.AttackAverageChance[npc.type] = 30;
-            NPCID.Sets.HatOffsetY[npc.type] = 4;
+            Main.npcFrameCount[NPC.type] = 23;
+            NPCID.Sets.ExtraFramesCount[NPC.type] = 9;
+            NPCID.Sets.AttackFrameCount[NPC.type] = 4;
+            NPCID.Sets.DangerDetectRange[NPC.type] = 700;
+            NPCID.Sets.AttackType[NPC.type] = 0;
+            NPCID.Sets.AttackTime[NPC.type] = 90;
+            NPCID.Sets.AttackAverageChance[NPC.type] = 30;
+            NPCID.Sets.HatOffsetY[NPC.type] = 4;
 
         }
 
         public override void SetDefaults()
         {
-            npc.townNPC = true;
-            npc.friendly = true;
-            npc.aiStyle = 7;
-            npc.width = 18;
-            npc.height = 40;
-            npc.damage = 30;
-            npc.defense = 30;
-            npc.lifeMax = 500;
-            npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.NPCDeath1;
-            npc.knockBackResist = 0.4f;
-            animationType = NPCID.Angler;
+            NPC.townNPC = true;
+            NPC.friendly = true;
+            NPC.aiStyle = 7;
+            NPC.width = 18;
+            NPC.height = 40;
+            NPC.damage = 30;
+            NPC.defense = 30;
+            NPC.lifeMax = 500;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath1;
+            NPC.knockBackResist = 0.4f;
+            AnimationType = NPCID.Angler;
         }
 
         public override bool CanTownNPCSpawn(int numTownNPCs, int money)
@@ -58,10 +72,9 @@ namespace Trinitarian.Content.NPCs.Town
             return NPC.downedBoss2 && Main.player.Any(x => x.active);
         }
 
-        public override string TownNPCName()
+        public override ITownNPCProfile TownNPCProfile()
         {
-            string[] names = { "Mary", "Padme", "Leia", "[Redacted]", "Lucy" };
-            return Main.rand.Next(names);
+            return new QuestMerchantProfile();
         }
 
         public override string GetChat()

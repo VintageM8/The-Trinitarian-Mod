@@ -16,29 +16,28 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Melee.SteelSabers
 
         public override void SetDefaults()
         {
-            item.damage = 15;
-            item.melee = true;
-            item.width = 48;
-            item.height = 54;
-            item.useTime = 10;
-            item.useAnimation = 20;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 3;
-            item.value = Item.sellPrice(0, 0, 80, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item1;
-            item.autoReuse = true;
+            Item.damage = 15;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 48;
+            Item.height = 54;
+            Item.useTime = 10;
+            Item.useAnimation = 20;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.knockBack = 3;
+            Item.value = Item.sellPrice(0, 0, 80, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item1;
+            Item.autoReuse = true;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<SteelSaber>(), 1);
-            recipe.AddIngredient(ItemType<FirePart>(), 1);
-            recipe.AddIngredient(ItemID.Obsidian, 5);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemType<SteelSaber>(), 1)
+                .AddIngredient(ItemType<FirePart>(), 1)
+                .AddIngredient(ItemID.Obsidian, 5)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)

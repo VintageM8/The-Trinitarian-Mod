@@ -15,34 +15,33 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee
         }
         public override void SetDefaults()
         {
-            item.channel = true;
-            item.crit = 8;
-            item.damage = 90;
-            item.melee = true;
-            item.width = 36;
-            item.height = 48;
-            item.useTime = 24;
-            item.useAnimation = 24;
-            item.UseSound = SoundID.Item1;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.noUseGraphic = true;
-            item.knockBack = 12;
-            item.value = Item.sellPrice(0, 8, 0, 0);
-            item.rare = ItemRarityID.Pink;
-            item.autoReuse = true;
-            item.shoot = mod.ProjectileType("VellamoThrowProjectile");
-            item.shootSpeed = 2f;
+            Item.channel = true;
+            Item.crit = 8;
+            Item.damage = 90;
+            Item.DamageType = DamageClass.Melee;
+            Item.width = 36;
+            Item.height = 48;
+            Item.useTime = 24;
+            Item.useAnimation = 24;
+            Item.UseSound = SoundID.Item1;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
+            Item.knockBack = 12;
+            Item.value = Item.sellPrice(0, 8, 0, 0);
+            Item.rare = ItemRarityID.Pink;
+            Item.autoReuse = true;
+            Item.shoot = Mod.Find<ModProjectile>("VellamoThrowProjectile").Type;
+            Item.shootSpeed = 2f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.HallowedBar, 15);
-            recipe.AddIngredient(ModContent.ItemType<OceanBar>(), 12);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.HallowedBar, 15)
+                .AddIngredient(ModContent.ItemType<OceanBar>(), 12)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

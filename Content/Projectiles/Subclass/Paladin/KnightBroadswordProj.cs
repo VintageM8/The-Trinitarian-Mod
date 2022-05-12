@@ -18,11 +18,11 @@ namespace Trinitarian.Content.Projectiles.Subclass.Paladin
             SwingTime = 30;
             holdOffset = 50f;
             base.SetDefaults();
-            projectile.width = projectile.height = 75;
-            projectile.friendly = true;
-            projectile.localNPCHitCooldown = SwingTime;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.melee = true;
+            Projectile.width = Projectile.height = 75;
+            Projectile.friendly = true;
+            Projectile.localNPCHitCooldown = SwingTime;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.DamageType = DamageClass.Melee;
         }
 
         public override float Lerp(float val)
@@ -31,19 +31,19 @@ namespace Trinitarian.Content.Projectiles.Subclass.Paladin
                 ? 0f
                 : (float)Math.Pow(2, val * 10f - 10f) / 2f);
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             // draws the slash
-            Player player = Main.player[projectile.owner];
-            Texture2D slash = ModContent.GetTexture("Trinitarian/Assets/Textures/slash_01");
-            float mult = Lerp(Utils.InverseLerp(0f, SwingTime, projectile.timeLeft));
+            Player player = Main.player[Projectile.owner];
+            Texture2D slash = ModContent.Request<Texture2D>("Trinitarian/Assets/Textures/slash_01").Value;
+            float mult = Lerp(Utils.GetLerpValue(0f, SwingTime, Projectile.timeLeft));
             float alpha = (float)Math.Sin(mult * Math.PI);
-            Vector2 pos = player.Center + projectile.velocity * (40f - mult * 30f);
-            spriteBatch.Draw(slash, pos - Main.screenPosition, null, Color.White * alpha, projectile.velocity.ToRotation() - MathHelper.PiOver2, slash.Size() / 2, projectile.scale / 2, SpriteEffects.None, 0f);
+            Vector2 pos = player.Center + Projectile.velocity * (40f - mult * 30f);
+            Main.EntitySpriteDraw(slash, pos - Main.screenPosition, null, Color.White * alpha, Projectile.velocity.ToRotation() - MathHelper.PiOver2, slash.Size() / 2, Projectile.scale / 2, SpriteEffects.None, 0);
             // draws the main blade
-            Texture2D texture = Main.projectileTexture[projectile.type];
+            Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
             Vector2 orig = texture.Size() / 2;
-            spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, Color.White, projectile.rotation, orig, projectile.scale, SpriteEffects.None, 0f);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, orig, Projectile.scale, SpriteEffects.None, 0);
             return false;
         }
     }

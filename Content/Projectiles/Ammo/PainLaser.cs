@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
 
 namespace Trinitarian.Content.Projectiles.Ammo
 {
@@ -13,25 +14,25 @@ namespace Trinitarian.Content.Projectiles.Ammo
 
         public override void SetDefaults()
         {
-            projectile.width = 4;
-            projectile.height = 4;
-            projectile.aiStyle = 1;
-            projectile.friendly = true;
-            projectile.magic = true;
-            projectile.penetrate = 3;
-            projectile.timeLeft = 600;
-            projectile.alpha = 255;
-            projectile.light = 0.5f;
-            projectile.ignoreWater = true;
-            projectile.tileCollide = true;
-            projectile.extraUpdates = 1;
-            projectile.scale = 1.75f;
-            aiType = ProjectileID.GreenLaser;
+            Projectile.width = 4;
+            Projectile.height = 4;
+            Projectile.aiStyle = 1;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.penetrate = 3;
+            Projectile.timeLeft = 600;
+            Projectile.alpha = 255;
+            Projectile.light = 0.5f;
+            Projectile.ignoreWater = true;
+            Projectile.tileCollide = true;
+            Projectile.extraUpdates = 1;
+            Projectile.scale = 1.75f;
+            AIType = ProjectileID.GreenLaser;
         }
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(SoundID.Dig, projectile.position);
+            SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

@@ -43,13 +43,13 @@ namespace Trinitarian.Content.Projectiles.Misc.Orbiting
 
         public float ProjID
         {
-            get => projectile.localAI[0];
-            set => projectile.localAI[0] = value;
+            get => Projectile.localAI[0];
+            set => Projectile.localAI[0] = value;
         }
         public float Proj_State
         {
-            get => projectile.localAI[1];
-            set => projectile.localAI[1] = value;
+            get => Projectile.localAI[1];
+            set => Projectile.localAI[1] = value;
         }
 
         public override void AI()
@@ -71,12 +71,12 @@ namespace Trinitarian.Content.Projectiles.Misc.Orbiting
                     ProjID = 0;
                     modplayer.OrbitingProjectile[ProjectileSlot, 0].localAI[0] = 1;
                     modplayer.OrbitingProjectile[ProjectileSlot, 1] = modplayer.OrbitingProjectile[ProjectileSlot, 0];
-                    modplayer.OrbitingProjectile[ProjectileSlot, 0] = projectile;
+                    modplayer.OrbitingProjectile[ProjectileSlot, 0] = Projectile;
                 }
                 else
                 {
                     ProjID = modplayer.OrbitingProjectileCount[ProjectileSlot];
-                    modplayer.OrbitingProjectile[ProjectileSlot, modplayer.OrbitingProjectileCount[ProjectileSlot]] = projectile;
+                    modplayer.OrbitingProjectile[ProjectileSlot, modplayer.OrbitingProjectileCount[ProjectileSlot]] = Projectile;
                 }
                 modplayer.OrbitingProjectileCount[ProjectileSlot]++;
                 //Make sure to update the array whenever the ProjectileSlot of projectiles changes.
@@ -86,25 +86,25 @@ namespace Trinitarian.Content.Projectiles.Misc.Orbiting
 
             //Despawn distance since server despawned projectiles don't call the Kill hook.
             //This is important since Kill is where we do the calculations to reorder the projectiles once one dies.
-            if (projectile.DistanceSQ(OrbitCenter) > 2000*2000)
+            if (Projectile.DistanceSQ(OrbitCenter) > 2000*2000)
             {
-                projectile.Kill();
+                Projectile.Kill();
             }
 
             //Movement section
             if (Proj_State == State_Spawning || Proj_State == State_Moving)
             {
                 //We make all the movement of the projectiles relative to the player to make sure the orbiting around the player works properly.
-                projectile.velocity = RelativeVelocity;
+                Projectile.velocity = RelativeVelocity;
                 int ProjNumber = modplayer.OrbitingProjectileCount[ProjectileSlot];
                 //Here we assign the projectile its position on the circle the positions are assigned from front to back to make sure that the projectiles rotate in the correct direction.
                 //The positions are stored in the array that is stored on the modplayer instance. 
                 Vector2 WantedPosition = modplayer.OrbitingProjectilePositions[ProjectileSlot, ProjNumber - (int)ProjID - 1];
                 //Snapping distance of 20 meaning that once the projectile gets within 20 pixels of the ideal position it just snapps there and stays.
                 //!!!!Make sure this ProjectileSlot is never smaller than the rotational velocity of the cirlce (the fast one).!!!!            
-                if (projectile.DistanceSQ(WantedPosition) < Snappingdistance * Snappingdistance)
+                if (Projectile.DistanceSQ(WantedPosition) < Snappingdistance * Snappingdistance)
                 {
-                    projectile.Center = WantedPosition;
+                    Projectile.Center = WantedPosition;
                     //once spawning is done aka we reached the correct OrbitingRadius. We can switch to using the radial movement.
                     Proj_State = State_Moving;
                     TimerStart = 0;
@@ -115,13 +115,13 @@ namespace Trinitarian.Content.Projectiles.Misc.Orbiting
                     //this just moves straight to the wanted position. This does work for getting to the positions after just spawning it does look somewhat wierd tho since it doesn't move along the OrbitingRadius of the circle.
                     if (Proj_State == State_Spawning || CurrentOrbitingRadius != OrbitingRadius)
                     {
-                        ProjectileVelocity = WantedPosition - projectile.Center;
+                        ProjectileVelocity = WantedPosition - Projectile.Center;
                         if (ProjectileVelocity != Vector2.Zero)
                         {
                             ProjectileVelocity.Normalize();
                         }
                         ProjectileVelocity *= ProjectileSpeed;
-                        projectile.velocity += ProjectileVelocity;
+                        Projectile.velocity += ProjectileVelocity;
                     }
                     //This is our main way of movement. We initialze the TimerStart here and calculate the current angle towards the player. These 2 variables allow us to get a starting position for the movement.
                     //We use the timer that runns on the player to make sure everything is synced.
@@ -139,12 +139,12 @@ namespace Trinitarian.Content.Projectiles.Misc.Orbiting
                         if (TimerStart == 0)
                         {   
                             //Get the initial conditions and with that also the current starting location for the movement.
-                            angle = Math.Atan2(projectile.Center.Y - player.Center.Y, projectile.Center.X - player.Center.X);
+                            angle = Math.Atan2(Projectile.Center.Y - player.Center.Y, Projectile.Center.X - player.Center.X);
                             TimerStart = modplayer.RotationTimer;
                         }
                         //This period determines how fast the projectiles move along the radial path.
                         double period = 2 * Math.PI / PeriodFast;                       
-                        projectile.Center = OrbitCenter + new Vector2(OrbitingRadius * (float)Math.Cos(period * (modplayer.RotationTimer - TimerStart) + angle), OrbitingRadius * (float)Math.Sin(period * (modplayer.RotationTimer - TimerStart) + angle));
+                        Projectile.Center = OrbitCenter + new Vector2(OrbitingRadius * (float)Math.Cos(period * (modplayer.RotationTimer - TimerStart) + angle), OrbitingRadius * (float)Math.Sin(period * (modplayer.RotationTimer - TimerStart) + angle));
                     }             
                 }
             }
@@ -165,7 +165,7 @@ namespace Trinitarian.Content.Projectiles.Misc.Orbiting
         //Its also important to uptade the positions array whenever the ProjectileSlot of projectiles changes.
         public void GeneratePositionsAfterKill()
         {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             TrinitarianPlayer modplayer = player.GetModPlayer<TrinitarianPlayer>();
             modplayer.OrbitingProjectileCount[ProjectileSlot]--;
             int ProjNumber = modplayer.OrbitingProjectileCount[ProjectileSlot];

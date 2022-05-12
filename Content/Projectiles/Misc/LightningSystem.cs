@@ -18,10 +18,10 @@ namespace Trinitarian.Content.Projectiles.Misc
         public float widthreset = 10;
         public Vector2[] positions;
         public int ticks = 0;
-        public virtual void CustomDrawPerPixel(Vector2 vec, SpriteBatch sprite) { }
-        public virtual void CustomDraw(Vector2[] positions, SpriteBatch spriteBatch) { }
+        public virtual void CustomDrawPerPixel(Vector2 vec) { }
+        public virtual void CustomDraw(Vector2[] positions) { }
         public override string Texture => "Trinitarian/Assets/Textures/Pixel";
-        public void DrawLine(Vector2 start, Vector2 end, Color color, SpriteBatch spriteBatch, float scale)
+        public void DrawLine(Vector2 start, Vector2 end, Color color,  float scale)
         {
             Vector2 unit = end - start;
             float length = unit.Length();
@@ -29,8 +29,8 @@ namespace Trinitarian.Content.Projectiles.Misc
             for (int i = 0; i < length; i++)
             {
                 Vector2 drawpos = start + unit * i - Main.screenPosition;
-                spriteBatch.Draw(Main.projectileTexture[projectile.type], drawpos, null, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
-                CustomDrawPerPixel(drawpos, spriteBatch);
+                Main.EntitySpriteDraw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawpos, null, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0);
+                CustomDrawPerPixel(drawpos);
             }
         }
         public void DrawLine(Vector2 start, Vector2 end, Color color, SpriteBatch spriteBatch, Vector2 scale)
@@ -41,8 +41,8 @@ namespace Trinitarian.Content.Projectiles.Misc
             for (int i = 0; i < length; i++)
             {
                 Vector2 drawpos = start + unit * i - Main.screenPosition;
-                spriteBatch.Draw(Main.projectileTexture[projectile.type], drawpos, null, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
-                CustomDrawPerPixel(drawpos, spriteBatch);
+                spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawpos, null, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                CustomDrawPerPixel(drawpos);
             }
         }
         public virtual Color GetColor(int progress) { return Color.White; }
@@ -56,11 +56,11 @@ namespace Trinitarian.Content.Projectiles.Misc
         }
         public virtual void SetDrawVariables()
         {
-            start = Main.player[(int)projectile.ai[0]].Center;
+            start = Main.player[(int)Projectile.ai[0]].Center;
             end = Main.MouseWorld;
         }
         public virtual void CustomPositionSet() { }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             SetDrawVariables();
             color = GetColor(ticks);
@@ -70,7 +70,7 @@ namespace Trinitarian.Content.Projectiles.Misc
             while (length < 300f)
                 length++;
             unit.Normalize();
-            if (IsMovingCloser(projectile.Center, unit, Main.player[(int)projectile.ai[0]].Center))
+            if (IsMovingCloser(Projectile.Center, unit, Main.player[(int)Projectile.ai[0]].Center))
                 unit *= -1;
             if (ticks == 0)
             {
@@ -94,7 +94,7 @@ namespace Trinitarian.Content.Projectiles.Misc
                     scale = 0.1f;
                     color = Color.Transparent;
                 }
-                DrawLine(positions[i], positions[i + 1], color, spriteBatch, scale);
+                DrawLine(positions[i], positions[i + 1], color,  scale);
                 color = GetColor(ticks);
             }
             if (!Main.gamePaused)
@@ -103,7 +103,7 @@ namespace Trinitarian.Content.Projectiles.Misc
                     ticks = 1;
                 widthreset -= widthdecrease;
             }
-            CustomDraw(positions, spriteBatch);
+            CustomDraw(positions);
 
             return false;
         }

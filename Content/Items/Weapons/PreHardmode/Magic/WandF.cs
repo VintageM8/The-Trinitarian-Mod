@@ -10,37 +10,36 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Wand of Frostburn");
-            Item.staff[item.type] = true;
+            Item.staff[Item.type] = true;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 12;
-            item.magic = true;
-            item.mana = 2;
-            item.width = 26;
-            item.height = 28;
-            item.useTime = 27;
-            item.useAnimation = 27;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.noMelee = true;
-            item.knockBack = 0;
-            item.value = Item.sellPrice(0, 0, 16, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item43;
-            item.autoReuse = false;
-            item.shoot = ModContent.ProjectileType<FrostSparking>();
-            item.shootSpeed = 10f;
+            Item.damage = 12;
+            Item.DamageType = DamageClass.Magic;
+            Item.mana = 2;
+            Item.width = 26;
+            Item.height = 28;
+            Item.useTime = 27;
+            Item.useAnimation = 27;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.noMelee = true;
+            Item.knockBack = 0;
+            Item.value = Item.sellPrice(0, 0, 16, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item43;
+            Item.autoReuse = false;
+            Item.shoot = ModContent.ProjectileType<FrostSparking>();
+            Item.shootSpeed = 10f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.AddIngredient(ItemID.BorealWood, 15);
-            recipe.AddIngredient(ItemID.Shiverthorn, 2);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddTile(TileID.WorkBenches)
+                .AddIngredient(ItemID.BorealWood, 15)
+                .AddIngredient(ItemID.Shiverthorn, 2)
+                .Register();
         }
     }
 }

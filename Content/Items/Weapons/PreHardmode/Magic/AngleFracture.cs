@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Content.Items.Materials.Bars;
@@ -14,50 +15,49 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic
         {
             DisplayName.SetDefault("Angel Fracture");
             Tooltip.SetDefault("A prehardmode Sky Fracture");
-            Item.staff[item.type] = true;
+            Item.staff[Item.type] = true;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 17;
-            item.magic = true;
-            item.mana = 10;
-            item.width = 42;
-            item.height = 40;
-            item.useTime = 19;
-            item.useAnimation = 19;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 4;
-            item.value = Item.sellPrice(0, 1, 0, 0);
-            item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item43;
-            item.autoReuse = true;
-            item.shoot = ProjectileID.SkyFracture;
-            item.shootSpeed = 18;
+            Item.damage = 17;
+            Item.DamageType = DamageClass.Magic;
+            Item.mana = 10;
+            Item.width = 42;
+            Item.height = 40;
+            Item.useTime = 19;
+            Item.useAnimation = 19;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 4;
+            Item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item43;
+            Item.autoReuse = true;
+            Item.shoot = ProjectileID.SkyFracture;
+            Item.shootSpeed = 18;
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             float numberProjectiles = 2;
             float rotation = MathHelper.ToRadians(-6);
-            position += Vector2.Normalize(new Vector2(speedX, speedY)) * 15f;
+            position += Vector2.Normalize(velocity) * 15f;
             for (int i = 0; i < numberProjectiles; i++)
             {
-                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 0.6f; // Watch out for dividing by 0 if there is only 1 projectile.
+                Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * 0.6f; // Watch out for dividing by 0 if there is only 1 projectile.
 
-                Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+                Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockback, player.whoAmI);
             }
 
             return false;
         }
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<StarSteel>(), 8);
-            recipe.AddIngredient(ItemID.Feather, 15);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemType<StarSteel>(), 8)
+                .AddIngredient(ItemID.Feather, 15)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

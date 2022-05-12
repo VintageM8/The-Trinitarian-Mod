@@ -7,13 +7,12 @@ namespace Trinitarian.Content.Buffs.Bonuses
 {
     public class ReaperSetBuff : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Reaper Set");
             Description.SetDefault("A Reaper will protect you\nThis reaper will steal life and heal you.");
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
-            longerExpertDebuff = false;
         }
 
         public override void Update(Player player, ref int buffIndex)

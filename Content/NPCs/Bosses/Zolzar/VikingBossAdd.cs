@@ -21,28 +21,28 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 
 		public float AI_State
 		{
-			get => npc.ai[0];
-			set => npc.ai[0] = value;
+			get => NPC.ai[0];
+			set => NPC.ai[0] = value;
 		}
 		public float AI_Owner
 		{
-			get => npc.ai[1];
-			set => npc.ai[1] = value;
+			get => NPC.ai[1];
+			set => NPC.ai[1] = value;
 		}
 		public float AI_Timer
 		{
-			get => npc.ai[2];
-			set => npc.ai[2] = value;
+			get => NPC.ai[2];
+			set => NPC.ai[2] = value;
 		}
 		public float AddID
 		{
-			get => npc.ai[3];
-			set => npc.ai[3] = value;
+			get => NPC.ai[3];
+			set => NPC.ai[3] = value;
 		}
 		public float Attack_State
 		{
-			get => npc.localAI[0];
-			set => npc.localAI[0] = value;
+			get => NPC.localAI[0];
+			set => NPC.localAI[0] = value;
 		}
 		private bool npcDashing = false;
 		private float DashTime;
@@ -65,27 +65,27 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("VikingAss");
-			Main.npcFrameCount[npc.type] = 4;
+			Main.npcFrameCount[NPC.type] = 4;
 		}
 
 		public override void SetDefaults()
 		{
-			npc.aiStyle = -1;
-			npc.width = 50;
-			npc.height = 50;
-			npc.damage = 90;
-			npc.defense = 8;
-			npc.lifeMax = 15000;
-			npc.value = 60f;
-			npc.knockBackResist = 0;
-			npc.scale = 1f;
-			npc.stepSpeed = 0f;
-			npc.noGravity = true;
-			npc.noTileCollide = true;
+			NPC.aiStyle = -1;
+			NPC.width = 50;
+			NPC.height = 50;
+			NPC.damage = 90;
+			NPC.defense = 8;
+			NPC.lifeMax = 15000;
+			NPC.value = 60f;
+			NPC.knockBackResist = 0;
+			NPC.scale = 1f;
+			NPC.stepSpeed = 0f;
+			NPC.noGravity = true;
+			NPC.noTileCollide = true;
 		}
 		public override bool PreAI()
 		{
-			Player target = Main.player[npc.target];
+			Player target = Main.player[NPC.target];
 			TrinitarianPlayer globaltarget = target.GetModPlayer<TrinitarianPlayer>();
 			int Frames = 20;
 			globaltarget.PreviousVelocity[0] = target.velocity;
@@ -98,8 +98,8 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 		}
 		public override void AI()
 		{
-			npc.TargetClosest(true);
-			Player player = Main.player[npc.target];
+			NPC.TargetClosest(true);
+			Player player = Main.player[NPC.target];
 			if (AI_State == State_Moving || AI_State == State_Circling)
 			{
 				Moving();
@@ -108,7 +108,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 			{
 				if (AI_Timer == 0)
 				{
-					npc.netUpdate = true;
+					NPC.netUpdate = true;
 				}
 				switch (Attack_State)
 				{
@@ -150,43 +150,43 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 			TrinitarianGlobalNPC globalOwner = Owner.GetGlobalNPC<TrinitarianGlobalNPC>();
 			int AddNumber = (int)Owner.ai[3]; //this is the number of Adds currently
 			Vector2 WantedPosition = globalOwner.AddPositions[AddNumber - (int)AddID - 1];
-			npc.velocity = Owner.velocity;
-			if (npc.DistanceSQ(WantedPosition) < 13 * 13)
+			NPC.velocity = Owner.velocity;
+			if (NPC.DistanceSQ(WantedPosition) < 13 * 13)
 			{
 				AI_State = State_Circling;
-				npc.Center = WantedPosition;
+				NPC.Center = WantedPosition;
 				TimerStart = 0;
 				//npc.velocity = Vector2.Zero;
 			}
 			else if (AI_State == State_Moving)
 			{
-				Vector2 npcVel = WantedPosition - npc.Center;
+				Vector2 npcVel = WantedPosition - NPC.Center;
 				if (npcVel != Vector2.Zero)
 				{
 					npcVel.Normalize();
 				}
 				npcVel *= npcVelocity;
-				npc.velocity += npcVel;
+				NPC.velocity += npcVel;
 			}
 			else
             {
 				if (TimerStart == 0)
 				{
-					angle = Math.Atan2(npc.Center.Y - Owner.Center.Y, npc.Center.X - Owner.Center.X);
+					angle = Math.Atan2(NPC.Center.Y - Owner.Center.Y, NPC.Center.X - Owner.Center.X);
 					TimerStart = Owner.localAI[0];
 				}
 
 				double period = 2 * Math.PI / 150f;
-				npc.Center = Owner.Center + new Vector2(300 * (float)Math.Cos(period * (Owner.localAI[0] - TimerStart) + angle), 300 * (float)Math.Sin(period * (Owner.localAI[0] - TimerStart) + angle));
+				NPC.Center = Owner.Center + new Vector2(300 * (float)Math.Cos(period * (Owner.localAI[0] - TimerStart) + angle), 300 * (float)Math.Sin(period * (Owner.localAI[0] - TimerStart) + angle));
 			}
 		}
 		private void Dash()
         {
-			Player target = Main.player[npc.target];
+			Player target = Main.player[NPC.target];
 			if (AI_Timer == 0) {
 				float time = 0;
-				Vector2 npcVel = ModTargeting.LinearAdvancedTargeting(npc.Center, target.Center, IntSpeed, DashSpeed, ref time);
-				ModTargeting.FallingTargeting(npc, target, new Vector2(0, -28), (int)DashSpeed, ref time, ref npcVel);
+				Vector2 npcVel = ModTargeting.LinearAdvancedTargeting(NPC.Center, target.Center, IntSpeed, DashSpeed, ref time);
+				ModTargeting.FallingTargeting(NPC, target, new Vector2(0, -28), (int)DashSpeed, ref time, ref npcVel);
 				if (time > 15) DashTime = time * OverDashFactor;
 				else DashTime = 15 * OverDashFactor;
 				//if (npcVel != Vector2.Zero)
@@ -194,7 +194,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 				//    npcVel.Normalize();
 				//}
 				//npcVel *= DashSpeed;
-				npc.velocity = npcVel;
+				NPC.velocity = npcVel;
 				npcDashing = true;
 			}
 
@@ -207,18 +207,18 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
         }
 		private void LightningStrike()
 		{
-			Player target = Main.player[npc.target];
+			Player target = Main.player[NPC.target];
 			if (MoveTo(target.Center + new Vector2(0, -300), LightningStrikeSpeed, false, true))
 			{
 				if (AI_Timer % 20 == 0)
 				{
-					Vector2 projVel = target.Center - npc.Center;
+					Vector2 projVel = target.Center - NPC.Center;
 					if (projVel != Vector2.Zero)
 					{
 						projVel.Normalize();
 					}
 					projVel *= 7;
-					Projectile.NewProjectile(npc.Center, projVel, ProjectileID.CultistBossLightningOrbArc, LightningDMG, LightningKB, Main.myPlayer, projVel.ToRotation(), AI_Timer);
+					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, projVel, ProjectileID.CultistBossLightningOrbArc, LightningDMG, LightningKB, Main.myPlayer, projVel.ToRotation(), AI_Timer);
 				}
 			}
 			else
@@ -234,9 +234,9 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 		private void LightningCircle()
 		{
 			NPC Owner = Main.npc[(int)AI_Owner];
-			Player target = Main.player[npc.target];
+			Player target = Main.player[NPC.target];
 			TrinitarianGlobalNPC globalOwner = Owner.GetGlobalNPC<TrinitarianGlobalNPC>();
-			npc.damage = 0;
+			NPC.damage = 0;
 			int AddNumber = (int)Owner.ai[3]; //this is the number of Adds currently
 											  			
 			if (AI_Timer <= AddNumber * FollowTime + 240)
@@ -246,9 +246,9 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 				if ((AI_Timer - 120) == AddID * FollowTime && (AI_Timer - 120) > 0)
 				{
 					float time = 0;
-					Vector2 projVel = ModTargeting.LinearAdvancedTargeting(npc.Center, target.Center, IntSpeed, 7 * 4, ref time);
-					ModTargeting.FallingTargeting(npc, target, new Vector2(0, -28), 7 * 4, ref time, ref projVel);
-					Projectile.NewProjectile(npc.Center, projVel / 4, ProjectileID.CultistBossLightningOrbArc, LightningDMG, LightningKB, Main.myPlayer, projVel.ToRotation(), AI_Timer);
+					Vector2 projVel = ModTargeting.LinearAdvancedTargeting(NPC.Center, target.Center, IntSpeed, 7 * 4, ref time);
+					ModTargeting.FallingTargeting(NPC, target, new Vector2(0, -28), 7 * 4, ref time, ref projVel);
+					Projectile.NewProjectile(NPC.GetSource_FromAI(),NPC.Center, projVel / 4, ProjectileID.CultistBossLightningOrbArc, LightningDMG, LightningKB, Main.myPlayer, projVel.ToRotation(), AI_Timer);
 				}
 
 			}
@@ -270,12 +270,12 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 			{
 				for (int i = 0; i < 4; i++)
 				{
-					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 8 * (float)Math.Cos(2 * Math.PI * i / 4), 8 * (float)Math.Sin(2 * Math.PI * i / 4), ProjectileID.CultistBossIceMist, 40, 1, target.whoAmI);
+					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, 8 * (float)Math.Cos(2 * Math.PI * i / 4), 8 * (float)Math.Sin(2 * Math.PI * i / 4), ProjectileID.CultistBossIceMist, 40, 1, target.whoAmI);
 				}
 			}
 			if (AI_Timer >= AddNumber * FollowTime + 240 + 1 + 75 + ExplosionDelay)
 			{
-				npc.damage = 90;
+				NPC.damage = 90;
 				AI_State = State_Moving;
 				AI_Timer = -1;
 			}
@@ -283,23 +283,23 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 		}
 		private bool MoveTo(Vector2 WantedPosition, float TravelSpeed, bool follow, bool relative = false, int delay = 0)
 		{
-			Player player = Main.player[npc.target];
+			Player player = Main.player[NPC.target];
 			if (AI_Timer == delay || follow)
 			{
-				if (relative) npc.velocity = player.velocity;
+				if (relative) NPC.velocity = player.velocity;
 				tempPos = WantedPosition;
-				Vector2 npcVel = tempPos - npc.Center;
+				Vector2 npcVel = tempPos - NPC.Center;
 				if (npcVel != Vector2.Zero)
 				{
 					npcVel.Normalize();
 				}
 				npcVel *= TravelSpeed;
-				npc.velocity += npcVel;
+				NPC.velocity += npcVel;
 			}
-			if (npc.DistanceSQ(tempPos) <= 14 * 14)
+			if (NPC.DistanceSQ(tempPos) <= 14 * 14)
 			{
-				npc.Center = tempPos;
-				npc.velocity = Vector2.Zero;
+				NPC.Center = tempPos;
+				NPC.velocity = Vector2.Zero;
 				return true;
 			}
 			return false;
@@ -312,24 +312,24 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 			double period = 2f * Math.PI / 300f;
 			for (int i = 0; i < AddNumber; i++)
 			{
-				globalOwner.AddPositions[i] = npc.Center + new Vector2(300 * (float)Math.Cos(period * (Owner.localAI[0] + (300 / AddNumber * i))), 300 * (float)Math.Sin(period * (Owner.localAI[0] + (300 / AddNumber * i))));
+				globalOwner.AddPositions[i] = NPC.Center + new Vector2(300 * (float)Math.Cos(period * (Owner.localAI[0] + (300 / AddNumber * i))), 300 * (float)Math.Sin(period * (Owner.localAI[0] + (300 / AddNumber * i))));
 			}
 		}
 		public override void FindFrame(int frameHeight)
 		{
-			int factor = (int)((Main.player[npc.target].Center.X - npc.Center.X) / Math.Abs(Main.player[npc.target].Center.X - npc.Center.X));
-			npc.frameCounter++;
+			int factor = (int)((Main.player[NPC.target].Center.X - NPC.Center.X) / Math.Abs(Main.player[NPC.target].Center.X - NPC.Center.X));
+			NPC.frameCounter++;
 
-			if (npc.frameCounter % 6f == 5f)
+			if (NPC.frameCounter % 6f == 5f)
 			{
-				npc.frame.Y += frameHeight;
+				NPC.frame.Y += frameHeight;
 			}
-			if (npc.frame.Y >= frameHeight * 4) // 10 is max # of frames
+			if (NPC.frame.Y >= frameHeight * 4) // 10 is max # of frames
 			{
-				npc.frame.Y = 0; // Reset back to default
+				NPC.frame.Y = 0; // Reset back to default
 			}
 
-			npc.spriteDirection = factor;
+			NPC.spriteDirection = factor;
 		}
 		//this is probably really scuffed. Id handles the the reordering of the adds once one of them dies. I wrote the algorythm for reordering them but forgot that the way the spots are assigned is such that AddID 0 goes to the last spot on the circle.
 		//that lead to them rotating against the spinning direction which looked ugly. So i just fixed it by shifting the array to the left by one and then just overriding the AddIDs. The shifting makes it so the try to align with the previous point instead of the next one wich fixes it. 
@@ -340,7 +340,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 			TrinitarianGlobalNPC globalOwner = Owner.GetGlobalNPC<TrinitarianGlobalNPC>();
 			Owner.ai[3]--; //reduce the Addnumber by 1
 			int AddNumber = (int)Owner.ai[3];
-			npc.boss = false;
+			NPC.boss = false;
             if (AddNumber > 0 && AddID != 0)
             {
                 for (int i = (int)AddID; i < AddNumber; i++)

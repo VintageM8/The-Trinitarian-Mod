@@ -13,17 +13,17 @@ namespace Trinitarian.Content.Projectiles.Subclass.Wizard
 
         public override void SetDefaults()
         {
-            projectile.width = 128;
-            projectile.height = 128;
-            projectile.timeLeft = 2;
-            projectile.penetrate = -1;
-            projectile.friendly = true;
+            Projectile.width = 128;
+            Projectile.height = 128;
+            Projectile.timeLeft = 2;
+            Projectile.penetrate = -1;
+            Projectile.friendly = true;
         }
 
         public override void Kill(int timeLeft)
         {
             for (int k = 0; k < 100; k++)
-                Dust.NewDustPerfect(projectile.Center, DustType<SolarDust>(), Vector2.One.RotatedByRandom(6.28f) * 5);
+                Dust.NewDustPerfect(Projectile.Center, DustType<SolarDust>(), Vector2.One.RotatedByRandom(6.28f) * 5);
         }
     }
 }

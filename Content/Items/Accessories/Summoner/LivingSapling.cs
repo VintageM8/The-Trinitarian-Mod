@@ -14,25 +14,24 @@ namespace Trinitarian.Content.Items.Accessories.Summoner
 
         public override void SetDefaults()
         {
-            item.accessory = true;
-            item.width = 36;
-            item.height = 36;
-            item.rare = ItemRarityID.White;
-            item.value = Item.sellPrice(0, 0, 50, 0);
+            Item.accessory = true;
+            Item.width = 36;
+            Item.height = 36;
+            Item.rare = ItemRarityID.White;
+            Item.value = Item.sellPrice(0, 0, 50, 0);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.minionDamage += 0.02f;
+            player.GetDamage(DamageClass.Summon) += 0.02f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Wood, 8);
-            recipe.AddTile(TileID.LivingLoom);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.Wood, 8)
+                .AddTile(TileID.LivingLoom)
+                .Register();
         }
     }
 }

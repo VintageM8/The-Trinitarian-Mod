@@ -5,7 +5,7 @@ namespace Trinitarian.Content.Buffs.Minion
 {
     public class IceDragBuff : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ice Dragon");
             Description.SetDefault("A powerful frost dragon will fight for your cause.");
@@ -15,7 +15,7 @@ namespace Trinitarian.Content.Buffs.Minion
 
         public override void Update(Player player, ref int buffIndex)
         {
-            if (player.ownedProjectileCounts[mod.ProjectileType("FrostDragonproj")] > 0)
+            if (player.ownedProjectileCounts[Mod.Find<ModProjectile>("FrostDragonproj").Type] > 0)
             {
                 player.buffTime[buffIndex] = 18000;
             }

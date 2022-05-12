@@ -14,19 +14,19 @@ namespace Trinitarian.Content.Items.Consumables.Potions
 
         public override void SetDefaults()
         {
-            item.width = 20;
-            item.height = 26;
-            item.useStyle = ItemUseStyleID.EatingUsing;
-            item.useAnimation = 17;
-            item.useTime = 17;
-            item.useTurn = true;
-            item.UseSound = SoundID.Item3;
-            item.maxStack = 1;
-            item.consumable = false;
-            item.rare = ItemRarityID.LightRed;
-            item.healLife = 180; // While we change the actual healing value in GetHealLife, item.healLife still needs to be higher than 0 for the item to be considered a healing item
-            item.potion = true; // Makes it so this item applies potion sickness on use and allows it to be used with quick heal
-            item.value = Item.sellPrice(0, 4, 0, 0);
+            Item.width = 20;
+            Item.height = 26;
+            Item.useStyle = ItemUseStyleID.EatFood;
+            Item.useAnimation = 17;
+            Item.useTime = 17;
+            Item.useTurn = true;
+            Item.UseSound = SoundID.Item3;
+            Item.maxStack = 1;
+            Item.consumable = false;
+            Item.rare = ItemRarityID.LightRed;
+            Item.healLife = 180; // While we change the actual healing value in GetHealLife, item.healLife still needs to be higher than 0 for the item to be considered a healing item
+            Item.potion = true; // Makes it so this item applies potion sickness on use and allows it to be used with quick heal
+            Item.value = Item.sellPrice(0, 4, 0, 0);
         }
     }
 }

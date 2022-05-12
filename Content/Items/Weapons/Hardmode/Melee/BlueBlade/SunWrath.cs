@@ -13,28 +13,28 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.BlueBlade
         }
         public override void SetDefaults()
         {
-            projectile.width = 2;
-            projectile.height = 2;
-            drawOffsetX = -45;
-            projectile.alpha = 255;
-            drawOriginOffsetY = 0;
-            projectile.damage = 65;
-            drawOriginOffsetX = 23;
-            projectile.aiStyle = -1;
-            projectile.friendly = true;
-            projectile.penetrate = 5;
-            projectile.melee = true;
-            projectile.tileCollide = false;
-            projectile.timeLeft = 600;
+            Projectile.width = 2;
+            Projectile.height = 2;
+            DrawOffsetX = -45;
+            Projectile.alpha = 255;
+            DrawOriginOffsetX = 0;
+            Projectile.damage = 65;
+            DrawOriginOffsetY = 23;
+            Projectile.aiStyle = -1;
+            Projectile.friendly = true;
+            Projectile.penetrate = 5;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.tileCollide = false;
+            Projectile.timeLeft = 600;
         }
 
         public override void AI()
         {
-            projectile.rotation = projectile.velocity.ToRotation();
+            Projectile.rotation = Projectile.velocity.ToRotation();
             i++;
             if (i % 1 == 0)
             {
-                int dust = Dust.NewDust(projectile.position, projectile.width / 2, projectile.height / 2, DustID.TeleportationPotion);
+                int dust = Dust.NewDust(Projectile.position, Projectile.width / 2, Projectile.height / 2, DustID.TeleportationPotion);
             }
         }
     }

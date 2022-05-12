@@ -32,7 +32,7 @@ namespace Trinitarian.Dusts
             {
                 dust.color = new Color(156, 166, 49);
             }
-            if (Main.player[Main.myPlayer].ZoneHoly)
+            if (Main.player[Main.myPlayer].ZoneHallow)
             {
                 dust.color = new Color(0, 255, 149);
             }

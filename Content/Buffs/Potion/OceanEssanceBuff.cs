@@ -6,7 +6,7 @@ namespace Trinitarian.Content.Buffs.Potion
 {
     public class OceanEssanceBuff : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ocean Essance");
             Description.SetDefault("If you are in the ocean, your stats are increased");

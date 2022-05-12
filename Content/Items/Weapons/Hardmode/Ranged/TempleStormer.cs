@@ -15,37 +15,36 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged
 
         public override void SetDefaults()
         {
-            item.damage = 98;
-            item.ranged = true;
-            item.width = 50;
-            item.height = 28;
-            item.useTime = 7;
-            item.useAnimation = 12;
-            item.reuseDelay = 14;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 6;
-            item.value = Item.sellPrice(0, 10, 0, 0);
-            item.rare = ItemRarityID.Purple;
-            item.UseSound = SoundID.Item11;
-            item.autoReuse = true;
-            item.shoot = ProjectileID.Bullet;
-            item.shootSpeed = 9f;
-            item.useAmmo = AmmoID.Bullet;
+            Item.damage = 98;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 50;
+            Item.height = 28;
+            Item.useTime = 7;
+            Item.useAnimation = 12;
+            Item.reuseDelay = 14;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 6;
+            Item.value = Item.sellPrice(0, 10, 0, 0);
+            Item.rare = ItemRarityID.Purple;
+            Item.UseSound = SoundID.Item11;
+            Item.autoReuse = true;
+            Item.shoot = ProjectileID.Bullet;
+            Item.shootSpeed = 9f;
+            Item.useAmmo = AmmoID.Bullet;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             if (type == ProjectileID.Bullet)
             {
                 type = ProjectileID.RocketII;
             }
-            return true;
         }
 
-        public override bool ConsumeAmmo(Player player)
+        public override bool CanConsumeAmmo(Player player)
         {
-            return !(player.itemAnimation < item.useAnimation - 2);
+            return !(player.itemAnimation < Item.useAnimation - 2);
         }
     }
 }

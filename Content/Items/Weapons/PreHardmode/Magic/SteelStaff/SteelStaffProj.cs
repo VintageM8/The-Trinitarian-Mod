@@ -15,32 +15,32 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic.SteelStaff
 
         public override void SetDefaults()
         {
-            projectile.arrow = true;
-            projectile.width = 16;
-            projectile.height = 16;
-            projectile.aiStyle = 29;
-            projectile.friendly = true;
-            projectile.magic = true;
-            aiType = ProjectileID.AmethystBolt;
+            Projectile.arrow = true;
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.aiStyle = 29;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Magic;
+            AIType = ProjectileID.AmethystBolt;
         }
 
         public override void AI()
         {
             if (Main.rand.NextBool(6))
             {
-                Dust.NewDust(projectile.Center, projectile.width, projectile.height, DustID.PinkFlame);
+                Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.PinkTorch);
             }
         }
         public override void Kill(int timeLeft)
         {
-            Vector2 origin = projectile.Center;
+            Vector2 origin = Projectile.Center;
             float radius = 10;
             int numLocations = 12;
             for (int i = 0; i < 12; i++)
             {
                 Vector2 position = origin + Vector2.UnitX.RotatedBy(MathHelper.ToRadians(360f / numLocations * i)) * radius;
                 Vector2 dustvelocity = new Vector2(0f, 0.5f).RotatedBy(MathHelper.ToRadians(360f / numLocations * i));
-                int dust = Dust.NewDust(position, 2, 2, DustID.PinkFlame, dustvelocity.X, dustvelocity.Y, 0, default, 1);
+                int dust = Dust.NewDust(position, 2, 2, DustID.PinkTorch, dustvelocity.X, dustvelocity.Y, 0, default, 1);
                 Main.dust[dust].noGravity = false;
             }
         }

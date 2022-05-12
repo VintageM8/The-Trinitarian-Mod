@@ -15,11 +15,11 @@ namespace Trinitarian.Content.Items.Armor.ReaperArmor
 
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 20;
-            item.value = Item.sellPrice(0, 2, 50, 0);
-            item.rare = ItemRarityID.Green;
-            item.defense = 20;
+            Item.width = 30;
+            Item.height = 20;
+            Item.value = Item.sellPrice(0, 2, 50, 0);
+            Item.rare = ItemRarityID.Green;
+            Item.defense = 20;
         }
 
         public override void UpdateEquip(Player player)

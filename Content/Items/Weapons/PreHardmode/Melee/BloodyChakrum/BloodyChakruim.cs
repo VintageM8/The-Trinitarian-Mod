@@ -14,33 +14,32 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Melee.BloodyChakrum
 
         public override void SetDefaults()
         {
-            item.UseSound = SoundID.Item1;
-            item.shootSpeed = 10;
-            item.crit = 4;
-            item.damage = 32;
-            item.knockBack = 5f;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.useAnimation = 13;
-            item.useTime = 13;
-            item.width = 22;
-            item.height = 22;
-            item.maxStack = 1;
-            item.rare = ItemRarityID.Blue;
-            item.consumable = false;
-            item.noUseGraphic = true;
-            item.melee = true;
-            item.autoReuse = false;
-            item.shoot = ModContent.ProjectileType<BloodyChakramproj>();
+            Item.UseSound = SoundID.Item1;
+            Item.shootSpeed = 10;
+            Item.crit = 4;
+            Item.damage = 32;
+            Item.knockBack = 5f;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.useAnimation = 13;
+            Item.useTime = 13;
+            Item.width = 22;
+            Item.height = 22;
+            Item.maxStack = 1;
+            Item.rare = ItemRarityID.Blue;
+            Item.consumable = false;
+            Item.noUseGraphic = true;
+            Item.DamageType = DamageClass.Melee;
+            Item.autoReuse = false;
+            Item.shoot = ModContent.ProjectileType<BloodyChakramproj>();
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.TissueSample, 25);
-            recipe.AddIngredient(ItemID.ThornChakram, 1);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemID.TissueSample, 25)
+                .AddIngredient(ItemID.ThornChakram, 1)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

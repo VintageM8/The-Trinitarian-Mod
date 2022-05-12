@@ -1,6 +1,7 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using Trinitarian.Content.Projectiles.Subclass.Elf;
 
@@ -16,28 +17,28 @@ namespace Trinitarian.Content.Subclasses.Elf.Weapon
 
         public override void SetDefaults()
         {
-            item.UseSound = SoundID.Item67;
-            item.crit = 4;
-            item.damage = 18;
-            item.ranged = true;
-            item.width = 60;
-            item.height = 32;
-            item.useTime = 25;
-            item.useAnimation = 25;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 6;
-            item.value = Item.sellPrice(0, 0, 20, 0);
-            item.rare = ItemRarityID.Green;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<ElfBolt>();
-            item.shootSpeed = 15f;
-            item.useAmmo = AmmoID.Arrow;
+            Item.UseSound = SoundID.Item67;
+            Item.crit = 4;
+            Item.damage = 18;
+            Item.DamageType = DamageClass.Ranged;
+            Item.width = 60;
+            Item.height = 32;
+            Item.useTime = 25;
+            Item.useAnimation = 25;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.noMelee = true;
+            Item.knockBack = 6;
+            Item.value = Item.sellPrice(0, 0, 20, 0);
+            Item.rare = ItemRarityID.Green;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<ElfBolt>();
+            Item.shootSpeed = 15f;
+            Item.useAmmo = AmmoID.Arrow;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<ElfBolt>(), damage, knockBack, player.whoAmI);
+			Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, ModContent.ProjectileType<ElfBolt>(), damage, knockback, player.whoAmI);
 			return false;
 		}
 

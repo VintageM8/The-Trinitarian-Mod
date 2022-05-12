@@ -11,7 +11,7 @@ namespace Trinitarian.Content.Tiles
 {
 	public class AlgaePlant : ModTile
 	{
-		public override void SetDefaults()
+		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLighted[Type] = true;
@@ -25,7 +25,7 @@ namespace Trinitarian.Content.Tiles
 			Main.tileLighted[Type] = true;
 			Main.tileCut[Type] = true;
 			Main.tileSolid[Type] = false;
-			drop = ModContent.ItemType<Items.Materials.Parts.Algae>	();
+			ItemDrop = ModContent.ItemType<Items.Materials.Parts.Algae>	();
 
 			AddMapEntry(new Color(200, 200, 200));
 			
@@ -45,7 +45,7 @@ namespace Trinitarian.Content.Tiles
                 Zero = Vector2.Zero;
             }
             var Height = 16;
-            Main.spriteBatch.Draw(mod.GetTexture("Content/Tiles/AlgaePlant"), new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + Zero, new Rectangle(tile.frameX, tile.frameY, 16, Height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Content/Tiles/AlgaePlant").Value, new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + Zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, Height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

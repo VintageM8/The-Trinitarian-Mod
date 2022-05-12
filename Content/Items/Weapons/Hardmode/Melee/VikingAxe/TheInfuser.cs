@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe;
 using static Terraria.ModLoader.ModContent;
+using Terraria.Audio;
 
 namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe
 {
@@ -18,126 +19,126 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe
         public override void SetDefaults()
         {
             //projectile.CloneDefaults(ProjectileID.PaladinsHammerFriendly);
-            projectile.width = 36;
-            projectile.height = 36;
+            Projectile.width = 36;
+            Projectile.height = 36;
             //projectile.aiStyle = 3;
-            projectile.friendly = true;
-            projectile.melee = true;
-            projectile.penetrate = -1;
-            projectile.timeLeft = 600;
-            projectile.tileCollide = true;
-            projectile.extraUpdates = 1;
-            projectile.ignoreWater = true;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.penetrate = -1;
+            Projectile.timeLeft = 600;
+            Projectile.tileCollide = true;
+            Projectile.extraUpdates = 1;
+            Projectile.ignoreWater = true;
         }
 
         int Suffocationtime = 0;
         public override void AI()
         {
-            Lighting.AddLight(projectile.Center, 0f, 1f, 0f);
-            if (projectile.soundDelay == 0)
+            Lighting.AddLight(Projectile.Center, 0f, 1f, 0f);
+            if (Projectile.soundDelay == 0)
             {
-                projectile.soundDelay = 8;
-                Main.PlaySound(SoundID.Item7, projectile.position);
+                Projectile.soundDelay = 8;
+                SoundEngine.PlaySound(SoundID.Item7, Projectile.position);
             }
 
-            if (projectile.ai[0] == 0f)
+            if (Projectile.ai[0] == 0f)
             {
-                if (projectile.ai[1] <= 5)
+                if (Projectile.ai[1] <= 5)
                 {
-                    projectile.width = 4;
-                    projectile.height = 4;
+                    Projectile.width = 4;
+                    Projectile.height = 4;
                 }
                 else
                 {
-                    projectile.width = 36;
-                    projectile.height = 36;
+                    Projectile.width = 36;
+                    Projectile.height = 36;
                 }
-                projectile.ai[1] += 1f;
-                if (projectile.ai[1] >= 30f) // Return back code
+                Projectile.ai[1] += 1f;
+                if (Projectile.ai[1] >= 30f) // Return back code
                 {
-                    projectile.ai[0] = 1f;
-                    projectile.ai[1] = 0f;
-                    projectile.netUpdate = true;
+                    Projectile.ai[0] = 1f;
+                    Projectile.ai[1] = 0f;
+                    Projectile.netUpdate = true;
                 }
             }
             else
             {
                 // Projectile is returning
-                projectile.tileCollide = false;
+                Projectile.tileCollide = false;
                 float num149 = 16f;
                 float num150 = 1.2f;
                 num149 = 15f;
                 num150 = 3f;
 
 
-                Vector2 vector163 = new Vector2(projectile.position.X + (float)projectile.width * 0.5f, projectile.position.Y + (float)projectile.height * 0.5f);
-                float num152 = Main.player[projectile.owner].position.X + (float)(Main.player[projectile.owner].width / 2) - vector163.X;
-                float num154 = Main.player[projectile.owner].position.Y + (float)(Main.player[projectile.owner].height / 2) - vector163.Y;
+                Vector2 vector163 = new Vector2(Projectile.position.X + (float)Projectile.width * 0.5f, Projectile.position.Y + (float)Projectile.height * 0.5f);
+                float num152 = Main.player[Projectile.owner].position.X + (float)(Main.player[Projectile.owner].width / 2) - vector163.X;
+                float num154 = Main.player[Projectile.owner].position.Y + (float)(Main.player[Projectile.owner].height / 2) - vector163.Y;
                 float num155 = (float)Math.Sqrt(num152 * num152 + num154 * num154);
 
                 // Maximum distance
                 if (num155 > 3000f)
                 {
-                    projectile.Kill();
+                    Projectile.Kill();
                 }
                 num155 = num149 / num155;
                 num152 *= num155;
                 num154 *= num155;
-                if (projectile.velocity.X < num152)
+                if (Projectile.velocity.X < num152)
                 {
-                    projectile.velocity.X = projectile.velocity.X + num150;
-                    if (projectile.velocity.X < 0f && num152 > 0f)
+                    Projectile.velocity.X = Projectile.velocity.X + num150;
+                    if (Projectile.velocity.X < 0f && num152 > 0f)
                     {
-                        projectile.velocity.X = projectile.velocity.X + num150;
+                        Projectile.velocity.X = Projectile.velocity.X + num150;
                     }
                 }
-                else if (projectile.velocity.X > num152)
+                else if (Projectile.velocity.X > num152)
                 {
-                    projectile.velocity.X = projectile.velocity.X - num150;
-                    if (projectile.velocity.X > 0f && num152 < 0f)
+                    Projectile.velocity.X = Projectile.velocity.X - num150;
+                    if (Projectile.velocity.X > 0f && num152 < 0f)
                     {
-                        projectile.velocity.X = projectile.velocity.X - num150;
+                        Projectile.velocity.X = Projectile.velocity.X - num150;
                     }
                 }
-                if (projectile.velocity.Y < num154)
+                if (Projectile.velocity.Y < num154)
                 {
-                    projectile.velocity.Y = projectile.velocity.Y + num150;
-                    if (projectile.velocity.Y < 0f && num154 > 0f)
+                    Projectile.velocity.Y = Projectile.velocity.Y + num150;
+                    if (Projectile.velocity.Y < 0f && num154 > 0f)
                     {
-                        projectile.velocity.Y = projectile.velocity.Y + num150;
+                        Projectile.velocity.Y = Projectile.velocity.Y + num150;
                     }
                 }
-                else if (projectile.velocity.Y > num154)
+                else if (Projectile.velocity.Y > num154)
                 {
-                    projectile.velocity.Y = projectile.velocity.Y - num150;
-                    if (projectile.velocity.Y > 0f && num154 < 0f)
+                    Projectile.velocity.Y = Projectile.velocity.Y - num150;
+                    if (Projectile.velocity.Y > 0f && num154 < 0f)
                     {
-                        projectile.velocity.Y = projectile.velocity.Y - num150;
+                        Projectile.velocity.Y = Projectile.velocity.Y - num150;
                     }
                 }
 
-                if (Main.myPlayer == projectile.owner)
+                if (Main.myPlayer == Projectile.owner)
                 {
-                    Rectangle rectangle = new Rectangle((int)projectile.position.X, (int)projectile.position.Y, projectile.width, projectile.height);
-                    Rectangle value99 = new Rectangle((int)Main.player[projectile.owner].position.X, (int)Main.player[projectile.owner].position.Y, Main.player[projectile.owner].width, Main.player[projectile.owner].height);
+                    Rectangle rectangle = new Rectangle((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height);
+                    Rectangle value99 = new Rectangle((int)Main.player[Projectile.owner].position.X, (int)Main.player[Projectile.owner].position.Y, Main.player[Projectile.owner].width, Main.player[Projectile.owner].height);
                     if (rectangle.Intersects(value99))
                     {
-                        projectile.Kill();
+                        Projectile.Kill();
                     }
                 }
             }
 
-            projectile.rotation += 0.35f;
+            Projectile.rotation += 0.35f;
 
             if (Main.rand.NextBool(6))
             {
-                Dust.NewDust(projectile.Center, projectile.width, projectile.height, DustID.Blood);
+                Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.Blood);
                 Suffocationtime++;
 
                 if (Suffocationtime == 5)
                 {
-                    Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 0, -3, ProjectileType<FragmentalShurikenProj>(), 45, projectile.knockBack, Main.myPlayer);
-                    Projectile.NewProjectile(projectile.position.X, projectile.position.Y, 0, 3, ProjectileType<FragmentalShurikenProj>(), 45, projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.position.X, Projectile.position.Y, 0, -3, ProjectileType<FragmentalShurikenProj>(), 45, Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(),Projectile.position.X, Projectile.position.Y, 0, 3, ProjectileType<FragmentalShurikenProj>(), 45, Projectile.knockBack, Main.myPlayer);
                     Suffocationtime = 0;
                 }
             }
@@ -146,12 +147,12 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Collision.HitTiles(projectile.position, projectile.velocity, projectile.width, projectile.height);
-            projectile.ai[0] = 1f;
-            projectile.velocity.X = 0f - projectile.velocity.X;
-            projectile.velocity.Y = 0f - projectile.velocity.Y;
-            projectile.netUpdate = true;
-            Main.PlaySound(SoundID.Dig, (int)projectile.position.X, (int)projectile.position.Y);
+            Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
+            Projectile.ai[0] = 1f;
+            Projectile.velocity.X = 0f - Projectile.velocity.X;
+            Projectile.velocity.Y = 0f - Projectile.velocity.Y;
+            Projectile.netUpdate = true;
+            SoundEngine.PlaySound(SoundID.Dig, (int)Projectile.position.X, (int)Projectile.position.Y);
             return false;
         }
     }

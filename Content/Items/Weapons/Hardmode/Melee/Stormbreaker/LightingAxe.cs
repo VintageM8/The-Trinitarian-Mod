@@ -20,31 +20,30 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.Stormbreaker
 
         public override void SetDefaults()
         {
-            item.damage = 103;
-            item.width = 60;
-            item.height = 60;
-            item.useTime = 20;
-            item.useAnimation = 20;
-            item.crit = 8;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.melee = true;
-            item.noMelee = true;
-            item.knockBack = 1;
-            item.useTurn = false;
-            item.value = Item.sellPrice(0, 25, 0, 0);
-            item.rare = ItemRarityID.Lime;
-            item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<LightAxe>();
-            item.shootSpeed = 6f;
+            Item.damage = 103;
+            Item.width = 60;
+            Item.height = 60;
+            Item.useTime = 20;
+            Item.useAnimation = 20;
+            Item.crit = 8;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.DamageType = DamageClass.Melee;
+            Item.noMelee = true;
+            Item.knockBack = 1;
+            Item.useTurn = false;
+            Item.value = Item.sellPrice(0, 25, 0, 0);
+            Item.rare = ItemRarityID.Lime;
+            Item.autoReuse = true;
+            Item.shoot = ModContent.ProjectileType<LightAxe>();
+            Item.shootSpeed = 6f;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<VikingMetal>(), 25);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ItemType<VikingMetal>(), 25)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

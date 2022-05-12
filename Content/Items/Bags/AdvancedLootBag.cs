@@ -16,13 +16,13 @@ namespace Trinitarian.Content.Items.Bags
 
         public override void SetDefaults()
         {
-            item.maxStack = 999;
-            item.consumable = true;
-            item.width = 26;
-            item.height = 34;
-            item.rare = ItemRarityID.LightRed;
-            item.expert = false;
-            item.value = Item.sellPrice(0, 0, 25, 0);
+            Item.maxStack = 999;
+            Item.consumable = true;
+            Item.width = 26;
+            Item.height = 34;
+            Item.rare = ItemRarityID.LightRed;
+            Item.expert = false;
+            Item.value = Item.sellPrice(0, 0, 25, 0);
         }
 
         public override bool CanRightClick()
@@ -33,10 +33,10 @@ namespace Trinitarian.Content.Items.Bags
         public override void RightClick(Player player)
         {
             if (Main.rand.Next(4) == 0)
-                player.QuickSpawnItem(ItemID.HallowedSeeds, 2);
-            player.QuickSpawnItem(ItemID.CobaltBar, 2);
+                player.QuickSpawnItem(player.GetSource_OpenItem(this.Type), ItemID.HallowedSeeds, 2);
+            player.QuickSpawnItem(player.GetSource_OpenItem(this.Type), ItemID.CobaltBar, 2);
             if (Main.rand.Next(7) == 0)
-                player.QuickSpawnItem(ItemID.MythrilAnvil, 1);
+                player.QuickSpawnItem(player.GetSource_OpenItem(this.Type), ItemID.MythrilAnvil, 1);
         }
     }
 }

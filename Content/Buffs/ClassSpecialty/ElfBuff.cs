@@ -6,13 +6,13 @@ namespace Trinitarian.Content.Buffs.ClassSpecialty
 {
     public class ElfBuff : ModBuff
     {
-        public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Forest's Blessing");
             Description.SetDefault("Your speed is being increased");
             Main.buffNoSave[Type] = true;
             Main.debuff[Type] = false;
-            canBeCleared = false;
+            Main.buffNoTimeDisplay[Type] = true;
         }
 
         public override void Update(Player player, ref int buffIndex)

@@ -16,50 +16,46 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged.Ghariel
 		}
 		public override void SetDefaults()
 		{
-			item.damage = 40;
-			item.ranged = true;
-			item.width = 40;
-			item.height = 20;
-			item.useTime = 10;
-			item.useAnimation = 10;
-			item.useStyle = ItemUseStyleID.HoldingOut;
-			item.noMelee = true;
-            item.knockBack = 4;
-			item.rare = ItemRarityID.LightRed;
-			item.value = Item.sellPrice(0, 2, 0, 0);
-			item.UseSound = SoundID.Item11;
-			item.autoReuse = true;
-			item.shoot = 10;
-			item.shootSpeed = 16f;
-			item.useAmmo = AmmoID.Bullet;
+			Item.damage = 40;
+			Item.DamageType = DamageClass.Ranged;
+			Item.width = 40;
+			Item.height = 20;
+			Item.useTime = 10;
+			Item.useAnimation = 10;
+			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.noMelee = true;
+            Item.knockBack = 4;
+			Item.rare = ItemRarityID.LightRed;
+			Item.value = Item.sellPrice(0, 2, 0, 0);
+			Item.UseSound = SoundID.Item11;
+			Item.autoReuse = true;
+			Item.shoot = 10;
+			Item.shootSpeed = 16f;
+			Item.useAmmo = AmmoID.Bullet;
 		}
 
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
-			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(40));//change to reduce spread
-			speedX = perturbedSpeed.X;
-			speedY = perturbedSpeed.Y;
+			Vector2 perturbedSpeed = new Vector2(position.X, position.Y).RotatedByRandom(MathHelper.ToRadians(40));//change to reduce spread
+			position.X = perturbedSpeed.X;
+			position.Y = perturbedSpeed.Y;
 		
-			return true;
 		}
      
         public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.IllegalGunParts, 1);
-			recipe.AddIngredient(ItemID.TitaniumBar, 5);
-			recipe.AddIngredient(ModContent.ItemType<OceanBar>(),5);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SetResult(this);
-            recipe.AddRecipe();
-            
-			ModRecipe recipe2 = new ModRecipe(mod);
-			recipe2.AddIngredient(ItemID.IllegalGunParts, 1);
-			recipe2.AddIngredient(ItemID.AdamantiteBar, 5);
-			recipe2.AddIngredient(ModContent.ItemType<OceanBar>(),5);
-			recipe2.AddTile(TileID.MythrilAnvil);
-			recipe2.SetResult(this);
-			recipe2.AddRecipe();
+            CreateRecipe(1)
+				.AddIngredient(ItemID.IllegalGunParts, 1)
+				.AddIngredient(ItemID.TitaniumBar, 5)
+				.AddIngredient(ModContent.ItemType<OceanBar>(),5)
+				.AddTile(TileID.MythrilAnvil)
+                .Register();
+			CreateRecipe(1)
+				.AddIngredient(ItemID.IllegalGunParts, 1)
+				.AddIngredient(ItemID.AdamantiteBar, 5)
+				.AddIngredient(ModContent.ItemType<OceanBar>(),5)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
 		}
 		
 	}

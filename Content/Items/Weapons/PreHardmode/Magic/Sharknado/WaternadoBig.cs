@@ -19,17 +19,17 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic.Sharknado
 		private const float SuckDist = 300 * 300;
 		public override void SetDefaults()
 		{
-			projectile.width = 156;
-			projectile.height = 125;
-			projectile.timeLeft = 800;
-			projectile.hostile = false;
-			projectile.magic = true;
-			projectile.tileCollide = false;
-			projectile.ignoreWater = true;
-			projectile.friendly = true;
-			projectile.light = 1f;
-			projectile.aiStyle = -1;
-			projectile.penetrate = -1;
+			Projectile.width = 156;
+			Projectile.height = 125;
+			Projectile.timeLeft = 800;
+			Projectile.hostile = false;
+			Projectile.DamageType = DamageClass.Magic;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
+			Projectile.friendly = true;
+			Projectile.light = 1f;
+			Projectile.aiStyle = -1;
+			Projectile.penetrate = -1;
 		}
 
 		public override string Texture => "Trinitarian/Content/Items/Weapons/PreHardmode/Magic/Sharknado/WaternadoTemp";
@@ -37,12 +37,12 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic.Sharknado
 		public override void AI()
         {
 			//framecounter for custom drawing
-			if (++projectile.frameCounter >= 4)
+			if (++Projectile.frameCounter >= 4)
 			{
-				projectile.frameCounter = 0;
-				if (++projectile.frame >= 6)
+				Projectile.frameCounter = 0;
+				if (++Projectile.frame >= 6)
 				{
-					projectile.frame = 1;
+					Projectile.frame = 1;
 				}
 			}
 			//TODO maybe enable suck for bosses
@@ -53,20 +53,20 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic.Sharknado
                 {
 					globalnpc = Main.npc[i].GetGlobalNPC<TrinitarianGlobalNPC>();
 				}
-				if (Main.npc[i].active && projectile.DistanceSQ(Main.npc[i].Center) < SuckDist && !Main.npc[i].boss && !Main.npc[i].friendly && Main.npc[i].type != NPCID.TargetDummy)
+				if (Main.npc[i].active && Projectile.DistanceSQ(Main.npc[i].Center) < SuckDist && !Main.npc[i].boss && !Main.npc[i].friendly && Main.npc[i].type != NPCID.TargetDummy)
 				{
 					globalnpc = Main.npc[i].GetGlobalNPC<TrinitarianGlobalNPC>();
-					Vector2 SuckAcc = projectile.Center - Main.npc[i].Center;
+					Vector2 SuckAcc = Projectile.Center - Main.npc[i].Center;
 					float npcSpeed = Main.npc[i].velocity.Length();;
 					globalnpc.gettingSucked = true;
 					Main.npc[i].noGravity = true;
 					if (SuckAcc != Vector2.Zero) SuckAcc.Normalize();
 					Main.npc[i].velocity += SuckAcc * 1/10f;
 					//40 stands for the radius at which the tornado keeps the enemy in the center
-					if (Main.npc[i].velocity != Vector2.Zero && projectile.DistanceSQ(Main.npc[i].Center) < 40*40)
+					if (Main.npc[i].velocity != Vector2.Zero && Projectile.DistanceSQ(Main.npc[i].Center) < 40*40)
                     {
 						Main.npc[i].velocity.Normalize();
-						Main.npc[i].velocity *= npcSpeed * projectile.DistanceSQ(Main.npc[i].Center)/(40*40);
+						Main.npc[i].velocity *= npcSpeed * Projectile.DistanceSQ(Main.npc[i].Center)/(40*40);
 					}
 					else if (Main.npc[i].velocity.LengthSquared() > 6 * 6 && Main.npc[i].velocity != Vector2.Zero)
                     {
@@ -91,7 +91,7 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic.Sharknado
 				{
 					globalnpc = Main.npc[i].GetGlobalNPC<TrinitarianGlobalNPC>();
 				}
-				if (Main.npc[i].active && projectile.DistanceSQ(Main.npc[i].Center) < SuckDist && globalnpc.gettingSucked && !Main.npc[i].boss && !Main.npc[i].friendly && Main.npc[i].type != NPCID.TargetDummy)
+				if (Main.npc[i].active && Projectile.DistanceSQ(Main.npc[i].Center) < SuckDist && globalnpc.gettingSucked && !Main.npc[i].boss && !Main.npc[i].friendly && Main.npc[i].type != NPCID.TargetDummy)
 				{
 					globalnpc = Main.npc[i].GetGlobalNPC<TrinitarianGlobalNPC>();
 					Main.npc[i].velocity = Vector2.Zero;
@@ -100,35 +100,35 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Magic.Sharknado
 				}
 			}
 		}
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = ModContent.GetTexture("Trinitarian/Content/Items/Weapons/PreHardmode/Magic/Sharknado/WaternadoTemp");
-			Color drawColor = projectile.GetAlpha(lightColor);
+			Texture2D texture = ModContent.Request<Texture2D>("Trinitarian/Content/Items/Weapons/PreHardmode/Magic/Sharknado/WaternadoTemp").Value;
+			Color drawColor = Projectile.GetAlpha(lightColor);
 
-			switch (projectile.frame)
+			switch (Projectile.frame)
 			{
 				case 1:
-					spriteBatch.Draw(texture, projectile.Center - Main.screenPosition,
+					Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition,
 					new Rectangle(9, 5, 156, 125), drawColor, 0, new Vector2(156 * .5f, 125 * .5f), 1f, 0, 0);
 					break;
 				case 2:
-					spriteBatch.Draw(texture, projectile.Center - Main.screenPosition,
+					Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition,
 					new Rectangle(175, 5, 156, 125), drawColor, 0, new Vector2(156 * .5f, 125 * .5f), 1f, 0, 0);
 					break;
 				case 3:
-					spriteBatch.Draw(texture, projectile.Center - Main.screenPosition,
+					Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition,
 					new Rectangle(347, 5, 156, 125), drawColor, 0, new Vector2(156 * .5f, 125 * .5f), 1f, 0, 0);
 					break;
 				case 4:
-					spriteBatch.Draw(texture, projectile.Center - Main.screenPosition,
+					Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition,
 					new Rectangle(5, 141, 156, 125), drawColor, 0, new Vector2(156 * .5f, 125 * .5f), 1f, 0, 0);
 					break;
 				case 5:
-					spriteBatch.Draw(texture, projectile.Center - Main.screenPosition,
+					Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition,
 					new Rectangle(175, 141, 156, 125), drawColor, 0, new Vector2(156 * .5f, 125 * .5f), 1f, 0, 0);
 					break;
 				case 6:
-					spriteBatch.Draw(texture, projectile.Center - Main.screenPosition,
+					Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition,
 					new Rectangle(350, 141, 156, 125), drawColor, 0, new Vector2(156 * .5f, 125 * .5f), 1f, 0, 0);
 					break;
 			}

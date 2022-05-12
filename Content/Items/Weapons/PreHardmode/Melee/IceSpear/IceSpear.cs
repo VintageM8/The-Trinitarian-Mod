@@ -10,40 +10,37 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Melee.IceSpear
     {
         public override void SetDefaults()
         {
-            item.damage = 15;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.useAnimation = 28;
-            item.useTime = 32;
-            item.shootSpeed = 5f;
-            item.knockBack = 10f;
-            item.width = 32;
-            item.height = 32;
-            item.scale = 1f;
-            item.rare = ItemRarityID.Orange;
-            item.UseSound = SoundID.Item1;
-            item.shoot = ModContent.ProjectileType<IceSpearproj>();
-            item.value = Item.sellPrice(0, 5, 0, 0);
-            item.noMelee = true;
-            item.noUseGraphic = true;
-            item.melee = true;
-            item.autoReuse = false;
+            Item.damage = 15;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useAnimation = 28;
+            Item.useTime = 32;
+            Item.shootSpeed = 5f;
+            Item.knockBack = 10f;
+            Item.width = 32;
+            Item.height = 32;
+            Item.scale = 1f;
+            Item.rare = ItemRarityID.Orange;
+            Item.UseSound = SoundID.Item1;
+            Item.shoot = ModContent.ProjectileType<IceSpearproj>();
+            Item.value = Item.sellPrice(0, 5, 0, 0);
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
+            Item.DamageType = DamageClass.Melee;
+            Item.autoReuse = false;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddTile(TileID.Anvils);
-            recipe.AddIngredient(ModContent.ItemType<IceShards>(), 12);
-            recipe.AddIngredient(ItemID.TissueSample, 15);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
-
-             ModRecipe recipe2 = new ModRecipe(mod);
-            recipe2.AddTile(TileID.Anvils);
-            recipe2.AddIngredient(ItemID.ShadowScale, 15);
-            recipe.AddIngredient(ModContent.ItemType<IceShards>(), 12);
-            recipe2.SetResult(this);
-            recipe2.AddRecipe();
+            CreateRecipe(1)
+                .AddTile(TileID.Anvils)
+                .AddIngredient(ModContent.ItemType<IceShards>(), 12)
+                .AddIngredient(ItemID.TissueSample, 15)
+                .Register();
+            CreateRecipe(1)
+                .AddTile(TileID.Anvils)
+                .AddIngredient(ItemID.ShadowScale, 15)
+                .AddIngredient(ModContent.ItemType<IceShards>(), 12)
+                .Register();
         }
     }
 }

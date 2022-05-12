@@ -14,21 +14,20 @@ namespace Trinitarian.Content.Items.Materials.Parts
 
         public override void SetDefaults()
         {
-            item.width = 16;
-            item.height = 16;
-            item.rare = ItemRarityID.Green;
-            item.value = Item.sellPrice(0, 2, 50, 0);
-            item.maxStack = 999;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Green;
+            Item.value = Item.sellPrice(0, 2, 50, 0);
+            Item.maxStack = 999;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Uranium>(), 1);
-            recipe.AddIngredient(ModContent.ItemType<Plutonium>(), 1);
-            recipe.AddTile(TileID.Furnaces);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            CreateRecipe(1)
+                .AddIngredient(ModContent.ItemType<Uranium>(), 1)
+                .AddIngredient(ModContent.ItemType<Plutonium>(), 1)
+                .AddTile(TileID.Furnaces)
+                .Register();
         }
     }
 }
