@@ -56,7 +56,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword
 
         public override void Kill(int timeLeft)
         {
-            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<MoonBurst>(), Projectile.ai[0] == 0 ? 120 : 20, 2, Projectile.owner);
+            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<MoonBlast>(), Projectile.ai[0] == 0 ? 120 : 20, 2, Projectile.owner);
             SoundEngine.PlaySound(SoundID.DD2_DarkMageAttack);
         }
     }
