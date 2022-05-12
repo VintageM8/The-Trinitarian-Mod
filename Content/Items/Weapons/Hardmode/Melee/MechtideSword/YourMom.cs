@@ -4,7 +4,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using AerovelenceMod.Content.Projectiles;
 using Terraria.Audio;
 
 namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword
@@ -57,11 +56,8 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword
 
         public override void Kill(int timeLeft)
         {
-            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ProjectileType<FeuerBallExplosion>(), Projectile.ai[0] == 0 ? 120 : 20, 2, Projectile.owner);
+            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<MoonBurst>(), Projectile.ai[0] == 0 ? 120 : 20, 2, Projectile.owner);
             SoundEngine.PlaySound(SoundID.DD2_DarkMageAttack);
         }
-
-        public override bool PreDraw(ref Color lightColor)
-            => this.DrawAroundOrigin(Main.spriteBatch, lightColor * Projectile.Opacity);
     }
 }
