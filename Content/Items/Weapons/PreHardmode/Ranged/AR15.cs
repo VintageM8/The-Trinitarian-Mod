@@ -36,8 +36,9 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged
             Item.useAmmo = AmmoID.Bullet;
         }
 
-        public override bool CanConsumeAmmo(Player player)
+        public override bool CanConsumeAmmo(Item ammo, Player player)
         {
+            return base.CanConsumeAmmo(ammo, player);
             return Main.rand.NextFloat() >= .11f;
         }
 
