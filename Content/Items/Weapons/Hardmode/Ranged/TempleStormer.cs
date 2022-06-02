@@ -42,9 +42,9 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged
             }
         }
 
-        public override bool CanConsumeAmmo(Player player)
-        {
-            return !(player.itemAnimation < Item.useAnimation - 2);
-        }
+       public override bool CanConsumeAmmo(Item ammo, Player player)
+       {
+            return base.CanConsumeAmmo(ammo, player);
+       }
     }
 }
