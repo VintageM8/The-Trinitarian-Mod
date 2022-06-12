@@ -1,103 +1,71 @@
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Trinitarian.Common.DropConditions;
 using Trinitarian.Content.Items.Bags;
 using Trinitarian.Content.Items.Materials.Parts;
-using Trinitarian.Content.Items.Weapons.PreHardmode.Magic;
 using Trinitarian.Content.Items.Weapons.Hardmode.Melee;
-using Trinitarian.Content.Items.Weapons.Hardmode.Ranged.LongBows;
 using Trinitarian.Content.Items.Weapons.Hardmode.Ranged;
-using Trinitarian.Content.Items.Consumables.Potions;
-using Terraria.GameContent.ItemDropRules;
+using Trinitarian.Content.Items.Weapons.Hardmode.Ranged.LongBows;
+using Trinitarian.Content.Items.Weapons.PreHardmode.Magic;
 
-namespace Trinitarian.Common.NPCs; 
+namespace Trinitarian.Common.NPCs;
 
-class Drops : GlobalNPC
-{
-    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
-    {
-        if (npc.type == NPCID.BlueSlime)
-        {
-            if (Main.rand.NextFloat() < .05f)
-            {
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EarlyLootBag>(), 1));
+internal class Drops : GlobalNPC {
+    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) {
+        HardmodeCondition hardmodeCondition = new();
+
+        switch (npc.type) {
+            case NPCID.BlueSlime: {
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EarlyLootBag>(), 20));
+                break;
             }
-        }
+            case NPCID.IceBat:
+            case NPCID.IceSlime: {
+                npcLoot.Add(new CommonDrop(ModContent.ItemType<IceShards>(), 20, 1, 1, 9));
 
-        if (npc.type == NPCID.IceBat)
-        {
-            if (Main.rand.NextFloat() < .45f)
-            {
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<IceShards>(), 3));
+                break;
             }
-        }
+            case NPCID.UndeadViking:
+            case NPCID.ArmoredViking: {
+                npcLoot.Add(ItemDropRule.ByCondition(hardmodeCondition, ModContent.ItemType<VikingMetal>(), 20,
+                    chanceNumerator: 9));
 
-        if (npc.type == NPCID.IceSlime)
-        {
-            if (Main.rand.NextFloat() < .45f)
-            {
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<IceShards>(), 3));
+                break;
             }
-        }
+            case NPCID.Harpy: {
+                npcLoot.Add(ItemDropRule.ByCondition(hardmodeCondition, ModContent.ItemType<AngleBow>(), 20));
 
-        if (npc.type == NPCID.UndeadViking || npc.type == NPCID.ArmoredViking)
-        {
-            if (Main.hardMode)
-                if (Main.rand.NextFloat() < .45f)
-                {
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<VikingMetal>(), 2));
-                }
-        }
-
-        if (npc.type == NPCID.Harpy)
-        {
-            if (Main.hardMode)
-                if (Main.rand.NextFloat() < .05f)
-                {
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AngleBow>(), 1));
-                }
-        }
-
-        if (npc.type == NPCID.AngryNimbus)
-        {
-            if (Main.hardMode)
-                if (Main.rand.NextFloat() < .15f)
-                {
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<StormEnergy>(), 3));
-                }
-        }
-
-        if (npc.type == NPCID.MisterStabby)
-        {
-            if (Main.hardMode)
-                if (Main.rand.NextFloat() < .25f)
-                {
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<StabbyKnife>(), 1));
-                }
-        }
-
-        //boss drops
-        if (npc.type == NPCID.Golem)
-        {
-            if (Main.rand.NextFloat() < .01f)
-            {
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<TempleStormer>(), 1));;
+                break;
             }
-        }
+            case NPCID.AngryNimbus: {
+                npcLoot.Add(ItemDropRule.ByCondition(hardmodeCondition, ModContent.ItemType<StormEnergy>(), 20,
+                    chanceNumerator: 3));
 
-        if (npc.type == NPCID.QueenBee)
-        {
-            if (Main.rand.NextFloat() < .30f)
-            {
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PoisonStaff>(), 1));
+                break;
             }
-        }
+            case NPCID.MisterStabby: {
+                npcLoot.Add(ItemDropRule.ByCondition(hardmodeCondition, ModContent.ItemType<StabbyKnife>(), 4,
+                    chanceNumerator: 1));
 
-        if (npc.type == NPCID.DD2Betsy)
-        {
-            if (Main.rand.NextFloat() < .25f)
-            {
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DragonBlood>(), 1));
+                break;
+            }
+            //boss drops
+            case NPCID.Golem: {
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<TempleStormer>(), 10));
+
+                break;
+            }
+            case NPCID.QueenBee: {
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PoisonStaff>(), 3));
+
+                break;
+            }
+            case NPCID.DD2Betsy: {
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PoisonStaff>(), 4));
+
+                break;
             }
         }
     }
