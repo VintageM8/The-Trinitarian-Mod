@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
-using Trinitarian.Dusts;
+using Trinitarian.Content.Dusts;
 
 namespace Trinitarian.Content.Items.Weapons.PreHardmode.Melee.IceSpear; 
 

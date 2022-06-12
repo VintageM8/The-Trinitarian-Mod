@@ -3,7 +3,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Trinitarian.Dusts;
+using Trinitarian.Content.Dusts;
 
 namespace Trinitarian.Content.Projectiles.Subclass.Elf; 
 

@@ -3,8 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Trinitarian.Content.Dusts;
 using static Terraria.ModLoader.ModContent;
-using Trinitarian.Dusts;
 
 namespace Trinitarian.Content.Projectiles.Subclass.Wizard; 
 

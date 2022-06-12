@@ -5,8 +5,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using Trinitarian.Dusts;
 using Terraria.Audio;
+using Trinitarian.Content.Dusts;
 
 namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe; 
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Trinitarian.Common.Players;
-using Trinitarian.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,6 +12,7 @@ using Terraria.Graphics.Effects;
 using Trinitarian.Common;
 using Trinitarian.Content.Projectiles.Subclass.Paladin;
 using Terraria.Audio;
+using Trinitarian.Content.Dusts;
 
 namespace Trinitarian.Content.Projectiles.Subclass.Paladin; 
 

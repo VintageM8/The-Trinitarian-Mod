@@ -5,9 +5,9 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Trinitarian.Content.Items.Materials.Bars;
 using Microsoft.Xna.Framework;
-using Trinitarian.Dusts;
 using Microsoft.Xna.Framework.Graphics;
 using Trinitarian.Common.Players;
+using Trinitarian.Content.Dusts;
 
 namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword; 
 

@@ -4,9 +4,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using Trinitarian.Dusts;
 using Trinitarian.Common.Players;
 using Terraria.Audio;
+using Trinitarian.Content.Dusts;
 
 namespace Trinitarian.Content.Projectiles.Subclass.Paladin; 
 

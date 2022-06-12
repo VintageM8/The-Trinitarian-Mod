@@ -5,7 +5,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Trinitarian.Content.Projectiles.Subclass.Wizard;
-using Trinitarian.Dusts;
 using Terraria.Audio;
 
 namespace Trinitarian.Content.Subclasses.Wizard.Weapon; 
