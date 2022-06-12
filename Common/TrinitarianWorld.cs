@@ -297,7 +297,8 @@ namespace Trinitarian.Common
 
 
                         }
-                        Framing.GetTileSafely(i + x, j + y).Slope = ((SlopeType)(byte)ShipSlope[x, y]);
+                        // TODO: Fix this
+                        //Framing.GetTileSafely(i + x, j + y).Slope = ((SlopeType)(byte)ShipSlope[x, y]);
                     }
                 }
             }

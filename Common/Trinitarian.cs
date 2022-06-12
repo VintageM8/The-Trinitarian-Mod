@@ -42,9 +42,11 @@ namespace Trinitarian.Common
             TrinitarianLists.UnloadLists();
 		    UseAbilty = null;
 	    }
+	    
 	    public override void Load()
         {
-            Prims.Load();
+	        // TODO: Needs to be called in different location as this is can be loaded on a different thread from main and crash
+	        //Prims.Load();
             TrinitarianLists.LoadLists();
 	        UseAbilty = KeybindLoader.RegisterKeybind(Mod, "Use Abilty", "R");
 
@@ -67,43 +69,47 @@ namespace Trinitarian.Common
 
 		public override void PostSetupContent()
 		{
-			var bossChecklist = ModLoader.GetMod("BossChecklist");
+			if (ModLoader.TryGetMod("BossChecklist", out Mod bossChecklist)) {
 
-			 bossChecklist?.Call(
-                "AddBoss",
-                2.3f,
-                new List<int> { ModContent.NPCType<IceBoss>() },
-                this,
-                "Njor, the Frozen Elemental",
-                (Func<bool>)(() => TrinitarianWorld.downedIceBoss),
-                ModContent.ItemType<FrozenRune>(),
-                new List<int> { ModContent.ItemType<IceSword>(), ModContent.ItemType<NjorsStaff>(), ModContent.ItemType<IcyTundra>(), ModContent.ItemType<RustedBow>(), },
-                "$Mods.Trinitarian.BossSpawnInfo.IceBoss"
-            );
+				bossChecklist?.Call(
+					"AddBoss",
+					2.3f,
+					new List<int> { ModContent.NPCType<IceBoss>() },
+					this,
+					"Njor, the Frozen Elemental",
+					(Func<bool>) (() => TrinitarianWorld.downedIceBoss),
+					ModContent.ItemType<FrozenRune>(),
+					new List<int> {
+						ModContent.ItemType<IceSword>(), ModContent.ItemType<NjorsStaff>(),
+						ModContent.ItemType<IcyTundra>(), ModContent.ItemType<RustedBow>(),
+					},
+					"$Mods.Trinitarian.BossSpawnInfo.IceBoss"
+				);
 
-			bossChecklist?.Call(
-                "AddBoss",
-                6.3f,
-                new List<int> { ModContent.NPCType<OceanGhost>() },
-                this,
-                "The Fallen Captian",
-                (Func<bool>)(() => TrinitarianWorld.downedOceanGhost),
-                ModContent.ItemType<SunkenGem>(),
-                "$Mods.Trinitarian.BossSpawnInfo.OceanGhost"
-            );
+				bossChecklist?.Call(
+					"AddBoss",
+					6.3f,
+					new List<int> { ModContent.NPCType<OceanGhost>() },
+					this,
+					"The Fallen Captian",
+					(Func<bool>) (() => TrinitarianWorld.downedOceanGhost),
+					ModContent.ItemType<SunkenGem>(),
+					"$Mods.Trinitarian.BossSpawnInfo.OceanGhost"
+				);
 
-            
-			 bossChecklist?.Call(
-                "AddBoss",
-                14.3f,
-                new List<int> { ModContent.NPCType<VikingBoss>() },
-                this,
-                "Zolzar, Berserker Viking",
-                (Func<bool>)(() => TrinitarianWorld.downedViking),
-                ModContent.ItemType<AsgardsCalling>(),
-                new List<int> { ModContent.ItemType<UlvkilSoul>(), },
-                "$Mods.Trinitarian.BossSpawnInfo.Viking"
-            );
+
+				bossChecklist?.Call(
+					"AddBoss",
+					14.3f,
+					new List<int> { ModContent.NPCType<VikingBoss>() },
+					this,
+					"Zolzar, Berserker Viking",
+					(Func<bool>) (() => TrinitarianWorld.downedViking),
+					ModContent.ItemType<AsgardsCalling>(),
+					new List<int> { ModContent.ItemType<UlvkilSoul>(), },
+					"$Mods.Trinitarian.BossSpawnInfo.Viking"
+				);
+			}
 		}
 
 		public override void AddRecipes()

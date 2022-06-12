@@ -11,7 +11,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Trinitarian.Common.Utilities;
+using Terraria.Utilities;
 
 namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword
 {
@@ -74,10 +74,8 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword
 
                             }
                         }
-                        else
-                        {
-                            var target = NPCUtils.NearestNPC(Projectile.Center, 16 * 25, i => i.CanBeChasedBy(Projectile, false) && Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, i.position, i.width, i.height));
-                            var npc = target.npc;
+                        else {
+                            var npc = NPCUtils.SearchForTarget(Projectile.Center, NPCUtils.TargetSearchFlag.NPCs).NearestNPC;
 
                             if (npc != null)
                             {

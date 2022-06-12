@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Content.Items.Materials.Bars;
+using Trinitarian.Content.Projectiles.Weapon.Melee;
 
 namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee
 {
@@ -31,13 +32,13 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee
             Item.value = Item.sellPrice(0, 8, 0, 0);
             Item.rare = ItemRarityID.Pink;
             Item.autoReuse = true;
-            Item.shoot = Mod.Find<ModProjectile>("VellamoThrowProjectile").Type;
+            Item.shoot = ModContent.ProjectileType<VellamoThrowProjectile>();
             Item.shootSpeed = 2f;
         }
 
         public override void AddRecipes()
         {
-            CreateRecipe(1)
+            CreateRecipe()
                 .AddIngredient(ItemID.HallowedBar, 15)
                 .AddIngredient(ModContent.ItemType<OceanBar>(), 12)
                 .AddTile(TileID.Anvils)

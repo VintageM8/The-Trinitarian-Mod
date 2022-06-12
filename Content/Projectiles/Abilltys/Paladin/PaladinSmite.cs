@@ -10,7 +10,7 @@ namespace Trinitarian.Content.Projectiles.Abilltys.Paladin
 {
     public class PaladinSmite : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_" + ProjectileID.CultistBossLightningOrbArc;
+        public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.CultistBossLightningOrbArc;
 
         public override void SetStaticDefaults()
         {

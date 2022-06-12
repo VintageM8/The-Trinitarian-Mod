@@ -2,11 +2,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe
+namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.BlueBlade
 {
     public class BlueBladeProj : ModProjectile
     {
@@ -30,11 +31,6 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe
             Projectile.light = 1f;
 
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            target.AddBuff(BuffID.OnFire, 240);
-        }
-
         public override void AI()
         {
             Projectile.rotation += 0.5f;

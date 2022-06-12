@@ -1,13 +1,16 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
 
 namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.CoralBow
 {
-    public class ShellPeirce : ModProjectile
-    {
-        public override void SetStaticDefaults()
+    public class ShellPeirce : ModProjectile {
+	    // TODO: REPLACE WITH ACTUAL TEXTURE
+	    public override string Texture => "Terraria/Images/Projectile_0";
+
+	    public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("ShellPeirce");
             //Main.projFrames[Projectile.type] = 3;
@@ -103,7 +106,7 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.CoralBow
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
-			SoundEngine.PlaySound(0, (int)Projectile.position.X, (int)Projectile.position.Y);
+			SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
 			return true;
 		}
 

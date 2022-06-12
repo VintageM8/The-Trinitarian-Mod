@@ -54,7 +54,8 @@ namespace Trinitarian.Content.Subclasses.Elf.Weapon
                 float anotherSpeedVariable = trueSpeed.Length();
                 int currentDmg = (int)(Item.damage * player.GetDamage(DamageClass.Ranged)).Multiplicative;
                 float currentKnockBack = Item.knockBack * knockback;
-                modPlayer.PickRandomAmmo(Item, ref type, ref anotherSpeedVariable, ref yes, ref currentDmg, ref currentKnockBack, Main.rand.Next(2) == 0);
+                // TODO: Fix this
+                //modPlayer.PickRandomAmmo(Item, ref type, ref anotherSpeedVariable, ref yes, ref currentDmg, ref currentKnockBack, Main.rand.Next(2) == 0);
                 Projectile.NewProjectile(source, position.X + Main.rand.Next(-12, 12), position.Y + Main.rand.Next(-12, 12), trueSpeed.X, trueSpeed.Y, type, currentDmg, currentKnockBack, player.whoAmI);
             }
             return false;

@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
+using Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.SoulEater;
 
 namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.CoralBow
 {
@@ -22,26 +23,23 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.CoralBow
             Projectile.timeLeft = 300;
             Projectile.aiStyle = 1;
         }
-        
-        public override bool AI()
-        {
-           Projectile.rotation += 0.8f;
-			if (Projectile.alpha > 55)
-			{
-				Projectile.alpha -= 10;
-				if (Projectile.alpha < 55)
-				{
-					Projectile.alpha = 55;
-				}
-			}
 
-            if (Main.rand.NextBool(6))
-            {
-                Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.Water); 
-            }
-
+        public override void AI() {
+	        Projectile.rotation += 0.8f;
+	        // if (Projectile.alpha > 55)
+	        // {
+	        // 	Projectile.alpha -= 10;
+	        // 	if (Projectile.alpha < 55)
+	        // 	{
+	        // 		Projectile.alpha = 55;
+	        // 	}
+	        // }
+	        //
+	        //          if (Main.rand.NextBool(6))
+	        //          {
+	        //              Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.Water); 
+	        //          }
         }
-       
         public override void Kill(int TimeLeft)
 		{
 			for (int i = 0; i < 30; i++)

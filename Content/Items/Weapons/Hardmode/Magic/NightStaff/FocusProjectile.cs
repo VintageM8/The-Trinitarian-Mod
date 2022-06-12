@@ -10,7 +10,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Magic.NightStaff
     {
         private float projectileRadius = 100;
         public override bool? CanDamage() => Projectile.ai[0] == 1;
-        public override string Texture => "Terraria/Projectile_" + ProjectileID.LostSoulFriendly;
+        public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.LostSoulFriendly;
 
         public override void SetDefaults()
         {

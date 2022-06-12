@@ -9,7 +9,7 @@ namespace Trinitarian.Content.Projectiles.Misc
 {
     public class Lightning : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_" + ProjectileID.CultistBossLightningOrbArc;
+        public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.CultistBossLightningOrbArc;
 
         public override void SetStaticDefaults()
         {
