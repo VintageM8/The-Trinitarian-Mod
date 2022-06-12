@@ -100,7 +100,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
             NPC.npcSlots = 10f;
             if (!Main.dedServ)
             {
-                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ZozarP2");
+                Music = MusicLoader.GetMusicSlot(Mod, "Assets/Sounds/Music/ZozarP2");
             }
             
         }

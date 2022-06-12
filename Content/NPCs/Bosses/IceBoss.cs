@@ -50,7 +50,7 @@ namespace Trinitarian.Content.NPCs.Bosses
             //music = MusicID.Boss5;
             if (!Main.dedServ)
             {
-                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/NjorsTheme");
+                Music = MusicLoader.GetMusicSlot(Mod, "Assets/Sounds/Music/NjorsTheme");
             }
            // bossBag = ModContent.ItemType<IceBossBag>();
         }

@@ -36,7 +36,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.Stormbreaker
         {
             for (int i = 0; i < 30; i++)
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Blood);
-            //Main.PlaySound(SoundLoader.customSoundType, player.position, mod.GetSoundSlot(SoundType.Custom, "Sounds/Thunder"));
+            //Main.PlaySound(SoundLoader.customSoundType, player.position, mod.GetSoundSlot(SoundType.Custom, "Assets/Sounds/Thunder"));
             for (int i = 0; i < Main.rand.Next(1, 2); i++)
             {
                 Vector2 perturbedSpeed = Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(360));
