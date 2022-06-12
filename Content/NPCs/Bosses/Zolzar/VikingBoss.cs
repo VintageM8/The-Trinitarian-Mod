@@ -17,6 +17,7 @@ using Trinitarian.Common.NPCs;
 using Trinitarian.Common.Projectiles;
 using Trinitarian.Common;
 using Terraria.GameContent.ItemDropRules;
+using Trinitarian.Common.Systems;
 
 namespace Trinitarian.Content.NPCs.Bosses.Zolzar
 {
@@ -152,7 +153,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Zolzar
             RotationTimer++;
 
             //Initial spawning. Boss starts with 5 Adds
-            if (!TrinitarianWorld.downedViking && AI_State == State_Spawning)
+            if (!TrinitarianSystem.downedViking && AI_State == State_Spawning)
             {
                 NPC.dontTakeDamage = true;
                 NPC.netUpdate = true;

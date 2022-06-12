@@ -23,6 +23,7 @@ using Trinitarian.Content.Items.Weapons.PreHardmode.Ranged;
 using Trinitarian.Content.Items.Consumables.BossSummons;
 using static Terraria.ModLoader.ModContent;
 using Trinitarian.Common.Players;
+using Trinitarian.Common.Systems;
 
 namespace Trinitarian.Common
 {
@@ -77,7 +78,7 @@ namespace Trinitarian.Common
 					new List<int> { ModContent.NPCType<IceBoss>() },
 					this,
 					"Njor, the Frozen Elemental",
-					(Func<bool>) (() => TrinitarianWorld.downedIceBoss),
+					(Func<bool>) (() => TrinitarianSystem.downedIceBoss),
 					ModContent.ItemType<FrozenRune>(),
 					new List<int> {
 						ModContent.ItemType<IceSword>(), ModContent.ItemType<NjorsStaff>(),
@@ -92,7 +93,7 @@ namespace Trinitarian.Common
 					new List<int> { ModContent.NPCType<OceanGhost>() },
 					this,
 					"The Fallen Captian",
-					(Func<bool>) (() => TrinitarianWorld.downedOceanGhost),
+					(Func<bool>) (() => TrinitarianSystem.downedOceanGhost),
 					ModContent.ItemType<SunkenGem>(),
 					"$Mods.Trinitarian.BossSpawnInfo.OceanGhost"
 				);
@@ -104,7 +105,7 @@ namespace Trinitarian.Common
 					new List<int> { ModContent.NPCType<VikingBoss>() },
 					this,
 					"Zolzar, Berserker Viking",
-					(Func<bool>) (() => TrinitarianWorld.downedViking),
+					(Func<bool>) (() => TrinitarianSystem.downedViking),
 					ModContent.ItemType<AsgardsCalling>(),
 					new List<int> { ModContent.ItemType<UlvkilSoul>(), },
 					"$Mods.Trinitarian.BossSpawnInfo.Viking"
