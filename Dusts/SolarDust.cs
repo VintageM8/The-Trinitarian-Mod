@@ -1,18 +1,17 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 
-namespace Trinitarian.Dusts
+namespace Trinitarian.Dusts; 
+
+public class SolarDust : ModDust
 {
-    public class SolarDust : ModDust
+    public override bool MidUpdate(Dust dust)
     {
-        public override bool MidUpdate(Dust dust)
+        if (!dust.noGravity)
         {
-            if (!dust.noGravity)
-            {
-                dust.velocity.Y += 0.05f;
-            }
-            Lighting.AddLight(dust.position, 0.1f, 0.1f, 0.1f);
-            return false;
+            dust.velocity.Y += 0.05f;
         }
+        Lighting.AddLight(dust.position, 0.1f, 0.1f, 0.1f);
+        return false;
     }
 }

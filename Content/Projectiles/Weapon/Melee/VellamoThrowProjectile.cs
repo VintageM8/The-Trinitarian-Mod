@@ -4,66 +4,65 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Dusts;
 
-namespace Trinitarian.Content.Projectiles.Weapon.Melee
+namespace Trinitarian.Content.Projectiles.Weapon.Melee; 
+
+public class VellamoThrowProjectile : ModProjectile
 {
-    public class VellamoThrowProjectile : ModProjectile
+    public int timer = 0;
+    public override void SetStaticDefaults()
     {
-        public int timer = 0;
-        public override void SetStaticDefaults()
+        ProjectileID.Sets.YoyosLifeTimeMultiplier[Projectile.type] = 30;
+        ProjectileID.Sets.YoyosMaximumRange[Projectile.type] = 540f;
+        ProjectileID.Sets.YoyosTopSpeed[Projectile.type] = 20f;
+    }
+    public override void SetDefaults()
+    {
+        Projectile.extraUpdates = 0;
+        Projectile.width = 16;
+        Projectile.height = 16;
+        Projectile.aiStyle = 99;
+        Projectile.friendly = true;
+        Projectile.penetrate = -1;
+        Projectile.DamageType = DamageClass.Melee;
+        Projectile.scale = 1f;
+        Projectile.tileCollide = true;
+        timer = 800;
+    }
+    public override bool ShouldUpdatePosition()
+    {
+        return false;
+    }
+    int counter = 0;
+    public override void AI()
+    {
+        for(int k = 0; k < 4; k++)
         {
-            ProjectileID.Sets.YoyosLifeTimeMultiplier[Projectile.type] = 30;
-            ProjectileID.Sets.YoyosMaximumRange[Projectile.type] = 540f;
-            ProjectileID.Sets.YoyosTopSpeed[Projectile.type] = 20f;
-        }
-        public override void SetDefaults()
-        {
-            Projectile.extraUpdates = 0;
-            Projectile.width = 16;
-            Projectile.height = 16;
-            Projectile.aiStyle = 99;
-            Projectile.friendly = true;
-            Projectile.penetrate = -1;
-            Projectile.DamageType = DamageClass.Melee;
-            Projectile.scale = 1f;
-            Projectile.tileCollide = true;
-            timer = 800;
-        }
-        public override bool ShouldUpdatePosition()
-        {
-            return false;
-        }
-        int counter = 0;
-        public override void AI()
-        {
-            for(int k = 0; k < 4; k++)
+            counter++;
+            Projectile.velocity = Collision.TileCollision(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height, true, true);
+            Projectile.position += Projectile.velocity * 0.25f;
+            for (int i = 0; i < 2; i++)
             {
-                counter++;
-                Projectile.velocity = Collision.TileCollision(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height, true, true);
-                Projectile.position += Projectile.velocity * 0.25f;
-                for (int i = 0; i < 2; i++)
+                Vector2 outwards = new Vector2(0, 1 * (i * 2 - 1)).RotatedBy(MathHelper.ToRadians(counter * 1.5f));
+                Vector2 spawnAt = Projectile.Center;
+                Dust dust = Dust.NewDustDirect(spawnAt - new Vector2(5), 0, 0, ModContent.DustType<VortexDust>());
+                dust.velocity = outwards * 6f;
+                dust.noGravity = true;
+                dust.scale *= 0.1f;
+                dust.scale += 1f;
+            }
+        }
+        timer++;
+        int spawnRate = 100;
+        if (timer >= spawnRate)
+        {
+            for(int i = 0; i < (timer > 300 ? 2 : 1); i++)
+            {
+                if(Main.myPlayer == Projectile.owner)
                 {
-                    Vector2 outwards = new Vector2(0, 1 * (i * 2 - 1)).RotatedBy(MathHelper.ToRadians(counter * 1.5f));
-                    Vector2 spawnAt = Projectile.Center;
-                    Dust dust = Dust.NewDustDirect(spawnAt - new Vector2(5), 0, 0, ModContent.DustType<VortexDust>());
-                    dust.velocity = outwards * 6f;
-                    dust.noGravity = true;
-                    dust.scale *= 0.1f;
-                    dust.scale += 1f;
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ProjectileID.WetGrenade, (int)(Projectile.damage * 0.75f), Projectile.knockBack, Main.myPlayer, Projectile.identity);
                 }
             }
-            timer++;
-            int spawnRate = 100;
-            if (timer >= spawnRate)
-            {
-                for(int i = 0; i < (timer > 300 ? 2 : 1); i++)
-                {
-                    if(Main.myPlayer == Projectile.owner)
-                    {
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ProjectileID.WetGrenade, (int)(Projectile.damage * 0.75f), Projectile.knockBack, Main.myPlayer, Projectile.identity);
-                    }
-                }
-                timer = Main.rand.Next(30);
-            }
+            timer = Main.rand.Next(30);
         }
     }
 }
