@@ -56,7 +56,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword
              charger++;
             if (charger >= 6)
             {
-                SoundEngine.PlaySound(SoundID.Item, (int)target.position.X, (int)target.position.Y, 14);
+                SoundEngine.PlaySound(SoundID.Item14, target.position);
                 Terraria.Projectile.NewProjectile(Item.GetSource_OnHit(target), target.Center.X, target.Center.Y, 0f, 0f, ModContent.ProjectileType<YourMom>(), damage, knockBack, player.whoAmI);
                 charger = 0;
             }
