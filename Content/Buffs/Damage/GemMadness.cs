@@ -2,23 +2,20 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Trinitarian.Content.Buffs.Damage; 
+namespace Trinitarian.Content.Buffs.Damage;
 
-public class GemMadness : ModBuff
-{
-    public override void SetStaticDefaults()
-    {
+public class GemMadness : ModBuff {
+    public override void SetStaticDefaults() {
         DisplayName.SetDefault("Gem Madness");
         Description.SetDefault("You are frozen in place.");
         Main.debuff[Type] = true; //denotes that is a debuff
         Main.pvpBuff[Type] = false; //denotes that players can get this in pvp i think? I'm not sure
-
     }
 
-    public override void Update(NPC npc, ref int buffIndex)
-    {
-        if (!npc.boss)
-        {
+    public override void Update(NPC npc, ref int buffIndex) {
+        npc.lifeRegen -= 8;
+
+        if (!npc.boss) {
             npc.velocity.X *= 0f;
             npc.velocity.Y *= 0f;
 
@@ -27,6 +24,5 @@ public class GemMadness : ModBuff
             Main.dust[dust].velocity *= 3f;
             Main.dust[dust].noGravity = true;
         }
-                
     }
 }
