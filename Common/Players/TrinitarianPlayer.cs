@@ -18,7 +18,6 @@ namespace Trinitarian.Common.Players;
 
 public class TrinitarianPlayer : ModPlayer {
     //Weapons 'n shit
-    public float ammoReduction = 1f;
     public bool canFocus = true;
     public bool chaosDefense;
 
@@ -34,7 +33,6 @@ public class TrinitarianPlayer : ModPlayer {
 
     public int MechtideCharge;
     public bool mirrorBuff;
-    public bool NecroHeal { get; set; }
 
     //Buffs
     public bool nosferatu;
@@ -99,6 +97,8 @@ public class TrinitarianPlayer : ModPlayer {
         Necromancer, //3
         Wizard, //4
     }
+
+    public bool NecroHeal { get; set; }
     /*public override void TagCompound SaveData()
     {
         return new TagCompound 
@@ -177,7 +177,6 @@ public class TrinitarianPlayer : ModPlayer {
         Dartboard = false;
 
         //Weapons
-        ammoReduction = 1f;
         shaking = false;
         shakeamount = 0;
 
