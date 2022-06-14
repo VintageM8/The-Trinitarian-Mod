@@ -28,7 +28,7 @@ namespace Trinitarian.Content.Projectiles.Subclass.Paladin
 
 		public override void Kill(int timeLeft)
 		{
-			SoundEngine.PlaySound(SoundID.Item, (int)Projectile.position.X, (int)Projectile.position.Y, 14);
+			SoundEngine.PlaySound(SoundID.Item, Projectile.position);
 			//ProjectileExtras.Explode(Projectile.whoAmI, 120, 120,
 				/*delegate
 				{

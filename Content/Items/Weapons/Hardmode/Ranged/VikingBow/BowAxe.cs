@@ -176,7 +176,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Ranged.VikingBow
             Projectile.velocity.X = 0f - Projectile.velocity.X;
             Projectile.velocity.Y = 0f - Projectile.velocity.Y;
             Projectile.netUpdate = true;
-            SoundEngine.PlaySound(SoundID.Dig, (int)Projectile.position.X, (int)Projectile.position.Y);
+            SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
             return false;
         }
     }

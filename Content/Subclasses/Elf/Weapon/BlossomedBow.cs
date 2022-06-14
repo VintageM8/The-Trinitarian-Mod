@@ -36,7 +36,7 @@ namespace Trinitarian.Content.Subclasses.Elf.Weapon
             Item.autoReuse = true;
         }
 
-        public override bool CanConsumeAmmo(Player player)
+        public override bool CanConsumeAmmo(Item ammo, Player player)
         {
             return false;
         }

@@ -450,53 +450,54 @@ namespace Trinitarian.Common.Players
                         }
                     }
                     Damage = (int)((double)((float)Damage) * 1.2);
-                }
-                KnockBack += item.knockBack;
-                shoot = item.shoot;
-                if (!dontConsume && item.maxStack > 1)
-                {
-                    item.stack--;
-                }
-                ItemLoader.PickAmmo(sItem, item, Player, ref shoot, ref speed, ref Damage, ref KnockBack);
-                bool flag2 = dontConsume;
+                    Terraria.ModLoader.StatModifier D = Player.GetDamage(DamageClass.Ranged) * 1.2f;
+                    KnockBack += item.knockBack;
+                    shoot = item.shoot;
+                    if (!dontConsume && item.maxStack > 1)
+                    {
+                        item.stack--;
+                    }
+                    ItemLoader.PickAmmo(sItem, item, Player, ref shoot, ref speed, ref D, ref KnockBack);
+                    bool flag2 = dontConsume;
 
-                if (Player.magicQuiver && sItem.useAmmo == AmmoID.Arrow && Main.rand.Next(5) == 0)
-                {
-                    flag2 = true;
-                }
-                if (Player.ammoBox && Main.rand.Next(5) == 0)
-                {
-                    flag2 = true;
-                }
-                if (Player.ammoPotion && Main.rand.Next(5) == 0)
-                {
-                    flag2 = true;
-                }
+                    if (Player.magicQuiver && sItem.useAmmo == AmmoID.Arrow && Main.rand.Next(5) == 0)
+                    {
+                        flag2 = true;
+                    }
+                    if (Player.ammoBox && Main.rand.Next(5) == 0)
+                    {
+                        flag2 = true;
+                    }
+                    if (Player.ammoPotion && Main.rand.Next(5) == 0)
+                    {
+                        flag2 = true;
+                    }
 
-                if (Player.ammoCost80 && Main.rand.Next(5) == 0)
-                {
-                    flag2 = true;
-                }
-                if (Player.ammoCost75 && Main.rand.Next(4) == 0)
-                {
-                    flag2 = true;
-                }
-                if (Main.rand.NextFloat() > ammoReduction)
-                {
-                    flag2 = true;
-                }
-                if (shoot == 85 && Player.itemAnimation < Player.itemAnimationMax - 6)
-                {
-                    flag2 = true;
-                }
+                    if (Player.ammoCost80 && Main.rand.Next(5) == 0)
+                    {
+                        flag2 = true;
+                    }
+                    if (Player.ammoCost75 && Main.rand.Next(4) == 0)
+                    {
+                        flag2 = true;
+                    }
+                    if (Main.rand.NextFloat() > ammoReduction)
+                    {
+                        flag2 = true;
+                    }
+                    if (shoot == 85 && Player.itemAnimation < Player.itemAnimationMax - 6)
+                    {
+                        flag2 = true;
+                    }
 
-               if (!PlayerLoader.CanConsumeAmmo(Player, sItem, item))
-                {
-                    flag2 = true;
-                }
-                if (!ItemLoader.CanConsumeAmmo(sItem, item, Player))
-                {
-                    flag2 = true;
+                    if (!PlayerLoader.CanConsumeAmmo(Player, sItem, item))
+                    {
+                        flag2 = true;
+                    }
+                    if (!ItemLoader.CanConsumeAmmo(sItem, item, Player))
+                    {
+                        flag2 = true;
+                    }
                 }
             }
         }

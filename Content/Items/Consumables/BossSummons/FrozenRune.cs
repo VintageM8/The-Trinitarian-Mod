@@ -55,7 +55,7 @@ namespace Trinitarian.Content.Items.Consumables.BossSummons
                 }
 
                 NPC.NewNPC(Item.GetSource_ItemUse(Item), (int)player.position.X, (int)(player.position.Y - 50f), ModContent.NPCType<IceBoss>(), 0, 0f, 0f, 0f, 0f, 255);
-                SoundEngine.PlaySound(SoundID.Roar, player.position, 0);
+                SoundEngine.PlaySound(SoundID.Roar, player.position);
                 return true;
             }
             return false;

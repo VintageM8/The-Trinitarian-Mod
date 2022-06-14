@@ -40,7 +40,7 @@ namespace Trinitarian.Content.Subclasses.Paladin.Weapon
              charger++;
             if (charger >= 6)
             {
-                SoundEngine.PlaySound(SoundID.Item, (int)target.position.X, (int)target.position.Y, 14);
+                SoundEngine.PlaySound(SoundID.Item, target.position);
                 Terraria.Projectile.NewProjectile(Item.GetSource_OnHit(target), target.Center.X, target.Center.Y, 0f, 0f, ModContent.ProjectileType<HolyBomb>(), damage, knockBack, player.whoAmI);
                 Terraria.Projectile.NewProjectile(Item.GetSource_OnHit(target), target.Center.X, target.Center.Y, 0f, 0f, ModContent.ProjectileType<LightningSpike>(), damage, knockBack, player.whoAmI);
                 charger = 0;

@@ -103,7 +103,8 @@ namespace Trinitarian.Content.Projectiles.Subclass.Elf
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
-			SoundEngine.PlaySound(0, (int)Projectile.position.X, (int)Projectile.position.Y);
+			//Not sure what this was meant to be 
+			//SoundEngine.PlaySound(0, Projectile.position);
 			return true;
 		}
 
@@ -114,7 +115,7 @@ namespace Trinitarian.Content.Projectiles.Subclass.Elf
 				int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 3);
 				Main.dust[d].scale *= 0.8f;
 			}
-			SoundEngine.PlaySound(SoundID.Dig, (int)Projectile.position.X, (int)Projectile.position.Y);
+			SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
 
 			if (base.Projectile.owner == Main.myPlayer)
 			{
