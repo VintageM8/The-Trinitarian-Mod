@@ -11,88 +11,87 @@ using Terraria.ModLoader;
 
 //This class can be used to make easy homing projectiles.
 //It allows you to easily change how "homing" the projectile is supposed to be by changing the DetectionRadius or the MaxTurningAngle or give other behaviour by adjusting MaxVelocity and target.
-namespace Trinitarian.Content.Projectiles.Misc
+namespace Trinitarian.Content.Projectiles.Misc; 
+
+public abstract class HomingProjectile : ModProjectile
 {
-    public abstract class HomingProjectile : ModProjectile
+    //How much the projectile can turn every tick. Units in Radians (Multiples of Pi)
+    protected double MaxTurningAngle;
+    //The wanted target of the projectile currently only NPC are valid targets.
+    protected NPC target;
+    //Maximum Velocity the projectile can reach.
+    protected float MaxVelocity;
+    //If the projectile should Point in the direction of it's speed
+    protected bool Orient;
+    //How big the radius for detecting targets should be. Only neccessary if the homing method assigns a target.
+    protected float DetectionRadius;
+
+    //This method does basic homing targeting with constant speed. The target must be assigned manually.
+    public void Homing()
     {
-        //How much the projectile can turn every tick. Units in Radians (Multiples of Pi)
-        protected double MaxTurningAngle;
-        //The wanted target of the projectile currently only NPC are valid targets.
-        protected NPC target;
-        //Maximum Velocity the projectile can reach.
-        protected float MaxVelocity;
-        //If the projectile should Point in the direction of it's speed
-        protected bool Orient;
-        //How big the radius for detecting targets should be. Only neccessary if the homing method assigns a target.
-        protected float DetectionRadius;
+        double temp = Math.Atan2(target.Center.Y - Projectile.Center.Y, target.Center.X - Projectile.Center.X);
+        double TurningAngle;
+        //float ProjSpeed = projectile.velocity.Length();
 
-        //This method does basic homing targeting with constant speed. The target must be assigned manually.
-        public void Homing()
+
+        if (Projectile.velocity != Vector2.Zero && Orient == true)
         {
-            double temp = Math.Atan2(target.Center.Y - Projectile.Center.Y, target.Center.X - Projectile.Center.X);
-            double TurningAngle;
-            //float ProjSpeed = projectile.velocity.Length();
-
-
-            if (Projectile.velocity != Vector2.Zero && Orient == true)
+            Projectile.rotation = Projectile.velocity.ToRotation();
+        }
+        TurningAngle = temp - Projectile.velocity.ToRotation();
+        if (TurningAngle > Math.PI)
+        {
+            TurningAngle = TurningAngle - 2 * Math.PI;
+        }
+        else if (TurningAngle < -Math.PI)
+        {
+            TurningAngle = TurningAngle + 2 * Math.PI;
+        }
+        if (TurningAngle > MaxTurningAngle)
+        {
+            Projectile.velocity = Projectile.velocity.RotatedBy(MaxTurningAngle);
+        }
+        else if (TurningAngle < -MaxTurningAngle) 
+        {
+            Projectile.velocity = Projectile.velocity.RotatedBy(-MaxTurningAngle);
+        }
+        else
+        {       
+            Projectile.velocity = Projectile.velocity.RotatedBy(TurningAngle);
+        }
+        if (Projectile.velocity.LengthSquared() > MaxVelocity * MaxVelocity)
+        {
+            if (Projectile.velocity != Vector2.Zero)
             {
-                Projectile.rotation = Projectile.velocity.ToRotation();
+                Projectile.velocity.Normalize();
             }
-            TurningAngle = temp - Projectile.velocity.ToRotation();
-            if (TurningAngle > Math.PI)
+            Projectile.velocity *= MaxVelocity;
+        }
+    }
+    //Automatically assigns the target to be the closes non friendly enemy 
+    public void HomingClosest()
+    {
+        float tempdist = Projectile.DistanceSQ(Main.npc[0].Center);
+        target = Main.npc[0];
+        for (int i = 1; i < Main.npc.Length; i++)
+        {
+            if (!Main.npc[i].friendly && Main.npc[i].active && Projectile.DistanceSQ(Main.npc[i].Center) < tempdist)
             {
-                TurningAngle = TurningAngle - 2 * Math.PI;
-            }
-            else if (TurningAngle < -Math.PI)
-            {
-                TurningAngle = TurningAngle + 2 * Math.PI;
-            }
-            if (TurningAngle > MaxTurningAngle)
-            {
-                Projectile.velocity = Projectile.velocity.RotatedBy(MaxTurningAngle);
-            }
-            else if (TurningAngle < -MaxTurningAngle) 
-            {
-                Projectile.velocity = Projectile.velocity.RotatedBy(-MaxTurningAngle);
-            }
-            else
-            {       
-                Projectile.velocity = Projectile.velocity.RotatedBy(TurningAngle);
-            }
-            if (Projectile.velocity.LengthSquared() > MaxVelocity * MaxVelocity)
-            {
-                if (Projectile.velocity != Vector2.Zero)
-                {
-                    Projectile.velocity.Normalize();
-                }
-                Projectile.velocity *= MaxVelocity;
+                tempdist = Projectile.DistanceSQ(Main.npc[i].Center);
+                target = Main.npc[i];
             }
         }
-        //Automatically assigns the target to be the closes non friendly enemy 
-        public void HomingClosest()
+        if (tempdist < DetectionRadius * DetectionRadius && !target.friendly)
         {
-            float tempdist = Projectile.DistanceSQ(Main.npc[0].Center);
-            target = Main.npc[0];
-            for (int i = 1; i < Main.npc.Length; i++)
+            Homing();
+        }
+        if (Projectile.velocity.LengthSquared() > MaxVelocity * MaxVelocity)
+        {
+            if (Projectile.velocity != Vector2.Zero)
             {
-                if (!Main.npc[i].friendly && Main.npc[i].active && Projectile.DistanceSQ(Main.npc[i].Center) < tempdist)
-                {
-                    tempdist = Projectile.DistanceSQ(Main.npc[i].Center);
-                    target = Main.npc[i];
-                }
+                Projectile.velocity.Normalize();
             }
-            if (tempdist < DetectionRadius * DetectionRadius && !target.friendly)
-            {
-                Homing();
-            }
-            if (Projectile.velocity.LengthSquared() > MaxVelocity * MaxVelocity)
-            {
-                if (Projectile.velocity != Vector2.Zero)
-                {
-                    Projectile.velocity.Normalize();
-                }
-                Projectile.velocity *= MaxVelocity;
-            }
+            Projectile.velocity *= MaxVelocity;
         }
     }
 }

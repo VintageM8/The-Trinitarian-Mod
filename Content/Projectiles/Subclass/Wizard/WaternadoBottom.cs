@@ -3,100 +3,99 @@ using System;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace Trinitarian.Content.Projectiles.Subclass.Wizard
+namespace Trinitarian.Content.Projectiles.Subclass.Wizard; 
+
+public class WaternadoBottom : ModProjectile
 {
-    public class WaternadoBottom : ModProjectile
+    int delay = 0;
+    float theta = 0;
+    int num = 1;
+
+    public override void SetStaticDefaults()
     {
-        int delay = 0;
-        float theta = 0;
-        int num = 1;
+        DisplayName.SetDefault("Waternado");
+    }
 
-        public override void SetStaticDefaults()
+    public override void SetDefaults()
+    {
+        num = 1;
+        delay = 0;
+        Projectile.width = 160;
+        Projectile.height = 21;
+        Projectile.timeLeft = 300;
+        Projectile.friendly = true;
+        Projectile.hostile = false;
+        Projectile.ignoreWater = true;
+        Projectile.tileCollide = false;
+        Main.projFrames[Projectile.type] = 6;
+        Projectile.penetrate = -1;
+    }
+
+    public override void AI()
+    {
+        Movement();
+        FrameAnimation();
+        SpawnWaternadoLayers();
+    }
+
+    private void Movement()
+    {
+        if (Projectile.velocity.X < 0)
         {
-            DisplayName.SetDefault("Waternado");
+            if (Projectile.velocity.X > -2)
+                Projectile.velocity.X *= .1f;
         }
-
-        public override void SetDefaults()
+        else
         {
-            num = 1;
-            delay = 0;
-            Projectile.width = 160;
-            Projectile.height = 21;
-            Projectile.timeLeft = 300;
-            Projectile.friendly = true;
-            Projectile.hostile = false;
-            Projectile.ignoreWater = true;
-            Projectile.tileCollide = false;
-            Main.projFrames[Projectile.type] = 6;
-            Projectile.penetrate = -1;
+            if (Projectile.velocity.X < 2)
+                Projectile.velocity.X *= .1f;
         }
+        Projectile.velocity.Y *= .2f;
+    }
 
-        public override void AI()
+    private void MovementAnimation()
+    {
+        Projectile.scale = (Projectile.ai[1] / 4f + .5f) / 2;
+        theta += (float)Math.PI / 60;
+        Projectile.position.Y = Main.projectile[(int)Projectile.ai[0]].position.Y - Projectile.height * (Projectile.ai[1] - 1) + 1;
+        Projectile.position.X = Main.projectile[(int)Projectile.ai[0]].position.X + (float)Math.Cos(theta) * 12 * (Projectile.ai[1] - 1);
+        if (!Main.projectile[(int)Projectile.ai[0]].active)
+            Projectile.Kill();
+    }
+
+    private void FrameAnimation()
+    {
+        Projectile.frameCounter++;
+        Projectile.scale = .5f;
+        if (Projectile.frameCounter > 2)
         {
-            Movement();
-            FrameAnimation();
-            SpawnWaternadoLayers();
+            Projectile.frame++;
+            Projectile.frameCounter = 0;
         }
-
-        private void Movement()
+        if (Projectile.frame > 5)
         {
-            if (Projectile.velocity.X < 0)
+            Projectile.frame = 0;
+        }
+    }
+
+    private void SpawnWaternadoLayers()
+    {
+        if (num < 5)
+        {
+            delay++;
+            if (delay > 5)
             {
-                if (Projectile.velocity.X > -2)
-                    Projectile.velocity.X *= .1f;
-            }
-            else
-            {
-                if (Projectile.velocity.X < 2)
-                    Projectile.velocity.X *= .1f;
-            }
-            Projectile.velocity.Y *= .2f;
-        }
-
-        private void MovementAnimation()
-        {
-            Projectile.scale = (Projectile.ai[1] / 4f + .5f) / 2;
-            theta += (float)Math.PI / 60;
-            Projectile.position.Y = Main.projectile[(int)Projectile.ai[0]].position.Y - Projectile.height * (Projectile.ai[1] - 1) + 1;
-            Projectile.position.X = Main.projectile[(int)Projectile.ai[0]].position.X + (float)Math.Cos(theta) * 12 * (Projectile.ai[1] - 1);
-            if (!Main.projectile[(int)Projectile.ai[0]].active)
-                Projectile.Kill();
-        }
-
-        private void FrameAnimation()
-        {
-            Projectile.frameCounter++;
-            Projectile.scale = .5f;
-            if (Projectile.frameCounter > 2)
-            {
-                Projectile.frame++;
-                Projectile.frameCounter = 0;
-            }
-            if (Projectile.frame > 5)
-            {
-                Projectile.frame = 0;
-            }
-        }
-
-        private void SpawnWaternadoLayers()
-        {
-            if (num < 5)
-            {
-                delay++;
-                if (delay > 5)
-                {
-                    delay = 0;
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X, Projectile.Center.Y - Projectile.height * Projectile.scale), new Vector2(0, 0), ModContent.ProjectileType<WaternadoUp>(), Projectile.damage, 0, Projectile.owner, Projectile.whoAmI, num + 1);
-                    num++;
-                }
+                delay = 0;
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X, Projectile.Center.Y - Projectile.height * Projectile.scale), new Vector2(0, 0), ModContent.ProjectileType<WaternadoUp>(), Projectile.damage, 0, Projectile.owner, Projectile.whoAmI, num + 1);
+                num++;
             }
         }
+    }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            if (target.noGravity == false)
-                target.velocity.Y = -12f;
-            base.OnHitNPC(target, damage, knockback, crit);
-        }
+    public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+    {
+        if (target.noGravity == false)
+            target.velocity.Y = -12f;
+        base.OnHitNPC(target, damage, knockback, crit);
     }
 }
