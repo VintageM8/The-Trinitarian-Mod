@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Content.Items.Weapons.Hardmode.Melee.BlueBlade;
+using Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe;
 
 namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.BlueBlade
 {
@@ -13,7 +15,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.BlueBlade
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blue Star Blade");
-            Tooltip.SetDefault("Fury of the sun rains down on your foes\nAfter 8 consecutive strikes, a homing sun will apper to burn your enemies.")
+            Tooltip.SetDefault("Fury of the sun rains down on your foes\nAfter 8 consecutive strikes, a homing sun will apper to burn your enemies.");
         }
 
         public override void SetDefaults()
@@ -61,7 +63,7 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.BlueBlade
              charger++;
             if (charger >= 8)
             {
-                SoundEngine.PlaySound(SoundID.Item14, target.position);
+                SoundEngine.PlaySound(SoundID.Item, target.position);
                 Terraria.Projectile.NewProjectile(Item.GetSource_OnHit(target), target.Center.X, target.Center.Y, 0f, 0f, ModContent.ProjectileType<BlueBladeProj>(), damage, knockBack, player.whoAmI);
                 charger = 0;
             }

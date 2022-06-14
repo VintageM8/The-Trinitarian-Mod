@@ -87,7 +87,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
                 //first tick
                 case 0:
                     {
-                        SoundEngine.PlaySound(SoundID.Roar, NPC.Center, 0);
+                        SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
                         AttackArray = InitialAttackArray();
                         phasepercentages = InitalPercentageArray();
                         DashArray = InitialDashArray();
@@ -186,7 +186,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
                             DrawLinearDash = true;
                             playeroldcenter = player.Center;
                             npcoldcenter = NPC.Center;
-                            SoundEngine.PlaySound(SoundID.Roar, NPC.Center, 0);   
+                            SoundEngine.PlaySound(SoundID.Roar, NPC.Center);   
                             player.GetModPlayer<TrinitarianPlayer>().ScreenShake = 10;
                         }
                         NPC.ai[2] += 0.03f;
@@ -273,7 +273,7 @@ namespace Trinitarian.Content.NPCs.Bosses.Ocean
                             DrawLinearDash = true;
                             playeroldcenter = player.Center;
                             npcoldcenter = NPC.Center;
-                            SoundEngine.PlaySound(SoundID.Roar, NPC.Center, 0);
+                            SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
                         }
                         NPC.ai[2] += 0.01f;
                         if (++NPC.ai[1] == 17)

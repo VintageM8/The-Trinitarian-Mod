@@ -2,8 +2,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Trinitarian.Content.Projectiles.Bonuses;
 using static Terraria.ModLoader.ModContent;
 
 namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe
@@ -29,10 +32,6 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe
             Projectile.friendly = true;
             Projectile.light = 1f;
 
-        }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            target.AddBuff(BuffID.OnFire, 240);
         }
 
         public override void AI()
@@ -86,16 +85,15 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            /*for (int i = 0; i < 30; i++)
+            target.AddBuff(BuffID.OnFire, 240);
+            for (int i = 0; i < 30; i++)
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Blood);
             SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
             for (int i = 0; i < Main.rand.Next(2, 3); i++)
             {
                 Vector2 perturbedSpeed = Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(360));
                 Projectile.NewProjectile(Projectile.GetSource_OnHurt(target), Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<ReaperProjectile>(), 40, 5f, Projectile.owner);
-            }*/
-
-            target.AddBuff(BuffID.OnFire, 240);
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)

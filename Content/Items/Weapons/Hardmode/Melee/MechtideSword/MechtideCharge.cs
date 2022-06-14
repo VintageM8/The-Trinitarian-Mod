@@ -11,7 +11,8 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Trinitarian.Common.Utilities;
+using Terraria.Utilities;
+using Trinitarian.Common;
 
 namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword
 {
@@ -76,9 +77,9 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword
                         }
                         else
                         {
-                            var target = NPCUtils.NearestNPC(Projectile.Center, 16 * 25, i => i.CanBeChasedBy(Projectile, false) && Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, i.position, i.width, i.height));
-                            var npc = target.npc;
 
+                            var target = NearestNPC(Projectile.Center, 16 * 25, i => i.CanBeChasedBy(Projectile, false) && Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, i.position, i.width, i.height));
+                            var npc = target;
                             if (npc != null)
                             {
                                 TargetIndex = npc.whoAmI;
@@ -97,6 +98,30 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.MechtideSword
             }
 
             Projectile.rotation += Math.Sign(Projectile.velocity.X) * 0.2f;
+        }
+        //TODO Make this a in a utils class
+        private NPC NearestNPC(Vector2 center, int v, Func<NPC, bool> p)
+        {
+            NPC Nearest = null;
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                var npc = Main.npc[i];
+                if (npc.active && p(npc))
+                {
+                    if (Nearest == null)
+                    {
+                        Nearest = npc;
+                    }
+                    else
+                    {
+                        if (Vector2.Distance(center, npc.Center) < Vector2.Distance(center, Nearest.Center))
+                        {
+                            Nearest = npc;
+                        }
+                    }
+                }
+            }
+            return Nearest;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
+using Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.SoulEater;
 
 namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.CoralBow
 {
@@ -23,7 +24,7 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.CoralBow
             Projectile.aiStyle = 1;
         }
         
-        public override bool AI()
+        public override void AI()
         {
            Projectile.rotation += 0.8f;
 			if (Projectile.alpha > 55)

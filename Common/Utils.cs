@@ -218,7 +218,7 @@ namespace Trinitarian.Common
             p.Add(ToPrimitive(BottomLeft, colorBL), ToPrimitive(TopRight, colorTR), ToPrimitive(TopLeft, colorBR));
             DrawPrim(p);
         }
-
+        
         public static void Load()
         {
             simpleVertexEffect = new BasicEffect(Main.graphics.GraphicsDevice)

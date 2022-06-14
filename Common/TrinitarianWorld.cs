@@ -30,13 +30,13 @@ namespace Trinitarian.Common
 
         
 
-       
-       
 
 
 
 
-       
+
+
+        
         public override void PostWorldGen()
         {
 
@@ -239,13 +239,52 @@ namespace Trinitarian.Common
 { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         };
         #endregion
-        
+        public void CreateIceCastle(GenerationProgress progress, GameConfiguration g)
+        {
+            progress.Message = "Creating Ice Castle (Trinitarian)";
+            Point Location = FindIceLocation();
+            int[] Chests = StructureLoader.ReadStruct(Location, "Assets/Structures/IceCastle");
+            foreach(int i in Chests)
+            {
+                //add with this
+                //Main.chest[i].AddItem(type,stack);
+                //this will only run once since theirs 1 chest
+            }
+        }
+        int attempts = 0;
+        const int MaxAttempts = 500000;
+        private Point FindIceLocation()
+        {
+            attempts++;
+            Point p = new Point();
+            p.X = Main.rand.Next(0,Main.maxTilesX);
+            p.Y = Main.rand.Next((int)WorldGen.rockLayerLow, (int)WorldGen.rockLayerHigh);
+            bool VaildLoc = false;
+            Tile t = Framing.GetTileSafely(p);
+            if(t.TileType == TileID.IceBlock ||t.TileType == TileID.SnowBlock)
+            {
+                VaildLoc = true;
+            }
+            if (VaildLoc)
+            {
+                return p;
+            }
+            else if( attempts > MaxAttempts)
+            {
+                Mod.Logger.Warn("cannot find a snow index");
+                throw new Exception($"cannot find snow with {MaxAttempts} attempts");
+            }
+            else
+            {
+                return FindIceLocation();
+            }
+        }
+
         private void MakeShipWreck(GenerationProgress progress, GameConfiguration g)
         {
             progress.Message = "Making Ship (Trinitarian)";
            int i = 50;
            int j = (int)Main.worldSurface - 50;
-            Mod.Logger.Info(j);
              Tile WF = Framing.GetTileSafely(i, j);
             while (WF.HasTile || WF.LiquidAmount > 5)
             {
@@ -254,8 +293,6 @@ namespace Trinitarian.Common
                     Mod.Logger.Error("Error Making ship, cannot find a vaild y. \n please report this error to our discord if you see it -- Trinitarian Devs");
                     break;
                 }
-
-                Mod.Logger.Info(j);
                 j--;
                 WF = Framing.GetTileSafely(i, j);
             }
@@ -452,8 +489,11 @@ namespace Trinitarian.Common
    
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
         {
+            int CleanupIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
+            tasks.Insert(CleanupIndex, new PassLegacy("IceCastle", CreateIceCastle));
             tasks.Add(new PassLegacy("Tri Ship", MakeShipWreck));
         }
+        
         private void Generate2Algea()
     {
         int attempts = 0;

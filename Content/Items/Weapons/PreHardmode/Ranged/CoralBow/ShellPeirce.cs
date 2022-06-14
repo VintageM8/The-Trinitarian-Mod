@@ -2,6 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
+using Microsoft.Xna.Framework;
 
 namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.CoralBow
 {
@@ -103,7 +104,7 @@ namespace Trinitarian.Content.Items.Weapons.PreHardmode.Ranged.CoralBow
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
-			SoundEngine.PlaySound(0, (int)Projectile.position.X, (int)Projectile.position.Y);
+			//SoundEngine.PlaySound(0, Projectile.position);
 			return true;
 		}
 
