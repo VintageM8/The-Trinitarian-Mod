@@ -1,5 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
+using Trinitarian.Content.Items.Weapons.Hardmode.Summoner.FrostDragon;
 
 namespace Trinitarian.Content.Buffs.Minion; 
 
@@ -15,7 +16,7 @@ public class IceDragBuff : ModBuff
 
     public override void Update(Player player, ref int buffIndex)
     {
-        if (player.ownedProjectileCounts[Mod.Find<ModProjectile>("FrostDragonproj").Type] > 0)
+        if (player.ownedProjectileCounts[ModContent.ProjectileType<FrostDragonproj>()] > 0)
         {
             player.buffTime[buffIndex] = 18000;
         }

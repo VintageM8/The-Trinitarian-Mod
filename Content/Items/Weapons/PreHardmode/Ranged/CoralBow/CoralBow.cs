@@ -28,7 +28,7 @@ public class CoralBow : ModItem
         Item.value = Item.sellPrice(0, 1, 50, 0);
         Item.rare = ItemRarityID.Blue;
         Item.autoReuse = true;
-        Item.shoot = Mod.Find<ModProjectile>("CoralBowProj").Type;
+        Item.shoot = ModContent.ProjectileType<CoralBowProj>();
         Item.shootSpeed = 11f;
     }
 }

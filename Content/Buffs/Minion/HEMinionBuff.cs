@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.ModLoader;
+using Trinitarian.Content.Items.Weapons.Hardmode.Summoner.HolyElemental;
 
 namespace Trinitarian.Content.Buffs.Minion; 
 
@@ -15,7 +16,7 @@ public class HEMinionBuff : ModBuff
 
     public override void Update(Player player, ref int buffIndex)
     {
-        if (player.ownedProjectileCounts[Mod.Find<ModProjectile>("HolyElementalMinion").Type] > 0)
+        if (player.ownedProjectileCounts[ModContent.ProjectileType<HolyElementalMinion>()] > 0)
         {
             player.buffTime[buffIndex] = 18000;
         }

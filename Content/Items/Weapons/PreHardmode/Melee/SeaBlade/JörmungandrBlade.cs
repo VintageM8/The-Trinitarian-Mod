@@ -2,7 +2,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Trinitarian.Content.Items.Materials.Bars;
-using static Terraria.ModLoader.ModContent;
 
 namespace Trinitarian.Content.Items.Weapons.PreHardmode.Melee.SeaBlade; 
 
@@ -29,7 +28,7 @@ public class JörmungandrBlade : ModItem
         Item.rare = ItemRarityID.Blue;
         Item.UseSound = SoundID.Item1;
         Item.autoReuse = true;
-        Item.shoot = Mod.Find<ModProjectile>("PrismSlash").Type;
+        Item.shoot = ModContent.ProjectileType<PrismSlash>();
         Item.shootSpeed = 25f;
         Item.channel = true;
     }
@@ -37,7 +36,7 @@ public class JörmungandrBlade : ModItem
     public override void AddRecipes()
     {
         CreateRecipe(1)
-            .AddIngredient(ItemType<OceanBar>(), 8)
+            .AddIngredient(ModContent.ItemType<OceanBar>(), 8)
             .AddTile(TileID.Anvils)
             .Register();
     }
