@@ -30,6 +30,13 @@ public class SteelHelm : ModItem
         return body.type == ItemType<SteelChainmail>() && legs.type == ItemType<SteelLeggings>();
     }
 
+    public override void UpdateArmorSet(Player player)
+    {
+            player.setBonus = "You release a chunk of steel when hit";
+
+            player.GetModPlayer<TrinitarianPlayer>().SteelSet = true;
+    }
+
     public override void AddRecipes()
     {
         CreateRecipe(1)
