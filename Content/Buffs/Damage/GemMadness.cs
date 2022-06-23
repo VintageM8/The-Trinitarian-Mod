@@ -2,7 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Trinitarian.Content.Buffs.Damage;
+namespace Trinitarian.Content.Buffs.Damage; //Will change location 
 
 public class GemMadness : ModBuff {
     public override void SetStaticDefaults() {
@@ -12,10 +12,11 @@ public class GemMadness : ModBuff {
         Main.pvpBuff[Type] = false; //denotes that players can get this in pvp i think? I'm not sure
     }
 
-    public override void Update(NPC npc, ref int buffIndex) {
-        npc.lifeRegen -= 8;
+    public override void Update(NPC npc, ref int buffIndex) 
+    {
 
-        if (!npc.boss) {
+        if (!npc.boss) 
+        {
             npc.velocity.X *= 0f;
             npc.velocity.Y *= 0f;
 
