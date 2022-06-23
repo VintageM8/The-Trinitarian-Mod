@@ -27,7 +27,7 @@ public class PaladinItem : ModItem
     {
 
         TrinitarianAbilityPlayer p = player.GetModPlayer<TrinitarianAbilityPlayer>();
-        if (p.CurrentA == TrinitarianPlayer.AbiltyID.Paladin)
+        if (p.CurrentA == TrinitarianAbilityPlayer.AbiltyID.Paladin)
         {
             return false;
         }
