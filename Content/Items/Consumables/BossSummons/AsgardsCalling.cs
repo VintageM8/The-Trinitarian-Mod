@@ -41,8 +41,6 @@ public class AsgardsCalling : ModItem
 
     public override bool? UseItem(Player player)
     {
-        player.GetModPlayer<TrinitarianPlayer>().TitleID = 3;
-        player.GetModPlayer<TrinitarianPlayer>().ShowText = true;
         player.GetModPlayer<TrinitarianPlayer>().ScreenShake = 30;
 
         if (Main.netMode != NetmodeID.MultiplayerClient)
