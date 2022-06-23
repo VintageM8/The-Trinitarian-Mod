@@ -178,6 +178,14 @@ namespace Trinitarian.Common.Players
                     target.AddBuff(ModContent.BuffType<Nosferatu>(), 600);
                 }
             }
-        }   
+        } 
+
+        public override void OnHitNPCWithProj(Terraria.Projectile proj, Terraria.NPC target, int damage, float knockback, bool crit)
+	{
+			if (Dartboard)
+				if (proj.type != 181)
+					if (Terraria.Main.rand.NextBool(10))
+						Terraria.Projectile.NewProjectile(target.GetSource_OnHurt(target), target.Center.X, target.Center.Y, 0f, 0f, ProjectileID.Bee, 3, 2, Player.whoAmI);
+        }  
     }
 }
