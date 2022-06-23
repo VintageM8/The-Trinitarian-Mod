@@ -144,7 +144,7 @@ namespace Trinitarian.Common.Players
                 }
             }
 
-            if (StarSet)
+            if (SteelSet)
             {
                 int projectiles = 1;
                 if (Main.netMode != NetmodeID.MultiplayerClient && Main.myPlayer == Player.whoAmI)
