@@ -26,7 +26,7 @@ public class PaladinItem : ModItem
     public override bool? UseItem(Player player)
     {
 
-        TrinitarianPlayer p = player.GetModPlayer<TrinitarianPlayer>();
+        TrinitarianAbilityPlayer p = player.GetModPlayer<TrinitarianAbilityPlayer>();
         if (p.CurrentA == TrinitarianPlayer.AbiltyID.Paladin)
         {
             return false;
@@ -34,7 +34,7 @@ public class PaladinItem : ModItem
         else
         {
             CombatText.NewText(new Rectangle((int)player.Center.X, (int)player.Center.Y, 50, 50), new Color(0, 200, 0), "You Abilty is now Paladin");
-            p.CurrentA = TrinitarianPlayer.AbiltyID.Paladin;
+            p.CurrentA = TrinitarianAbilityPlayer.AbiltyID.Paladin;
             return true;
         }
     }
