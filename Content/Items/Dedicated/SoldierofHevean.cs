@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria.Graphics.Shaders;
 using System;
-using Trinitarian.Common;
+using Trinitarian.Core;
 
 namespace Trinitarian.Content.Items.Dedicated; 
 
@@ -40,31 +40,6 @@ public class SoldierofHevean : ModItem
         Item.useAmmo = AmmoID.Bullet;
     }
 
-    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-    {
-        Vector2 pos = Item.Center - Main.screenPosition;
-        Texture2D texture = Terraria.GameContent.TextureAssets.Item[Item.type].Value;
-        Texture2D spot = ModContent.Request<Texture2D>("Trinitarian/Assets/Textures/Spotlight").Value;
-        float alpha = 0.8f;
-        float s = 0.5f * scale;
-        for (int i = 0; i < 6; i++)
-        {
-            spriteBatch.Draw(
-                spot,
-                pos,
-                null,
-                Color.Lerp(Color.White, Color.LightYellow, (float)i / 3) * alpha,
-                0f,
-                new Vector2(spot.Width, spot.Height) / 2,
-                s * (1f + ((float)Math.Sin((Main.GlobalTimeWrappedHourly * 2) + (MathHelper.PiOver4 * i)) * 0.15f)),
-                SpriteEffects.None,
-                0f);
-            s *= 2;
-            alpha *= 0.9f;
-        }
-        spriteBatch.Draw(texture, pos, null, Color.White, -MathHelper.PiOver4, new Vector2(texture.Width, texture.Height) / 2, scale, SpriteEffects.None, 0f);
-        return false;
-    }
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
     {
         Vector2 pos = Utilty.GetInventoryPosition(position, frame, origin, scale);
