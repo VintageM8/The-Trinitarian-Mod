@@ -26,7 +26,7 @@ public class WizardItem : ModItem
     public override bool? UseItem(Player player)
     {
 
-        TrinitarianPlayer p = player.GetModPlayer<TrinitarianPlayer>();
+        TrinitarianAbilityPlayer p = player.GetModPlayer<TrinitarianAbilityPlayer>();
         if (p.CurrentA == TrinitarianPlayer.AbiltyID.Wizard)
         {
             return false;
@@ -34,7 +34,7 @@ public class WizardItem : ModItem
         else
         {
             CombatText.NewText(new Rectangle((int)player.Center.X, (int)player.Center.Y, 50, 50), new Color(0, 200, 0), "You Abilty is now Wizard");
-            p.CurrentA = TrinitarianPlayer.AbiltyID.Wizard;
+            p.CurrentA = TrinitarianAbilityPlayer.AbiltyID.Wizard;
             return true;
         }
     }
