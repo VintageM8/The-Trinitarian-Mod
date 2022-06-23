@@ -46,9 +46,6 @@ namespace Trinitarian.Common.Players
            //Armor
            public bool SteelSet
            public bool StarSet;
-           public bool oceanSet;
-           public bool Reaper;
-           public bool Reap;
        
            public int timer = 0;
            private int othertimer = 0;
@@ -74,10 +71,6 @@ namespace Trinitarian.Common.Players
             //Armor
             SteelSet = false;
             StarSet = false;
-            oceanSet = false;
-            Reaper = false;
-            Reap = false;
-
         }
         public override void UpdateDead()
         {
