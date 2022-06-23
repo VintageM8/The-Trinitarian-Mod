@@ -40,8 +40,6 @@ public class SunkenGem : ModItem
 
     public override bool? UseItem(Player player)
     {
-        player.GetModPlayer<TrinitarianPlayer>().TitleID = 2;
-        player.GetModPlayer<TrinitarianPlayer>().ShowText = true;
 
         if (Main.netMode != NetmodeID.MultiplayerClient)
         {
