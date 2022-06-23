@@ -25,35 +25,35 @@ namespace Trinitarian.Common.Players
 {
 	public class TrinitarianPlayer : ModPlayer
 	{
-        //stuffs
-		public int ScreenShake;
-        public bool canFocus = true;
-        public int timer = 0;
-        private int othertimer = 0;
-        public Vector2[] PreviousVelocity = new Vector2[30];
+           //stuffs
+           public int ScreenShake;
+           public bool canFocus = true;
+           public int timer = 0;
+           private int othertimer = 0;
+           public Vector2[] PreviousVelocity = new Vector2[30];
 
-        //Orbiting
-        public int RotationTimer = 0;
-        public int[] OrbitingProjectileCount = new int[5];                               //Current upadted count of how many projectiles are active.
-        public Vector2[,] OrbitingProjectilePositions = new Vector2[5, 50];             //Used to store the desired positions for the projectiles.
-        public Projectile[,] OrbitingProjectile = new Projectile[5, 50];                //This stores all the projectiles that are currently beeing used. A projectiles ID is equal to the index in this array.
+           //Orbiting
+           public int RotationTimer = 0;
+           public int[] OrbitingProjectileCount = new int[5];                               //Current upadted count of how many projectiles are active.
+           public Vector2[,] OrbitingProjectilePositions = new Vector2[5, 50];             //Used to store the desired positions for the projectiles.
+           public Projectile[,] OrbitingProjectile = new Projectile[5, 50];                //This stores all the projectiles that are currently beeing used. A projectiles ID is equal to the index in this array.
 
-        //Accessories
-        public bool SummonerDeath;
-        public bool Dartboard;
-        public bool TrueHeart;
+           //Accessories
+           public bool SummonerDeath;
+           public bool Dartboard;
+           public bool TrueHeart;
 
-        //Armor
-        public bool SteelSet
-        public bool StarSet;
-        public bool oceanSet;
-        public bool Reaper;
-        public bool Reap;
+           //Armor
+           public bool SteelSet
+           public bool StarSet;
+           public bool oceanSet;
+           public bool Reaper;
+           public bool Reap;
        
-        public int timer = 0;
-        private int othertimer = 0;
+           public int timer = 0;
+           private int othertimer = 0;
 
-        public Vector2[] PreviousVelocity = new Vector2[30];
+          public Vector2[] PreviousVelocity = new Vector2[30];
 
         public override void OnEnterWorld(Player player)
         {
@@ -103,11 +103,11 @@ namespace Trinitarian.Common.Players
                 RotationTimer++;
             }
             else RotationTimer = 0;
-        }
+             }
 
-
-		public override void ModifyScreenPosition()
-        {
+ 
+     		public override void ModifyScreenPosition()
+            {
 
             if (!Main.gamePaused)
             {
@@ -170,10 +170,9 @@ namespace Trinitarian.Common.Players
         }
 
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
-		{
-
+        {
             if (item.DamageType == DamageClass.Summon)
-			{
+	    {
                 if (SummonerDeath)
                 { 
                     target.AddBuff(ModContent.BuffType<Nosferatu>(), 600);
