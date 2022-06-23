@@ -120,24 +120,4 @@ class TrinitarianGlobalProjectile : GlobalProjectile
             target.immune[projectile.owner] = OldIm;
         }
     }
-    //public override bool PreDraw(Projectile projectile, SpriteBatch spriteBatch, Color lightColor)
-    //{
-    //    Texture2D texture = ModContent.GetTexture("Trinitarian/Projectiles/Mage/Test");
-    //    Projectile Mirror = Main.projectile[0];
-    //    Color c = new Color(0, 200, 0);
-    //    for (int i = 0; i < Main.projectile.Length; i++)
-    //    {
-    //        if (Main.projectile[i].type == ModContent.ProjectileType<ElfAbilityMirror>())
-    //        {
-    //            Mirror = Main.projectile[i];
-    //        }
-    //    }
-    //    for (int i = -5; i < 6; i++)
-    //    {
-    //        int timer = (int)Mirror.ai[0];
-    //        Vector2 target = projectile.Center + new Vector2(-20 * i * (float)Math.Sin((2 * Math.PI) / 360 * timer), 20 * i * (float)Math.Cos((2 * Math.PI) / 360 * timer));
-    //        spriteBatch.Draw(texture, target - Main.screenPosition, c);
-    //    }            
-    //    return true;
-    //}
 }
