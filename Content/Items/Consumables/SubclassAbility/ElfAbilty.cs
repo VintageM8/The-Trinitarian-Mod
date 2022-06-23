@@ -27,15 +27,15 @@ public class ElfItem : ModItem
     public override bool? UseItem(Player player)
     {
 
-        TrinitarianPlayer p = player.GetModPlayer<TrinitarianPlayer>();
-        if (p.CurrentA == TrinitarianPlayer.AbiltyID.Elf)
+        TrinitarianAbilityPlayer p = player.GetModPlayer<TrinitarianAbilityPlayer>();
+        if (p.CurrentA == TrinitarianAbilityPlayer.AbiltyID.Elf)
         {
             return false;
         }
         else
         {
             CombatText.NewText(new Rectangle((int)player.Center.X, (int)player.Center.Y, 50, 50),new Color (0,200,0),"You Abilty is now Elf");
-            p.CurrentA = TrinitarianPlayer.AbiltyID.Elf;
+            p.CurrentA = TrinitarianAbilityPlayer.AbiltyID.Elf;
             return true;
         }
     }
