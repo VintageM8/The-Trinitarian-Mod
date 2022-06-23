@@ -26,15 +26,15 @@ public class NecromancerItem : ModItem
     public override bool? UseItem(Player player)
     {
 
-        TrinitarianPlayer p = player.GetModPlayer<TrinitarianPlayer>();
-        if (p.CurrentA == TrinitarianPlayer.AbiltyID.Necromancer)
+        TrinitarianAbilityPlayer p = player.GetModPlayer<TrinitarianAbilityPlayer>();
+        if (p.CurrentA == TrinitarianAbilityPlayer.AbiltyID.Necromancer)
         {
             return false;
         }
         else
         {
             CombatText.NewText(new Rectangle((int)player.Center.X, (int)player.Center.Y, 50, 50), new Color(0, 200, 0), "You Abilty is now Necromancer");
-            p.CurrentA = TrinitarianPlayer.AbiltyID.Necromancer;
+            p.CurrentA = TrinitarianAbilityPlayer.AbiltyID.Necromancer;
             return true;
         }
     }
