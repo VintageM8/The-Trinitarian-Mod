@@ -8,7 +8,7 @@ namespace Trinitarian.Content.Items.Materials.Parts
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("GunParts");
+            DisplayName.SetDefault("Gun Parts");
             Tooltip.SetDefault("Yes, these are legal");
         }
 
