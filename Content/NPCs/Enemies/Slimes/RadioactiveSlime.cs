@@ -62,7 +62,7 @@ namespace Trinitarian.Content.NPCs.Enemies.Slimes
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Uranium>(), 5));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Uranium>(), 2));
         }
     }
 }
