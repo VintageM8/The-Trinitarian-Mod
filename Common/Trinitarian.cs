@@ -65,6 +65,13 @@ namespace Trinitarian.Common
 	    }
         public override void PostSetupContent()
         {
+	    bool HasOreDictionary = ModLoader.TryGetMod("OreDictionary", out var oreDictionary);
+	    if (HasOreDictionary && !Main.dedServ)
+	    {
+	    	oreDictionary.Call("SetDictionaryKey", ModContent.ItemType<Content.Items.Materials.Parts.Charcoal>(), "Charcoal");
+	    	oreDictionary.Call("SetDictionaryKey", ModContent.ItemType<Content.Items.Materials.Parts.IceShards>(), "IceShard");
+	    	oreDictionary.Call("SetDictionaryKey", ModContent.ItemType<Content.Items.Materials.Bars.SteelBar>(), "SteelBar");
+	    }
             bool HasCheckList = ModLoader.TryGetMod("BossChecklist", out var bossChecklist);
             if (HasCheckList)
             {
