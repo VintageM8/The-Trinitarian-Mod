@@ -1,0 +1,30 @@
+﻿using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Microsoft.Xna.Framework;
+using Trinitarian.Dusts;
+
+namespace Trinitarian.Content.Buffs.ClassSpecialty
+{
+    public class PaladinDebuff2 : ModBuff
+    {
+        public override void Update(NPC NPC, ref int buffIndex)
+        {
+            if (Main.rand.Next(4) == 0)
+            {
+                int i = Dust.NewDust(NPC.position, NPC.width, NPC.height, 264, 0, 0, 0, new Color(255, 255, 200));
+                Main.dust[i].noGravity = true;
+            }
+        }
+
+        public override void Update(Player Player, ref int buffIndex)
+        {
+            if (Main.rand.Next(4) == 0)
+            {
+                int i = Dust.NewDust(Player.position, Player.width, Player.height, 264, 0, 0, 0, new Color(255, 255, 200));
+                Main.dust[i].noGravity = true;
+            }
+        }
+    }
+}
