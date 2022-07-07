@@ -111,14 +111,22 @@ public class Trinitarian : Mod
 				"$Mods.Trinitarian.BossSpawnInfo.Viking"
 			);
 		}
+		
+	       bool HasOreDictionary = ModLoader.TryGetMod("OreDictionary", out var oreDictionary);
+	       if (HasOreDictionary && !Main.dedServ)
+	      {
+	    	  oreDictionary.Call("SetDictionaryKey", ModContent.ItemType<Content.Items.Materials.Parts.Charcoal>(), "Charcoal");
+	    	  oreDictionary.Call("SetDictionaryKey", ModContent.ItemType<Content.Items.Materials.Parts.IceShards>(), "IceShard");
+	    	  oreDictionary.Call("SetDictionaryKey", ModContent.ItemType<Content.Items.Materials.Bars.SteelBar>(), "SteelBar");
+	      }
 	}
 
 	public override void AddRecipes()
 	{
-		Mod.CreateRecipe(ItemID.Torch, 10)
+		/*Mod.CreateRecipe(ItemID.Torch, 10)
 			.AddIngredient(ModContent.ItemType<Charcoal>(), 3)
 			.AddIngredient(ItemID.Wood, 8)
 			.AddTile(TileID.WorkBenches)
-			.Register();
+			.Register();*/
 	}
 }
