@@ -26,4 +26,19 @@ public class StabbyKnife : ModItem
         Item.UseSound = SoundID.Item1;
         Item.autoReuse = true;
     }
+
+    public override void AddRecipes()
+		{
+			CreateRecipe(1)
+                .AddIngredient(ModContent.ItemType<EnchantedIceBall>(), 3)
+                .AddIngredient(ItemID.AdamantiteBar, 4)
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
+            CreateRecipe(1)
+                .AddTile(TileID.MythrilAnvil)
+                .AddIngredient(ItemID.TitaniumBar, 4)
+                .AddIngredient(ModContent.ItemType<EnchantedIceBall>(), 3)
+                .Register();
+		}
+
 }
