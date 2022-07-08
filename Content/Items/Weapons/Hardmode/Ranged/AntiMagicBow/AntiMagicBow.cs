@@ -32,4 +32,13 @@ public class AntiMagicBow : ModItem
         Item.shoot = ModContent.ProjectileType<AntiMagicLaser>();
         Item.shootSpeed = 11f;
     }
+
+    public override void AddRecipes()
+        {
+            CreateRecipe(1)
+                .AddTile(TileID.Anvils)
+                .AddIngredient(ModContent.ItemType<Mechtide>(), 13)
+                .AddIngredient(ItemID.Ectoplasm, 4)
+                .Register();
+        }
 }
