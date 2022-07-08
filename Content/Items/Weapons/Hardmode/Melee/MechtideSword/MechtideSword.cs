@@ -21,7 +21,7 @@ public class MechtideSword : ModItem
 
 	public override void SetDefaults()
 	{
-		Item.damage = 70;
+		Item.damage = 62;
 		Item.DamageType = DamageClass.Melee;
 		Item.width = 84;
 		Item.height = 90;
@@ -74,7 +74,7 @@ public class MechtideSword : ModItem
 	public override void AddRecipes()
 	{
 		CreateRecipe(1)
-			.AddIngredient(ModContent.ItemType<Mechtide>(), 50)
+			.AddIngredient(ModContent.ItemType<Mechtide>(), 18)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 	}
