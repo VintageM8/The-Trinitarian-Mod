@@ -28,11 +28,12 @@ public class Mechtide : ModItem
     }
 
     public override void AddRecipes()
-    {
-        CreateRecipe(2)
-            .AddIngredient(ItemID.HallowedBar, 3)
-            .AddIngredient(ItemID.ChlorophyteBar, 1)
-            .AddTile(TileID.Anvils)
-            .Register();
-    }
+        {
+            CreateRecipe(2)
+                .AddIngredient(ItemID.HellstoneBar, 1)
+                .AddIngredient(ItemID.SoulofNight, 1)
+                .AddIngredient(ItemID.SoulofLight, 1)
+                .AddTile(TileID.AdamantiteForge)
+                .Register();
+        }
 }
