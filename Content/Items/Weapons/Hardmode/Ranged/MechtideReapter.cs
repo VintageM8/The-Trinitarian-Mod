@@ -47,7 +47,7 @@ public class MechtideReapter : ModItem
     {
         CreateRecipe(1)
             .AddTile(TileID.Anvils)
-            .AddIngredient(ModContent.ItemType<Mechtide>(), 25)
+            .AddIngredient(ModContent.ItemType<Mechtide>(), 13)
             .Register();
     }
 }
