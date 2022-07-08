@@ -47,7 +47,6 @@ public class SeashellBag : ModItem
     {
         CreateRecipe(1)
             .AddIngredient(ItemType<OceanBar>(), 8)
-            .AddIngredient(ItemID.Bone, 35)
             .AddIngredient(ItemID.Coral, 10)
             .AddIngredient(ItemID.SpellTome, 1)
             .AddIngredient(ItemType<AdvancedLootBag>(), 1)
