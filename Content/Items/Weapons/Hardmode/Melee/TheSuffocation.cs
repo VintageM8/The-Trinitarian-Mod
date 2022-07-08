@@ -9,7 +9,7 @@ public class TheSuffocation : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("The Suffocation");
+        DisplayName.SetDefault("Suffocation");
     }
 
     public override void SetDefaults()
@@ -40,7 +40,7 @@ public class TheSuffocation : ModItem
             .AddIngredient(ItemID.CursedFlame, 5)
             .AddIngredient(ItemID.WormTooth, 2)
             .AddIngredient(ItemID.DemoniteBar, 25)
-            .AddTile(TileID.Anvils)
+            .AddTile(TileID.AdementiteForge)
             .Register();
     }
 
