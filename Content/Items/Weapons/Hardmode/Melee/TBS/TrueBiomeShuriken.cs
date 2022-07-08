@@ -53,7 +53,6 @@ public class TrueBiomeShuriken : ModItem
 	public override void AddRecipes()
 	{
 		CreateRecipe(1)
-			.AddIngredient(ItemID.ShroomiteBar, 8)
 			.AddIngredient(ModContent.ItemType<Mechtide>(), 18)
 			.AddIngredient(ItemID.SoulofNight, 10)
 			.AddTile(TileID.DemonAltar)
