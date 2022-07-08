@@ -36,7 +36,7 @@ public class CryonicLauncher : ModItem
     {
         CreateRecipe(1)
             .AddTile(TileID.MythrilAnvil)
-            .AddIngredient(ItemID.GrenadeLauncher, 3)
+            .AddIngredient(ItemID.GrenadeLauncher, 1)
             .AddIngredient(ModContent.ItemType<EnchantedIceBall>(), 2)
             .Register();
     }
