@@ -20,22 +20,22 @@ public class LightingAxe : ModItem
 
     public override void SetDefaults()
     {
-        Item.damage = 103;
+        Item.damage = 48;
         Item.width = 60;
         Item.height = 60;
-        Item.useTime = 20;
-        Item.useAnimation = 20;
-        Item.crit = 8;
+        Item.useTime = 25;
+        Item.useAnimation = 25;
+        Item.crit = 9;
         Item.useStyle = ItemUseStyleID.Swing;
         Item.DamageType = DamageClass.Melee;
         Item.noMelee = true;
-        Item.knockBack = 1;
+        Item.knockBack = 5;
         Item.useTurn = false;
-        Item.value = Item.sellPrice(0, 25, 0, 0);
+        Item.value = Item.sellPrice(0, 10, 0, 0);
         Item.rare = ItemRarityID.Lime;
         Item.autoReuse = true;
         Item.shoot = ModContent.ProjectileType<LightAxe>();
-        Item.shootSpeed = 6f;
+        Item.shootSpeed = 10f;
     }
 
     public override void AddRecipes()
