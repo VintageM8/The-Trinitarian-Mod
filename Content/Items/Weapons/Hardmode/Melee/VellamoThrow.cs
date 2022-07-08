@@ -11,7 +11,7 @@ public class VellamoThrow : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Vellamo's Throw");
+        DisplayName.SetDefault("Sea's Depth");
         Tooltip.SetDefault("Summons an array of ocean shards\nLegend says this was once wielded by a finnish goddess");
     }
     public override void SetDefaults()
@@ -34,14 +34,5 @@ public class VellamoThrow : ModItem
         Item.autoReuse = true;
         Item.shoot = ModContent.ProjectileType<VellamoThrowProjectile>();
         Item.shootSpeed = 2f;
-    }
-
-    public override void AddRecipes()
-    {
-        CreateRecipe()
-            .AddIngredient(ItemID.HallowedBar, 15)
-            .AddIngredient(ModContent.ItemType<OceanBar>(), 12)
-            .AddTile(TileID.Anvils)
-            .Register();
     }
 }
