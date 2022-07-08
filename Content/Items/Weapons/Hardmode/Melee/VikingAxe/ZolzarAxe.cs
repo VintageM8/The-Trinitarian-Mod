@@ -40,5 +40,15 @@ namespace Trinitarian.Content.Items.Weapons.Hardmode.Melee.VikingAxe
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 0, dir);
             return false;
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe(1)
+                .AddIngredient(ModContent.ItemType<UlvkilSoul>(), 4)
+                .AddIngredient(ModContent.ItemType<StormEnergy>(), 12)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
+
     }
 }
