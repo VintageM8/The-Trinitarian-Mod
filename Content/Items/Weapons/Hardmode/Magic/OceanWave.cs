@@ -47,4 +47,15 @@ public class OceanWave : ModItem
 		}
 		return false;
 	}
+
+        public override void AddRecipes()
+        {
+            CreateRecipe(1)
+                .AddIngredient(ModContent.ItemType<OceanBar>(), 11)
+                .AddIngredient(ModContent.ItemType<TrueStarSteel>(), 5)
+                .AddIngredient(ItemID.SpellTome, 1)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
+
 }
