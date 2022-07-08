@@ -8,7 +8,7 @@ public class IceSword : ModItem
 {
     public override void SetStaticDefaults()
     {
-        DisplayName.SetDefault("Frosted Katana");
+        DisplayName.SetDefault("Frosted Broadsword");
     }
 
     public override void SetDefaults()
